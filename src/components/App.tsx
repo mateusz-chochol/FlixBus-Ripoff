@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
 } from 'react-router-dom';
 import MainPage from './MainPage/MainPage';
 import SignupPage from './Account/SignupPage';
@@ -18,6 +18,7 @@ import {
   removeNotificationActionCreator,
   selectNotifications
 } from '../redux/NotificationsSlice';
+import PrivateRoute from './Misc/PrivateRoute';
 
 const styles = {
   paperContainer: {
@@ -48,8 +49,8 @@ const App = () => {
       <Paper style={styles.paperContainer} square>
         <Switch>
           <Route exact path="/" component={MainPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignupPage} />
+          <PrivateRoute path="/login" component={LoginPage} shouldBeLogged={false} />
+          <PrivateRoute path="/signup" component={SignupPage} shouldBeLogged={false} />
         </Switch>
       </Paper>
     </Router>

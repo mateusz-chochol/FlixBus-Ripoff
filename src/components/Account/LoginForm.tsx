@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
-import { useNotifications } from '../Notifications';
+import { useNotifications } from '../Misc/Notifications';
 
 const LoginForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);

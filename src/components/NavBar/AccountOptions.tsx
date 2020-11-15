@@ -12,7 +12,7 @@ import {
   ButtonGroup,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
-import { useNotifications } from '../Notifications';
+import { useNotifications } from '../Misc/Notifications';
 
 const AccountOptions: React.FC = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
