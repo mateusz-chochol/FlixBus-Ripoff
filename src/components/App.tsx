@@ -40,7 +40,7 @@ function App() {
         onExited: () => { dispatch(removeNotificationActionCreator({ id: notification.id })) },
       });
     })
-  }, [notifications, closeSnackbar, dispatch, enqueueSnackbar])
+  }, [notifications, closeSnackbar, dispatch, enqueueSnackbar]);
 
   return (
     <Router>
