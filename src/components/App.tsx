@@ -25,7 +25,7 @@ const styles = {
   }
 };
 
-function App() {
+const App = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const notifications = useSelector(selectNotifications);
   const dispatch = useDispatch();
