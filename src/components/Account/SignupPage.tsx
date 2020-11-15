@@ -26,7 +26,7 @@ const SignupPage: React.FC = () => {
       minHeight="100vh"
       minWidth="100vw"
     >
-      <SignupForm />
+      {!currentUser && <SignupForm />}
     </Box>
   )
 }

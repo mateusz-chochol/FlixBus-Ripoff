@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
       minHeight="100vh"
       minWidth="100vw"
     >
-      <LoginForm />
+      {!currentUser && <LoginForm />}
     </Box>
   )
 }
