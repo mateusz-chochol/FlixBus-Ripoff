@@ -15,9 +15,8 @@ import { useHistory } from 'react-router-dom';
 import { useNotifications } from '../Misc/Notifications';
 import { routes } from '../../routes';
 
-const LoginForm: React.FC = () => {
+const ForgotPasswordForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { login } = useAuth();
   const history = useHistory();
@@ -26,7 +25,7 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
     e?.preventDefault();
 
-    if (!(emailRef.current?.value && passwordRef.current?.value)) {
+    if (!emailRef.current?.value) {
       return showError('All text fields must be filled out');
     }
 
@@ -36,7 +35,7 @@ const LoginForm: React.FC = () => {
 
     try {
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
+      //await login(emailRef.current.value, passwordRef.current.value);
       history.push(routes.mainPage);
     }
     catch {
@@ -47,7 +46,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <>
-      <Box width={1 / 6} minWidth={300}>
+      <Box width={1 / 5} minWidth={300}>
         <Grid
           container
           direction="column"
@@ -61,10 +60,10 @@ const LoginForm: React.FC = () => {
                 alignContent="center"
                 spacing={3}
               >
-                <Grid item>
-                  <Typography variant="h2" align="center">Log In</Typography>
+                <Grid item xs={9}>
+                  <Typography variant="h2" align="center">Reset Password</Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs={9}>
                   <TextField
                     id="email"
                     label="Email"
@@ -73,16 +72,7 @@ const LoginForm: React.FC = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item>
-                  <TextField
-                    id="password"
-                    label="Password"
-                    type="password"
-                    inputRef={passwordRef}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item>
+                <Grid item xs={9}>
                   <Box mt={2}>
                     <Button
                       variant="contained"
@@ -91,14 +81,21 @@ const LoginForm: React.FC = () => {
                       onClick={handleSubmit}
                       disabled={loading}
                     >
-                      Log In
+                      Reset Password
                       </Button>
                   </Box>
                 </Grid>
                 <Grid item>
-                  <Button fullWidth variant="text" size="small" onClick={() => { history.push(routes.forgotPasswordPage) }}>
-                    Forgot Password?
-                  </Button>
+                  <Box mb={1}>
+                    <Button
+                      fullWidth
+                      variant="text"
+                      size="small"
+                      onClick={() => { history.push(routes.loginPage) }}
+                    >
+                      Log In
+                    </Button>
+                  </Box>
                 </Grid>
               </Grid>
             </Paper>
@@ -117,4 +114,4 @@ const LoginForm: React.FC = () => {
   );
 }
 
-export default LoginForm
+export default ForgotPasswordForm

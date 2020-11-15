@@ -14,6 +14,7 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { routes } from '../../routes';
 
 const SignupForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -54,7 +55,7 @@ const SignupForm: React.FC = () => {
     try {
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      history.push('/');
+      history.push(routes.mainPage);
     }
     catch {
       setError('Failed to create an account');
@@ -128,7 +129,7 @@ const SignupForm: React.FC = () => {
             <Typography variant="h6" align="center">
               Already have an account?
             </Typography>
-            <Button color="primary" onClick={() => { history.push('/login') }}>
+            <Button color="primary" onClick={() => { history.push(routes.loginPage) }}>
               <Typography variant="h4">Log In</Typography>
             </Button>
           </Grid>

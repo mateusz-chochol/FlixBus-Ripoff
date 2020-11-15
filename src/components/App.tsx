@@ -19,6 +19,8 @@ import {
   selectNotifications
 } from '../redux/NotificationsSlice';
 import PrivateRoute from './Misc/PrivateRoute';
+import ForgotPasswordPage from './Account/ForgotPasswordPage';
+import { routes } from '../routes';
 
 const styles = {
   paperContainer: {
@@ -48,9 +50,10 @@ const App = () => {
       <MenuAppBar />
       <Paper style={styles.paperContainer} square>
         <Switch>
-          <Route exact path="/" component={MainPage} />
-          <PrivateRoute path="/login" component={LoginPage} shouldBeLogged={false} />
-          <PrivateRoute path="/signup" component={SignupPage} shouldBeLogged={false} />
+          <Route exact path={routes.mainPage} component={MainPage} />
+          <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
+          <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
+          <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
         </Switch>
       </Paper>
     </Router>

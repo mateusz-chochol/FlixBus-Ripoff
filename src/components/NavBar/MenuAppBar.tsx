@@ -16,6 +16,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from './Drawer';
 import AccountOptions from './AccountOptions';
+import { routes } from '../../routes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,7 +64,7 @@ export default function MenuAppBar() {
               disableElevation
               className={classes.titleButton}
               disableRipple
-              onClick={() => { history.push('/') }}
+              onClick={() => { history.push(routes.mainPage) }}
             >
               <Typography variant="h4">
                 FlixBus

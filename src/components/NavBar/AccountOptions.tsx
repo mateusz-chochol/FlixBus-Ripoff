@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { useNotifications } from '../Misc/Notifications';
+import { routes } from '../../routes';
 
 const AccountOptions: React.FC = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
@@ -29,7 +30,7 @@ const AccountOptions: React.FC = () => {
     try {
       await logout();
       showSuccess('Successfully logged out')
-      history.push('/');
+      history.push(routes.mainPage);
     }
     catch {
       showError('Failed to log out');
@@ -74,10 +75,10 @@ const AccountOptions: React.FC = () => {
           size="large"
           disableElevation
         >
-          <Button onClick={() => { history.push('/login') }}>
+          <Button onClick={() => { history.push(routes.loginPage) }}>
             Log In
           </Button>
-          <Button onClick={() => { history.push('/signup') }}>
+          <Button onClick={() => { history.push(routes.singupPage) }}>
             Sign Up
           </Button>
         </ButtonGroup>
