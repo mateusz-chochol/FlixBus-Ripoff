@@ -34,9 +34,9 @@ const ForgotPasswordForm: React.FC = () => {
   const classes = useStyles();
   const emailRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const { login } = useAuth();
+  const { resetPassword } = useAuth();
   const history = useHistory();
-  const { showError } = useNotifications();
+  const { showError, showSuccess } = useNotifications();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
     e?.preventDefault();
@@ -51,18 +51,19 @@ const ForgotPasswordForm: React.FC = () => {
 
     try {
       setLoading(true);
-      //await login(emailRef.current.value, passwordRef.current.value);
-      history.push(routes.mainPage);
+      await resetPassword(emailRef.current.value);
+      showSuccess('Check your email for further instructions')
+      history.push(routes.loginPage);
     }
     catch {
-      showError('Failed to log in. Do you need an account?');
+      showError('Failed to reset password');
       setLoading(false);
     }
   }
 
   return (
     <>
-      <Box width={1 / 4} minWidth={300}>
+      <Box width={1 / 4} minWidth={400}>
         <Grid
           container
           direction="column"

@@ -18,18 +18,24 @@ const logout = () => {
   return auth.signOut();
 }
 
+const resetPassword = (email: string) => {
+  return auth.sendPasswordResetEmail(email);
+}
+
 interface AuthValues {
   currentUser: firebase.default.User | null,
   signup: (email: string, password: string) => Promise<firebase.default.auth.UserCredential>,
   login: (email: string, password: string) => Promise<firebase.default.auth.UserCredential>,
   logout: () => Promise<void>,
+  resetPassword: (email: string) => Promise<void>,
 }
 
 const AuthContext = createContext<AuthValues>({
   currentUser: null,
-  signup: signup,
-  login: login,
-  logout: logout,
+  signup,
+  login,
+  logout,
+  resetPassword,
 });
 
 export const useAuth = () => {
@@ -45,6 +51,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
     signup,
     login,
     logout,
+    resetPassword,
   };
 
   useEffect(() => {
