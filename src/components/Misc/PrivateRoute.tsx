@@ -18,7 +18,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, shoul
   const display = (currentUser && shouldBeLogged) || (!currentUser && !shouldBeLogged);
 
   useEffect(() => {
-    if (!display) {
+    if (!display && Component) {
       const infoMessage = shouldBeLogged ? "You need to log in to see this page" : "You are already logged in";
       showInfo(infoMessage);
     }
