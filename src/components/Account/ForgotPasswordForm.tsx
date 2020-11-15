@@ -3,6 +3,11 @@ import React, {
   useState,
 } from 'react';
 import {
+  createStyles,
+  makeStyles,
+  Theme
+} from '@material-ui/core/styles';
+import {
   Typography,
   TextField,
   Button,
@@ -15,7 +20,18 @@ import { useHistory } from 'react-router-dom';
 import { useNotifications } from '../Misc/Notifications';
 import { routes } from '../../routes';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    loginButton: {
+      '&&:hover': {
+        backgroundColor: 'transparent',
+      },
+    },
+  }),
+);
+
 const ForgotPasswordForm: React.FC = () => {
+  const classes = useStyles();
   const emailRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { login } = useAuth();
@@ -46,7 +62,7 @@ const ForgotPasswordForm: React.FC = () => {
 
   return (
     <>
-      <Box width={1 / 5} minWidth={300}>
+      <Box width={1 / 4} minWidth={300}>
         <Grid
           container
           direction="column"
@@ -60,10 +76,10 @@ const ForgotPasswordForm: React.FC = () => {
                 alignContent="center"
                 spacing={3}
               >
-                <Grid item xs={9}>
+                <Grid item xs={8}>
                   <Typography variant="h2" align="center">Reset Password</Typography>
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={8}>
                   <TextField
                     id="email"
                     label="Email"
@@ -72,7 +88,7 @@ const ForgotPasswordForm: React.FC = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={8}>
                   <Box mt={2}>
                     <Button
                       variant="contained"
@@ -88,6 +104,7 @@ const ForgotPasswordForm: React.FC = () => {
                 <Grid item>
                   <Box mb={1}>
                     <Button
+                      className={classes.loginButton}
                       fullWidth
                       variant="text"
                       size="small"

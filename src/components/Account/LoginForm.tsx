@@ -3,6 +3,11 @@ import React, {
   useState,
 } from 'react';
 import {
+  createStyles,
+  makeStyles,
+  Theme
+} from '@material-ui/core/styles';
+import {
   Typography,
   TextField,
   Button,
@@ -15,7 +20,18 @@ import { useHistory } from 'react-router-dom';
 import { useNotifications } from '../Misc/Notifications';
 import { routes } from '../../routes';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    forgotPasswordButton: {
+      '&&:hover': {
+        backgroundColor: 'transparent',
+      },
+    },
+  }),
+);
+
 const LoginForm: React.FC = () => {
+  const classes = useStyles();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,7 +99,7 @@ const LoginForm: React.FC = () => {
                   />
                 </Grid>
                 <Grid item>
-                  <Box mt={2}>
+                  <Box mt={3}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -96,9 +112,17 @@ const LoginForm: React.FC = () => {
                   </Box>
                 </Grid>
                 <Grid item>
-                  <Button fullWidth variant="text" size="small" onClick={() => { history.push(routes.forgotPasswordPage) }}>
-                    Forgot Password?
-                  </Button>
+                  <Box mb={1}>
+                    <Button
+                      className={classes.forgotPasswordButton}
+                      fullWidth
+                      variant="text"
+                      size="small"
+                      onClick={() => { history.push(routes.forgotPasswordPage) }}
+                    >
+                      Forgot Password?
+                    </Button>
+                  </Box>
                 </Grid>
               </Grid>
             </Paper>
