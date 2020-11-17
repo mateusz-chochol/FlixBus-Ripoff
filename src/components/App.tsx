@@ -1,11 +1,7 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
 } from 'react-router-dom';
 import MainPage from './MainPage/MainPage';
 import SignupPage from './Account/SignupPage';
@@ -21,6 +17,7 @@ import {
   removeNotificationActionCreator,
   selectNotifications
 } from '../redux/NotificationsSlice';
+import DefaultRoute from './Misc/DefaultRoute';
 import PrivateRoute from './Misc/PrivateRoute';
 import ForgotPasswordPage from './Account/ForgotPasswordPage';
 import { routes } from '../routes';
@@ -53,7 +50,7 @@ const App = () => {
       <MenuAppBar />
       <Paper style={styles.paperContainer} square>
         <Switch>
-          <Route exact path={routes.mainPage} component={MainPage} />
+          <DefaultRoute exact path={routes.mainPage} component={MainPage} />
           <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
           <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
           <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
