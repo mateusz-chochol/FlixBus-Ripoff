@@ -146,7 +146,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 <Drawer items={menuItems} open={openDrawerMenu} setOpen={setOpenDrawerMenu} />
               </Grid>
             }
-            <Grid item xs={8} md={2}>
+            <Grid item xs={5} md={2}>
               <Typography align='left'>
                 <Button
                   size="large"
@@ -164,7 +164,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
               </Typography>
             </Grid>
             {!isSmallScreen &&
-              <Grid item md={6}>
+              <Grid item md={6} >
                 <Tabs
                   value={tabIndex}
                   indicatorColor="secondary"
@@ -176,7 +176,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Tabs>
               </Grid>
             }
-            <Grid item xs={3} md={2}>
+            <Grid item xs={6} sm={5} md={2} >
               <AccountOptions />
             </Grid>
           </Grid>
