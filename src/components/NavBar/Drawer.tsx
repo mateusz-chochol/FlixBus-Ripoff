@@ -9,16 +9,8 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Divider,
   SwipeableDrawer,
 } from '@material-ui/core';
-import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
-import StreetviewRoundedIcon from '@material-ui/icons/StreetviewRounded';
-import DevicesRoundedIcon from '@material-ui/icons/DevicesRounded';
-import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
-import HelpRoundedIcon from '@material-ui/icons/HelpRounded';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import FeedbackIcon from '@material-ui/icons/Feedback';
 import AppBarMenuItem from '../../types/AppBarMenuItem';
 
 const useStyles = makeStyles((theme: Theme) =>
