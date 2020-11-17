@@ -10,6 +10,7 @@ import {
   Menu,
   Button,
   ButtonGroup,
+  Box,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -55,34 +56,36 @@ const AccountOptions: React.FC = () => {
 
   return (
     currentUser ? <>
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={(event: React.MouseEvent<HTMLElement>) => { setMenuAnchorEl(event.currentTarget) }}
-        color="inherit"
-      >
-        <AccountCircle fontSize="large" />
-      </IconButton>
-      <Menu
-        id="menu-appbar"
-        anchorEl={menuAnchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={open}
-        onClose={() => { setMenuAnchorEl(null) }}
-      >
-        <MenuItem onClick={() => { setMenuAnchorEl(null) }}>Profile</MenuItem>
-        <MenuItem onClick={() => { setMenuAnchorEl(null) }}>Trips</MenuItem>
-        <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-      </Menu>
+      <Box display='flex' justifyContent='flex-end'>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={(event: React.MouseEvent<HTMLElement>) => { setMenuAnchorEl(event.currentTarget) }}
+          color="inherit"
+        >
+          <AccountCircle fontSize="large" />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={menuAnchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={open}
+          onClose={() => { setMenuAnchorEl(null) }}
+        >
+          <MenuItem onClick={() => { setMenuAnchorEl(null) }}>Profile</MenuItem>
+          <MenuItem onClick={() => { setMenuAnchorEl(null) }}>Trips</MenuItem>
+          <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+        </Menu>
+      </Box>
     </> : <>
         <ButtonGroup
           variant="contained"
