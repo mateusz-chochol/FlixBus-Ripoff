@@ -1,7 +1,6 @@
 import React, {
   useRef,
   useState,
-  useEffect,
 } from 'react';
 import {
   Typography,
@@ -13,43 +12,31 @@ import {
 } from '@material-ui/core';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
+import { useNotifications } from '../Misc/Notifications';
 import { routes } from '../../routes';
 
 const SignupForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { signup } = useAuth();
+  const { showError } = useNotifications();
   const history = useHistory();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  useEffect(() => {
-    if (error) {
-      const snackbarKey = enqueueSnackbar(error, {
-        variant: 'error',
-        onClick: () => { closeSnackbar(snackbarKey) },
-        persist: true
-      });
-      setError('');
-    }
-  }, [error, enqueueSnackbar, closeSnackbar]);
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
     e?.preventDefault();
 
     if (!(emailRef.current?.value && passwordRef.current?.value && passwordConfirmRef.current?.value)) {
-      return setError('All text fields must be filled out');
+      return showError('All text fields must be filled out');
     }
 
     if (!emailRef.current.value.includes('@')) {
-      return setError('Email must contain \'@\' sign');
+      return showError('Email must contain \'@\' sign');
     }
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError('Passwords do not match');
+      return showError('Passwords do not match');
     }
 
     try {
@@ -58,7 +45,7 @@ const SignupForm: React.FC = () => {
       history.push(routes.mainPage);
     }
     catch {
-      setError('Failed to create an account');
+      showError('Failed to create an account');
       setLoading(false);
     }
   }
