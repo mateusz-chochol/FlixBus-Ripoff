@@ -1,15 +1,9 @@
 import React, { useEffect } from 'react'
-import {
-  Route,
-  Redirect,
-  RouteProps
-} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNotifications } from '../Misc/Notifications';
-
-interface PrivateRouteProps extends RouteProps {
-  shouldBeLogged: boolean
-};
+import PrivateRouteProps from '../../types/PrivateRouteProps';
+import DefaultRoute from './DefaultRoute';
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, shouldBeLogged, ...rest }) => {
   const { currentUser } = useAuth();
@@ -26,7 +20,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, shoul
   }, [])
 
   return Component ? (
-    <Route {...rest} render={props =>
+    <DefaultRoute {...rest} render={props =>
       display ? <Component {...props} /> : <Redirect to="/" />
     } />
   ) : null;

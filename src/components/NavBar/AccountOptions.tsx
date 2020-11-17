@@ -11,11 +11,27 @@ import {
   Button,
   ButtonGroup,
 } from '@material-ui/core';
+import {
+  createStyles,
+  makeStyles,
+  Theme
+} from '@material-ui/core/styles';
 import { AccountCircle } from '@material-ui/icons';
 import { useNotifications } from '../Misc/Notifications';
 import { routes } from '../../routes';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      '&&:hover': {
+        backgroundColor: 'transparent',
+      },
+    },
+  }),
+);
+
 const AccountOptions: React.FC = () => {
+  const classes = useStyles();
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const { currentUser, logout } = useAuth();
   const { showError, showSuccess } = useNotifications();
@@ -69,16 +85,18 @@ const AccountOptions: React.FC = () => {
       </Menu>
     </> : <>
         <ButtonGroup
-          aria-label="button group"
           variant="contained"
           color="primary"
           size="large"
           disableElevation
+          fullWidth
+          disableRipple
+          disableFocusRipple
         >
-          <Button onClick={() => { history.push(routes.loginPage) }}>
+          <Button className={classes.button} onClick={() => { history.push(routes.loginPage) }}>
             Log In
           </Button>
-          <Button onClick={() => { history.push(routes.singupPage) }}>
+          <Button className={classes.button} onClick={() => { history.push(routes.singupPage) }}>
             Sign Up
           </Button>
         </ButtonGroup>

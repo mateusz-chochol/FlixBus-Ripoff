@@ -1,9 +1,11 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import NotificationsReducer from './NotificationsSlice';
+import TabsReducer from './TabsSlice';
 
 const store = configureStore({
   reducer: combineReducers({
-    notifications: NotificationsReducer
+    notifications: NotificationsReducer,
+    tab: TabsReducer,
   })
 })
 
