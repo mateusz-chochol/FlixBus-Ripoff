@@ -164,7 +164,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
               </Typography>
             </Grid>
             {!isSmallScreen &&
-              <Grid item md={6} >
+              <Grid item md={6} xl={8} >
                 <Tabs
                   value={tabIndex}
                   indicatorColor="secondary"
