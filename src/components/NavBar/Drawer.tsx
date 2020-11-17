@@ -57,6 +57,7 @@ const Drawer: React.FC<{
         orientation="vertical"
         value={tabIndex}
         indicatorColor="secondary"
+        textColor="secondary"
         variant="fullWidth"
         scrollButtons="on"
         onChange={(event: React.ChangeEvent<{}>, tabIndex: number) => dispatch(setTab(tabIndex))}

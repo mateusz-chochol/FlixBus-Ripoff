@@ -128,7 +128,7 @@ const LoginForm: React.FC = () => {
             </Paper>
           </Grid>
           <Grid item container direction="column" justify="center">
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" color='textSecondary'>
               Need an account?
             </Typography>
             <Button color="primary" onClick={() => { history.push(routes.singupPage) }}>
