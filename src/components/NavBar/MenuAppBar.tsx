@@ -28,6 +28,7 @@ import {
   Tabs,
   Tab,
   Grid,
+  Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from './Drawer';
@@ -131,7 +132,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
       <AppBar position="fixed">
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
-            {isSmallScreen &&
+            <Hidden mdUp>
               <Grid item xs={1}>
                 <IconButton
                   edge="start"
@@ -145,7 +146,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </IconButton>
                 <Drawer items={menuItems} open={openDrawerMenu} setOpen={setOpenDrawerMenu} />
               </Grid>
-            }
+            </Hidden>
             <Grid item xs={6} md={2}>
               <Typography align='left'>
                 <Button
@@ -163,7 +164,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Button>
               </Typography>
             </Grid>
-            {!isSmallScreen &&
+            <Hidden smDown>
               <Grid item md={6} xl={8} >
                 <Tabs
                   value={tabIndex}
@@ -175,7 +176,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                   {menuItems.map(item => <Tab key={item.key} label={item.text} icon={item.icon} />)}
                 </Tabs>
               </Grid>
-            }
+            </Hidden>
             <Grid item xs={4} md={2} >
               <AccountOptions />
             </Grid>
