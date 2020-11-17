@@ -10,4 +10,4 @@ As of now the things that work are:
 - notifications
 - routing (to the pages that already exist, which is: main page, login, signup, password reset)
 - private routing (i.e. you cannot go to the login page if you are already logged in)
-- and transitioning to mobile view on smaller screens
+- transitioning to mobile view on smaller screens (drawer instead of tabs)
