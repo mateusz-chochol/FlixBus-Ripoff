@@ -71,12 +71,11 @@ const Drawer: React.FC<{
                   <Box display='flex'>{item.icon}</Box>
                 </Grid>
                 <Grid item xs={9}>
-                  <Box display='flex' className={classes.tabBox}>
-                    {item.text}
-                  </Box>
+                  <Box display='flex' className={classes.tabBox}>{item.text}</Box>
                 </Grid>
               </Grid>
             }
+            onClick={() => { setOpen(false) }}
           />
         )}
       </Tabs>
