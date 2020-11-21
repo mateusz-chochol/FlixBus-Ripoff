@@ -3,7 +3,6 @@ import {
   Box,
   Paper,
   TextField,
-  InputAdornment,
   IconButton,
   Grid,
   Radio,
@@ -25,7 +24,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const [tripType, setTripType] = useState<string>('one way');
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date('2014-08-18T21:11:54'),
+    new Date('2020-11-20T21:11:54'),
   );
 
   const handleDateChange = (date: Date | null) => {
@@ -43,10 +42,26 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
       >
         <Box width={3 / 5} minWidth={300}>
           <Paper elevation={4}>
-            <Grid container direction='column' spacing={3} alignItems='center'>
-              <Grid item container justify={isSmallScreen ? 'center' : 'flex-start'} direction={isSmallScreen ? 'column' : 'row'}>
+            <Grid
+              container
+              direction='column'
+              spacing={3}
+              alignItems='center'
+            >
+              <Grid
+                item
+                container
+                justify='center'
+                direction={isSmallScreen ? 'column' : 'row'}
+              >
+                <Grid item md={1} />
                 <Grid item md={2}>
-                  <Box display='flex' justifyContent='center' alignItems='center' mt={1}>
+                  <Box
+                    display='flex'
+                    justifyContent={isSmallScreen ? 'center' : 'flex-start'}
+                    alignItems='center'
+                    mt={1}
+                  >
                     <Radio
                       checked={tripType === 'one way'}
                       onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
@@ -57,7 +72,12 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   </Box>
                 </Grid>
                 <Grid item md={2}>
-                  <Box display='flex' justifyContent='center' alignItems='center' mt={1}>
+                  <Box
+                    display='flex'
+                    justifyContent={isSmallScreen ? 'center' : 'flex-start'}
+                    alignItems='center'
+                    mt={1}
+                  >
                     <Radio
                       checked={tripType === 'round trip'}
                       onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
@@ -67,13 +87,19 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                     <Typography>Round Trip</Typography>
                   </Box>
                 </Grid>
-                <Hidden smDown>
-                  <Grid item md={6} />
+                <Grid item xs={7} />
+                <Hidden xsUp>
+                  <Grid item md={5} />
                   <Grid item md={2}>
-                    <Box display='flex' justifyContent='center' alignItems='center' mt={1}>
+                    <Box
+                      display='flex'
+                      justifyContent='center'
+                      alignItems='center'
+                      mt={1}
+                    >
                       <Button
                         variant="text"
-                        color="primary"
+                        color="secondary"
                         size="large"
                         endIcon={<SearchIcon />}
                         fullWidth
@@ -87,7 +113,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
               <Grid
                 item
                 container
-                alignItems='flex-end'
+                alignItems='center'
                 justify='center'
                 spacing={3}
               >
@@ -95,9 +121,9 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   item
                   container
                   alignItems={isSmallScreen ? 'center' : 'flex-end'}
-                  justify={isSmallScreen ? 'center' : 'flex-end'}
+                  justify='center'
                   spacing={isSmallScreen ? 3 : 1}
-                  md={6}
+                  md={5}
                   direction={isSmallScreen ? 'column' : 'row'}
                 >
                   <Hidden mdUp>
@@ -151,7 +177,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   alignItems='center'
                   justify='center'
                   spacing={3}
-                  md={6}
+                  md={7}
                   direction={isSmallScreen ? 'column' : 'row'}
                 >
                   <Grid item xs={12} md={5}>
@@ -161,6 +187,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         label="Departure"
                         value={selectedDate}
                         onChange={handleDateChange}
+                        color='secondary'
                       />
                     </Box>
                   </Grid>
@@ -171,25 +198,19 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         label="Arrival"
                         value={selectedDate}
                         onChange={handleDateChange}
+                        color='secondary'
                       />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    <Box display='flex' alignItems='flex-end' justifyItems='flex-end'>
+                      <IconButton color="secondary" edge='end'>
+                        <SearchIcon fontSize='large' />
+                      </IconButton>
                     </Box>
                   </Grid>
                 </Grid>
               </Grid>
-              <Hidden mdUp>
-                <Grid item xs={12} md={2}>
-                  <Box display='flex' justifyContent='center' alignItems='center'>
-                    <Button
-                      variant="text"
-                      color="primary"
-                      size="large"
-                      endIcon={<SearchIcon />}
-                    >
-                      Search
-                        </Button>
-                  </Box>
-                </Grid>
-              </Hidden>
               <Grid item />
             </Grid>
           </Paper>
