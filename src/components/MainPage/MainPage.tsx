@@ -25,7 +25,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const [tripType, setTripType] = useState<string>('one way');
   const [departure, setDeparture] = useState<string>('');
   const [destination, setDestination] = useState<string>('');
-  const [numberOfPassengers, setNumberOfPassengers] = useState<number>(1);
+  const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2020-11-20T21:11:54'));
 
   const handleSwitchClick = () => {
@@ -35,8 +35,24 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const numberOfPassengers = Number(event.target.value);
-    setNumberOfPassengers(numberOfPassengers > 1 ? numberOfPassengers : 1);
+    const max = 10;
+
+    if (event.target.value) {
+      const numberOfPassengers = Number(event.target.value);
+
+      if (numberOfPassengers > max) {
+        setNumberOfPassengers(max);
+      }
+      else if (numberOfPassengers < 0) {
+        setNumberOfPassengers(0);
+      }
+      else {
+        setNumberOfPassengers(numberOfPassengers);
+      }
+    }
+    else {
+      setNumberOfPassengers(undefined);
+    }
   }
 
   return (
@@ -222,7 +238,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         value={numberOfPassengers}
                         onChange={handlePassengersNumberChange}
                         color='secondary'
-                        inputProps={{ style: { textAlign: 'revert' }, dir: "rtl" }}
+                        inputProps={{ dir: "rtl" }}
                         InputLabelProps={{
                           shrink: true,
                         }}
