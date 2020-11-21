@@ -40,7 +40,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
         minHeight="100vh"
         minWidth="100vw"
       >
-        <Box width={3 / 5} minWidth={300}>
+        <Box width={isSmallScreen ? 2 / 5 : 3 / 5} minWidth={300}>
           <Paper elevation={4}>
             <Grid
               container
