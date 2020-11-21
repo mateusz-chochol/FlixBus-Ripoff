@@ -7,6 +7,7 @@ import MainPage from './MainPage/MainPage';
 import SignupPage from './Account/SignupPage';
 import LoginPage from './Account/LoginPage';
 import MenuAppBar from './NavBar/MenuAppBar';
+import RouteMapPage from './RouteMapPage/RouteMapPage';
 import { Paper } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import {
@@ -51,6 +52,7 @@ const App = () => {
       <Paper style={styles.paperContainer} square>
         <Switch>
           <DefaultRoute exact path={routes.mainPage} component={MainPage} />
+          <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
           <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
           <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
           <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />

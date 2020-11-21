@@ -63,7 +63,7 @@ const menuItems: AppBarMenuItem[] = [
     key: 'Route Map',
     text: 'Route Map',
     icon: <ExploreRoundedIcon />,
-    route: routes.mainPage,
+    route: routes.routeMapPage,
   },
   {
     index: 1,
@@ -173,7 +173,14 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                   scrollButtons="on"
                   onChange={(event: React.ChangeEvent<{}>, tabIndex: number) => dispatch(setTab(tabIndex))}
                 >
-                  {menuItems.map(item => <Tab key={item.key} label={item.text} icon={item.icon} />)}
+                  {menuItems.map(item =>
+                    <Tab
+                      key={item.key}
+                      label={item.text}
+                      icon={item.icon}
+                      onClick={() => { history.push(item.route) }}
+                    />
+                  )}
                 </Tabs>
               </Grid>
             </Hidden>

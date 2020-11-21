@@ -8,6 +8,7 @@ import {
   useSelector,
   useDispatch
 } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   getTab,
   setTab,
@@ -42,6 +43,12 @@ const Drawer: React.FC<{
   const iOS = Boolean(process.env.browser && /iPad|iPhone|iPod/.test(navigator.userAgent));
   const tabIndex = useSelector(getTab)
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleTabChange = (item: AppBarMenuItem) => {
+    setOpen(false);
+    history.push(item.route);
+  }
 
   return (
     <SwipeableDrawer
@@ -75,7 +82,7 @@ const Drawer: React.FC<{
                 </Grid>
               </Grid>
             }
-            onClick={() => { setOpen(false) }}
+            onClick={() => { handleTabChange(item) }}
           />
         )}
       </Tabs>
