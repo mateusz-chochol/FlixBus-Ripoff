@@ -6,11 +6,11 @@ import {
   IconButton,
   Grid,
   Radio,
-  Typography,
   Button,
   Hidden,
   withWidth,
   WithWidth,
+  FormControlLabel
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LoopIcon from '@material-ui/icons/Loop';
@@ -57,13 +57,15 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                     alignItems='center'
                     mt={1}
                   >
-                    <Radio
-                      checked={tripType === 'one way'}
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
+                    <FormControlLabel
                       value='one way'
+                      control={<Radio
+                        checked={tripType === 'one way'}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
+                      />}
                       name="one-way-radio"
+                      label='One way'
                     />
-                    <Typography>One way</Typography>
                   </Box>
                 </Grid>
                 <Grid item md={2}>
@@ -73,13 +75,15 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                     alignItems='center'
                     mt={1}
                   >
-                    <Radio
-                      checked={tripType === 'round trip'}
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
+                    <FormControlLabel
                       value='round trip'
+                      control={<Radio
+                        checked={tripType === 'round trip'}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
+                      />}
+                      label='Round trip'
                       name="round-trip-radio"
                     />
-                    <Typography>Round Trip</Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={7} />
