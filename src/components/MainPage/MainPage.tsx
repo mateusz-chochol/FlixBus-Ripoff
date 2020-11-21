@@ -23,13 +23,15 @@ import {
 const MainPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const [tripType, setTripType] = useState<string>('one way');
+  const [numberOfPassengers, setNumberOfPassengers] = useState<number>(1);
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(
     new Date('2020-11-20T21:11:54'),
   );
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-  };
+  const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const numberOfPassengers = Number(event.target.value);
+    setNumberOfPassengers(numberOfPassengers > 0 ? numberOfPassengers : 0);
+  }
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -179,25 +181,41 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   md={7}
                   direction={isSmallScreen ? 'column' : 'row'}
                 >
-                  <Grid item xs={12} md={5}>
+                  <Grid item xs={12} md={4}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <DateTimePicker
                         variant="inline"
                         label="Departure"
                         value={selectedDate}
-                        onChange={handleDateChange}
+                        onChange={(date: Date | null) => { setSelectedDate(date) }}
                         color='secondary'
                       />
                     </Box>
                   </Grid>
-                  <Grid item xs={12} md={5}>
+                  <Grid item xs={12} md={4}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <DateTimePicker
                         variant="inline"
                         label="Arrival"
                         value={selectedDate}
-                        onChange={handleDateChange}
+                        onChange={(date: Date | null) => { setSelectedDate(date) }}
                         color='secondary'
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    <Box display='flex' justifyContent='center' alignItems='center'>
+                      <TextField
+                        id="passengers-number"
+                        label="Passengers"
+                        type="number"
+                        value={numberOfPassengers}
+                        onChange={handlePassengersNumberChange}
+                        color='secondary'
+                        inputProps={{ style: { textAlign: 'revert' }, dir: "rtl" }}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
                       />
                     </Box>
                   </Grid>
