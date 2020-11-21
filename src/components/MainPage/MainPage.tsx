@@ -48,12 +48,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
               spacing={3}
               alignItems='center'
             >
-              <Grid
-                item
-                container
-                justify='center'
-                direction={isSmallScreen ? 'column' : 'row'}
-              >
+              <Grid item container justify='center'>
                 <Grid item md={1} />
                 <Grid item md={2}>
                   <Box
@@ -126,15 +121,6 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   md={5}
                   direction={isSmallScreen ? 'column' : 'row'}
                 >
-                  <Hidden mdUp>
-                    <Grid item xs={12}>
-                      <Box display='flex' justifyContent='center' alignItems='flex-end'>
-                        <IconButton>
-                          <LoopIcon />
-                        </IconButton>
-                      </Box>
-                    </Grid>
-                  </Hidden>
                   <Grid item xs={12} md={5}>
                     <Box display='flex' justifyContent='flex-end' alignItems='center'>
                       <TextField
@@ -170,6 +156,15 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       />
                     </Box>
                   </Grid>
+                  <Hidden mdUp>
+                    <Grid item xs={12}>
+                      <Box display='flex' justifyContent='center' alignItems='flex-end'>
+                        <IconButton>
+                          <LoopIcon />
+                        </IconButton>
+                      </Box>
+                    </Grid>
+                  </Hidden>
                 </Grid>
                 <Grid
                   item
