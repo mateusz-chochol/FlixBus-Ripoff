@@ -23,14 +23,20 @@ import {
 const MainPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const [tripType, setTripType] = useState<string>('one way');
+  const [departure, setDeparture] = useState<string>('');
+  const [destination, setDestination] = useState<string>('');
   const [numberOfPassengers, setNumberOfPassengers] = useState<number>(1);
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date('2020-11-20T21:11:54'),
-  );
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2020-11-20T21:11:54'));
+
+  const handleSwitchClick = () => {
+    const tempDeparture = departure;
+    setDeparture(destination);
+    setDestination(tempDeparture);
+  }
 
   const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const numberOfPassengers = Number(event.target.value);
-    setNumberOfPassengers(numberOfPassengers > 0 ? numberOfPassengers : 0);
+    setNumberOfPassengers(numberOfPassengers > 1 ? numberOfPassengers : 1);
   }
 
   return (
@@ -134,6 +140,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         label="From"
                         placeholder="Where do you start?"
                         color="secondary"
+                        value={departure}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDeparture(event.target.value) }}
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -143,7 +151,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   <Hidden smDown>
                     <Grid item md={1}>
                       <Box display='flex' justifyContent='center' alignItems='flex-end'>
-                        <IconButton size='small'>
+                        <IconButton size='small' onClick={handleSwitchClick}>
                           <LoopIcon />
                         </IconButton>
                       </Box>
@@ -156,6 +164,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         label="To"
                         placeholder="Where are you going?"
                         color="secondary"
+                        value={destination}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDestination(event.target.value) }}
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -165,7 +175,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   <Hidden mdUp>
                     <Grid item xs={12}>
                       <Box display='flex' justifyContent='center' alignItems='flex-end'>
-                        <IconButton>
+                        <IconButton onClick={handleSwitchClick}>
                           <LoopIcon />
                         </IconButton>
                       </Box>
