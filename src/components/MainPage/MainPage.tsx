@@ -6,7 +6,6 @@ import {
   IconButton,
   Grid,
   Radio,
-  Button,
   Hidden,
   withWidth,
   WithWidth,
