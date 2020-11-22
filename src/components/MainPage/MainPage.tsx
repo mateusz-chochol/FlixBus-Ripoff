@@ -63,7 +63,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
         minHeight="100vh"
         minWidth="100vw"
       >
-        <Box width={isSmallScreen ? 2 / 5 : 3 / 5} minWidth={300}>
+        <Box width={isSmallScreen ? 2 / 5 : undefined} minWidth={300}>
           <Paper elevation={4}>
             <Grid
               container
@@ -121,10 +121,10 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid
                   item
                   container
-                  alignItems={isSmallScreen ? 'center' : 'flex-end'}
+                  alignItems={'center'}
                   justify='center'
                   spacing={isSmallScreen ? 3 : 1}
-                  md={5}
+                  md={tripType === 'one way' ? 6 : 5}
                   direction={isSmallScreen ? 'column' : 'row'}
                 >
                   <Grid item xs={12} md={5}>
@@ -139,12 +139,13 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         InputLabelProps={{
                           shrink: true,
                         }}
+                        variant="outlined"
                       />
                     </Box>
                   </Grid>
                   <Hidden smDown>
                     <Grid item md={1}>
-                      <Box display='flex' justifyContent='center' alignItems='flex-end'>
+                      <Box display='flex' justifyContent='center' alignItems='center'>
                         <IconButton size='small' onClick={handleSwitchClick}>
                           <LoopIcon />
                         </IconButton>
@@ -163,6 +164,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         InputLabelProps={{
                           shrink: true,
                         }}
+                        variant="outlined"
                       />
                     </Box>
                   </Grid>
@@ -180,12 +182,12 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   item
                   container
                   alignItems='center'
-                  justify='center'
+                  justify='space-around'
                   spacing={3}
-                  md={7}
+                  md={tripType === 'one way' ? 6 : 7}
                   direction={isSmallScreen ? 'column' : 'row'}
                 >
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={tripType === 'one way' ? 7 : 4}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <DateTimePicker
                         variant="inline"
@@ -193,20 +195,24 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         value={selectedDate}
                         onChange={(date: Date | null) => { setSelectedDate(date) }}
                         color='secondary'
+                        inputVariant="outlined"
                       />
                     </Box>
                   </Grid>
-                  <Grid item xs={12} md={4}>
-                    <Box display='flex' justifyContent='center' alignItems='center'>
-                      <DateTimePicker
-                        variant="inline"
-                        label="Arrival"
-                        value={selectedDate}
-                        onChange={(date: Date | null) => { setSelectedDate(date) }}
-                        color='secondary'
-                      />
-                    </Box>
-                  </Grid>
+                  {tripType === 'round trip' &&
+                    <Grid item xs={12} md={4}>
+                      <Box display='flex' justifyContent='center' alignItems='center'>
+                        <DateTimePicker
+                          variant="inline"
+                          label="Return"
+                          value={selectedDate}
+                          onChange={(date: Date | null) => { setSelectedDate(date) }}
+                          color='secondary'
+                          inputVariant="outlined"
+                        />
+                      </Box>
+                    </Grid>
+                  }
                   <Grid item xs={12} md={2}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <TextField
@@ -220,6 +226,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         InputLabelProps={{
                           shrink: true,
                         }}
+                        variant="outlined"
                       />
                     </Box>
                   </Grid>
