@@ -230,9 +230,9 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       />
                     </Box>
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <Box display='flex' alignItems='flex-end' justifyItems='flex-end'>
-                      <IconButton color="secondary" edge='end'>
+                  <Grid item xs={12} md={tripType === 'one way' ? 3 : 2}>
+                    <Box display='flex' alignItems='flex-end' justifyContent={tripType === 'one way' ? 'flex-end' : 'inherit'}>
+                      <IconButton color="secondary">
                         <SearchIcon fontSize='large' />
                       </IconButton>
                     </Box>
