@@ -111,27 +111,6 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   </Box>
                 </Grid>
                 <Grid item xs={7} />
-                <Hidden xsUp>
-                  <Grid item md={5} />
-                  <Grid item md={2}>
-                    <Box
-                      display='flex'
-                      justifyContent='center'
-                      alignItems='center'
-                      mt={1}
-                    >
-                      <Button
-                        variant="text"
-                        color="secondary"
-                        size="large"
-                        endIcon={<SearchIcon />}
-                        fullWidth
-                      >
-                        Search
-                      </Button>
-                    </Box>
-                  </Grid>
-                </Hidden>
               </Grid>
               <Grid
                 item
