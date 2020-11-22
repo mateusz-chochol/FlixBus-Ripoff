@@ -213,7 +213,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       </Box>
                     </Grid>
                   }
-                  <Grid item xs={12} md={2}>
+                  <Grid item xs={12} md={tripType === 'one way' ? 3 : 2}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <TextField
                         id="passengers-number"
@@ -230,8 +230,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       />
                     </Box>
                   </Grid>
-                  <Grid item xs={12} md={tripType === 'one way' ? 3 : 2}>
-                    <Box display='flex' alignItems='flex-end' justifyContent={tripType === 'one way' ? 'flex-end' : 'inherit'}>
+                  <Grid item xs={12} md={2}>
+                    <Box display='flex' alignItems='flex-end' justifyContent='center'>
                       <IconButton color="secondary">
                         <SearchIcon fontSize='large' />
                       </IconButton>
