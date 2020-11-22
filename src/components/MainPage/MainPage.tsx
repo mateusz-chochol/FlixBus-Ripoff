@@ -222,10 +222,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         value={numberOfPassengers}
                         onChange={handlePassengersNumberChange}
                         color='secondary'
-                        inputProps={{ dir: "rtl" }}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
+                        inputProps={{ dir: "rtl", }}
+                        InputLabelProps={{ shrink: true, }}
                         variant="outlined"
                       />
                     </Box>
