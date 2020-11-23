@@ -129,7 +129,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
   return (
     <>
       <CssBaseline />
-      <AppBar position="fixed">
+      <AppBar>
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
             <Hidden mdUp>

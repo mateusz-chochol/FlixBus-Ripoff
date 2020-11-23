@@ -60,8 +60,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
-        minWidth="100vw"
+        height="100vh"
+        width="100vw"
       >
         <Box width={isSmallScreen ? 2 / 5 : undefined} minWidth={300}>
           <Paper elevation={4}>

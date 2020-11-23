@@ -10,10 +10,10 @@ const RouteMapPage: React.FC = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      minHeight="100vh"
-      minWidth="100vw"
+      height="100vh"
+      width="100vw"
     >
-      <Typography variant='h1'>Route map</Typography>
+      <Typography variant='h1' align='center'>Route map</Typography>
     </Box>
   )
 }

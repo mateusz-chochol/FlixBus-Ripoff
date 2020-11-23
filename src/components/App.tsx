@@ -22,6 +22,7 @@ import DefaultRoute from './Misc/DefaultRoute';
 import PrivateRoute from './Misc/PrivateRoute';
 import ForgotPasswordPage from './Account/ForgotPasswordPage';
 import { routes } from '../routes';
+import { Box } from '@material-ui/core';
 
 const styles = {
   paperContainer: {
@@ -48,15 +49,24 @@ const App = () => {
 
   return (
     <Router>
-      <MenuAppBar />
       <Paper style={styles.paperContainer} square>
-        <Switch>
-          <DefaultRoute exact path={routes.mainPage} component={MainPage} />
-          <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
-          <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
-          <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
-          <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
-        </Switch>
+        <Box
+          display="flex"
+          flexDirection='column'
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          height="100vh"
+          width="100vw"
+        >
+          <MenuAppBar />
+          <Switch>
+            <DefaultRoute exact path={routes.mainPage} component={MainPage} />
+            <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
+            <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
+            <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
+            <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
+          </Switch>
+        </Box>
       </Paper>
     </Router>
   );
