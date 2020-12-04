@@ -1,7 +1,8 @@
 import React, {
   useRef,
   useCallback,
-  useState
+  useState,
+  useEffect,
 } from 'react';
 import {
   Box,
@@ -12,6 +13,10 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  TextField,
+  Grid,
+  Divider,
+  IconButton
 } from '@material-ui/core';
 import {
   GoogleMap,
@@ -20,6 +25,8 @@ import {
 } from "@react-google-maps/api";
 import mapStyles from "./mapStyles";
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import LoopIcon from '@material-ui/icons/Loop';
+import SearchIcon from '@material-ui/icons/Search';
 
 const drawerWidth = 240;
 
@@ -74,20 +81,40 @@ const tempMarkers = new Array<TempMarker>(
       lat: 52.5065133,
       lng: 13.1445545
     }
-  }
+  },
+  {
+    key: 'Białystok',
+    position: {
+      lat: 53.1275431,
+      lng: 23.0159837
+    }
+  },
 )
 
 const RouteMapPage: React.FC = () => {
   const classes = useStyles();
   const mapRef = useRef<any>();
+  const [departureText, setDepartureText] = useState<string>('');
+  const [destinationText, setDestinationText] = useState<string>('');
   const [departure, setDeparture] = useState<TempMarker>();
   const [destination, setDestination] = useState<TempMarker>();
+
+  useEffect(() => {
+    setDepartureText(departure ? departure.key : '')
+  }, [departure]);
+
+  useEffect(() => {
+    setDestinationText(destination ? destination.key : '')
+  }, [destination]);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
+
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
+
   const handleSelectMarker = (marker: TempMarker) => {
     mapRef.current.panTo(marker.position);
 
@@ -106,6 +133,12 @@ const RouteMapPage: React.FC = () => {
     if (!departure && destination) {
       return setDeparture(marker);
     }
+  }
+
+  const handleSwitchClick = () => {
+    const tempDeparture = departure;
+    setDeparture(destination);
+    setDestination(tempDeparture);
   }
 
   if (loadError) return <>Error</>;
@@ -129,28 +162,70 @@ const RouteMapPage: React.FC = () => {
           open
         >
           <Toolbar />
+          <Grid container direction='column' spacing={2}>
+            <Grid item />
+            <Grid item />
+            <Grid item />
+            <Grid item>
+              <Box display='flex' justifyContent='center' alignItems='center'>
+                <TextField
+                  id="departure-search-bar"
+                  label="From"
+                  placeholder="Where do you start?"
+                  color="secondary"
+                  value={departureText}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDepartureText(event.target.value) }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                />
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box display='flex' justifyContent='center' alignItems='center'>
+                <TextField
+                  id="destination-search-bar"
+                  label="To"
+                  placeholder="Where are you going?"
+                  color="secondary"
+                  value={destinationText}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDestinationText(event.target.value) }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                />
+              </Box>
+            </Grid>
+            <Grid item container spacing={1}>
+              <Grid item xs={6}>
+                <Box display='flex' justifyContent='flex-end' alignItems='center'>
+                  <IconButton onClick={handleSwitchClick}>
+                    <LoopIcon fontSize='large' />
+                  </IconButton>
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <Box display='flex' justifyContent='flex-start' alignItems='center'>
+                  <IconButton color="secondary">
+                    <SearchIcon fontSize='large' />
+                  </IconButton>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Divider />
+            </Grid>
+          </Grid>
           <List>
             <ListItem />
             <ListItem />
             <ListItem>
               <ListItemText>
-                <Typography variant="h2">Menu place -holder</Typography>
+                <Typography variant="h2">List of trips</Typography>
               </ListItemText>
             </ListItem>
-            {departure && (
-              <ListItem>
-                <ListItemText>
-                  <Typography variant="h2">{departure.key}</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
-            {destination && (
-              <ListItem>
-                <ListItemText>
-                  <Typography variant="h2">{destination.key}</Typography>
-                </ListItemText>
-              </ListItem>
-            )}
           </List>
         </Drawer>
       </Hidden>
