@@ -167,7 +167,7 @@ const RouteMapPage: React.FC = () => {
           <Marker
             key={marker.key}
             position={marker.position}
-            onClick={() => { handleSelectMarker(marker) }}
+          // onClick={() => { handleSelectMarker(marker) }}
           />
         ))}
       </GoogleMap>
