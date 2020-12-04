@@ -100,10 +100,10 @@ const RouteMapPage: React.FC = () => {
     if (!departure && !destination) {
       return setDeparture(marker);
     }
-    if (departure) {
+    if (departure && !destination) {
       return setDestination(marker);
     }
-    if (destination) {
+    if (!departure && destination) {
       return setDeparture(marker);
     }
   }
@@ -140,27 +140,19 @@ const RouteMapPage: React.FC = () => {
             {departure && (
               <ListItem>
                 <ListItemText>
-                  <Typography>Departure: {departure}</Typography>
+                  <Typography variant="h2">{departure.key}</Typography>
                 </ListItemText>
               </ListItem>
             )}
             {destination && (
               <ListItem>
                 <ListItemText>
-                  <Typography>Destination: {destination}</Typography>
+                  <Typography variant="h2">{destination.key}</Typography>
                 </ListItemText>
               </ListItem>
             )}
           </List>
         </Drawer>
-      </Hidden>
-      <Hidden mdUp>
-        {departure && (
-          <Typography>Departure: {departure}</Typography>
-        )}
-        {destination && (
-          <Typography>Destination: {destination}</Typography>
-        )}
       </Hidden>
       <GoogleMap
         id="map"
@@ -169,12 +161,13 @@ const RouteMapPage: React.FC = () => {
         center={center}
         options={options}
         onLoad={onMapLoad}
+        onClick={() => { }}
       >
         {tempMarkers.map((marker) => (
           <Marker
             key={marker.key}
             position={marker.position}
-          // onClick={() => { handleSelectMarker(marker) }}
+            onClick={() => handleSelectMarker(marker)}
           />
         ))}
       </GoogleMap>
