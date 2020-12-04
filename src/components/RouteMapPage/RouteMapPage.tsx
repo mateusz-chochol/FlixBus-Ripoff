@@ -130,6 +130,13 @@ const RouteMapPage: React.FC = () => {
         >
           <Toolbar />
           <List>
+            <ListItem />
+            <ListItem />
+            <ListItem>
+              <ListItemText>
+                <Typography variant="h2">Menu place -holder</Typography>
+              </ListItemText>
+            </ListItem>
             {departure && (
               <ListItem>
                 <ListItemText>
