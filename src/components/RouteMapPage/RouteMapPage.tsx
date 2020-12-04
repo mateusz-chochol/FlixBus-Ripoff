@@ -161,7 +161,6 @@ const RouteMapPage: React.FC = () => {
         center={center}
         options={options}
         onLoad={onMapLoad}
-        onClick={() => { }}
       >
         {tempMarkers.map((marker) => (
           <Marker
