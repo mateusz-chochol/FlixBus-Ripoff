@@ -188,14 +188,13 @@ const RouteMapPage: React.FC = () => {
                   id="departure-search-bar"
                   fullWidth
                   blurOnSelect
-                  options={tempMarkers.map(marker => marker.key).filter(place => place !== destinationText)}
+                  freeSolo
+                  options={tempMarkers.map(marker => marker.key)}
                   popupIcon={null}
-                  inputValue={departureText}
-                  open={departureText.length > 0 && textFieldFocused === 'departure'}
-                  onFocus={() => setTextFieldFocused('departure')}
-                  onInputChange={(event: React.ChangeEvent<{}>, value: string) => setDepartureText(value)}
-                  onBlur={() => setTextFieldFocused('none')}
+                  value={departureText}
+                  onInputChange={(event, value) => setDepartureText(value)}
                   onChange={(event, value) => setDeparture(tempMarkers.find(marker => marker.key === value))}
+                  onBlur={() => setDepartureText(departure?.key ?? '')}
                   renderInput={(props) =>
                     <TextField
                       {...props}
@@ -217,14 +216,13 @@ const RouteMapPage: React.FC = () => {
                   id="destination-search-bar"
                   fullWidth
                   blurOnSelect
-                  options={tempMarkers.map(marker => marker.key).filter(place => place !== departureText)}
+                  freeSolo
+                  options={tempMarkers.map(marker => marker.key)}
                   popupIcon={null}
-                  inputValue={destinationText}
-                  open={destinationText.length > 0 && textFieldFocused === 'destination'}
-                  onFocus={() => setTextFieldFocused('destination')}
-                  onInputChange={(event: React.ChangeEvent<{}>, value: string) => setDestinationText(value)}
-                  onBlur={() => setTextFieldFocused('none')}
+                  value={destinationText}
+                  onInputChange={(event, value) => setDestinationText(value)}
                   onChange={(event, value) => setDestination(tempMarkers.find(marker => marker.key === value))}
+                  onBlur={() => setDestinationText(destination?.key ?? '')}
                   renderInput={(props) =>
                     <TextField
                       {...props}
