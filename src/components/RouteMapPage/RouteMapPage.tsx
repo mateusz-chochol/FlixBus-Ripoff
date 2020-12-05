@@ -24,7 +24,11 @@ import {
   Marker,
 } from "@react-google-maps/api";
 import mapStyles from "./mapStyles";
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  Theme,
+  createStyles
+} from '@material-ui/core/styles';
 import LoopIcon from '@material-ui/icons/Loop';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -40,6 +44,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       zIndex: theme.zIndex.appBar - 1,
     },
+    grid: {
+      margin: 0,
+      width: '100%',
+    }
   }),
 );
 
@@ -162,7 +170,7 @@ const RouteMapPage: React.FC = () => {
           open
         >
           <Toolbar />
-          <Grid container direction='column' spacing={2}>
+          <Grid container direction='column' spacing={2} className={classes.grid}>
             <Grid item />
             <Grid item />
             <Grid item />
@@ -198,7 +206,7 @@ const RouteMapPage: React.FC = () => {
                 />
               </Box>
             </Grid>
-            <Grid item container spacing={1}>
+            <Grid item container spacing={1} className={classes.grid}>
               <Grid item xs={6}>
                 <Box display='flex' justifyContent='flex-end' alignItems='center'>
                   <IconButton onClick={handleSwitchClick}>

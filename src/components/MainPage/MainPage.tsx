@@ -18,8 +18,23 @@ import {
   MuiPickersUtilsProvider,
   DateTimePicker,
 } from '@material-ui/pickers';
+import {
+  makeStyles,
+  Theme,
+  createStyles
+} from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    grid: {
+      margin: 0,
+      width: '100%',
+    }
+  }),
+);
 
 const MainPage: React.FC<WithWidth> = ({ width }) => {
+  const classes = useStyles();
   const isSmallScreen = width === 'xs' || width === 'sm';
   const [tripType, setTripType] = useState<string>('one way');
   const [departure, setDeparture] = useState<string>('');
@@ -68,8 +83,9 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
             <Grid
               container
               direction='column'
-              spacing={3}
+              spacing={2}
               alignItems='center'
+              className={classes.grid}
             >
               <Grid item container justify='center'>
                 <Grid item md={1} />
@@ -117,6 +133,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 alignItems='center'
                 justify='center'
                 spacing={3}
+                className={classes.grid}
               >
                 <Grid
                   item
@@ -126,6 +143,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   spacing={isSmallScreen ? 3 : 1}
                   md={tripType === 'one way' ? 6 : 5}
                   direction={isSmallScreen ? 'column' : 'row'}
+                  className={classes.grid}
                 >
                   <Grid item xs={12} md={5}>
                     <Box display='flex' justifyContent='flex-end' alignItems='center'>
@@ -186,6 +204,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   spacing={3}
                   md={tripType === 'one way' ? 6 : 7}
                   direction={isSmallScreen ? 'column' : 'row'}
+                  className={classes.grid}
                 >
                   <Grid item xs={12} md={tripType === 'one way' ? 7 : 4}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
@@ -237,7 +256,6 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item />
             </Grid>
           </Paper>
         </Box>
