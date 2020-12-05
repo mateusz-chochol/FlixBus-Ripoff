@@ -22,6 +22,7 @@ import {
   GoogleMap,
   useLoadScript,
   Marker,
+  Polyline,
 } from "@react-google-maps/api";
 import mapStyles from "./mapStyles";
 import {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     grid: {
       margin: 0,
       width: '100%',
+      padding: 4,
     }
   }),
 );
@@ -58,7 +60,7 @@ interface TempMarker {
     lat: number,
     lng: number
   },
-}
+};
 
 const mapContainerStyle = {
   height: "100vh",
@@ -83,23 +85,23 @@ const tempMarkers = new Array<TempMarker>(
     position: {
       lat: 50.0682709,
       lng: 19.9601472
-    }
+    },
   },
   {
     key: 'Berlin',
     position: {
       lat: 52.5065133,
       lng: 13.1445545
-    }
+    },
   },
   {
     key: 'Białystok',
     position: {
       lat: 53.1275431,
       lng: 23.0159837
-    }
+    },
   },
-)
+);
 
 const RouteMapPage: React.FC = () => {
   const classes = useStyles();
@@ -108,7 +110,6 @@ const RouteMapPage: React.FC = () => {
   const [destinationText, setDestinationText] = useState<string>('');
   const [departure, setDeparture] = useState<TempMarker>();
   const [destination, setDestination] = useState<TempMarker>();
-  const [textFieldFocused, setTextFieldFocused] = useState<string>('none');
 
   useEffect(() => {
     setDepartureText(departure ? departure.key : '');
@@ -288,9 +289,24 @@ const RouteMapPage: React.FC = () => {
           <Marker
             key={marker.key}
             position={marker.position}
+            icon={marker === departure || marker === destination ?
+              `${process.env.PUBLIC_URL}/map_markers/default_marker.png` :
+              `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`
+            }
             onClick={() => handleSelectMarker(marker)}
           />
         ))}
+        {departure && destination && (
+          <Polyline
+            path={[
+              departure.position,
+              destination.position
+            ]}
+            options={{
+              strokeColor: "#ff2527",
+            }}
+          />
+        )}
       </GoogleMap>
     </Box>
   )
