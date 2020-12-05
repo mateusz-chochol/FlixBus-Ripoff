@@ -29,10 +29,11 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import LoopIcon from '@material-ui/icons/Loop';
 import SearchIcon from '@material-ui/icons/Search';
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,7 +79,7 @@ const center = {
 
 const tempMarkers = new Array<TempMarker>(
   {
-    key: 'Krakow',
+    key: 'Kraków',
     position: {
       lat: 50.0682709,
       lng: 19.9601472
@@ -107,13 +108,14 @@ const RouteMapPage: React.FC = () => {
   const [destinationText, setDestinationText] = useState<string>('');
   const [departure, setDeparture] = useState<TempMarker>();
   const [destination, setDestination] = useState<TempMarker>();
+  const [textFieldFocused, setTextFieldFocused] = useState<string>('none');
 
   useEffect(() => {
-    setDepartureText(departure ? departure.key : '')
+    setDepartureText(departure ? departure.key : '');
   }, [departure]);
 
   useEffect(() => {
-    setDestinationText(destination ? destination.key : '')
+    setDestinationText(destination ? destination.key : '');
   }, [destination]);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -136,7 +138,7 @@ const RouteMapPage: React.FC = () => {
     if (!departure && !destination) {
       return setDeparture(marker);
     }
-    if (departure && !destination) {
+    if (departure) {
       return setDestination(marker);
     }
     if (!departure && destination) {
@@ -182,33 +184,59 @@ const RouteMapPage: React.FC = () => {
             <Grid item />
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
-                <TextField
+                <Autocomplete
                   id="departure-search-bar"
-                  label="From"
-                  placeholder="Where do you start?"
-                  color="secondary"
-                  value={departureText}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDepartureText(event.target.value) }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
+                  fullWidth
+                  blurOnSelect
+                  options={tempMarkers.map(marker => marker.key).filter(place => place !== destinationText)}
+                  popupIcon={null}
+                  inputValue={departureText}
+                  open={departureText.length > 0 && textFieldFocused === 'departure'}
+                  onFocus={() => setTextFieldFocused('departure')}
+                  onInputChange={(event: React.ChangeEvent<{}>, value: string) => setDepartureText(value)}
+                  onBlur={() => setTextFieldFocused('none')}
+                  onChange={(event, value) => setDeparture(tempMarkers.find(marker => marker.key === value))}
+                  renderInput={(props) =>
+                    <TextField
+                      {...props}
+                      label="From"
+                      placeholder="Where do you start?"
+                      color="secondary"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="outlined"
+                    />
+                  }
                 />
               </Box>
             </Grid>
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
-                <TextField
+                <Autocomplete
                   id="destination-search-bar"
-                  label="To"
-                  placeholder="Where are you going?"
-                  color="secondary"
-                  value={destinationText}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDestinationText(event.target.value) }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
+                  fullWidth
+                  blurOnSelect
+                  options={tempMarkers.map(marker => marker.key).filter(place => place !== departureText)}
+                  popupIcon={null}
+                  inputValue={destinationText}
+                  open={destinationText.length > 0 && textFieldFocused === 'destination'}
+                  onFocus={() => setTextFieldFocused('destination')}
+                  onInputChange={(event: React.ChangeEvent<{}>, value: string) => setDestinationText(value)}
+                  onBlur={() => setTextFieldFocused('none')}
+                  onChange={(event, value) => setDestination(tempMarkers.find(marker => marker.key === value))}
+                  renderInput={(props) =>
+                    <TextField
+                      {...props}
+                      label="To"
+                      placeholder="Where are you going?"
+                      color="secondary"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="outlined"
+                    />
+                  }
                 />
               </Box>
             </Grid>
