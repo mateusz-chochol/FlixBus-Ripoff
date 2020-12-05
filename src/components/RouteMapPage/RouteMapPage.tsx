@@ -68,6 +68,7 @@ const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
+  gestureHandling: "greedy",
 };
 
 const center = {
@@ -170,7 +171,12 @@ const RouteMapPage: React.FC = () => {
           open
         >
           <Toolbar />
-          <Grid container direction='column' spacing={2} className={classes.grid}>
+          <Grid
+            container
+            direction='column'
+            spacing={2}
+            className={classes.grid}
+          >
             <Grid item />
             <Grid item />
             <Grid item />
@@ -206,7 +212,12 @@ const RouteMapPage: React.FC = () => {
                 />
               </Box>
             </Grid>
-            <Grid item container spacing={1} className={classes.grid}>
+            <Grid
+              item
+              container
+              spacing={1}
+              className={classes.grid}
+            >
               <Grid item xs={6}>
                 <Box display='flex' justifyContent='flex-end' alignItems='center'>
                   <IconButton onClick={handleSwitchClick}>
