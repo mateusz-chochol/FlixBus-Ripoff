@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  current,
-  PayloadAction
-} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import Location from '../types/Location';
 import { AppState } from './Store';
 

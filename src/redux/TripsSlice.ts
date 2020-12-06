@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  current,
-  PayloadAction
-} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import Trip from '../types/Trip';
 import { AppState } from './Store';
 
@@ -61,6 +57,66 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     id: 6,
     startLocationId: 2,
     endLocationId: 1,
+    startTime: new Date(),
+    tripDuration: 4,
+    price: 60,
+    maxSeats: 20,
+    seatsLeft: 20
+  },
+  {
+    id: 7,
+    startLocationId: 3,
+    endLocationId: 2,
+    startTime: new Date(),
+    tripDuration: 4,
+    price: 60,
+    maxSeats: 20,
+    seatsLeft: 16
+  },
+  {
+    id: 8,
+    startLocationId: 6,
+    endLocationId: 3,
+    startTime: new Date(),
+    tripDuration: 6,
+    price: 80,
+    maxSeats: 22,
+    seatsLeft: 18
+  },
+  {
+    id: 9,
+    startLocationId: 5,
+    endLocationId: 2,
+    startTime: new Date(),
+    tripDuration: 2,
+    price: 50,
+    maxSeats: 18,
+    seatsLeft: 2
+  },
+  {
+    id: 10,
+    startLocationId: 4,
+    endLocationId: 3,
+    startTime: new Date(),
+    tripDuration: 1,
+    price: 100,
+    maxSeats: 20,
+    seatsLeft: 10
+  },
+  {
+    id: 11,
+    startLocationId: 6,
+    endLocationId: 2,
+    startTime: new Date(),
+    tripDuration: 5,
+    price: 160,
+    maxSeats: 26,
+    seatsLeft: 0
+  },
+  {
+    id: 12,
+    startLocationId: 2,
+    endLocationId: 4,
     startTime: new Date(),
     tripDuration: 4,
     price: 60,

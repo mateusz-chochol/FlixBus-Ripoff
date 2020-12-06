@@ -12,7 +12,6 @@ import {
   ListItem,
   ListItemText,
   Toolbar,
-  Typography,
   TextField,
   Grid,
   Divider,
@@ -20,9 +19,11 @@ import {
   Paper,
   withWidth,
   WithWidth,
+  ListSubheader
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { getLocations } from '../../redux/LocationsSlice';
+import { getTrips } from '../../redux/TripsSlice';
 import {
   GoogleMap,
   useLoadScript,
@@ -39,6 +40,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import LoopIcon from '@material-ui/icons/Loop';
 import SearchIcon from '@material-ui/icons/Search';
 import Location from '../../types/Location';
+import Trip from '../../types/Trip';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 const drawerWidth = 260;
 
@@ -56,6 +59,21 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0,
       width: '100%',
       padding: 4,
+    },
+    list: {
+      width: '100%',
+      position: 'relative',
+      overflow: 'auto',
+      backgroundColor: theme.palette.background.paper,
+      '&::-webkit-scrollbar': {
+        width: '0.4em'
+      },
+      '&::-webkit-scrollbar-track': {
+        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgba(0,0,0,.1)',
+      }
     }
   }),
 );
@@ -82,10 +100,29 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const mapRef = useRef<any>();
   const isSmallScreen = width === 'xs' || width === 'sm';
   const locations = useSelector(getLocations);
+  const trips = useSelector(getTrips);
   const [departureText, setDepartureText] = useState<string>('');
   const [destinationText, setDestinationText] = useState<string>('');
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
+  const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
+
+  useEffect(() => {
+    const tempTrips = trips.filter(trip => trip.seatsLeft > 0);
+
+    if (departure && destination) {
+      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id));
+    }
+    else if (departure) {
+      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id));
+    }
+    else if (destination) {
+      setTripsToDisplay(tempTrips.filter(trip => trip.endLocationId === destination.id));
+    }
+    else {
+      setTripsToDisplay(tempTrips);
+    }
+  }, [departure, destination, trips]);
 
   useEffect(() => {
     setDepartureText(departure ? departure.name : '');
@@ -259,14 +296,22 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
               <Divider />
             </Grid>
           </Grid>
-          <List>
-            <ListItem />
-            <ListItem />
-            <ListItem>
-              <ListItemText>
-                <Typography variant="h2">List of trips</Typography>
-              </ListItemText>
-            </ListItem>
+          <List subheader={<ListSubheader>Available trips</ListSubheader>} className={classes.list}>
+            {tripsToDisplay.map(trip => (
+              <ListItem button key={trip.id}>
+                <Grid container className={classes.grid} alignItems='flex-end' justify='space-around'>
+                  <Grid item xs={5}>
+                    <ListItemText>{locations.find(location => location.id === trip.startLocationId)?.name}</ListItemText>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <ArrowRightAltIcon />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItemText>{locations.find(location => location.id === trip.endLocationId)?.name}</ListItemText>
+                  </Grid>
+                </Grid>
+              </ListItem>
+            ))}
           </List>
         </Drawer>
       </Hidden>
