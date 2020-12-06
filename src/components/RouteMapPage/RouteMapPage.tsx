@@ -161,7 +161,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const resetTextFieldsOnError = useCallback(() => {
     setDepartureText('');
     setDestinationText('');
-    showError('Such trip doesn\'t exist. Please choose from existing trips');
+    showError('Such trip doesn\'t exist. Please choose from existing trips.');
   }, [showError])
 
   useEffect(() => {
@@ -329,15 +329,20 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           <List subheader={<ListSubheader>Available trips</ListSubheader>} className={classes.list}>
             {tripsToDisplay.map(trip => (
               <ListItem button key={trip.id}>
-                <Grid container className={classes.grid} alignItems='flex-end' justify='space-around'>
-                  <Grid item xs={5}>
-                    <ListItemText>{locations.find(location => location.id === trip.startLocationId)?.name}</ListItemText>
+                <Grid container className={classes.grid} direction='column'>
+                  <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
+                    <Grid item xs={5}>
+                      <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <ArrowRightAltIcon />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={2}>
-                    <ArrowRightAltIcon />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <ListItemText>{locations.find(location => location.id === trip.endLocationId)?.name}</ListItemText>
+                  <Grid item>
+                    <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
                   </Grid>
                 </Grid>
               </ListItem>

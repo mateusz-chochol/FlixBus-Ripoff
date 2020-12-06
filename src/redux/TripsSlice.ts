@@ -8,6 +8,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 1,
     endLocationId: 2,
     tripDuration: 4,
+    date: new Date().toISOString().split('T')[0],
     price: 60,
     maxSeats: 20,
     seatsLeft: 16
@@ -17,6 +18,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 2,
     endLocationId: 3,
     tripDuration: 6,
+    date: new Date().toISOString().split('T')[0],
     price: 80,
     maxSeats: 22,
     seatsLeft: 18
@@ -26,6 +28,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 5,
     endLocationId: 1,
     tripDuration: 2,
+    date: new Date().toISOString().split('T')[0],
     price: 50,
     maxSeats: 18,
     seatsLeft: 2
@@ -35,6 +38,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 7,
     endLocationId: 3,
     tripDuration: 1,
+    date: new Date().toISOString().split('T')[0],
     price: 100,
     maxSeats: 20,
     seatsLeft: 10
@@ -44,6 +48,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 2,
     endLocationId: 6,
     tripDuration: 5,
+    date: new Date().toISOString().split('T')[0],
     price: 160,
     maxSeats: 26,
     seatsLeft: 0
@@ -53,6 +58,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 2,
     endLocationId: 1,
     tripDuration: 4,
+    date: new Date().toISOString().split('T')[0],
     price: 60,
     maxSeats: 20,
     seatsLeft: 20
@@ -62,6 +68,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 3,
     endLocationId: 2,
     tripDuration: 4,
+    date: new Date().toISOString().split('T')[0],
     price: 60,
     maxSeats: 20,
     seatsLeft: 16
@@ -71,6 +78,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 6,
     endLocationId: 3,
     tripDuration: 6,
+    date: new Date().toISOString().split('T')[0],
     price: 80,
     maxSeats: 22,
     seatsLeft: 18
@@ -80,6 +88,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 5,
     endLocationId: 2,
     tripDuration: 2,
+    date: new Date().toISOString().split('T')[0],
     price: 50,
     maxSeats: 18,
     seatsLeft: 2
@@ -89,6 +98,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 4,
     endLocationId: 3,
     tripDuration: 1,
+    date: new Date().toISOString().split('T')[0],
     price: 100,
     maxSeats: 20,
     seatsLeft: 10
@@ -98,6 +108,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 6,
     endLocationId: 2,
     tripDuration: 5,
+    date: new Date().toISOString().split('T')[0],
     price: 160,
     maxSeats: 26,
     seatsLeft: 0
@@ -107,6 +118,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     startLocationId: 2,
     endLocationId: 4,
     tripDuration: 4,
+    date: new Date().toISOString().split('T')[0],
     price: 60,
     maxSeats: 20,
     seatsLeft: 20

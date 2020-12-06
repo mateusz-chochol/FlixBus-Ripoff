@@ -3,6 +3,7 @@ export default interface Trip {
   startLocationId: number,
   endLocationId: number,
   tripDuration: number,
+  date: string
   price: number,
   maxSeats: number,
   seatsLeft: number,
