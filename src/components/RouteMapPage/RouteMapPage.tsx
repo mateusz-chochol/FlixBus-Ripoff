@@ -190,10 +190,10 @@ const RouteMapPage: React.FC = () => {
                   fullWidth
                   blurOnSelect
                   freeSolo
+                  popupIcon={null}
                   options={tempMarkers.map(marker => marker.key)}
                   getOptionDisabled={(option) => option === destinationText}
-                  popupIcon={null}
-                  value={departureText}
+                  inputValue={departureText ?? ''}
                   onInputChange={(event, value) => setDepartureText(value)}
                   onChange={(event, value) => setDeparture(tempMarkers.find(marker => marker.key === value))}
                   onBlur={() => setDepartureText(departure?.key ?? '')}
@@ -219,10 +219,10 @@ const RouteMapPage: React.FC = () => {
                   fullWidth
                   blurOnSelect
                   freeSolo
+                  popupIcon={null}
                   options={tempMarkers.map(marker => marker.key)}
                   getOptionDisabled={(option) => option === departureText}
-                  popupIcon={null}
-                  value={destinationText}
+                  inputValue={destinationText ?? ''}
                   onInputChange={(event, value) => setDestinationText(value)}
                   onChange={(event, value) => setDestination(tempMarkers.find(marker => marker.key === value))}
                   onBlur={() => setDestinationText(destination?.key ?? '')}
