@@ -24,6 +24,7 @@ import {
 import { useSelector } from 'react-redux';
 import { getLocations } from '../../redux/LocationsSlice';
 import { getTrips } from '../../redux/TripsSlice';
+import { useNotifications } from '../Misc/Notifications';
 import {
   GoogleMap,
   useLoadScript,
@@ -72,7 +73,7 @@ const useStyles = makeStyles((theme: Theme) =>
         '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
       },
       '&::-webkit-scrollbar-thumb': {
-        backgroundColor: 'rgba(0,0,0,.1)',
+        backgroundColor: 'rgba(0,0,0,.2)',
       }
     }
   }),
@@ -101,6 +102,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const locations = useSelector(getLocations);
   const trips = useSelector(getTrips);
+  const notificationsFunctionsRef = useRef(useNotifications());
+  const { showError } = notificationsFunctionsRef.current;
   const [departureText, setDepartureText] = useState<string>('');
   const [destinationText, setDestinationText] = useState<string>('');
   const [departure, setDeparture] = useState<Location>();
@@ -108,32 +111,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
   const [toggleDepartureRerenderAutocomplete, setToggleDepartureRerenderAutocomplete] = useState<number>(0);
   const [toggleDestinationRerenderAutocomplete, setToggleDestinationRerenderAutocomplete] = useState<number>(0);
-
-  useEffect(() => {
-    const tempTrips = trips.filter(trip => trip.seatsLeft > 0);
-
-    if (departure && destination) {
-      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id));
-    }
-    else if (departure) {
-      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id));
-    }
-    else if (destination) {
-      setTripsToDisplay(tempTrips.filter(trip => trip.endLocationId === destination.id));
-    }
-    else {
-      setTripsToDisplay(tempTrips);
-    }
-  }, [departure, destination, trips]);
-
-  useEffect(() => {
-    setDeparture(locations.find(location => location.name === departureText))
-  }, [departureText, locations])
-
-  useEffect(() => {
-    setDestination(locations.find(location => location.name === destinationText))
-  }, [destinationText, locations])
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
@@ -165,10 +142,59 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleSwitchClick = () => {
-    const tempDeparture = departure;
-    setDeparture(destination);
-    setDestination(tempDeparture);
+    const tempDepartureText = departureText;
+    setDepartureText(destinationText);
+    setDestinationText(tempDepartureText);
   }
+
+  const getMarkerColor = (location: Location) => {
+    if (location === departure || location === destination) {
+      return `${process.env.PUBLIC_URL}/map_markers/default_marker.png`;
+    }
+    else if (tripsToDisplay.find(trip => trip.endLocationId === location.id || trip.startLocationId === location.id) || (!departure && !destination)) {
+      return `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`
+    }
+
+    return `${process.env.PUBLIC_URL}/map_markers/grey_marker.png`
+  }
+
+  const resetTextFieldsOnError = useCallback(() => {
+    setDepartureText('');
+    setDestinationText('');
+    showError('Such trip doesn\'t exist. Please choose from existing trips');
+  }, [showError])
+
+  useEffect(() => {
+    const tempTrips = trips.filter(trip => trip.seatsLeft > 0);
+
+    if (departure === destination && departure) {
+      resetTextFieldsOnError();
+    }
+    else if (departure && destination) {
+      if (!trips.find(trip => trip.startLocationId === departure?.id && trip.endLocationId === destination?.id)) {
+        resetTextFieldsOnError();
+      }
+
+      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id));
+    }
+    else if (departure) {
+      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id));
+    }
+    else if (destination) {
+      setTripsToDisplay(tempTrips.filter(trip => trip.endLocationId === destination.id));
+    }
+    else {
+      setTripsToDisplay(tempTrips);
+    }
+  }, [departure, destination, trips, resetTextFieldsOnError]);
+
+  useEffect(() => {
+    setDeparture(locations.find(location => location.name === departureText))
+  }, [departureText, locations])
+
+  useEffect(() => {
+    setDestination(locations.find(location => location.name === destinationText))
+  }, [destinationText, locations])
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
@@ -331,11 +357,9 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           <Marker
             key={location.name}
             position={location.coordinates}
-            icon={location === departure || location === destination ?
-              `${process.env.PUBLIC_URL}/map_markers/default_marker.png` :
-              `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`
-            }
+            icon={getMarkerColor(location)}
             onClick={() => handleSelectMarker(location)}
+            clickable={tripsToDisplay.find(trip => trip.startLocationId === location.id || trip.endLocationId === location.id) !== undefined}
           />
         ))}
         {departure && destination && (
