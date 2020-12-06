@@ -58,7 +58,7 @@ const locationsInitialState: Location[] = new Array<Location>(
       lat: 52.3546449,
       lng: 4.8339211
     }
-  }
+  },
 );
 
 const locationsSlice = createSlice({
@@ -72,3 +72,17 @@ const locationsSlice = createSlice({
 export const getLocations = (state: AppState) => state.locations;
 
 export default locationsSlice.reducer
+
+// Code to check if location is on the screen.
+// Its supposed to run on the server but i'm yet to think through how i'm going to do this.
+
+// const isWithin = (point: Coordinates, northEast: Coordinates, southWest: Coordinates) => {
+//   console.log('point', point);
+//   console.log('upperLeft', northEast);
+//   console.log('bottomRight', southWest);
+
+//   return point.lat >= southWest.lat &&
+//     point.lat <= northEast.lat &&
+//     point.lng >= southWest.lng &&
+//     point.lng <= northEast.lng
+// }

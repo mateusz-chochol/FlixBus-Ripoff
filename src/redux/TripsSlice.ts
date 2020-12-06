@@ -111,7 +111,7 @@ const tripsInitialState: Trip[] = new Array<Trip>(
     date: new Date().toISOString().split('T')[0],
     price: 160,
     maxSeats: 26,
-    seatsLeft: 0
+    seatsLeft: 12
   },
   {
     id: 12,
