@@ -21,6 +21,8 @@ import {
   withWidth,
   WithWidth,
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { getLocations } from '../../redux/LocationsSlice';
 import {
   GoogleMap,
   useLoadScript,
@@ -36,6 +38,7 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LoopIcon from '@material-ui/icons/Loop';
 import SearchIcon from '@material-ui/icons/Search';
+import Location from '../../types/Location';
 
 const drawerWidth = 260;
 
@@ -57,14 +60,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface TempMarker {
-  key: string,
-  position: {
-    lat: number,
-    lng: number
-  },
-};
-
 const mapContainerStyle = {
   height: "100vh",
   width: "100vw",
@@ -82,45 +77,22 @@ const center = {
   lng: 19.9601472,
 };
 
-const tempMarkers = new Array<TempMarker>(
-  {
-    key: 'Kraków',
-    position: {
-      lat: 50.0682709,
-      lng: 19.9601472
-    },
-  },
-  {
-    key: 'Berlin',
-    position: {
-      lat: 52.5065133,
-      lng: 13.1445545
-    },
-  },
-  {
-    key: 'Białystok',
-    position: {
-      lat: 53.1275431,
-      lng: 23.0159837
-    },
-  },
-);
-
 const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const mapRef = useRef<any>();
   const isSmallScreen = width === 'xs' || width === 'sm';
+  const locations = useSelector(getLocations);
   const [departureText, setDepartureText] = useState<string>('');
   const [destinationText, setDestinationText] = useState<string>('');
-  const [departure, setDeparture] = useState<TempMarker>();
-  const [destination, setDestination] = useState<TempMarker>();
+  const [departure, setDeparture] = useState<Location>();
+  const [destination, setDestination] = useState<Location>();
 
   useEffect(() => {
-    setDepartureText(departure ? departure.key : '');
+    setDepartureText(departure ? departure.name : '');
   }, [departure]);
 
   useEffect(() => {
-    setDestinationText(destination ? destination.key : '');
+    setDestinationText(destination ? destination.name : '');
   }, [destination]);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -131,23 +103,23 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     mapRef.current = map;
   }, []);
 
-  const handleSelectMarker = (marker: TempMarker) => {
-    mapRef.current.panTo(marker.position);
+  const handleSelectMarker = (location: Location) => {
+    mapRef.current.panTo(location.coordinates);
 
-    if (marker === destination) {
+    if (location === destination) {
       return setDestination(undefined);
     }
-    if (marker === departure) {
+    if (location === departure) {
       return setDeparture(undefined);
     }
     if (!departure && !destination) {
-      return setDeparture(marker);
+      return setDeparture(location);
     }
     if (departure) {
-      return setDestination(marker);
+      return setDestination(location);
     }
     if (!departure && destination) {
-      return setDeparture(marker);
+      return setDeparture(location);
     }
   }
 
@@ -167,12 +139,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       blurOnSelect
       freeSolo
       popupIcon={null}
-      options={tempMarkers.map(marker => marker.key)}
+      options={locations.map(location => location.name)}
       getOptionDisabled={(option) => option === destinationText}
       inputValue={departureText ?? ''}
       onInputChange={(event, value) => setDepartureText(value)}
-      onChange={(event, value) => setDeparture(tempMarkers.find(marker => marker.key === value))}
-      onBlur={() => setDepartureText(departure?.key ?? '')}
+      onChange={(event, value) => setDeparture(locations.find(location => location.name === value))}
+      onBlur={() => setDepartureText(departure?.name ?? '')}
       renderInput={(props) =>
         <TextField
           {...props}
@@ -195,12 +167,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       blurOnSelect
       freeSolo
       popupIcon={null}
-      options={tempMarkers.map(marker => marker.key)}
+      options={locations.map(location => location.name)}
       getOptionDisabled={(option) => option === departureText}
       inputValue={destinationText ?? ''}
       onInputChange={(event, value) => setDestinationText(value)}
-      onChange={(event, value) => setDestination(tempMarkers.find(marker => marker.key === value))}
-      onBlur={() => setDestinationText(destination?.key ?? '')}
+      onChange={(event, value) => setDestination(locations.find(location => location.name === value))}
+      onBlur={() => setDestinationText(destination?.name ?? '')}
       renderInput={(props) =>
         <TextField
           {...props}
@@ -306,22 +278,22 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         options={options}
         onLoad={onMapLoad}
       >
-        {tempMarkers.map((marker) => (
+        {locations.map((location) => (
           <Marker
-            key={marker.key}
-            position={marker.position}
-            icon={marker === departure || marker === destination ?
+            key={location.name}
+            position={location.coordinates}
+            icon={location === departure || location === destination ?
               `${process.env.PUBLIC_URL}/map_markers/default_marker.png` :
               `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`
             }
-            onClick={() => handleSelectMarker(marker)}
+            onClick={() => handleSelectMarker(location)}
           />
         ))}
         {departure && destination && (
           <Polyline
             path={[
-              departure.position,
-              destination.position
+              departure.coordinates,
+              destination.coordinates
             ]}
             options={{
               strokeColor: "#ff2527",
