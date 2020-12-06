@@ -106,6 +106,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
+  const [toggleDepartureRerenderAutocomplete, setToggleDepartureRerenderAutocomplete] = useState<number>(0);
+  const [toggleDestinationRerenderAutocomplete, setToggleDestinationRerenderAutocomplete] = useState<number>(0);
 
   useEffect(() => {
     const tempTrips = trips.filter(trip => trip.seatsLeft > 0);
@@ -143,11 +145,13 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const handleSelectMarker = (location: Location) => {
     mapRef.current.panTo(location.coordinates);
 
-    if (location === destination) {
-      return setDestination(undefined);
-    }
     if (location === departure) {
+      setToggleDepartureRerenderAutocomplete(number => number + 1);
       return setDeparture(undefined);
+    }
+    if (location === destination) {
+      setToggleDestinationRerenderAutocomplete(number => number + 1);
+      return setDestination(undefined);
     }
     if (!departure && !destination) {
       return setDeparture(location);
@@ -172,16 +176,16 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const departureForm = <>
     <Autocomplete
       id="departure-search-bar"
+      key={toggleDepartureRerenderAutocomplete}
       fullWidth
-      blurOnSelect
       freeSolo
       popupIcon={null}
       options={locations.map(location => location.name)}
       getOptionDisabled={(option) => option === destinationText}
+      getOptionSelected={(option, value) => { console.log(value); return option === value }}
       inputValue={departureText ?? ''}
       onInputChange={(event, value) => setDepartureText(value)}
       onChange={(event, value) => setDeparture(locations.find(location => location.name === value))}
-      onBlur={() => setDepartureText(departure?.name ?? '')}
       renderInput={(props) =>
         <TextField
           {...props}
@@ -200,8 +204,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const destinationForm = <>
     <Autocomplete
       id="destination-search-bar"
+      key={toggleDestinationRerenderAutocomplete}
       fullWidth
-      blurOnSelect
       freeSolo
       popupIcon={null}
       options={locations.map(location => location.name)}
@@ -209,7 +213,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       inputValue={destinationText ?? ''}
       onInputChange={(event, value) => setDestinationText(value)}
       onChange={(event, value) => setDestination(locations.find(location => location.name === value))}
-      onBlur={() => setDestinationText(destination?.name ?? '')}
       renderInput={(props) =>
         <TextField
           {...props}
