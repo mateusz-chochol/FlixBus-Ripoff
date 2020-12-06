@@ -16,7 +16,10 @@ import {
   TextField,
   Grid,
   Divider,
-  IconButton
+  IconButton,
+  Paper,
+  withWidth,
+  WithWidth,
 } from '@material-ui/core';
 import {
   GoogleMap,
@@ -103,9 +106,10 @@ const tempMarkers = new Array<TempMarker>(
   },
 );
 
-const RouteMapPage: React.FC = () => {
+const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const mapRef = useRef<any>();
+  const isSmallScreen = width === 'xs' || width === 'sm';
   const [departureText, setDepartureText] = useState<string>('');
   const [destinationText, setDestinationText] = useState<string>('');
   const [departure, setDeparture] = useState<TempMarker>();
@@ -156,6 +160,74 @@ const RouteMapPage: React.FC = () => {
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
 
+  const departureForm = <>
+    <Autocomplete
+      id="departure-search-bar"
+      fullWidth
+      blurOnSelect
+      freeSolo
+      popupIcon={null}
+      options={tempMarkers.map(marker => marker.key)}
+      getOptionDisabled={(option) => option === destinationText}
+      inputValue={departureText ?? ''}
+      onInputChange={(event, value) => setDepartureText(value)}
+      onChange={(event, value) => setDeparture(tempMarkers.find(marker => marker.key === value))}
+      onBlur={() => setDepartureText(departure?.key ?? '')}
+      renderInput={(props) =>
+        <TextField
+          {...props}
+          label="From"
+          placeholder="Where do you start?"
+          color="secondary"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+        />
+      }
+    />
+  </>
+
+  const destinationForm = <>
+    <Autocomplete
+      id="destination-search-bar"
+      fullWidth
+      blurOnSelect
+      freeSolo
+      popupIcon={null}
+      options={tempMarkers.map(marker => marker.key)}
+      getOptionDisabled={(option) => option === departureText}
+      inputValue={destinationText ?? ''}
+      onInputChange={(event, value) => setDestinationText(value)}
+      onChange={(event, value) => setDestination(tempMarkers.find(marker => marker.key === value))}
+      onBlur={() => setDestinationText(destination?.key ?? '')}
+      renderInput={(props) =>
+        <TextField
+          {...props}
+          label="To"
+          placeholder="Where are you going?"
+          color="secondary"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+        />
+      }
+    />
+  </>
+
+  const switchButton = <>
+    <IconButton onClick={handleSwitchClick}>
+      <LoopIcon fontSize='large' />
+    </IconButton>
+  </>
+
+  const searchButton = <>
+    <IconButton color="secondary">
+      <SearchIcon fontSize='large' />
+    </IconButton>
+  </>
+
   return (
     <Box
       display="flex"
@@ -163,6 +235,7 @@ const RouteMapPage: React.FC = () => {
       alignItems="center"
       height="100vh"
       width="100vw"
+      flexDirection={isSmallScreen ? 'column' : 'row'}
     >
       <Hidden smDown>
         <Drawer
@@ -185,60 +258,12 @@ const RouteMapPage: React.FC = () => {
             <Grid item />
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
-                <Autocomplete
-                  id="departure-search-bar"
-                  fullWidth
-                  blurOnSelect
-                  freeSolo
-                  popupIcon={null}
-                  options={tempMarkers.map(marker => marker.key)}
-                  getOptionDisabled={(option) => option === destinationText}
-                  inputValue={departureText ?? ''}
-                  onInputChange={(event, value) => setDepartureText(value)}
-                  onChange={(event, value) => setDeparture(tempMarkers.find(marker => marker.key === value))}
-                  onBlur={() => setDepartureText(departure?.key ?? '')}
-                  renderInput={(props) =>
-                    <TextField
-                      {...props}
-                      label="From"
-                      placeholder="Where do you start?"
-                      color="secondary"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      variant="outlined"
-                    />
-                  }
-                />
+                {departureForm}
               </Box>
             </Grid>
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
-                <Autocomplete
-                  id="destination-search-bar"
-                  fullWidth
-                  blurOnSelect
-                  freeSolo
-                  popupIcon={null}
-                  options={tempMarkers.map(marker => marker.key)}
-                  getOptionDisabled={(option) => option === departureText}
-                  inputValue={destinationText ?? ''}
-                  onInputChange={(event, value) => setDestinationText(value)}
-                  onChange={(event, value) => setDestination(tempMarkers.find(marker => marker.key === value))}
-                  onBlur={() => setDestinationText(destination?.key ?? '')}
-                  renderInput={(props) =>
-                    <TextField
-                      {...props}
-                      label="To"
-                      placeholder="Where are you going?"
-                      color="secondary"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      variant="outlined"
-                    />
-                  }
-                />
+                {destinationForm}
               </Box>
             </Grid>
             <Grid
@@ -249,16 +274,12 @@ const RouteMapPage: React.FC = () => {
             >
               <Grid item xs={6}>
                 <Box display='flex' justifyContent='flex-end' alignItems='center'>
-                  <IconButton onClick={handleSwitchClick}>
-                    <LoopIcon fontSize='large' />
-                  </IconButton>
+                  {switchButton}
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Box display='flex' justifyContent='flex-start' alignItems='center'>
-                  <IconButton color="secondary">
-                    <SearchIcon fontSize='large' />
-                  </IconButton>
+                  {searchButton}
                 </Box>
               </Grid>
             </Grid>
@@ -308,8 +329,40 @@ const RouteMapPage: React.FC = () => {
           />
         )}
       </GoogleMap>
+      <Hidden mdUp>
+        <Box width='100vw'>
+          <Paper square>
+            <Grid
+              container
+              spacing={2}
+              className={classes.grid}
+            >
+              <Grid item xs={4}>
+                <Box display='flex' justifyContent='center' alignItems='center'>
+                  {departureForm}
+                </Box>
+              </Grid>
+              <Grid item xs={2}>
+                <Box display='flex' justifyContent='center' alignItems='center'>
+                  {switchButton}
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box display='flex' justifyContent='center' alignItems='center'>
+                  {destinationForm}
+                </Box>
+              </Grid>
+              <Grid item xs={2}>
+                <Box display='flex' justifyContent='center' alignItems='center'>
+                  {searchButton}
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Box>
+      </Hidden>
     </Box>
   )
 }
 
-export default RouteMapPage;
+export default withWidth()(RouteMapPage);
