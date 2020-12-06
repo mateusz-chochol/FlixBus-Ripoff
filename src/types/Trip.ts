@@ -1,8 +1,7 @@
-import Location from './Location';
-
 export default interface Trip {
-  startLocation: Location,
-  endLocation: Location,
+  id: number,
+  startLocationId: number,
+  endLocationId: number,
   startTime: Date,
   tripDuration: number,
   price: number,
