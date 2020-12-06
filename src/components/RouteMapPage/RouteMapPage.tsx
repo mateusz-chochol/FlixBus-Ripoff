@@ -127,12 +127,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }, [departure, destination, trips]);
 
   useEffect(() => {
-    setDepartureText(departure ? departure.name : '');
-  }, [departure]);
+    setDeparture(locations.find(location => location.name === departureText))
+  }, [departureText, locations])
 
   useEffect(() => {
-    setDestinationText(destination ? destination.name : '');
-  }, [destination]);
+    setDestination(locations.find(location => location.name === destinationText))
+  }, [destinationText, locations])
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
@@ -147,20 +147,20 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
 
     if (location === departure) {
       setToggleDepartureRerenderAutocomplete(number => number + 1);
-      return setDeparture(undefined);
+      return setDepartureText('');
     }
     if (location === destination) {
       setToggleDestinationRerenderAutocomplete(number => number + 1);
-      return setDestination(undefined);
+      return setDestinationText('');
     }
     if (!departure && !destination) {
-      return setDeparture(location);
+      return setDepartureText(location.name);
     }
     if (departure) {
-      return setDestination(location);
+      return setDestinationText(location.name);
     }
     if (!departure && destination) {
-      return setDeparture(location);
+      return setDepartureText(location.name);
     }
   }
 
@@ -182,10 +182,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       popupIcon={null}
       options={locations.map(location => location.name)}
       getOptionDisabled={(option) => option === destinationText}
-      getOptionSelected={(option, value) => { console.log(value); return option === value }}
       inputValue={departureText ?? ''}
       onInputChange={(event, value) => setDepartureText(value)}
       onChange={(event, value) => setDeparture(locations.find(location => location.name === value))}
+      onBlur={() => setDepartureText(departure ? departure.name : '')}
       renderInput={(props) =>
         <TextField
           {...props}
@@ -213,6 +213,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       inputValue={destinationText ?? ''}
       onInputChange={(event, value) => setDestinationText(value)}
       onChange={(event, value) => setDestination(locations.find(location => location.name === value))}
+      onBlur={() => setDestinationText(destination ? destination.name : '')}
       renderInput={(props) =>
         <TextField
           {...props}
