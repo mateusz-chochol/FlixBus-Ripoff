@@ -159,7 +159,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                   onClick={handleLogoClick}
                 >
                   <Typography variant="h4">
-                    FlixBus
+                    BusTravel
                   </Typography>
                 </Button>
               </Typography>
