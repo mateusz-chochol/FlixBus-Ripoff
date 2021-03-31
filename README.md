@@ -50,3 +50,4 @@ Current TODOs:
   - create blank page with some static info
 - general:
   - fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time)
+  - move all data to the firebase backend and create api calls that will fetch them when needed
