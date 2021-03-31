@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import Location from '../types/Location';
+import Location from 'types/Location';
 import { AppState } from './Store';
 
 const locationsInitialState: Location[] = new Array<Location>(

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import Trip from '../types/Trip';
+import Trip from 'types/Trip';
 import { AppState } from './Store';
 
 const tripsInitialState: Trip[] = new Array<Trip>(

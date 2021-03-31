@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Redirect } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import { useNotifications } from '../Misc/Notifications';
-import PrivateRouteProps from '../../types/PrivateRouteProps';
+import { useAuth } from 'contexts/AuthContext';
+import { useNotifications } from 'components/Misc/Notifications';
+import PrivateRouteProps from 'types/PrivateRouteProps';
 import DefaultRoute from './DefaultRoute';
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, shouldBeLogged, ...rest }) => {

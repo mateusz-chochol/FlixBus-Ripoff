@@ -10,10 +10,10 @@ import {
   Grid,
   Box,
 } from '@material-ui/core';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
-import { useNotifications } from '../Misc/Notifications';
-import { routes } from '../../routes';
+import { useNotifications } from 'components/Misc/Notifications';
+import { routes } from 'routes';
 
 const SignupForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);

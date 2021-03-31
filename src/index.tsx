@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import App from 'components/App';
 import 'typeface-roboto';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider } from 'contexts/AuthContext';
 import { SnackbarProvider } from 'notistack';
 import { Provider } from 'react-redux';
-import store from './redux/Store';
+import store from 'redux/Store';
 
 ReactDOM.render(
   <React.StrictMode>

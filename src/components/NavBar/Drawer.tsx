@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import {
   getTab,
   setTab,
-} from '../../redux/TabsSlice';
+} from 'redux/TabsSlice';
 import {
   SwipeableDrawer,
   Tabs,
@@ -20,7 +20,7 @@ import {
   Box,
   Grid,
 } from '@material-ui/core';
-import AppBarMenuItem from '../../types/AppBarMenuItem';
+import AppBarMenuItem from 'types/AppBarMenuItem';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

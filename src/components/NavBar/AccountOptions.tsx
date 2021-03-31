@@ -2,7 +2,7 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 import {
   IconButton,
@@ -18,8 +18,8 @@ import {
   Theme
 } from '@material-ui/core/styles';
 import { AccountCircle } from '@material-ui/icons';
-import { useNotifications } from '../Misc/Notifications';
-import { routes } from '../../routes';
+import { useNotifications } from 'components/Misc/Notifications';
+import { routes } from 'routes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,23 +87,23 @@ const AccountOptions: React.FC = () => {
         </Menu>
       </Box>
     </> : <>
-        <ButtonGroup
-          variant="contained"
-          color="primary"
-          size="large"
-          disableElevation
-          fullWidth
-          disableRipple
-          disableFocusRipple
-        >
-          <Button className={classes.button} onClick={() => { history.push(routes.loginPage) }}>
-            Log In
+      <ButtonGroup
+        variant="contained"
+        color="primary"
+        size="large"
+        disableElevation
+        fullWidth
+        disableRipple
+        disableFocusRipple
+      >
+        <Button className={classes.button} onClick={() => { history.push(routes.loginPage) }}>
+          Log In
           </Button>
-          <Button className={classes.button} onClick={() => { history.push(routes.singupPage) }}>
-            Sign Up
+        <Button className={classes.button} onClick={() => { history.push(routes.singupPage) }}>
+          Sign Up
           </Button>
-        </ButtonGroup>
-      </>
+      </ButtonGroup>
+    </>
   )
 }
 

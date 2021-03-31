@@ -22,9 +22,9 @@ import {
   ListSubheader
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { getLocations } from '../../redux/LocationsSlice';
-import { getTrips } from '../../redux/TripsSlice';
-import { useNotifications } from '../Misc/Notifications';
+import { getLocations } from 'redux/LocationsSlice';
+import { getTrips } from 'redux/TripsSlice';
+import { useNotifications } from 'components/Misc/Notifications';
 import {
   GoogleMap,
   useLoadScript,
@@ -40,8 +40,8 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LoopIcon from '@material-ui/icons/Loop';
 import SearchIcon from '@material-ui/icons/Search';
-import Location from '../../types/Location';
-import Trip from '../../types/Trip';
+import Location from 'types/Location';
+import Trip from 'types/Trip';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 const drawerWidth = 260;

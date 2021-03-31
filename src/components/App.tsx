@@ -17,11 +17,11 @@ import {
 import {
   removeNotificationActionCreator,
   selectNotifications
-} from '../redux/NotificationsSlice';
+} from 'redux/NotificationsSlice';
 import DefaultRoute from './Misc/DefaultRoute';
 import PrivateRoute from './Misc/PrivateRoute';
 import ForgotPasswordPage from './Account/ForgotPasswordPage';
-import { routes } from '../routes';
+import { routes } from 'routes';
 import { Box } from '@material-ui/core';
 
 const styles = {

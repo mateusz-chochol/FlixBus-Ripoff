@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import {
   getTab,
   setTab,
-} from '../../redux/TabsSlice';
+} from 'redux/TabsSlice';
 import {
   useSelector,
   useDispatch
@@ -33,8 +33,8 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from './Drawer';
 import AccountOptions from './AccountOptions';
-import { routes } from '../../routes';
-import AppBarMenuItem from '../../types/AppBarMenuItem';
+import { routes } from 'routes';
+import AppBarMenuItem from 'types/AppBarMenuItem';
 import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 import StreetviewRoundedIcon from '@material-ui/icons/StreetviewRounded';
 import DevicesRoundedIcon from '@material-ui/icons/DevicesRounded';

@@ -5,7 +5,7 @@ import {
 import {
   addNotificationActionCreator,
   selectNotifications
-} from '../../redux/NotificationsSlice';
+} from 'redux/NotificationsSlice';
 import { v1 as uuid } from 'uuid';
 
 interface NotificationsFunctions {
