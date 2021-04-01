@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const mapContainerStyle = {
-  height: "100vh",
+  height: "92vh",
   width: "100vw",
 };
 
@@ -136,13 +136,15 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleSwitchClick = () => {
-    if (trips.find(trip => trip.startLocationId === destination?.id && trip.endLocationId === departure?.id)) {
-      const tempDeparture = departure;
-      setDeparture(destination);
-      setDestination(tempDeparture);
-    }
-    else {
-      resetTextFieldsOnError();
+    if (destination && departure) {
+      if (trips.find(trip => trip.startLocationId === destination?.id && trip.endLocationId === departure?.id)) {
+        const tempDeparture = departure;
+        setDeparture(destination);
+        setDestination(tempDeparture);
+      }
+      else {
+        resetTextFieldsOnError();
+      }
     }
   }
 

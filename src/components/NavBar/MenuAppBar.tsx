@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: 'transparent',
       },
     },
+    toolbar: {
+      height: '8vh'
+    },
   }),
 );
 
@@ -130,7 +133,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
     <>
       <CssBaseline />
       <AppBar position='static'>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <Grid container justify="space-between" alignItems="center">
             <Hidden mdUp>
               <Grid item xs={1}>
