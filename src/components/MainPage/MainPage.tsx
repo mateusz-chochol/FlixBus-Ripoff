@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useRef,
+} from 'react';
 import {
   Box,
   Paper,
@@ -15,9 +18,10 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import LoopIcon from '@material-ui/icons/Loop';
 import DateFnsUtils from '@date-io/date-fns';
+import moment from 'moment';
 import {
   MuiPickersUtilsProvider,
-  DateTimePicker,
+  DatePicker,
 } from '@material-ui/pickers';
 import {
   makeStyles,
@@ -26,6 +30,7 @@ import {
 } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { getLocations } from 'redux/LocationsSlice';
+import { useNotifications } from 'components/Misc/Notifications';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import Location from 'types/Location';
 
@@ -42,11 +47,47 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const isSmallScreen = width === 'xs' || width === 'sm';
   const locations = useSelector(getLocations);
+  const notificationsFunctionsRef = useRef(useNotifications());
+  const { showError } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<string>('one way');
   const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2020-11-20T21:11:54'));
+  const [isDepartureDateWindowOpen, setIsDepartureDateWindowOpen] = useState<boolean>(false);
+  const [isReturnDateWindowOpen, setIsReturnDateWindowOpen] = useState<boolean>(false);
+  const [departureDate, setDepartureDate] = React.useState<Date | null>(moment().toDate());
+  const [returnDate, setReturnDate] = React.useState<Date | null>(moment().add(1, 'days').toDate());
+
+  const handleTripTypeChange = (tripType: string) => {
+    setTripType(tripType);
+
+    if (moment(departureDate).isAfter(returnDate)) {
+      setReturnDate(moment(departureDate).add(1, 'days').toDate());
+    }
+  }
+
+  const handleDepartureDateChange = (date: Date | null) => {
+    if (moment(date).isBefore(moment(), 'day')) {
+      showError('Departure date cannot be from the past');
+    }
+    else if (tripType === 'one way' || moment(date).isSameOrBefore(returnDate, 'day')) {
+      setDepartureDate(date);
+    }
+    else {
+      setIsDepartureDateWindowOpen(false);
+      showError('Departure date cannot be after return date');
+    }
+  }
+
+  const handleReturnDateChange = (date: Date | null) => {
+    if (moment(date).isSameOrAfter(departureDate, 'day')) {
+      setReturnDate(date);
+    }
+    else {
+      setIsReturnDateWindowOpen(false);
+      showError('Return date cannot be before departure date');
+    }
+  }
 
   const handleSwitchClick = () => {
     const tempDeparture = departure;
@@ -111,7 +152,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       value='one way'
                       control={<Radio
                         checked={tripType === 'one way'}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleTripTypeChange(event.target.value)}
                       />}
                       name="one-way-radio"
                       label='One way'
@@ -129,7 +170,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       value='round trip'
                       control={<Radio
                         checked={tripType === 'round trip'}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setTripType(event.target.value) }}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { handleTripTypeChange(event.target.value) }}
                       />}
                       label='Round trip'
                       name="round-trip-radio"
@@ -152,7 +193,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   alignItems='stretch'
                   justify='center'
                   spacing={isSmallScreen ? 3 : 1}
-                  md={tripType === 'one way' ? 7 : 5}
+                  md={tripType === 'one way' ? 7 : 6}
                   direction={isSmallScreen ? 'column' : 'row'}
                   className={classes.grid}
                 >
@@ -203,19 +244,22 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   alignItems='center'
                   justify='space-around'
                   spacing={3}
-                  md={tripType === 'one way' ? 5 : 7}
+                  md={tripType === 'one way' ? 5 : 6}
                   direction={isSmallScreen ? 'column' : 'row'}
                   className={classes.grid}
                 >
                   <Grid item xs={12} md={tripType === 'one way' ? 6 : 4}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
-                      <DateTimePicker
+                      <DatePicker
                         variant="inline"
                         label="Departure"
-                        value={selectedDate}
-                        onChange={(date: Date | null) => { setSelectedDate(date) }}
+                        value={departureDate}
+                        onChange={(date: Date | null) => handleDepartureDateChange(date)}
                         color='secondary'
                         inputVariant="outlined"
+                        open={isDepartureDateWindowOpen}
+                        onOpen={() => setIsDepartureDateWindowOpen(true)}
+                        onClose={() => setIsDepartureDateWindowOpen(false)}
                         fullWidth
                       />
                     </Box>
@@ -223,13 +267,16 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   {tripType === 'round trip' &&
                     <Grid item xs={12} md={4}>
                       <Box display='flex' justifyContent='center' alignItems='center'>
-                        <DateTimePicker
+                        <DatePicker
                           variant="inline"
                           label="Return"
-                          value={selectedDate}
-                          onChange={(date: Date | null) => { setSelectedDate(date) }}
+                          value={returnDate}
+                          onChange={(date: Date | null) => handleReturnDateChange(date)}
                           color='secondary'
                           inputVariant="outlined"
+                          open={isReturnDateWindowOpen}
+                          onOpen={() => setIsReturnDateWindowOpen(true)}
+                          onClose={() => setIsReturnDateWindowOpen(false)}
                           fullWidth
                         />
                       </Box>

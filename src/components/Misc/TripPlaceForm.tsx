@@ -27,15 +27,19 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   }, [placeText, locations, setPlace])
 
   useEffect(() => {
-    if (placeTextValue === '') {
+    if (placeTextValue.length < 1) {
       setOptions(placeText ? [placeText] : []);
-      setNoOptionsText('Type at least 1 character...')
+      setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
+    }
+    else if (place && place.name === placeTextValue) {
+      setOptions([]);
+      setNoOptionsText(`You chose ${place.name}`)
     }
     else {
       setOptions(locations.map(location => location.name));
       setNoOptionsText('No results found')
     }
-  }, [placeTextValue, locations, placeText])
+  }, [placeTextValue, placeText, place, locations])
 
   return (
     <Autocomplete
@@ -44,7 +48,6 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       inputValue={placeTextValue}
       onInputChange={(event, value) => setPlaceTextValue(value)}
       onBlur={() => setPlace(locations.find(location => location.name === placeTextValue))}
-      getOptionDisabled={(option) => option === placeText}
       fullWidth
       popupIcon={null}
       options={options}
