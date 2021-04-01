@@ -145,23 +145,9 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleSwitchClick = () => {
-    const swapPlaces = () => {
-      const tempDeparture = departure;
-      setDeparture(destination);
-      setDestination(tempDeparture);
-    }
-
-    if (destination && departure) {
-      if (trips.find(trip => trip.startLocationId === destination?.id && trip.endLocationId === departure?.id)) {
-        swapPlaces()
-      }
-      else {
-        resetTextFieldsOnError();
-      }
-    }
-    else if (departure || destination) {
-      swapPlaces();
-    }
+    const tempDeparture = departure;
+    setDeparture(destination);
+    setDestination(tempDeparture);
   }
 
   const getMarkerColor = (location: Location) => {
@@ -175,12 +161,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     return `${process.env.PUBLIC_URL}/map_markers/grey_marker.png`;
   }
 
-  const resetTextFieldsOnError = useCallback(() => {
-    setDeparture(undefined);
-    setDestination(undefined);
-    showError('Such trip doesn\'t exist. Please choose from existing trips.');
-  }, [showError])
-
   const isMarkerClickable = (location: Location) => {
     return departure === location ||
       destination === location ||
@@ -192,16 +172,15 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     setIsValidTripSelected(false);
 
     if (departure === destination && departure) {
-      resetTextFieldsOnError();
+      setDeparture(undefined);
+      setDestination(undefined);
+      showError('Departure and destination cannot be the same');
     }
     else if (departure && destination) {
       tempTrips = tempTrips.filter(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id)
 
       if (tempTrips.length > 0) {
         setIsValidTripSelected(true);
-      }
-      else {
-        resetTextFieldsOnError();
       }
     }
     else if (departure) {
@@ -212,7 +191,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     }
 
     setTripsToDisplay(tempTrips);
-  }, [departure, destination, trips, resetTextFieldsOnError]);
+  }, [departure, destination, trips, showError]);
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
