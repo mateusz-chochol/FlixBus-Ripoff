@@ -136,10 +136,14 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleSwitchClick = () => {
-    // TODO: investigate why its crashing when clicking on switch button
-    const tempDeparture = departure;
-    setDeparture(destination);
-    setDestination(tempDeparture);
+    if (trips.find(trip => trip.startLocationId === destination?.id && trip.endLocationId === departure?.id)) {
+      const tempDeparture = departure;
+      setDeparture(destination);
+      setDestination(tempDeparture);
+    }
+    else {
+      resetTextFieldsOnError();
+    }
   }
 
   const getMarkerColor = (location: Location) => {
@@ -147,10 +151,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       return `${process.env.PUBLIC_URL}/map_markers/default_marker.png`;
     }
     else if (tripsToDisplay.find(trip => trip.endLocationId === location.id || trip.startLocationId === location.id) || (!departure && !destination)) {
-      return `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`
+      return `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`;
     }
 
-    return `${process.env.PUBLIC_URL}/map_markers/grey_marker.png`
+    return `${process.env.PUBLIC_URL}/map_markers/grey_marker.png`;
   }
 
   const resetTextFieldsOnError = useCallback(() => {
