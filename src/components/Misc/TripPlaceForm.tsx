@@ -21,8 +21,10 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setPlaceText(place?.name ?? '');
-  }, [place])
+    if (place && place.name !== placeText) {
+      setPlaceText(place?.name ?? '');
+    }
+  }, [place, placeText])
 
   useEffect(() => {
     setPlace(locations.find(location => location.name.toUpperCase() === placeText.toUpperCase()));
