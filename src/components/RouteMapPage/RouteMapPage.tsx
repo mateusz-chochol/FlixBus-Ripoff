@@ -181,6 +181,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     showError('Such trip doesn\'t exist. Please choose from existing trips.');
   }, [showError])
 
+  const isMarkerClickable = (location: Location) => {
+    return departure === location ||
+      destination === location ||
+      tripsToDisplay.find(trip => trip.startLocationId === location.id || trip.endLocationId === location.id) !== undefined
+  }
+
   useEffect(() => {
     let tempTrips = trips.filter(trip => trip.seatsLeft > 0);
     setIsValidTripSelected(false);
@@ -304,7 +310,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           </Grid>
           {(departure || destination) ?
             <List subheader={<ListSubheader>Available trips</ListSubheader>} className={classes.list}>
-              {tripsToDisplay.map(trip => (
+              {tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
                 <ListItem button key={trip.id}>
                   <Grid container className={classes.grid} direction='column'>
                     <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
@@ -323,7 +329,13 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                     </Grid>
                   </Grid>
                 </ListItem>
-              ))}
+              )) :
+                <Box height='100%'>
+                  <Typography variant='h5'>
+                    <Box m={2} mt={3} color="text.disabled">Sorry, no trips found</Box>
+                  </Typography>
+                </Box>
+              }
             </List> :
             <Box height='100%'>
               <Typography variant='h5'>
@@ -347,7 +359,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             position={location.coordinates}
             icon={getMarkerColor(location)}
             onClick={() => handleSelectMarker(location)}
-            clickable={tripsToDisplay.find(trip => trip.startLocationId === location.id || trip.endLocationId === location.id) !== undefined}
+            clickable={isMarkerClickable(location)}
           />
         ))}
         {departure && destination && isValidTripSelected && (
