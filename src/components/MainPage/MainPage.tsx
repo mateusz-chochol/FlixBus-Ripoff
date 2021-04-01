@@ -210,8 +210,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                     </Box>
                   </Grid>
                   <Hidden smDown>
-                    <Grid item container md={1}>
-                      <Box display='flex' justifyContent='center' alignSelf='center'>
+                    <Grid item container justify='center' alignItems='center' md={1}>
+                      <Box display='flex' >
                         <IconButton size='small' onClick={handleSwitchClick}>
                           <LoopIcon />
                         </IconButton>
@@ -242,7 +242,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid
                   item
                   container
-                  alignItems='center'
+                  alignItems='stretch'
                   justify='space-around'
                   spacing={3}
                   md={tripType === TripType.OneWay ? 5 : 6}
@@ -278,6 +278,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                           open={isReturnDateWindowOpen}
                           onOpen={() => setIsReturnDateWindowOpen(true)}
                           onClose={() => setIsReturnDateWindowOpen(false)}
+                          inputProps={{ fullWidth: true }}
                           fullWidth
                         />
                       </Box>
@@ -292,7 +293,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         value={numberOfPassengers}
                         onChange={handlePassengersNumberChange}
                         color='secondary'
-                        inputProps={{ dir: "rtl", }}
+                        inputProps={{ dir: "rtl" }}
                         InputLabelProps={{ shrink: true, }}
                         variant="outlined"
                         fullWidth
