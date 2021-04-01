@@ -202,7 +202,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       place={departure}
       setPlace={setDeparture}
       label="From"
-      placeholder="Where do you start?"
+      placeholder="Start from..."
     />
   </>
 
@@ -212,7 +212,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       place={destination}
       setPlace={setDestination}
       label="To"
-      placeholder="Where are you going?"
+      placeholder="Finish in..."
     />
   </>
 
