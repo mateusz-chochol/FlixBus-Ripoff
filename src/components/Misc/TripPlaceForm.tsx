@@ -17,6 +17,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   const [placeText, setPlaceText] = useState<string>('');
   const [options, setOptions] = useState<string[]>([]);
   const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setPlaceText(place?.name ?? '');
@@ -27,17 +28,26 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   }, [placeText, locations, setPlace])
 
   useEffect(() => {
+    setIsLoading(true);
+    setOptions([]);
+
     if (placeTextValue.length < 1) {
-      setOptions(placeText ? [placeText] : []);
+      setIsLoading(false);
       setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
     }
     else if (place && place.name === placeTextValue) {
-      setOptions([]);
+      setIsLoading(false);
       setNoOptionsText(`You chose ${place.name}`)
     }
     else {
-      setOptions(locations.map(location => location.name));
-      setNoOptionsText('No results found')
+      setNoOptionsText('No results found');
+
+      const delayCallForOptions = setTimeout(() => {
+        setOptions(locations.map(location => location.name).filter(location => location.startsWith(placeTextValue)));
+        setIsLoading(false);
+      }, 1000)
+
+      return () => clearTimeout(delayCallForOptions)
     }
   }, [placeTextValue, placeText, place, locations])
 
@@ -52,6 +62,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       popupIcon={null}
       options={options}
       noOptionsText={noOptionsText}
+      loading={isLoading}
       renderInput={(props) =>
         <TextField
           {...props}
