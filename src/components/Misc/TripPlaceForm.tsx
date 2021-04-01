@@ -24,7 +24,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   }, [place])
 
   useEffect(() => {
-    setPlace(locations.find(location => location.name === placeText));
+    setPlace(locations.find(location => location.name.toUpperCase() === placeText.toUpperCase()));
   }, [placeText, locations, setPlace])
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       setIsLoading(false);
       setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
     }
-    else if (place && place.name === placeTextValue) {
+    else if (place && place.name.toUpperCase() === placeTextValue.toUpperCase()) {
       setIsLoading(false);
       setNoOptionsText(`You chose ${place.name}`)
     }
@@ -43,7 +43,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       setNoOptionsText('No results found');
 
       const delayCallForOptions = setTimeout(() => {
-        setOptions(locations.map(location => location.name).filter(location => location.startsWith(placeTextValue)));
+        setOptions(locations.map(location => location.name).filter(location => location.toUpperCase().startsWith(placeTextValue.toUpperCase())));
         setIsLoading(false);
       }, 1000)
 
