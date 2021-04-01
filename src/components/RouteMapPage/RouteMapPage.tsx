@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'auto',
       backgroundColor: theme.palette.background.paper,
       '&::-webkit-scrollbar': {
-        height: '0.4em'
+        height: '1em'
       },
       '&::-webkit-scrollbar-track': {
         '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
