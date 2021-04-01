@@ -144,15 +144,22 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleSwitchClick = () => {
+    const swapPlaces = () => {
+      const tempDeparture = departure;
+      setDeparture(destination);
+      setDestination(tempDeparture);
+    }
+
     if (destination && departure) {
       if (trips.find(trip => trip.startLocationId === destination?.id && trip.endLocationId === departure?.id)) {
-        const tempDeparture = departure;
-        setDeparture(destination);
-        setDestination(tempDeparture);
+        swapPlaces()
       }
       else {
         resetTextFieldsOnError();
       }
+    }
+    else if (departure || destination) {
+      swapPlaces();
     }
   }
 
