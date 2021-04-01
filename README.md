@@ -23,7 +23,7 @@ Current TODOs:
   - make search button actually do something
 - route map page:
   - <del> fix autocompletion so it generates results after typing at least 2 characters </del>  (Done)
-  - use RxJS to delay call for autocompletion data (1-2 seconds after last typed character)
+  - <del> use RxJS to delay call for autocompletion data (1-2 seconds after last typed character) </del> (Won't do [found easier way])
   - <del> disable selecting markers after typing the departure / destination (make so the search button does that) </del> (Won't do)
   - <del> disable immediate filtering of the trips (make so the search button does the filtering) </del> (Won't do)
   - <del> create new button that redirects the user to the results page if departure / destination forms are filled up (include parameters in the url)</del> (Won't do)
