@@ -55,10 +55,19 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       zIndex: theme.zIndex.appBar - 1,
     },
+    footerPaper: {
+      height: '100%'
+    },
     grid: {
       margin: 0,
       width: '100%',
-      padding: 4,
+      paddingTop: 4,
+    },
+    footerGrid: {
+      margin: 0,
+      width: '100%',
+      height: '100%',
+      paddingTop: 4,
     },
     list: {
       width: '100%',
@@ -77,11 +86,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }),
 );
-
-const mapContainerStyle = {
-  height: "92vh",
-  width: "100vw",
-};
 
 const options = {
   styles: mapStyles,
@@ -110,6 +114,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
+  const mapContainerStyle = {
+    height: isSmallScreen ? "82vh" : "92vh",
+    width: "100vw",
+  };
 
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -340,12 +348,13 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         )}
       </GoogleMap>
       <Hidden mdUp>
-        <Box width='100vw'>
-          <Paper square>
+        <Box width='100vw' height='10vh'>
+          <Paper square className={classes.footerPaper}>
             <Grid
               container
               spacing={2}
-              className={classes.grid}
+              className={classes.footerGrid}
+              alignItems='center'
             >
               <Grid item xs={4}>
                 <Box display='flex' justifyContent='center' alignItems='center'>
