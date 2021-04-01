@@ -12,7 +12,6 @@ import {
   ListItem,
   ListItemText,
   Toolbar,
-  TextField,
   Grid,
   Divider,
   IconButton,
@@ -25,6 +24,7 @@ import { useSelector } from 'react-redux';
 import { getLocations } from 'redux/LocationsSlice';
 import { getTrips } from 'redux/TripsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
+import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import {
   GoogleMap,
   useLoadScript,
@@ -37,7 +37,6 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import LoopIcon from '@material-ui/icons/Loop';
 import SearchIcon from '@material-ui/icons/Search';
 import Location from 'types/Location';
@@ -104,13 +103,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const trips = useSelector(getTrips);
   const notificationsFunctionsRef = useRef(useNotifications());
   const { showError } = notificationsFunctionsRef.current;
-  const [departureText, setDepartureText] = useState<string>('');
-  const [destinationText, setDestinationText] = useState<string>('');
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
-  const [toggleDepartureRerenderAutocomplete, setToggleDepartureRerenderAutocomplete] = useState<number>(0);
-  const [toggleDestinationRerenderAutocomplete, setToggleDestinationRerenderAutocomplete] = useState<number>(0);
+  const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
@@ -123,28 +119,27 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     mapRef.current.panTo(location.coordinates);
 
     if (location === departure) {
-      setToggleDepartureRerenderAutocomplete(number => number + 1);
-      return setDepartureText('');
+      return setDeparture(undefined);
     }
     if (location === destination) {
-      setToggleDestinationRerenderAutocomplete(number => number + 1);
-      return setDestinationText('');
+      return setDestination(undefined);
     }
     if (!departure && !destination) {
-      return setDepartureText(location.name);
+      return setDeparture(location);
     }
     if (departure) {
-      return setDestinationText(location.name);
+      return setDestination(location);
     }
     if (!departure && destination) {
-      return setDepartureText(location.name);
+      return setDeparture(location);
     }
   }
 
   const handleSwitchClick = () => {
-    const tempDepartureText = departureText;
-    setDepartureText(destinationText);
-    setDestinationText(tempDepartureText);
+    // TODO: investigate why its crashing when clicking on switch button
+    const tempDeparture = departure;
+    setDeparture(destination);
+    setDestination(tempDeparture);
   }
 
   const getMarkerColor = (location: Location) => {
@@ -159,99 +154,58 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const resetTextFieldsOnError = useCallback(() => {
-    setDepartureText('');
-    setDestinationText('');
+    setDeparture(undefined);
+    setDestination(undefined);
     showError('Such trip doesn\'t exist. Please choose from existing trips.');
   }, [showError])
 
   useEffect(() => {
-    const tempTrips = trips.filter(trip => trip.seatsLeft > 0);
+    let tempTrips = trips.filter(trip => trip.seatsLeft > 0);
+    setIsValidTripSelected(false);
 
     if (departure === destination && departure) {
       resetTextFieldsOnError();
     }
     else if (departure && destination) {
-      if (!trips.find(trip => trip.startLocationId === departure?.id && trip.endLocationId === destination?.id)) {
+      tempTrips = tempTrips.filter(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id)
+
+      if (tempTrips.length > 0) {
+        setIsValidTripSelected(true);
+      }
+      else {
         resetTextFieldsOnError();
       }
-
-      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id));
     }
     else if (departure) {
-      setTripsToDisplay(tempTrips.filter(trip => trip.startLocationId === departure.id));
+      tempTrips = tempTrips.filter(trip => trip.startLocationId === departure.id);
     }
     else if (destination) {
-      setTripsToDisplay(tempTrips.filter(trip => trip.endLocationId === destination.id));
+      tempTrips = tempTrips.filter(trip => trip.endLocationId === destination.id);
     }
-    else {
-      setTripsToDisplay(tempTrips);
-    }
+
+    setTripsToDisplay(tempTrips);
   }, [departure, destination, trips, resetTextFieldsOnError]);
-
-  useEffect(() => {
-    setDeparture(locations.find(location => location.name === departureText))
-  }, [departureText, locations])
-
-  useEffect(() => {
-    setDestination(locations.find(location => location.name === destinationText))
-  }, [destinationText, locations])
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
 
   const departureForm = <>
-    <Autocomplete
-      id="departure-search-bar"
-      key={toggleDepartureRerenderAutocomplete}
-      fullWidth
-      freeSolo
-      popupIcon={null}
-      options={locations.map(location => location.name)}
-      getOptionDisabled={(option) => option === destinationText}
-      inputValue={departureText ?? ''}
-      onInputChange={(event, value) => setDepartureText(value)}
-      onChange={(event, value) => setDeparture(locations.find(location => location.name === value))}
-      onBlur={() => setDepartureText(departure ? departure.name : '')}
-      renderInput={(props) =>
-        <TextField
-          {...props}
-          label="From"
-          placeholder="Where do you start?"
-          color="secondary"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-        />
-      }
+    <TripPlaceForm
+      locations={locations}
+      place={departure}
+      setPlace={setDeparture}
+      label="From"
+      placeholder="Where do you start?"
     />
   </>
 
   const destinationForm = <>
-    <Autocomplete
-      id="destination-search-bar"
-      key={toggleDestinationRerenderAutocomplete}
-      fullWidth
-      freeSolo
-      popupIcon={null}
-      options={locations.map(location => location.name)}
-      getOptionDisabled={(option) => option === departureText}
-      inputValue={destinationText ?? ''}
-      onInputChange={(event, value) => setDestinationText(value)}
-      onChange={(event, value) => setDestination(locations.find(location => location.name === value))}
-      onBlur={() => setDestinationText(destination ? destination.name : '')}
-      renderInput={(props) =>
-        <TextField
-          {...props}
-          label="To"
-          placeholder="Where are you going?"
-          color="secondary"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-        />
-      }
+    <TripPlaceForm
+      locations={locations}
+      place={destination}
+      setPlace={setDestination}
+      label="To"
+      placeholder="Where are you going?"
     />
   </>
 
@@ -367,7 +321,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             clickable={tripsToDisplay.find(trip => trip.startLocationId === location.id || trip.endLocationId === location.id) !== undefined}
           />
         ))}
-        {departure && destination && (
+        {departure && destination && isValidTripSelected && (
           <Polyline
             path={[
               departure.coordinates,
