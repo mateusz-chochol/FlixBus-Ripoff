@@ -15,19 +15,17 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   disableClearable,
 }) => {
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
-  const [placeText, setPlaceText] = useState<string>('');
+  const [placeText, setPlaceText] = useState<string>(place?.name ?? '');
   const [options, setOptions] = useState<string[]>([]);
   const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (place && place.name !== placeText) {
-      setPlaceText(place?.name ?? '');
-    }
-  }, [place, placeText])
+    setPlaceText(place?.name ?? '');
+  }, [place])
 
   useEffect(() => {
-    setPlace(locations.find(location => location.name.toUpperCase() === placeText.toUpperCase()));
+    setPlace(locations.find(location => location.name.toUpperCase() === placeText?.toUpperCase()));
   }, [placeText, locations, setPlace])
 
   useEffect(() => {
