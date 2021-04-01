@@ -12,6 +12,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   setPlace,
   label,
   placeholder,
+  disableClearable,
 }) => {
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
   const [placeText, setPlaceText] = useState<string>('');
@@ -63,6 +64,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       options={options}
       noOptionsText={noOptionsText}
       loading={isLoading}
+      disableClearable={disableClearable ?? false}
       renderInput={(props) =>
         <TextField
           {...props}

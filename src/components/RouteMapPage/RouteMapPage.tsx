@@ -84,6 +84,25 @@ const useStyles = makeStyles((theme: Theme) =>
       '&::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.2)',
       }
+    },
+    smallList: {
+      overflow: 'auto',
+      backgroundColor: theme.palette.background.paper,
+      '&::-webkit-scrollbar': {
+        height: '0.4em'
+      },
+      '&::-webkit-scrollbar-track': {
+        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgba(0,0,0,.2)',
+      },
+      display: 'flex',
+      flexDirection: 'row',
+      padding: 0,
+    },
+    smallListItem: {
+      minWidth: '220px',
     }
   }),
 );
@@ -116,7 +135,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
   const mapContainerStyle = {
-    height: isSmallScreen ? "82vh" : "92vh",
+    height: isSmallScreen ? "70vh" : "92vh",
     width: "100vw",
   };
 
@@ -203,6 +222,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       setPlace={setDeparture}
       label="From"
       placeholder="Start from..."
+      disableClearable={isSmallScreen}
     />
   </>
 
@@ -213,6 +233,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       setPlace={setDestination}
       label="To"
       placeholder="Finish in..."
+      disableClearable={isSmallScreen}
     />
   </>
 
@@ -354,32 +375,82 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         )}
       </GoogleMap>
       <Hidden mdUp>
-        <Box width='100vw' height='10vh'>
+        <Box width='100vw' height='22vh'>
           <Paper square className={classes.footerPaper}>
             <Grid
               container
-              spacing={2}
-              className={classes.footerGrid}
-              alignItems='center'
+              direction='column'
             >
-              <Grid item xs={4}>
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                  {departureForm}
-                </Box>
+              <Grid
+                item
+                container
+                spacing={2}
+                className={classes.footerGrid}
+                alignItems='center'
+                justify='center'
+                xs={12}
+              >
+                <Grid item xs={4}>
+                  <Box display='flex' justifyContent='center' alignItems='center'>
+                    {departureForm}
+                  </Box>
+                </Grid>
+                <Grid item xs={1}>
+                  <Box display='flex' justifyContent='center' alignItems='center'>
+                    {switchButton}
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Box display='flex' justifyContent='center' alignItems='center'>
+                    {destinationForm}
+                  </Box>
+                </Grid>
+                <Grid item xs={1}>
+                  <Box display='flex' justifyContent='center' alignItems='center'>
+                    {searchButton}
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={2}>
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                  {switchButton}
-                </Box>
+              <Grid item xs={12}>
+                <Divider />
               </Grid>
-              <Grid item xs={4}>
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                  {destinationForm}
-                </Box>
-              </Grid>
-              <Grid item xs={2}>
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                  {searchButton}
+              <Grid item container xs={12} justify='center'>
+                <Box height='100%' width='100%'>
+                  {(departure || destination) ?
+                    <List className={classes.smallList}>
+                      {tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
+                        <ListItem button key={trip.id} className={classes.smallListItem}>
+                          <Grid container className={classes.grid} direction='row'>
+                            <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
+                              <Grid item xs={5}>
+                                <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <ArrowRightAltIcon />
+                              </Grid>
+                              <Grid item xs={4}>
+                                <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                              </Grid>
+                            </Grid>
+                            <Grid item>
+                              <ListItemText secondary={`Date: ${trip.date}, ${trip.price}$`} />
+                            </Grid>
+                          </Grid>
+                        </ListItem>
+                      )) :
+                        <Box height='100%' width='100%'>
+                          <Typography variant='subtitle1' align='center' noWrap>
+                            <Box m={2} mt={3} color="text.disabled">Sorry, no trips found</Box>
+                          </Typography>
+                        </Box>
+                      }
+                    </List> :
+                    <Box height='100%' width='100%'>
+                      <Typography variant='subtitle1' align='center' noWrap>
+                        <Box m={2} mt={3} color="text.disabled">Choose departure, destination or both to display trips</Box>
+                      </Typography>
+                    </Box>
+                  }
                 </Box>
               </Grid>
             </Grid>

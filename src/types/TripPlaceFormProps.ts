@@ -6,4 +6,5 @@ export default interface TripPlaceFormProps {
   setPlace: React.Dispatch<React.SetStateAction<Location | undefined>>,
   label: string,
   placeholder: string,
+  disableClearable?: boolean,
 }
