@@ -17,12 +17,12 @@ As of now the things that work are:
 Current TODOs:
 - main page:
   - fix vertical scaling on mobile devices
-  - add autocompletion for destination / departure text fields
+  - <del> add autocompletion for destination / departure text fields </del> (Done)
   - change background paper to something code generated so it's never to small no matter the resolution
   - fix return / departure date fields so they have separate data sources and departure cannot be after return date and none can be before current date
   - make search button actually do something
 - route map page:
-  - fix autocompletion so it generates results after typing at least 2 characters
+  - <del> fix autocompletion so it generates results after typing at least 2 characters </del> (Done)
   - use RxJS to delay call for autocompletion data (1-2 seconds after last typed character)
   - disable selecting markers after typing the departure / destination (make so the search button does that)
   - disable immediate filtering of the trips (make so the search button does the filtering)
