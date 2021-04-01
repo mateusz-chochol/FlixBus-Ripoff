@@ -29,7 +29,7 @@ Current TODOs:
   - <del> create new button that redirects the user to the results page if departure / destination forms are filled up (include parameters in the url)</del> (Won't do)
     - <del> the button should at first be disabled with info that you need to fill up the forms </del> (Won't do)
   - <del> search button should update the available trips column </del> (Won't do)
-  - default stage of the trips column should tell the user to fill up at least one form
+  - <del> default stage of the trips column should tell the user to fill up at least one form </del> (Done)
   - trips column should display some "not found" message if the user input doesnt match to anything
   - clicking on the available trip should redirect the user to the page of that trip (also create a page of a particular trip)
   - error snackbar about no such trips found should only show up after clicking the search button
