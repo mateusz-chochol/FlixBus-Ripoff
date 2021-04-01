@@ -242,7 +242,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid
                   item
                   container
-                  alignItems='stretch'
+                  alignItems={isSmallScreen ? 'stretch' : 'center'}
                   justify='space-around'
                   spacing={3}
                   md={tripType === TripType.OneWay ? 5 : 6}

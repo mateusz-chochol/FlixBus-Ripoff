@@ -11,7 +11,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   place,
   setPlace,
   label,
-  placeholder
+  placeholder,
 }) => {
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
   const [placeText, setPlaceText] = useState<string>('');

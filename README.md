@@ -24,13 +24,13 @@ Current TODOs:
 - route map page:
   - <del> fix autocompletion so it generates results after typing at least 2 characters </del>  (Done)
   - use RxJS to delay call for autocompletion data (1-2 seconds after last typed character)
-  - disable selecting markers after typing the departure / destination (make so the search button does that)
-  - disable immediate filtering of the trips (make so the search button does the filtering)
-  - create new button that redirects the user to the results page if departure / destination forms are filled up (include parameters in the url)
-    - the button should at first be disabled with info that you need to fill up the forms
-  - search button should update the available trips column
-    - default stage of this column should tell the user to fill up at least one form
-    - column should display some "not found" message if the user input doesnt match to anything
+  - <del> disable selecting markers after typing the departure / destination (make so the search button does that) </del> (Won't do)
+  - <del> disable immediate filtering of the trips (make so the search button does the filtering) </del> (Won't do)
+  - <del> create new button that redirects the user to the results page if departure / destination forms are filled up (include parameters in the url)</del> (Won't do)
+    - <del> the button should at first be disabled with info that you need to fill up the forms </del> (Won't do)
+  - <del> search button should update the available trips column </del> (Won't do)
+  - default stage of the trips column should tell the user to fill up at least one form
+  - trips column should display some "not found" message if the user input doesnt match to anything
   - clicking on the available trip should redirect the user to the page of that trip (also create a page of a particular trip)
   - error snackbar about no such trips found should only show up after clicking the search button
   - map should load only markers of the locations that the user can actually see (depending on the zoom level) and should display only set amount of them with system that selects which ones to show and that depends on the "importance" level of the locations (every location should have some "importance" level)
