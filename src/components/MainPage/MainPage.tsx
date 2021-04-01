@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
     grid: {
       margin: 0,
       width: '100%',
-    }
+    },
   }),
 );
 
@@ -206,6 +206,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         setPlace={setDeparture}
                         label="From"
                         placeholder="Start from..."
+                        disableClearable={isSmallScreen}
                       />
                     </Box>
                   </Grid>
@@ -226,6 +227,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         setPlace={setDestination}
                         label="To"
                         placeholder="Finish in..."
+                        disableClearable={isSmallScreen}
                       />
                     </Box>
                   </Grid>
@@ -300,7 +302,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       />
                     </Box>
                   </Grid>
-                  {tripType === TripType.OneWay &&
+                  {tripType === TripType.OneWay && !isSmallScreen &&
                     <Grid item md={1} />
                   }
                   <Grid
