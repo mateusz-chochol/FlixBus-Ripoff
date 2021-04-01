@@ -162,10 +162,10 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                     </Box>
                   </Grid>
                   <Hidden smDown>
-                    <Grid item md={1}>
-                      <Box display='flex' justifyContent='center' alignItems='center'>
-                        <IconButton onClick={handleSwitchClick}>
-                          <LoopIcon fontSize='large' />
+                    <Grid item container md={1}>
+                      <Box display='flex' justifyContent='center' alignSelf='center'>
+                        <IconButton size='small' onClick={handleSwitchClick}>
+                          <LoopIcon />
                         </IconButton>
                       </Box>
                     </Grid>
@@ -194,7 +194,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid
                   item
                   container
-                  alignItems='stretch'
+                  alignItems='center'
                   justify='space-around'
                   spacing={3}
                   md={tripType === 'one way' ? 5 : 7}
