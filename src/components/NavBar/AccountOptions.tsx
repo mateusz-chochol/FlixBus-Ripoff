@@ -97,11 +97,11 @@ const AccountOptions: React.FC = () => {
         disableFocusRipple
       >
         <Button className={classes.button} onClick={() => { history.push(routes.loginPage) }}>
-          Log In
-          </Button>
+          Login
+        </Button>
         <Button className={classes.button} onClick={() => { history.push(routes.singupPage) }}>
-          Sign Up
-          </Button>
+          Signup
+        </Button>
       </ButtonGroup>
     </>
   )
