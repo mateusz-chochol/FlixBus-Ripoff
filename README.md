@@ -3,7 +3,7 @@ Like the name suggests it's a bus travel website that tries to imitate FlixBus
 
 It uses firebase as a hosting service: https://flixbus-development.web.app/ (demo so far)
 
-As of now the things that work are: 
+As of now the things that work are:
 - login
 - singup
 - password reseting (it sends a message to the registered email)

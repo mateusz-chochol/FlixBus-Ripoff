@@ -9,7 +9,8 @@ import {
   Hidden,
   withWidth,
   WithWidth,
-  FormControlLabel
+  FormControlLabel,
+  Typography
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LoopIcon from '@material-ui/icons/Loop';
@@ -80,15 +81,20 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="100vh"
+        height={isSmallScreen ? "100vh" : "80vh"}
         width="100vw"
       >
         <Box width={isSmallScreen ? 2 / 5 : undefined} minWidth={300}>
+          <Hidden smDown>
+            <Typography variant='h2'>
+              <Box ml={3} mb={1} fontWeight={500} letterSpacing={6} color="text.disabled">Low cost bus travel</Box>
+            </Typography>
+          </Hidden>
           <Paper elevation={4}>
             <Grid
               container
               direction='column'
-              spacing={2}
+              spacing={isSmallScreen ? 0 : 2}
               alignItems='center'
               className={classes.grid}
             >
