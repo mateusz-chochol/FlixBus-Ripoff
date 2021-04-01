@@ -23,6 +23,10 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
+import { getLocations } from 'redux/LocationsSlice';
+import TripPlaceForm from 'components/Misc/TripPlaceForm';
+import Location from 'types/Location';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,9 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const MainPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const isSmallScreen = width === 'xs' || width === 'sm';
+  const locations = useSelector(getLocations);
+  const [departure, setDeparture] = useState<Location>();
+  const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<string>('one way');
-  const [departure, setDeparture] = useState<string>('');
-  const [destination, setDestination] = useState<string>('');
   const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2020-11-20T21:11:54'));
 
@@ -138,51 +143,41 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid
                   item
                   container
-                  alignItems={'center'}
+                  alignItems='stretch'
                   justify='center'
                   spacing={isSmallScreen ? 3 : 1}
-                  md={tripType === 'one way' ? 6 : 5}
+                  md={tripType === 'one way' ? 7 : 5}
                   direction={isSmallScreen ? 'column' : 'row'}
                   className={classes.grid}
                 >
                   <Grid item xs={12} md={5}>
                     <Box display='flex' justifyContent='flex-end' alignItems='center'>
-                      <TextField
-                        id="departure-search-bar"
+                      <TripPlaceForm
+                        locations={locations}
+                        place={departure}
+                        setPlace={setDeparture}
                         label="From"
                         placeholder="Where do you start?"
-                        color="secondary"
-                        value={departure}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDeparture(event.target.value) }}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        variant="outlined"
                       />
                     </Box>
                   </Grid>
                   <Hidden smDown>
                     <Grid item md={1}>
                       <Box display='flex' justifyContent='center' alignItems='center'>
-                        <IconButton size='small' onClick={handleSwitchClick}>
-                          <LoopIcon />
+                        <IconButton onClick={handleSwitchClick}>
+                          <LoopIcon fontSize='large' />
                         </IconButton>
                       </Box>
                     </Grid>
                   </Hidden>
                   <Grid item xs={12} md={5}>
                     <Box display='flex' justifyContent='flex-start' alignItems='center'>
-                      <TextField
-                        id="destination-search-bar"
+                      <TripPlaceForm
+                        locations={locations}
+                        place={destination}
+                        setPlace={setDestination}
                         label="To"
                         placeholder="Where are you going?"
-                        color="secondary"
-                        value={destination}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setDestination(event.target.value) }}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        variant="outlined"
                       />
                     </Box>
                   </Grid>
@@ -199,14 +194,14 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid
                   item
                   container
-                  alignItems='center'
+                  alignItems='stretch'
                   justify='space-around'
                   spacing={3}
-                  md={tripType === 'one way' ? 6 : 7}
+                  md={tripType === 'one way' ? 5 : 7}
                   direction={isSmallScreen ? 'column' : 'row'}
                   className={classes.grid}
                 >
-                  <Grid item xs={12} md={tripType === 'one way' ? 7 : 4}>
+                  <Grid item xs={12} md={tripType === 'one way' ? 6 : 4}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <DateTimePicker
                         variant="inline"
@@ -215,6 +210,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         onChange={(date: Date | null) => { setSelectedDate(date) }}
                         color='secondary'
                         inputVariant="outlined"
+                        fullWidth
                       />
                     </Box>
                   </Grid>
@@ -228,6 +224,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                           onChange={(date: Date | null) => { setSelectedDate(date) }}
                           color='secondary'
                           inputVariant="outlined"
+                          fullWidth
                         />
                       </Box>
                     </Grid>
@@ -244,9 +241,13 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         inputProps={{ dir: "rtl", }}
                         InputLabelProps={{ shrink: true, }}
                         variant="outlined"
+                        fullWidth
                       />
                     </Box>
                   </Grid>
+                  {tripType === 'one way' &&
+                    <Grid item md={1} />
+                  }
                   <Grid item xs={12} md={2}>
                     <Box display='flex' alignItems='flex-end' justifyContent='center'>
                       <IconButton color="secondary">
