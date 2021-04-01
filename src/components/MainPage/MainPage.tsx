@@ -33,6 +33,7 @@ import { getLocations } from 'redux/LocationsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import Location from 'types/Location';
+import TripType from 'types/TripType';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,14 +52,14 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const { showError } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
-  const [tripType, setTripType] = useState<string>('one way');
+  const [tripType, setTripType] = useState<TripType>(TripType.OneWay);
   const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
   const [isDepartureDateWindowOpen, setIsDepartureDateWindowOpen] = useState<boolean>(false);
   const [isReturnDateWindowOpen, setIsReturnDateWindowOpen] = useState<boolean>(false);
   const [departureDate, setDepartureDate] = React.useState<Date | null>(moment().toDate());
   const [returnDate, setReturnDate] = React.useState<Date | null>(moment().add(1, 'days').toDate());
 
-  const handleTripTypeChange = (tripType: string) => {
+  const handleTripTypeChange = (tripType: TripType) => {
     setTripType(tripType);
 
     if (moment(departureDate).isAfter(returnDate)) {
@@ -70,7 +71,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
     if (moment(date).isBefore(moment(), 'day')) {
       showError('Departure date cannot be from the past');
     }
-    else if (tripType === 'one way' || moment(date).isSameOrBefore(returnDate, 'day')) {
+    else if (tripType === TripType.OneWay || moment(date).isSameOrBefore(returnDate, 'day')) {
       setDepartureDate(date);
     }
     else {
@@ -151,8 +152,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                     <FormControlLabel
                       value='one way'
                       control={<Radio
-                        checked={tripType === 'one way'}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleTripTypeChange(event.target.value)}
+                        checked={tripType === TripType.OneWay}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleTripTypeChange(TripType.OneWay)}
                       />}
                       name="one-way-radio"
                       label='One way'
@@ -169,8 +170,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                     <FormControlLabel
                       value='round trip'
                       control={<Radio
-                        checked={tripType === 'round trip'}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { handleTripTypeChange(event.target.value) }}
+                        checked={tripType === TripType.RoundTrip}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { handleTripTypeChange(TripType.RoundTrip) }}
                       />}
                       label='Round trip'
                       name="round-trip-radio"
@@ -193,7 +194,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   alignItems='stretch'
                   justify='center'
                   spacing={isSmallScreen ? 3 : 1}
-                  md={tripType === 'one way' ? 7 : 6}
+                  md={tripType === TripType.OneWay ? 7 : 6}
                   direction={isSmallScreen ? 'column' : 'row'}
                   className={classes.grid}
                 >
@@ -244,11 +245,11 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                   alignItems='center'
                   justify='space-around'
                   spacing={3}
-                  md={tripType === 'one way' ? 5 : 6}
+                  md={tripType === TripType.OneWay ? 5 : 6}
                   direction={isSmallScreen ? 'column' : 'row'}
                   className={classes.grid}
                 >
-                  <Grid item xs={12} md={tripType === 'one way' ? 6 : 4}>
+                  <Grid item xs={12} md={tripType === TripType.OneWay ? 6 : 4}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <DatePicker
                         variant="inline"
@@ -264,7 +265,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       />
                     </Box>
                   </Grid>
-                  {tripType === 'round trip' &&
+                  {tripType === TripType.RoundTrip &&
                     <Grid item xs={12} md={4}>
                       <Box display='flex' justifyContent='center' alignItems='center'>
                         <DatePicker
@@ -282,7 +283,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       </Box>
                     </Grid>
                   }
-                  <Grid item xs={12} md={tripType === 'one way' ? 3 : 2}>
+                  <Grid item xs={12} md={tripType === TripType.OneWay ? 3 : 2}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                       <TextField
                         id="passengers-number"
@@ -298,15 +299,34 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       />
                     </Box>
                   </Grid>
-                  {tripType === 'one way' &&
+                  {tripType === TripType.OneWay &&
                     <Grid item md={1} />
                   }
-                  <Grid item xs={12} md={2}>
-                    <Box display='flex' alignItems='flex-end' justifyContent='center'>
-                      <IconButton color="secondary">
-                        <SearchIcon fontSize='large' />
-                      </IconButton>
-                    </Box>
+                  <Grid
+                    item
+                    container
+                    direction='row'
+                    alignItems='center'
+                    justify='center'
+                    xs={12}
+                    md={2}
+                  >
+                    <Hidden smDown>
+                      {tripType === TripType.RoundTrip &&
+                        <Grid item md={6} />
+                      }
+                    </Hidden>
+                    <Grid item md={6}>
+                      <Box
+                        display='flex'
+                        alignItems='flex-end'
+                        justifyContent='center'
+                      >
+                        <IconButton color="secondary">
+                          <SearchIcon fontSize='large' />
+                        </IconButton>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
