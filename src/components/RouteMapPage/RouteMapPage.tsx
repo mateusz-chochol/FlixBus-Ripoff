@@ -18,7 +18,8 @@ import {
   Paper,
   withWidth,
   WithWidth,
-  ListSubheader
+  ListSubheader,
+  Typography
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { getLocations } from 'redux/LocationsSlice';
@@ -301,28 +302,35 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
               <Divider />
             </Grid>
           </Grid>
-          <List subheader={<ListSubheader>Available trips</ListSubheader>} className={classes.list}>
-            {tripsToDisplay.map(trip => (
-              <ListItem button key={trip.id}>
-                <Grid container className={classes.grid} direction='column'>
-                  <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
-                    <Grid item xs={5}>
-                      <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+          {(departure || destination) ?
+            <List subheader={<ListSubheader>Available trips</ListSubheader>} className={classes.list}>
+              {tripsToDisplay.map(trip => (
+                <ListItem button key={trip.id}>
+                  <Grid container className={classes.grid} direction='column'>
+                    <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
+                      <Grid item xs={5}>
+                        <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                      </Grid>
+                      <Grid item xs={2}>
+                        <ArrowRightAltIcon />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={2}>
-                      <ArrowRightAltIcon />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                    <Grid item>
+                      <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
                     </Grid>
                   </Grid>
-                  <Grid item>
-                    <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
-                  </Grid>
-                </Grid>
-              </ListItem>
-            ))}
-          </List>
+                </ListItem>
+              ))}
+            </List> :
+            <Box height='100%'>
+              <Typography variant='h5'>
+                <Box m={2} mt={3} color="text.disabled">Choose departure, destination or both to display available trips</Box>
+              </Typography>
+            </Box>
+          }
         </Drawer>
       </Hidden>
       <GoogleMap
