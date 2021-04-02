@@ -20,6 +20,10 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const capitalizeFirstLetter = (value: string) => {
+    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+  };
+
   useEffect(() => {
     setPlaceText(place?.name ?? '');
   }, [place])
@@ -57,7 +61,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       value={placeText}
       onChange={(event: any, value) => setPlaceText(value ?? '')}
       inputValue={placeTextValue}
-      onInputChange={(event, value) => setPlaceTextValue(value)}
+      onInputChange={(event, value) => setPlaceTextValue(capitalizeFirstLetter(value))}
       onBlur={() => setPlace(locations.find(location => location.name === placeTextValue))}
       fullWidth
       popupIcon={null}

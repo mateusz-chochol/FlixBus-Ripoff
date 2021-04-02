@@ -75,8 +75,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
       setDepartureDate(date);
     }
     else {
-      setIsDepartureDateWindowOpen(false);
-      showError('Departure date cannot be after return date');
+      setDepartureDate(date);
+      setReturnDate(moment(departureDate).add(1, 'days').toDate());
     }
   }
 
