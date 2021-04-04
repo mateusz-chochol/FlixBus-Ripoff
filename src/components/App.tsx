@@ -8,8 +8,15 @@ import SignupPage from './Account/SignupPage';
 import LoginPage from './Account/LoginPage';
 import MenuAppBar from './NavBar/MenuAppBar';
 import RouteMapPage from './RouteMapPage/RouteMapPage';
+import DefaultRoute from './Misc/DefaultRoute';
+import PrivateRoute from './Misc/PrivateRoute';
+import ForgotPasswordPage from './Account/ForgotPasswordPage';
+import ResultsPage from './ResultsPage/ResultsPage';
 import { Paper } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import {
   useSelector,
   useDispatch
@@ -18,11 +25,7 @@ import {
   removeNotificationActionCreator,
   selectNotifications
 } from 'redux/NotificationsSlice';
-import DefaultRoute from './Misc/DefaultRoute';
-import PrivateRoute from './Misc/PrivateRoute';
-import ForgotPasswordPage from './Account/ForgotPasswordPage';
 import { routes } from 'routes';
-import { Box } from '@material-ui/core';
 
 const styles = {
   paperContainer: {
@@ -58,14 +61,17 @@ const App = () => {
           height="100vh"
           width="100vw"
         >
-          <MenuAppBar />
-          <Switch>
-            <DefaultRoute exact path={routes.mainPage} component={MainPage} />
-            <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
-            <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
-            <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
-            <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
-          </Switch>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MenuAppBar />
+            <Switch>
+              <DefaultRoute exact path={routes.mainPage} component={MainPage} />
+              <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
+              <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
+              <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
+              <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
+              <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
+            </Switch>
+          </MuiPickersUtilsProvider>
         </Box>
       </Paper>
     </Router>

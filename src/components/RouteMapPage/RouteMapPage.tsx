@@ -135,7 +135,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
   const mapContainerStyle = {
-    height: isSmallScreen ? "70vh" : "92vh",
+    height: isSmallScreen ? '70vh' : '92vh',
     width: "100vw",
   };
 
