@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Typography, Paper } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { ResultsPageProps } from 'types/ResultsPageProps';
 
-const ResultsPage: React.FC = () => {
+const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
+  const { departureId, destinationId } = match.params;
   const history = useHistory();
 
   return (

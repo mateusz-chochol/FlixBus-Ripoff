@@ -3,6 +3,6 @@ export const routes = {
   singupPage: "/signup",
   forgotPasswordPage: "/forgotpassword",
   routeMapPage: "/routemap",
-  resultsPage: "/results",
+  resultsPage: "/results/:departureId/:destinationId",
   mainPage: "/",
 }

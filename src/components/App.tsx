@@ -64,12 +64,12 @@ const App = () => {
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <MenuAppBar />
             <Switch>
-              <DefaultRoute exact path={routes.mainPage} component={MainPage} />
               <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
               <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
               <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
               <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
               <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
+              <DefaultRoute path={routes.mainPage} component={MainPage} />
             </Switch>
           </MuiPickersUtilsProvider>
         </Box>

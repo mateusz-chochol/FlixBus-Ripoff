@@ -1,5 +1,6 @@
 import React, {
   useState,
+  useEffect,
   useRef,
 } from 'react';
 import {
@@ -57,6 +58,12 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const [isReturnDateWindowOpen, setIsReturnDateWindowOpen] = useState<boolean>(false);
   const [departureDate, setDepartureDate] = React.useState<Date | null>(moment().toDate());
   const [returnDate, setReturnDate] = React.useState<Date | null>(moment().add(1, 'days').toDate());
+
+  useEffect(() => {
+    if (history.location.pathname !== routes.mainPage) {
+      history.replace('/')
+    }
+  }, [history])
 
   const handleTripTypeChange = (tripType: TripType) => {
     setTripType(tripType);
@@ -117,11 +124,11 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleSearchButtonClick = () => {
-    if (departure || destination) {
-      history.push(routes.resultsPage);
+    if (departure && destination) {
+      history.push(routes.resultsPage.replace(':departureId', departure.id.toString()).replace(':destinationId', destination.id.toString()));
     }
     else {
-      showInfo('You need to fill departure or destination field (or both)')
+      showInfo('You need to fill departure and destination fields first')
     }
   }
 
