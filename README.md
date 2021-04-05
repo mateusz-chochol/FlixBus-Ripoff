@@ -52,5 +52,5 @@ Current TODOs:
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - move all data to the firebase backend and create api calls that will fetch them when needed
-  - think if user should be able to search trips if only one of departure / destination fields are filled
-  - redo redux for locations (like it was done with trips)
+  - <del> think if user should be able to search trips if only one of departure / destination fields are filled </del> (Done)
+  - <del> redo redux for locations (like it was done with trips) </del> (Done)
