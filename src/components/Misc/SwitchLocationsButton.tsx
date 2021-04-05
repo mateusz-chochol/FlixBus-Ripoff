@@ -30,7 +30,6 @@ const SwitchLocationsButton: React.FC<SwitchLocationsButtonProps> = ({
         setDeparture(undefined);
         setDestination(undefined);
       }
-
     }
   }
 
