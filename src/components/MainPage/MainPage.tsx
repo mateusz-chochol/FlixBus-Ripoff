@@ -285,7 +285,6 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         open={isReturnDateWindowOpen}
                         onOpen={() => setIsReturnDateWindowOpen(true)}
                         onClose={() => setIsReturnDateWindowOpen(false)}
-                        inputProps={{ fullWidth: true }}
                         fullWidth
                       />
                     </Box>
