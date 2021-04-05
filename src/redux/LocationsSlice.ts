@@ -1,8 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit'
+import Coordinates from 'types/Objects/Coordinates';
 import Location from 'types/Objects/Location';
 import { AppState } from './Store';
 
-const locationsInitialState: Location[] = new Array<Location>(
+interface LocationsSliceState {
+  locationsForTextField: Location[],
+  locationsForMap: Location[],
+}
+
+const allLocations: Location[] = new Array<Location>(
   {
     id: 1,
     name: 'Kraków',
@@ -69,28 +78,42 @@ const locationsInitialState: Location[] = new Array<Location>(
   },
 );
 
+const locationsInitialState: LocationsSliceState = {
+  locationsForTextField: allLocations,
+  locationsForMap: [],
+}
+
+// fake API calls
+const getAllLocations = () => locationsInitialState;
+const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates) => {
+  return allLocations.filter(location => {
+    return location.coordinates.lat >= bottomRight.lat &&
+      location.coordinates.lat <= upperLeft.lat &&
+      location.coordinates.lng >= bottomRight.lng &&
+      location.coordinates.lng <= upperLeft.lng
+  })
+}
+
 const locationsSlice = createSlice({
   name: 'locations',
   initialState: locationsInitialState,
   reducers: {
-
+    getAllLocations: () => getAllLocations(),
+    getLocationsByCoordinates: (state, { payload }: PayloadAction<{ upperLeft: Coordinates, bottomRight: Coordinates }>) => {
+      return {
+        ...state,
+        locationsForMap: getLocationsByCoordinates(payload.upperLeft, payload.bottomRight)
+      }
+    },
   }
 })
 
-export const getLocations = (state: AppState) => state.locations;
+export const getLocationsForTextField = (state: AppState) => state.locations.locationsForTextField;
+export const getLocationsForMap = (state: AppState) => state.locations.locationsForMap;
+
+export const {
+  getAllLocations: getAllLocationsActionCreator,
+  getLocationsByCoordinates: getLocationsByCoordinatesActionCreator,
+} = locationsSlice.actions;
 
 export default locationsSlice.reducer
-
-// Code to check if location is on the screen.
-// Its supposed to run on the server but i'm yet to think through how i'm going to do this.
-
-// const isWithin = (point: Coordinates, northEast: Coordinates, southWest: Coordinates) => {
-//   console.log('point', point);
-//   console.log('upperLeft', northEast);
-//   console.log('bottomRight', southWest);
-
-//   return point.lat >= southWest.lat &&
-//     point.lat <= northEast.lat &&
-//     point.lng >= southWest.lng &&
-//     point.lng <= northEast.lng
-// }

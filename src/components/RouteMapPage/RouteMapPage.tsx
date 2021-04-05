@@ -23,7 +23,11 @@ import {
   getBasicTrips,
   getBasicTripsFromDepartureIdActionCreator,
 } from 'redux/BasicTripsSlice';
-import { getLocations } from 'redux/LocationsSlice';
+import {
+  getLocationsForTextField,
+  getLocationsForMap,
+  getLocationsByCoordinatesActionCreator,
+} from 'redux/LocationsSlice';
 import {
   getTrips,
   getLastDepartureId,
@@ -132,7 +136,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const mapRef = useRef<any>();
   const isSmallScreen = width === 'xs' || width === 'sm';
   const dispatch = useDispatch();
-  const locations = useSelector(getLocations);
+  const locationsForTextFields = useSelector(getLocationsForTextField);
+  const locationsForMap = useSelector(getLocationsForMap);
   const basicTrips = useSelector(getBasicTrips);
   const trips = useSelector(getTrips);
   const lastDepartureId = useSelector(getLastDepartureId);
@@ -172,6 +177,23 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     if (!departure && destination) {
       return setDeparture(location);
     }
+  }
+
+  const getLocationsToShow = () => {
+    const bounds = mapRef.current.getBounds();
+    const northEast = bounds.getNorthEast();
+    const southWest = bounds.getSouthWest();
+
+    dispatch(getLocationsByCoordinatesActionCreator({
+      upperLeft: {
+        lng: northEast.lng(),
+        lat: northEast.lat()
+      },
+      bottomRight: {
+        lng: southWest.lng(),
+        lat: southWest.lat()
+      }
+    }))
   }
 
   const getMarkerColor = (location: Location) => {
@@ -261,7 +283,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <TripPlaceForm
-                  locations={locations}
+                  locations={locationsForTextFields}
                   place={departure}
                   setPlace={setDeparture}
                   label="From"
@@ -273,7 +295,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <TripPlaceForm
-                  locations={locations}
+                  locations={locationsForTextFields}
                   place={destination}
                   setPlace={setDestination}
                   label="To"
@@ -312,7 +334,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           <TripsList
             departure={departure}
             destination={destination}
-            locations={locations}
+            locations={locationsForTextFields}
             basicTrips={basicTrips}
             trips={trips}
             listClassName={classes.list}
@@ -332,8 +354,9 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         center={center}
         options={options}
         onLoad={onMapLoad}
+        onIdle={getLocationsToShow}
       >
-        {locations.map((location) => (
+        {locationsForMap.map((location) => (
           <Marker
             key={location.name}
             position={location.coordinates}
@@ -373,7 +396,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid item xs={4}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
                     <TripPlaceForm
-                      locations={locations}
+                      locations={locationsForTextFields}
                       place={departure}
                       setPlace={setDeparture}
                       label="From"
@@ -396,7 +419,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid item xs={4}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
                     <TripPlaceForm
-                      locations={locations}
+                      locations={locationsForTextFields}
                       place={destination}
                       setPlace={setDestination}
                       label="To"
@@ -419,7 +442,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                   <TripsList
                     departure={departure}
                     destination={destination}
-                    locations={locations}
+                    locations={locationsForTextFields}
                     basicTrips={basicTrips}
                     trips={trips}
                     listClassName={classes.smallList}
