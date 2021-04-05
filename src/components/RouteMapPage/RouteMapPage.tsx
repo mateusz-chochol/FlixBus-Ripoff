@@ -39,8 +39,8 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import Location from 'types/Location';
-import Trip from 'types/Trip';
+import Location from 'types/Objects/Location';
+import Trip from 'types/Objects/Trip';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 const drawerWidth = 260;

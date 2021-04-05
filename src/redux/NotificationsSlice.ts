@@ -3,7 +3,7 @@ import {
   current,
   PayloadAction
 } from '@reduxjs/toolkit';
-import Notification from 'types/Notification';
+import Notification from 'types/Objects/Notification';
 import { AppState } from './Store';
 
 const notificationsInitialState: Notification[] = new Array<Notification>()

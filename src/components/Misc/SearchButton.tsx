@@ -2,7 +2,7 @@ import React from 'react';
 import { routes } from 'routes';
 import { useHistory } from 'react-router-dom';
 import { useNotifications } from 'components/Misc/Notifications';
-import SearchButtonProps from 'types/SearchButtonProps';
+import SearchButtonProps from 'types/Props/SearchButtonProps';
 import { IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 

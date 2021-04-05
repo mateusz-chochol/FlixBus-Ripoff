@@ -5,7 +5,7 @@ import {
   Paper,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import ResultsPageProps from 'types/ResultsPageProps';
+import ResultsPageProps from 'types/Props/ResultsPageProps';
 
 const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   const { departureId, destinationId } = match.params;

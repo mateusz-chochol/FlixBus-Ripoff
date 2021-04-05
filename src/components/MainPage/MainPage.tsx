@@ -28,8 +28,8 @@ import { useSelector } from 'react-redux';
 import { getLocations } from 'redux/LocationsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
-import Location from 'types/Location';
-import TripType from 'types/TripType';
+import Location from 'types/Objects/Location';
+import TripType from 'types/Objects/TripType';
 import SearchButton from 'components/Misc/SearchButton';
 import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
 

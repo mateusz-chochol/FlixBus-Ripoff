@@ -34,7 +34,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from './Drawer';
 import AccountOptions from './AccountOptions';
 import { routes } from 'routes';
-import AppBarMenuItem from 'types/AppBarMenuItem';
+import AppBarMenuItem from 'types/Objects/AppBarMenuItem';
 import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 import StreetviewRoundedIcon from '@material-ui/icons/StreetviewRounded';
 import DevicesRoundedIcon from '@material-ui/icons/DevicesRounded';

@@ -20,7 +20,8 @@ import {
   Box,
   Grid,
 } from '@material-ui/core';
-import AppBarMenuItem from 'types/AppBarMenuItem';
+import DrawerProps from 'types/Props/DrawerProps';
+import AppBarMenuItem from 'types/Objects/AppBarMenuItem';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,11 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Drawer: React.FC<{
-  items: AppBarMenuItem[],
-  open: boolean,
-  setOpen: (value: React.SetStateAction<boolean>) => void
-}> = ({ items, open, setOpen }) => {
+const Drawer: React.FC<DrawerProps> = ({
+  items,
+  open,
+  setOpen
+}) => {
   const classes = useStyles();
   const iOS = Boolean(process.env.browser && /iPad|iPhone|iPod/.test(navigator.userAgent));
   const tabIndex = useSelector(getTab)

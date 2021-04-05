@@ -1,4 +1,4 @@
-import Location from './Location'
+import Location from 'types/Objects/Location'
 
 export default interface TripPlaceFormProps {
   locations: Location[],

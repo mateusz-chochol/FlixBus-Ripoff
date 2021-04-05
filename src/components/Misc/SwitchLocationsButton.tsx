@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
 import LoopIcon from '@material-ui/icons/Loop';
-import SwitchLocationsButtonProps from 'types/SwitchLocationsButtonProps';
+import SwitchLocationsButtonProps from 'types/Props/SwitchLocationsButtonProps';
 
 const SwitchLocationsButton: React.FC<SwitchLocationsButtonProps> = ({
   departure,
