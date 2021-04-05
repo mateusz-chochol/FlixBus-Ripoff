@@ -12,9 +12,15 @@ const SwitchLocationsButton: React.FC<SwitchLocationsButtonProps> = ({
   fontSize,
 }) => {
   const handleSwitchClick = () => {
-    const tempDeparture = departure;
-    setDeparture(destination);
-    setDestination(tempDeparture);
+    if (destination) {
+      const tempDeparture = departure;
+      setDeparture(destination);
+      setDestination(tempDeparture);
+    }
+    else {
+      setDeparture(undefined);
+      setDestination(undefined);
+    }
   }
 
   return (

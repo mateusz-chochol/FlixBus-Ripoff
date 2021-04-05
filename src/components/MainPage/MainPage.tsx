@@ -216,6 +216,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         setDeparture={setDeparture}
                         destination={destination}
                         setDestination={setDestination}
+                        allowEmptyDeparture
                         size='small'
                       />
                     </Box>
@@ -241,6 +242,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                         setDeparture={setDeparture}
                         destination={destination}
                         setDestination={setDestination}
+                        allowEmptyDeparture
                       />
                     </Box>
                   </Grid>

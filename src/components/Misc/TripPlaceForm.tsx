@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 
 const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   locations,
+  trips,
   place,
   setPlace,
   label,
@@ -48,7 +49,14 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       setNoOptionsText('No results found');
 
       const delayCallForOptions = setTimeout(() => {
-        setOptions(locations.map(location => location.name).filter(location => location.toUpperCase().startsWith(placeTextValue.toUpperCase())));
+        let locationsToShow = locations.filter(location => location.name.toUpperCase().startsWith(placeTextValue.toUpperCase()));
+
+        if (trips !== undefined) {
+          const tripsEndLocationsIds = trips.map(trip => trip.endLocationId);
+          locationsToShow = locationsToShow.filter(location => tripsEndLocationsIds.includes(location.id));
+        }
+
+        setOptions(locationsToShow.map(locations => locations.name));
         setIsLoading(false);
       }, 1000)
 

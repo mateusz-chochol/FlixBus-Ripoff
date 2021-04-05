@@ -5,6 +5,7 @@ export default interface SwitchLocationsButtonProps {
   destination?: Location,
   setDeparture: (value: React.SetStateAction<Location | undefined>) => void,
   setDestination: (value: React.SetStateAction<Location | undefined>) => void,
+  allowEmptyDeparture?: boolean,
   size?: "small" | "medium",
   fontSize?: "inherit" | "default" | "large" | "small",
 }

@@ -219,14 +219,21 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   useEffect(() => {
     setIsValidTripSelected(false);
 
-    if (departure === destination && departure) {
+    if (!departure && !destination) {
+      dispatch(getBasicTripsFromDepartureIdActionCreator(0));
+    }
+    else if (departure === destination && departure) {
+      dispatch(getBasicTripsFromDepartureIdActionCreator(0));
+
       setDeparture(undefined);
       setDestination(undefined);
+
       showError('Departure and destination cannot be the same');
     }
     else if (destination && !departure) {
       dispatch(setLastDepartureIdActionCreator(0));
       dispatch(setLastDestinationIdActionCreator(0));
+      dispatch(getBasicTripsFromDepartureIdActionCreator(0));
 
       setDeparture(undefined);
       setDestination(undefined);
@@ -296,6 +303,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <TripPlaceForm
                   locations={locationsForTextFields}
+                  trips={basicTrips}
                   place={destination}
                   setPlace={setDestination}
                   label="To"
