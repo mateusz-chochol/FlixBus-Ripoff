@@ -7,7 +7,6 @@ import {
   Box,
   Paper,
   TextField,
-  IconButton,
   Grid,
   Radio,
   Hidden,
@@ -18,8 +17,6 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { routes } from 'routes';
-import SearchIcon from '@material-ui/icons/Search';
-import LoopIcon from '@material-ui/icons/Loop';
 import moment from 'moment';
 import { DatePicker } from '@material-ui/pickers';
 import {
@@ -33,6 +30,8 @@ import { useNotifications } from 'components/Misc/Notifications';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import Location from 'types/Location';
 import TripType from 'types/TripType';
+import SearchButton from 'components/Misc/SearchButton';
+import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,7 +48,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const locations = useSelector(getLocations);
   const notificationsFunctionsRef = useRef(useNotifications());
-  const { showError, showInfo } = notificationsFunctionsRef.current;
+  const { showError } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<TripType>(TripType.OneWay);
@@ -96,12 +95,6 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
     }
   }
 
-  const handleSwitchClick = () => {
-    const tempDeparture = departure;
-    setDeparture(destination);
-    setDestination(tempDeparture);
-  }
-
   const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const max = 10;
 
@@ -120,15 +113,6 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
     }
     else {
       setNumberOfPassengers(undefined);
-    }
-  }
-
-  const handleSearchButtonClick = () => {
-    if (departure && destination) {
-      history.push(routes.resultsPage.replace(':departureId', departure.id.toString()).replace(':destinationId', destination.id.toString()));
-    }
-    else {
-      showInfo('You need to fill departure and destination fields first')
     }
   }
 
@@ -227,9 +211,13 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Hidden smDown>
                   <Grid item container justify='center' alignItems='center' md={1}>
                     <Box display='flex' >
-                      <IconButton size='small' onClick={handleSwitchClick}>
-                        <LoopIcon />
-                      </IconButton>
+                      <SwitchLocationsButton
+                        departure={departure}
+                        setDeparture={setDeparture}
+                        destination={destination}
+                        setDestination={setDestination}
+                        size='small'
+                      />
                     </Box>
                   </Grid>
                 </Hidden>
@@ -248,9 +236,12 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Hidden mdUp>
                   <Grid item xs={12}>
                     <Box display='flex' justifyContent='center' alignItems='flex-end'>
-                      <IconButton onClick={handleSwitchClick}>
-                        <LoopIcon />
-                      </IconButton>
+                      <SwitchLocationsButton
+                        departure={departure}
+                        setDeparture={setDeparture}
+                        destination={destination}
+                        setDestination={setDestination}
+                      />
                     </Box>
                   </Grid>
                 </Hidden>
@@ -339,9 +330,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       alignItems='flex-end'
                       justifyContent='center'
                     >
-                      <IconButton color="secondary" onClick={handleSearchButtonClick}>
-                        <SearchIcon fontSize='large' />
-                      </IconButton>
+                      <SearchButton departure={departure} destination={destination} />
                     </Box>
                   </Grid>
                 </Grid>

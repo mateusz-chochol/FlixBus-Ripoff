@@ -14,7 +14,6 @@ import {
   Toolbar,
   Grid,
   Divider,
-  IconButton,
   Paper,
   withWidth,
   WithWidth,
@@ -25,6 +24,8 @@ import { useSelector } from 'react-redux';
 import { getLocations } from 'redux/LocationsSlice';
 import { getTrips } from 'redux/TripsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
+import SearchButton from 'components/Misc/SearchButton';
+import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import {
   GoogleMap,
@@ -38,8 +39,6 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import LoopIcon from '@material-ui/icons/Loop';
-import SearchIcon from '@material-ui/icons/Search';
 import Location from 'types/Location';
 import Trip from 'types/Trip';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
@@ -163,12 +162,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     }
   }
 
-  const handleSwitchClick = () => {
-    const tempDeparture = departure;
-    setDeparture(destination);
-    setDestination(tempDeparture);
-  }
-
   const getMarkerColor = (location: Location) => {
     if (location === departure || location === destination) {
       return `${process.env.PUBLIC_URL}/map_markers/default_marker.png`;
@@ -215,40 +208,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
 
-  const departureForm = <>
-    <TripPlaceForm
-      locations={locations}
-      place={departure}
-      setPlace={setDeparture}
-      label="From"
-      placeholder="Start from..."
-      disableClearable={isSmallScreen}
-    />
-  </>
-
-  const destinationForm = <>
-    <TripPlaceForm
-      locations={locations}
-      place={destination}
-      setPlace={setDestination}
-      label="To"
-      placeholder="Finish in..."
-      disableClearable={isSmallScreen}
-    />
-  </>
-
-  const switchButton = <>
-    <IconButton onClick={handleSwitchClick}>
-      <LoopIcon fontSize='large' />
-    </IconButton>
-  </>
-
-  const searchButton = <>
-    <IconButton color="secondary">
-      <SearchIcon fontSize='large' />
-    </IconButton>
-  </>
-
   return (
     <Box
       display="flex"
@@ -279,12 +238,26 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             <Grid item />
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
-                {departureForm}
+                <TripPlaceForm
+                  locations={locations}
+                  place={departure}
+                  setPlace={setDeparture}
+                  label="From"
+                  placeholder="Start from..."
+                  disableClearable={isSmallScreen}
+                />
               </Box>
             </Grid>
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
-                {destinationForm}
+                <TripPlaceForm
+                  locations={locations}
+                  place={destination}
+                  setPlace={setDestination}
+                  label="To"
+                  placeholder="Finish in..."
+                  disableClearable={isSmallScreen}
+                />
               </Box>
             </Grid>
             <Grid
@@ -295,12 +268,18 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             >
               <Grid item xs={6}>
                 <Box display='flex' justifyContent='flex-end' alignItems='center'>
-                  {switchButton}
+                  <SwitchLocationsButton
+                    departure={departure}
+                    setDeparture={setDeparture}
+                    destination={destination}
+                    setDestination={setDestination}
+                    fontSize='large'
+                  />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Box display='flex' justifyContent='flex-start' alignItems='center'>
-                  {searchButton}
+                  <SearchButton departure={departure} destination={destination} />
                 </Box>
               </Grid>
             </Grid>
@@ -392,22 +371,42 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
               >
                 <Grid item xs={4}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
-                    {departureForm}
+                    <TripPlaceForm
+                      locations={locations}
+                      place={departure}
+                      setPlace={setDeparture}
+                      label="From"
+                      placeholder="Start from..."
+                      disableClearable={isSmallScreen}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={1}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
-                    {switchButton}
+                    <SwitchLocationsButton
+                      departure={departure}
+                      setDeparture={setDeparture}
+                      destination={destination}
+                      setDestination={setDestination}
+                      fontSize='large'
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={4}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
-                    {destinationForm}
+                    <TripPlaceForm
+                      locations={locations}
+                      place={destination}
+                      setPlace={setDestination}
+                      label="To"
+                      placeholder="Finish in..."
+                      disableClearable={isSmallScreen}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={1}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
-                    {searchButton}
+                    <SearchButton departure={departure} destination={destination} />
                   </Box>
                 </Grid>
               </Grid>

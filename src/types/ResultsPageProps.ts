@@ -5,4 +5,4 @@ interface ResultsPageParams {
   destinationId: string,
 }
 
-export interface ResultsPageProps extends RouteComponentProps<ResultsPageParams> { }
+export default interface ResultsPageProps extends RouteComponentProps<ResultsPageParams> { }
