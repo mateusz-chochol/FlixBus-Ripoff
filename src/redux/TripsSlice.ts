@@ -394,12 +394,14 @@ const tripsSlice = createSlice({
       return {
         ...state,
         lastDepartureId: payload,
+        lastDestinationId: 0,
         list: getTripsByDepartureId(payload)
       }
     },
     getTripsByDestinationId: (state, { payload }: PayloadAction<number>) => {
       return {
         ...state,
+        lastDepartureId: 0,
         lastDestinationId: payload,
         list: getTripsByDestinationId(payload)
       }
