@@ -7,6 +7,7 @@ import Location from 'types/Objects/Location';
 import { AppState } from './Store';
 
 interface LocationsSliceState {
+  allLocations: Location[],
   locationsForTextField: Location[],
   locationsForMap: Location[],
 }
@@ -79,6 +80,7 @@ const allLocations: Location[] = new Array<Location>(
 );
 
 const locationsInitialState: LocationsSliceState = {
+  allLocations: allLocations,
   locationsForTextField: allLocations,
   locationsForMap: [],
 }
@@ -100,9 +102,15 @@ const locationsSlice = createSlice({
   reducers: {
     getAllLocations: () => getAllLocations(),
     getLocationsByCoordinates: (state, { payload }: PayloadAction<{ upperLeft: Coordinates, bottomRight: Coordinates }>) => {
+      const locationsByCoordinates = getLocationsByCoordinates(payload.upperLeft, payload.bottomRight);
+
       return {
         ...state,
-        locationsForMap: getLocationsByCoordinates(payload.upperLeft, payload.bottomRight)
+        locationsForMap: locationsByCoordinates,
+        allLocations: [
+          ...state.allLocations,
+          ...locationsByCoordinates,
+        ]
       }
     },
   }
