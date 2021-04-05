@@ -20,7 +20,7 @@ Current TODOs:
   - <del> add autocompletion for destination / departure text fields </del> (Done)
   - change background paper to something code generated so it's never to small no matter the resolution
   - <del> fix return / departure date fields so they have separate data sources and departure cannot be after return date and none can be before current date </del>  (Done)
-  - make search button actually do something
+  - <del> make search button actually do something </del> (Done)
 - route map page:
   - <del> fix autocompletion so it generates results after typing at least 2 characters </del>  (Done)
   - <del> use RxJS to delay call for autocompletion data (1-2 seconds after last typed character) </del> (Done [found easier way than with RxJS])
@@ -49,6 +49,8 @@ Current TODOs:
   - create blank page with some static info
 - help page:
   - create blank page with some static info
+- results page:
+  - fill the results page with results
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - move all data to the firebase backend and create api calls that will fetch them when needed
