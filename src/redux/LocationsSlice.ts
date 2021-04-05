@@ -59,6 +59,14 @@ const locationsInitialState: Location[] = new Array<Location>(
       lng: 4.8339211
     }
   },
+  {
+    id: 8,
+    name: 'Prague',
+    coordinates: {
+      lat: 50.073658,
+      lng: 14.418540
+    }
+  },
 );
 
 const locationsSlice = createSlice({

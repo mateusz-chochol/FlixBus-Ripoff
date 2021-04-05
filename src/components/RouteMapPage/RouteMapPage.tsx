@@ -8,21 +8,31 @@ import {
   Box,
   Hidden,
   Drawer,
-  List,
-  ListItem,
-  ListItemText,
   Toolbar,
   Grid,
   Divider,
   Paper,
   withWidth,
   WithWidth,
-  ListSubheader,
-  Typography
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import {
+  getBasicTrips,
+  getBasicTripsFromDepartureIdActionCreator,
+  getBasicTripsFromDestinationIdActionCreator,
+} from 'redux/BasicTripsSlice';
 import { getLocations } from 'redux/LocationsSlice';
-import { getTrips } from 'redux/TripsSlice';
+import {
+  getTrips,
+  getLastDepartureId,
+  getLastDestinationId,
+  getTripsByDepartureAndDestinationIdsActionCreator,
+  setLastDepartureIdActionCreator,
+  setLastDestinationIdActionCreator,
+} from 'redux/TripsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import SearchButton from 'components/Misc/SearchButton';
 import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
@@ -40,8 +50,7 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import Location from 'types/Objects/Location';
-import Trip from 'types/Objects/Trip';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import TripsList from './TripsList';
 
 const drawerWidth = 260;
 
@@ -102,6 +111,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     smallListItem: {
       minWidth: '220px',
+      minHeight: '80px',
     }
   }),
 );
@@ -122,13 +132,16 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const mapRef = useRef<any>();
   const isSmallScreen = width === 'xs' || width === 'sm';
+  const dispatch = useDispatch();
   const locations = useSelector(getLocations);
+  const basicTrips = useSelector(getBasicTrips);
   const trips = useSelector(getTrips);
+  const lastDepartureId = useSelector(getLastDepartureId);
+  const lastDestinationId = useSelector(getLastDestinationId);
   const notificationsFunctionsRef = useRef(useNotifications());
   const { showError } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
-  const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
   const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
@@ -166,21 +179,23 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     if (location === departure || location === destination) {
       return `${process.env.PUBLIC_URL}/map_markers/default_marker.png`;
     }
-    else if (tripsToDisplay.find(trip => trip.endLocationId === location.id || trip.startLocationId === location.id) || (!departure && !destination)) {
-      return `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`;
-    }
 
-    return `${process.env.PUBLIC_URL}/map_markers/grey_marker.png`;
+    return `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`;
   }
 
-  const isMarkerClickable = (location: Location) => {
-    return departure === location ||
-      destination === location ||
-      tripsToDisplay.find(trip => trip.startLocationId === location.id || trip.endLocationId === location.id) !== undefined
+  const isMarkerVisible = (location: Location) => {
+    if ((!departure && !destination) || (location === departure || location === destination)) {
+      return true;
+    }
+    if (departure) {
+      return basicTrips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === location.id) !== undefined;
+    }
+    if (destination && !departure) {
+      return basicTrips.find(trip => trip.startLocationId === location.id && trip.endLocationId === destination.id) !== undefined;
+    }
   }
 
   useEffect(() => {
-    let tempTrips = trips.filter(trip => trip.seatsLeft > 0);
     setIsValidTripSelected(false);
 
     if (departure === destination && departure) {
@@ -189,21 +204,24 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       showError('Departure and destination cannot be the same');
     }
     else if (departure && destination) {
-      tempTrips = tempTrips.filter(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id)
+      if (lastDepartureId !== departure.id || lastDestinationId !== destination.id) {
+        dispatch(getTripsByDepartureAndDestinationIdsActionCreator({ departureId: departure.id, destinationId: destination.id }));
+        dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
+      }
 
-      if (tempTrips.length > 0) {
+      if (trips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id) !== undefined) {
         setIsValidTripSelected(true);
       }
     }
     else if (departure) {
-      tempTrips = tempTrips.filter(trip => trip.startLocationId === departure.id);
+      dispatch(setLastDepartureIdActionCreator(departure.id));
+      dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
     }
     else if (destination) {
-      tempTrips = tempTrips.filter(trip => trip.endLocationId === destination.id);
+      dispatch(setLastDestinationIdActionCreator(destination.id));
+      dispatch(getBasicTripsFromDestinationIdActionCreator(destination.id));
     }
-
-    setTripsToDisplay(tempTrips);
-  }, [departure, destination, trips, showError]);
+  }, [departure, destination, showError, dispatch, trips, lastDepartureId, lastDestinationId]);
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
@@ -287,41 +305,20 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
               <Divider />
             </Grid>
           </Grid>
-          {(departure || destination) ?
-            <List subheader={<ListSubheader>Available trips</ListSubheader>} className={classes.list}>
-              {tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
-                <ListItem button key={trip.id}>
-                  <Grid container className={classes.grid} direction='column'>
-                    <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
-                      <Grid item xs={5}>
-                        <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
-                      </Grid>
-                      <Grid item xs={2}>
-                        <ArrowRightAltIcon />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-              )) :
-                <Box height='100%'>
-                  <Typography variant='h5'>
-                    <Box m={2} mt={3} color="text.disabled">Sorry, no trips found</Box>
-                  </Typography>
-                </Box>
-              }
-            </List> :
-            <Box height='100%'>
-              <Typography variant='h5'>
-                <Box m={2} mt={3} color="text.disabled">Choose departure, destination or both to display available trips</Box>
-              </Typography>
-            </Box>
-          }
+          <TripsList
+            departure={departure}
+            destination={destination}
+            locations={locations}
+            basicTrips={basicTrips}
+            trips={trips}
+            listClassName={classes.list}
+            typographyProps={{
+              variant: 'h5',
+            }}
+            messageBoxProps={{
+              height: '100%',
+            }}
+          />
         </Drawer>
       </Hidden>
       <GoogleMap
@@ -338,7 +335,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             position={location.coordinates}
             icon={getMarkerColor(location)}
             onClick={() => handleSelectMarker(location)}
-            clickable={isMarkerClickable(location)}
+            visible={isMarkerVisible(location)}
           />
         ))}
         {departure && destination && isValidTripSelected && (
@@ -415,41 +412,24 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
               </Grid>
               <Grid item container xs={12} justify='center'>
                 <Box height='100%' width='100%'>
-                  {(departure || destination) ?
-                    <List className={classes.smallList}>
-                      {tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
-                        <ListItem button key={trip.id} className={classes.smallListItem}>
-                          <Grid container className={classes.grid} direction='row'>
-                            <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
-                              <Grid item xs={5}>
-                                <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
-                              </Grid>
-                              <Grid item xs={2}>
-                                <ArrowRightAltIcon />
-                              </Grid>
-                              <Grid item xs={4}>
-                                <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
-                              </Grid>
-                            </Grid>
-                            <Grid item>
-                              <ListItemText secondary={`Date: ${trip.date}, ${trip.price}$`} />
-                            </Grid>
-                          </Grid>
-                        </ListItem>
-                      )) :
-                        <Box height='100%' width='100%'>
-                          <Typography variant='subtitle1' align='center' noWrap>
-                            <Box m={2} mt={3} color="text.disabled">Sorry, no trips found</Box>
-                          </Typography>
-                        </Box>
-                      }
-                    </List> :
-                    <Box height='100%' width='100%'>
-                      <Typography variant='subtitle1' align='center' noWrap>
-                        <Box m={2} mt={3} color="text.disabled">Choose departure, destination or both to display trips</Box>
-                      </Typography>
-                    </Box>
-                  }
+                  <TripsList
+                    departure={departure}
+                    destination={destination}
+                    locations={locations}
+                    basicTrips={basicTrips}
+                    trips={trips}
+                    listClassName={classes.smallList}
+                    listItemClassName={classes.smallListItem}
+                    typographyProps={{
+                      variant: 'subtitle1',
+                      align: 'center',
+                      noWrap: true,
+                    }}
+                    messageBoxProps={{
+                      height: '100%',
+                      width: '100%',
+                    }}
+                  />
                 </Box>
               </Grid>
             </Grid>
