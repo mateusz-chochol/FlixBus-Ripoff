@@ -8,18 +8,29 @@ const SwitchLocationsButton: React.FC<SwitchLocationsButtonProps> = ({
   setDeparture,
   destination,
   setDestination,
+  allowEmptyDeparture,
   size,
   fontSize,
 }) => {
   const handleSwitchClick = () => {
-    if (destination) {
+    const swap = () => {
       const tempDeparture = departure;
       setDeparture(destination);
       setDestination(tempDeparture);
     }
+
+    if (allowEmptyDeparture) {
+      swap();
+    }
     else {
-      setDeparture(undefined);
-      setDestination(undefined);
+      if (destination) {
+        swap();
+      }
+      else {
+        setDeparture(undefined);
+        setDestination(undefined);
+      }
+
     }
   }
 

@@ -2,6 +2,8 @@ import React, {
   useState,
   useEffect,
 } from 'react';
+import { useDispatch } from 'react-redux';
+import { getLocationsBySubstringActionCreator } from 'redux/LocationsSlice';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TripPlaceFormProps from 'types/Props/TripPlaceFormProps';
 import TextField from '@material-ui/core/TextField';
@@ -15,6 +17,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   placeholder,
   disableClearable,
 }) => {
+  const dispatch = useDispatch();
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
   const [placeText, setPlaceText] = useState<string>(place?.name ?? '');
   const [options, setOptions] = useState<string[]>([]);
@@ -49,11 +52,12 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       setNoOptionsText('No results found');
 
       const delayCallForOptions = setTimeout(() => {
+        //dispatch(getLocationsBySubstringActionCreator(placeTextValue))
         let locationsToShow = locations.filter(location => location.name.toUpperCase().startsWith(placeTextValue.toUpperCase()));
 
         if (trips !== undefined) {
           const tripsEndLocationsIds = trips.map(trip => trip.endLocationId);
-          locationsToShow = locationsToShow.filter(location => tripsEndLocationsIds.includes(location.id));
+          locationsToShow = locations.filter(location => tripsEndLocationsIds.includes(location.id));
         }
 
         setOptions(locationsToShow.map(locations => locations.name));

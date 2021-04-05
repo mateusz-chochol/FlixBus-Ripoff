@@ -86,7 +86,7 @@ const locationsInitialState: LocationsSliceState = {
 }
 
 // fake API calls
-const getAllLocations = () => locationsInitialState;
+const getDefaultLocations = () => locationsInitialState;
 const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates) => {
   return allLocations.filter(location => {
     return location.coordinates.lat >= bottomRight.lat &&
@@ -95,12 +95,16 @@ const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordina
       location.coordinates.lng <= upperLeft.lng
   })
 }
+const getLocationsBySubstring = (substring: string) => {
+  console.log(allLocations.filter(location => location.name.startsWith(substring)))
+  return allLocations.filter(location => location.name.startsWith(substring));
+}
 
 const locationsSlice = createSlice({
   name: 'locations',
   initialState: locationsInitialState,
   reducers: {
-    getAllLocations: () => getAllLocations(),
+    getDefaultLocations: () => getDefaultLocations(),
     getLocationsByCoordinates: (state, { payload }: PayloadAction<{ upperLeft: Coordinates, bottomRight: Coordinates }>) => {
       const locationsByCoordinates = getLocationsByCoordinates(payload.upperLeft, payload.bottomRight);
 
@@ -113,15 +117,29 @@ const locationsSlice = createSlice({
         ]
       }
     },
+    getLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
+      const locationsBySubstring = getLocationsBySubstring(payload);
+
+      return {
+        ...state,
+        locationsForTextField: locationsBySubstring,
+        allLocations: [
+          ...state.allLocations,
+          ...locationsBySubstring,
+        ]
+      }
+    },
   }
 })
 
+export const getAllLocations = (state: AppState) => state.locations.allLocations;
 export const getLocationsForTextField = (state: AppState) => state.locations.locationsForTextField;
 export const getLocationsForMap = (state: AppState) => state.locations.locationsForMap;
 
 export const {
-  getAllLocations: getAllLocationsActionCreator,
+  getDefaultLocations: getDefaultLocationsActionCreator,
   getLocationsByCoordinates: getLocationsByCoordinatesActionCreator,
+  getLocationsBySubstring: getLocationsBySubstringActionCreator,
 } = locationsSlice.actions;
 
 export default locationsSlice.reducer
