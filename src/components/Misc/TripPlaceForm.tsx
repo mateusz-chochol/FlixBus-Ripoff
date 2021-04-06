@@ -28,7 +28,13 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
     if (placeTextValue.length < 1) {
       setOptions([]);
     }
-  }
+  };
+
+  const handleOnBlur = () => {
+    if (options.find(option => option === placeTextValue)) {
+      setPlace(locations.find(location => location.name === placeTextValue));
+    }
+  };
 
   const capitalizeFirstLetter = (value: string) => {
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
@@ -75,7 +81,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
 
       return () => clearTimeout(delayCallForOptions)
     }
-  }, [placeTextValue, placeText, place, dispatch, toDispatch])
+  }, [placeTextValue, place, dispatch, toDispatch])
 
   return (
     <Autocomplete
@@ -83,7 +89,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       onChange={(event: any, value) => setPlaceText(value ?? '')}
       inputValue={placeTextValue}
       onInputChange={(event, value) => setPlaceTextValue(capitalizeFirstLetter(value))}
-      onBlur={() => setPlace(locations.find(location => location.name === placeTextValue))}
+      onBlur={handleOnBlur}
       onFocus={handleOnFocus}
       fullWidth
       popupIcon={null}

@@ -170,19 +170,16 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     mapRef.current.panTo(location.coordinates);
 
     if (location === departure) {
-      return setDeparture(undefined);
+      setDeparture(undefined);
     }
-    if (location === destination) {
-      return setDestination(undefined);
+    else if (location === destination) {
+      setDestination(undefined);
     }
-    if (!departure && !destination) {
-      return setDeparture(location);
+    else if (departure) {
+      setDestination(location);
     }
-    if (departure) {
-      return setDestination(location);
-    }
-    if (!departure && destination) {
-      return setDeparture(location);
+    else {
+      setDeparture(location);
     }
   }
 
@@ -226,55 +223,43 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   useEffect(() => {
     setIsValidTripSelected(false);
 
-    if (!departure && !destination) {
-      dispatch(getBasicTripsFromDepartureIdActionCreator(0));
-    }
-    else if (departure === destination && departure) {
-      dispatch(getBasicTripsFromDepartureIdActionCreator(0));
-
-      setDeparture(undefined);
-      setDestination(undefined);
-
-      showInfo('Departure and destination cannot be the same');
-    }
-    else if (destination && !departure) {
-      dispatch(setLastDepartureIdActionCreator(0));
-      dispatch(setLastDestinationIdActionCreator(0));
-      dispatch(getBasicTripsFromDepartureIdActionCreator(0));
-
-      setDeparture(undefined);
-      setDestination(undefined);
-    }
-    else if (departure && destination) {
+    if (departure && destination) {
       if (lastDepartureId !== departure.id || lastDestinationId !== destination.id) {
         dispatch(getTripsByDepartureAndDestinationIdsActionCreator({ departureId: departure.id, destinationId: destination.id }));
+        dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
+        dispatch(getDestinationLocationsBySubstringActionCreator(destination.name));
       }
 
-      dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
-      dispatch(getDestinationLocationsBySubstringActionCreator(destination.name));
-      dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
+      if (lastDepartureId !== departure.id) {
+        dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
+      }
 
       if (trips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id) !== undefined) {
         setIsValidTripSelected(true);
       }
     }
+    else if (destination && !departure) {
+      setDeparture(undefined);
+      setDestination(undefined);
+    }
     else if (departure) {
-      dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
+      if (lastDepartureId !== departure.id) {
+        dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
+        dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
+      }
+
       dispatch(setLastDepartureIdActionCreator(departure.id));
       dispatch(setLastDestinationIdActionCreator(0));
-      dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
     }
   }, [departure, destination, showInfo, dispatch, trips, lastDepartureId, lastDestinationId]);
 
   useEffect(() => {
-    if (departure && !destination) {
-      const ids = basicTrips.map(trip => trip.endLocationId);
+    const ids = basicTrips.map(trip => trip.endLocationId);
 
-      if (ids.length > 0) {
-        dispatch(getLocationsByIdArrayActionCreator(basicTrips.map(trip => trip.endLocationId)));
-      }
+    if (ids.length > 0) {
+      dispatch(getLocationsByIdArrayActionCreator(ids));
     }
-  }, [departure, destination, basicTrips, dispatch])
+  }, [basicTrips, dispatch]);
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
