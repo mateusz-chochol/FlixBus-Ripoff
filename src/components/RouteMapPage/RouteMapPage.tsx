@@ -31,6 +31,7 @@ import {
   getLocationsForDestinationTextField,
   getLocationsForMap,
   getLocationsByCoordinatesActionCreator,
+  getLocationsByIdArrayActionCreator,
 } from 'redux/LocationsSlice';
 import {
   getTrips,
@@ -264,6 +265,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
     }
   }, [departure, destination, showInfo, dispatch, trips, lastDepartureId, lastDestinationId]);
+
+  useEffect(() => {
+    if (departure && !destination) {
+      dispatch(getLocationsByIdArrayActionCreator(basicTrips.map(trip => trip.endLocationId)))
+    }
+  }, [departure, destination, basicTrips, dispatch])
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;

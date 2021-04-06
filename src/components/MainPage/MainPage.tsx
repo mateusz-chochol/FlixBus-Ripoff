@@ -75,7 +75,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
     if (destination) {
       dispatch(getDestinationLocationsBySubstringActionCreator(destination.name))
     }
-  }, [departure, destination])
+  }, [departure, destination, dispatch])
 
   useEffect(() => {
     if (history.location.pathname !== routes.mainPage) {

@@ -81,24 +81,34 @@ const allLocations: Location[] = new Array<Location>(
 );
 
 const locationsInitialState: LocationsSliceState = {
-  allLocations: allLocations,
-  locationsForDepartureTextField: allLocations,
-  locationsForDestinationTextField: allLocations,
+  allLocations: [],
+  locationsForDepartureTextField: [],
+  locationsForDestinationTextField: [],
   locationsForMap: [],
 }
 
-// fake API calls
+// fake API calls where allLocations would be a source on backend
 const getDefaultLocations = () => locationsInitialState;
 const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates) => {
+  const longituteScaleFacotr = 1.2;
+  const latitudeScaleFactor = 1.1;
+
   return allLocations.filter(location => {
-    return location.coordinates.lat >= bottomRight.lat &&
-      location.coordinates.lat <= upperLeft.lat &&
-      location.coordinates.lng >= bottomRight.lng &&
-      location.coordinates.lng <= upperLeft.lng
+    return (location.coordinates.lat * latitudeScaleFactor >= bottomRight.lat &&
+      location.coordinates.lat <= upperLeft.lat * latitudeScaleFactor &&
+      location.coordinates.lng * longituteScaleFacotr >= bottomRight.lng &&
+      location.coordinates.lng <= upperLeft.lng * longituteScaleFacotr) ||
+      (location.coordinates.lat >= bottomRight.lat * latitudeScaleFactor &&
+        location.coordinates.lat * latitudeScaleFactor <= upperLeft.lat &&
+        location.coordinates.lng >= bottomRight.lng * longituteScaleFacotr &&
+        location.coordinates.lng * longituteScaleFacotr <= upperLeft.lng)
   })
 }
 const getLocationsBySubstring = (substring: string) => {
   return allLocations.filter(location => location.name.startsWith(substring));
+}
+const getLocationsByIdArray = (ids: number[]) => {
+  return allLocations.filter(location => ids.includes(location.id));
 }
 
 const locationsSlice = createSlice({
@@ -142,6 +152,17 @@ const locationsSlice = createSlice({
         ]
       }
     },
+    getLocationsByIdArray: (state, { payload }: PayloadAction<number[]>) => {
+      const locationsByIdArray = getLocationsByIdArray(payload);
+
+      return {
+        ...state,
+        allLocations: [
+          ...state.allLocations,
+          ...locationsByIdArray,
+        ]
+      }
+    }
   }
 })
 
@@ -155,6 +176,7 @@ export const {
   getLocationsByCoordinates: getLocationsByCoordinatesActionCreator,
   getDepartureLocationsBySubstring: getDepartureLocationsBySubstringActionCreator,
   getDestinationLocationsBySubstring: getDestinationLocationsBySubstringActionCreator,
+  getLocationsByIdArray: getLocationsByIdArrayActionCreator,
 } = locationsSlice.actions;
 
 export default locationsSlice.reducer
