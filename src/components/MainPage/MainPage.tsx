@@ -25,7 +25,12 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import { getLocationsForTextField } from 'redux/LocationsSlice';
+import {
+  getDepartureLocationsBySubstringActionCreator,
+  getDestinationLocationsBySubstringActionCreator,
+  getLocationsForDepartureTextField,
+  getLocationsForDestinationTextField,
+} from 'redux/LocationsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import Location from 'types/Objects/Location';
@@ -46,7 +51,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const history = useHistory();
   const isSmallScreen = width === 'xs' || width === 'sm';
-  const locations = useSelector(getLocationsForTextField);
+  const departureLocations = useSelector(getLocationsForDepartureTextField);
+  const destinationLocations = useSelector(getLocationsForDestinationTextField);
   const notificationsFunctionsRef = useRef(useNotifications());
   const { showError } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
@@ -199,9 +205,10 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid item xs={12} md={5}>
                   <Box display='flex' justifyContent='flex-end' alignItems='center'>
                     <TripPlaceForm
-                      locations={locations}
+                      locations={departureLocations}
                       place={departure}
                       setPlace={setDeparture}
+                      toDispatch={getDepartureLocationsBySubstringActionCreator}
                       label="From"
                       placeholder="Start from..."
                       disableClearable={isSmallScreen}
@@ -225,9 +232,10 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid item xs={12} md={5}>
                   <Box display='flex' justifyContent='flex-start' alignItems='center'>
                     <TripPlaceForm
-                      locations={locations}
+                      locations={destinationLocations}
                       place={destination}
                       setPlace={setDestination}
+                      toDispatch={getDestinationLocationsBySubstringActionCreator}
                       label="To"
                       placeholder="Finish in..."
                       disableClearable={isSmallScreen}

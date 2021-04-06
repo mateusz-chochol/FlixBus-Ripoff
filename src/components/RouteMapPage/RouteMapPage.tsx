@@ -24,7 +24,11 @@ import {
   getBasicTripsFromDepartureIdActionCreator,
 } from 'redux/BasicTripsSlice';
 import {
-  getLocationsForTextField,
+  getAllLocations,
+  getDepartureLocationsBySubstringActionCreator,
+  getDestinationLocationsBySubstringActionCreator,
+  getLocationsForDepartureTextField,
+  getLocationsForDestinationTextField,
   getLocationsForMap,
   getLocationsByCoordinatesActionCreator,
 } from 'redux/LocationsSlice';
@@ -136,14 +140,16 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const mapRef = useRef<any>();
   const isSmallScreen = width === 'xs' || width === 'sm';
   const dispatch = useDispatch();
-  const locationsForTextFields = useSelector(getLocationsForTextField);
+  const allLocations = useSelector(getAllLocations);
+  const departureLocationsForTextFields = useSelector(getLocationsForDepartureTextField);
+  const destinationLocationsForTextFields = useSelector(getLocationsForDestinationTextField);
   const locationsForMap = useSelector(getLocationsForMap);
   const basicTrips = useSelector(getBasicTrips);
   const trips = useSelector(getTrips);
   const lastDepartureId = useSelector(getLastDepartureId);
   const lastDestinationId = useSelector(getLastDestinationId);
   const notificationsFunctionsRef = useRef(useNotifications());
-  const { showError } = notificationsFunctionsRef.current;
+  const { showInfo } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
@@ -228,7 +234,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       setDeparture(undefined);
       setDestination(undefined);
 
-      showError('Departure and destination cannot be the same');
+      showInfo('Departure and destination cannot be the same');
     }
     else if (destination && !departure) {
       dispatch(setLastDepartureIdActionCreator(0));
@@ -243,6 +249,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         dispatch(getTripsByDepartureAndDestinationIdsActionCreator({ departureId: departure.id, destinationId: destination.id }));
       }
 
+      dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
+      dispatch(getDestinationLocationsBySubstringActionCreator(destination.name));
       dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
 
       if (trips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id) !== undefined) {
@@ -250,11 +258,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       }
     }
     else if (departure) {
+      dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
       dispatch(setLastDepartureIdActionCreator(departure.id));
       dispatch(setLastDestinationIdActionCreator(0));
       dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
     }
-  }, [departure, destination, showError, dispatch, trips, lastDepartureId, lastDestinationId]);
+  }, [departure, destination, showInfo, dispatch, trips, lastDepartureId, lastDestinationId]);
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
@@ -290,9 +299,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <TripPlaceForm
-                  locations={locationsForTextFields}
+                  locations={departureLocationsForTextFields}
                   place={departure}
                   setPlace={setDeparture}
+                  toDispatch={getDepartureLocationsBySubstringActionCreator}
                   label="From"
                   placeholder="Start from..."
                   disableClearable={isSmallScreen}
@@ -302,10 +312,11 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             <Grid item>
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <TripPlaceForm
-                  locations={locationsForTextFields}
+                  locations={destinationLocationsForTextFields}
                   trips={basicTrips}
                   place={destination}
                   setPlace={setDestination}
+                  toDispatch={getDestinationLocationsBySubstringActionCreator}
                   label="To"
                   placeholder="Finish in..."
                   disableClearable={isSmallScreen}
@@ -342,7 +353,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           <TripsList
             departure={departure}
             destination={destination}
-            locations={locationsForTextFields}
+            locations={allLocations}
             basicTrips={basicTrips}
             trips={trips}
             listClassName={classes.list}
@@ -373,7 +384,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             visible={isMarkerVisible(location)}
           />
         ))}
-        {departure && destination && isValidTripSelected && (
+        {departure && destination && isValidTripSelected && (locationsForMap.includes(departure) || locationsForMap.includes(destination)) && (
           <Polyline
             path={[
               departure.coordinates,
@@ -404,9 +415,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid item xs={4}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
                     <TripPlaceForm
-                      locations={locationsForTextFields}
+                      locations={departureLocationsForTextFields}
                       place={departure}
                       setPlace={setDeparture}
+                      toDispatch={getDepartureLocationsBySubstringActionCreator}
                       label="From"
                       placeholder="Start from..."
                       disableClearable={isSmallScreen}
@@ -427,9 +439,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                 <Grid item xs={4}>
                   <Box display='flex' justifyContent='center' alignItems='center'>
                     <TripPlaceForm
-                      locations={locationsForTextFields}
+                      locations={destinationLocationsForTextFields}
                       place={destination}
                       setPlace={setDestination}
+                      toDispatch={getDestinationLocationsBySubstringActionCreator}
                       label="To"
                       placeholder="Finish in..."
                       disableClearable={isSmallScreen}
@@ -450,7 +463,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                   <TripsList
                     departure={departure}
                     destination={destination}
-                    locations={locationsForTextFields}
+                    locations={allLocations}
                     basicTrips={basicTrips}
                     trips={trips}
                     listClassName={classes.smallList}

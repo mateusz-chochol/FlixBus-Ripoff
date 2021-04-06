@@ -3,7 +3,6 @@ import React, {
   useEffect,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { getLocationsBySubstringActionCreator } from 'redux/LocationsSlice';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TripPlaceFormProps from 'types/Props/TripPlaceFormProps';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +12,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   trips,
   place,
   setPlace,
+  toDispatch,
   label,
   placeholder,
   disableClearable,
@@ -23,6 +23,12 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   const [options, setOptions] = useState<string[]>([]);
   const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleOnFocus = () => {
+    if (placeTextValue.length < 1) {
+      setOptions([]);
+    }
+  }
 
   const capitalizeFirstLetter = (value: string) => {
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
@@ -35,6 +41,17 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   useEffect(() => {
     setPlace(locations.find(location => location.name.toUpperCase() === placeText?.toUpperCase()));
   }, [placeText, locations, setPlace])
+
+  useEffect(() => {
+    let locationsToShow = locations.filter(location => location.name.toUpperCase().startsWith(placeTextValue.toUpperCase()));
+
+    if (trips !== undefined) {
+      const tripsEndLocationsIds = trips.map(trip => trip.endLocationId);
+      locationsToShow = locations.filter(location => tripsEndLocationsIds.includes(location.id));
+    }
+
+    setOptions(locationsToShow.map(locations => locations.name));
+  }, [locations, placeTextValue, trips])
 
   useEffect(() => {
     setIsLoading(true);
@@ -52,21 +69,13 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       setNoOptionsText('No results found');
 
       const delayCallForOptions = setTimeout(() => {
-        //dispatch(getLocationsBySubstringActionCreator(placeTextValue))
-        let locationsToShow = locations.filter(location => location.name.toUpperCase().startsWith(placeTextValue.toUpperCase()));
-
-        if (trips !== undefined) {
-          const tripsEndLocationsIds = trips.map(trip => trip.endLocationId);
-          locationsToShow = locations.filter(location => tripsEndLocationsIds.includes(location.id));
-        }
-
-        setOptions(locationsToShow.map(locations => locations.name));
+        dispatch(toDispatch(placeTextValue));
         setIsLoading(false);
       }, 1000)
 
       return () => clearTimeout(delayCallForOptions)
     }
-  }, [placeTextValue, placeText, place, locations])
+  }, [placeTextValue, placeText, place, dispatch, toDispatch])
 
   return (
     <Autocomplete
@@ -75,6 +84,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       inputValue={placeTextValue}
       onInputChange={(event, value) => setPlaceTextValue(capitalizeFirstLetter(value))}
       onBlur={() => setPlace(locations.find(location => location.name === placeTextValue))}
+      onFocus={handleOnFocus}
       fullWidth
       popupIcon={null}
       options={options}

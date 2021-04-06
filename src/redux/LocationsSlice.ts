@@ -8,7 +8,8 @@ import { AppState } from './Store';
 
 interface LocationsSliceState {
   allLocations: Location[],
-  locationsForTextField: Location[],
+  locationsForDepartureTextField: Location[],
+  locationsForDestinationTextField: Location[],
   locationsForMap: Location[],
 }
 
@@ -81,7 +82,8 @@ const allLocations: Location[] = new Array<Location>(
 
 const locationsInitialState: LocationsSliceState = {
   allLocations: allLocations,
-  locationsForTextField: allLocations,
+  locationsForDepartureTextField: allLocations,
+  locationsForDestinationTextField: allLocations,
   locationsForMap: [],
 }
 
@@ -96,7 +98,6 @@ const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordina
   })
 }
 const getLocationsBySubstring = (substring: string) => {
-  console.log(allLocations.filter(location => location.name.startsWith(substring)))
   return allLocations.filter(location => location.name.startsWith(substring));
 }
 
@@ -117,12 +118,24 @@ const locationsSlice = createSlice({
         ]
       }
     },
-    getLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
+    getDepartureLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
       const locationsBySubstring = getLocationsBySubstring(payload);
 
       return {
         ...state,
-        locationsForTextField: locationsBySubstring,
+        locationsForDepartureTextField: locationsBySubstring,
+        allLocations: [
+          ...state.allLocations,
+          ...locationsBySubstring,
+        ]
+      }
+    },
+    getDestinationLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
+      const locationsBySubstring = getLocationsBySubstring(payload);
+
+      return {
+        ...state,
+        locationsForDestinationTextField: locationsBySubstring,
         allLocations: [
           ...state.allLocations,
           ...locationsBySubstring,
@@ -133,13 +146,15 @@ const locationsSlice = createSlice({
 })
 
 export const getAllLocations = (state: AppState) => state.locations.allLocations;
-export const getLocationsForTextField = (state: AppState) => state.locations.locationsForTextField;
+export const getLocationsForDepartureTextField = (state: AppState) => state.locations.locationsForDepartureTextField;
+export const getLocationsForDestinationTextField = (state: AppState) => state.locations.locationsForDestinationTextField;
 export const getLocationsForMap = (state: AppState) => state.locations.locationsForMap;
 
 export const {
   getDefaultLocations: getDefaultLocationsActionCreator,
   getLocationsByCoordinates: getLocationsByCoordinatesActionCreator,
-  getLocationsBySubstring: getLocationsBySubstringActionCreator,
+  getDepartureLocationsBySubstring: getDepartureLocationsBySubstringActionCreator,
+  getDestinationLocationsBySubstring: getDestinationLocationsBySubstringActionCreator,
 } = locationsSlice.actions;
 
 export default locationsSlice.reducer

@@ -12,7 +12,12 @@ const SearchButton: React.FC<SearchButtonProps> = ({ departure, destination }) =
 
   const handleSearchButtonClick = () => {
     if (departure && destination) {
-      history.push(routes.resultsPage.replace(':departureId', departure.id.toString()).replace(':destinationId', destination.id.toString()));
+      if (departure !== destination) {
+        history.push(routes.resultsPage.replace(':departureId', departure.id.toString()).replace(':destinationId', destination.id.toString()));
+      }
+      else {
+        showInfo('Departure and destination cannot be the same')
+      }
     }
     else {
       showInfo('You need to fill departure and destination fields first')

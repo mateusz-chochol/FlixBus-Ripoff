@@ -8,8 +8,12 @@ import { useHistory } from 'react-router-dom';
 import ResultsPageProps from 'types/Props/ResultsPageProps';
 
 const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
+  // eslint-disable-next-line
   const { departureId, destinationId } = match.params;
+  // eslint-disable-next-line
   const history = useHistory();
+
+  //above warning removed temporarily
 
   return (
     <Paper square>
