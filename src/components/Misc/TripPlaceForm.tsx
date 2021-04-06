@@ -15,6 +15,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   toDispatch,
   label,
   placeholder,
+  shouldHideOptions,
   disableClearable,
 }) => {
   const dispatch = useDispatch();
@@ -60,28 +61,35 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   }, [locations, placeTextValue, trips])
 
   useEffect(() => {
-    setIsLoading(true);
-    setOptions([]);
+    if (!shouldHideOptions) {
+      setIsLoading(true);
+      setOptions([]);
 
-    if (placeTextValue.length < 1) {
-      setIsLoading(false);
-      setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
-    }
-    else if (place && place.name.toUpperCase() === placeTextValue.toUpperCase()) {
-      setIsLoading(false);
-      setNoOptionsText(`You chose ${place.name}`)
+      if (placeTextValue.length < 1) {
+        setIsLoading(false);
+        setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
+      }
+      else if (place && place.name.toUpperCase() === placeTextValue.toUpperCase()) {
+        setIsLoading(false);
+        setNoOptionsText(`You chose ${place.name}`)
+      }
+      else {
+        setNoOptionsText('No results found');
+
+        const delayCallForOptions = setTimeout(() => {
+          console.log('dispatch')
+          dispatch(toDispatch(placeTextValue));
+          setIsLoading(false);
+        }, 1000)
+
+        return () => clearTimeout(delayCallForOptions)
+      }
     }
     else {
+      setOptions([]);
       setNoOptionsText('No results found');
-
-      const delayCallForOptions = setTimeout(() => {
-        dispatch(toDispatch(placeTextValue));
-        setIsLoading(false);
-      }, 1000)
-
-      return () => clearTimeout(delayCallForOptions)
     }
-  }, [placeTextValue, place, dispatch, toDispatch])
+  }, [placeTextValue, place, dispatch, toDispatch, shouldHideOptions])
 
   return (
     <Autocomplete

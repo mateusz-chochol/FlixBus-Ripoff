@@ -5,7 +5,11 @@ import {
 import { AppState } from './Store';
 import BasicTrip from 'types/Objects/BasicTrip';
 
-const basicTripsInitialState: BasicTrip[] = new Array<BasicTrip>(
+interface BasicTripsSliceState {
+  trips: BasicTrip[],
+}
+
+const allTrips: BasicTrip[] = new Array<BasicTrip>(
   {
     id: 1,
     startLocationId: 1,
@@ -188,18 +192,28 @@ const basicTripsInitialState: BasicTrip[] = new Array<BasicTrip>(
   },
 );
 
+const basicTripsInitialState: BasicTripsSliceState = {
+  trips: [],
+}
+
 // fake calls to API
-const getAllTrips = () => basicTripsInitialState;
-const getTripsFromDepartureId = (id: number) => basicTripsInitialState.filter(trip => trip.startLocationId === id);
-const getTripsFromDestinationId = (id: number) => basicTripsInitialState.filter(trip => trip.endLocationId === id);
+const getAllTrips = () => allTrips;
+const getTripsFromDepartureId = (id: number) => allTrips.filter(trip => trip.startLocationId === id);
+const getTripsFromDestinationId = (id: number) => allTrips.filter(trip => trip.endLocationId === id);
 
 const basicTripsSlice = createSlice({
   name: 'basicTrips',
   initialState: basicTripsInitialState,
   reducers: {
-    getAllTrips: () => getAllTrips(),
-    getTripsFromDepartureId: (state, { payload }: PayloadAction<number>) => getTripsFromDepartureId(payload),
-    getTripsFromDestinationId: (state, { payload }: PayloadAction<number>) => getTripsFromDestinationId(payload),
+    getAllTrips: (state) => {
+      state.trips = getAllTrips();
+    },
+    getTripsFromDepartureId: (state, { payload }: PayloadAction<number>) => {
+      state.trips = getTripsFromDepartureId(payload);
+    },
+    getTripsFromDestinationId: (state, { payload }: PayloadAction<number>) => {
+      state.trips = getTripsFromDestinationId(payload);
+    },
   }
 })
 

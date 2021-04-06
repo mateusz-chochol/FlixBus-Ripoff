@@ -145,7 +145,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const departureLocationsForTextFields = useSelector(getLocationsForDepartureTextField);
   const destinationLocationsForTextFields = useSelector(getLocationsForDestinationTextField);
   const locationsForMap = useSelector(getLocationsForMap);
-  const basicTrips = useSelector(getBasicTrips);
+  const basicTrips = useSelector(getBasicTrips).trips;
   const trips = useSelector(getTrips);
   const lastDepartureId = useSelector(getLastDepartureId);
   const lastDestinationId = useSelector(getLastDestinationId);
@@ -240,8 +240,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         setIsValidTripSelected(true);
       }
     }
+    else if (!departure && !destination) {
+
+    }
     else if (destination && !departure) {
-      setDeparture(undefined);
       setDestination(undefined);
     }
     else if (departure) {
@@ -315,6 +317,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                   place={destination}
                   setPlace={setDestination}
                   toDispatch={getDestinationLocationsBySubstringActionCreator}
+                  shouldHideOptions={departure === undefined}
                   label="To"
                   placeholder="Finish in..."
                   disableClearable={isSmallScreen}
@@ -441,6 +444,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                       place={destination}
                       setPlace={setDestination}
                       toDispatch={getDestinationLocationsBySubstringActionCreator}
+                      shouldHideOptions={departure === undefined}
                       label="To"
                       placeholder="Finish in..."
                       disableClearable={isSmallScreen}
