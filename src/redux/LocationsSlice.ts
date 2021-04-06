@@ -89,7 +89,7 @@ const locationsInitialState: LocationsSliceState = {
 
 // fake API calls where allLocations would be a source on backend
 const getDefaultLocations = () => locationsInitialState;
-const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates) => {
+const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
   const longituteOffset = 5;
   const latitudeOffset = 5;
 
@@ -116,9 +116,8 @@ const locationsSlice = createSlice({
   initialState: locationsInitialState,
   reducers: {
     getDefaultLocations: () => getDefaultLocations(),
-    getLocationsByCoordinates: (state, { payload }: PayloadAction<{ upperLeft: Coordinates, bottomRight: Coordinates }>) => {
-      console.log('locationsByCoordinates')
-      const locationsByCoordinates = getLocationsByCoordinates(payload.upperLeft, payload.bottomRight);
+    getLocationsByCoordinates: (state, { payload }: PayloadAction<{ upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number }>) => {
+      const locationsByCoordinates = getLocationsByCoordinates(payload.upperLeft, payload.bottomRight, payload.zoomLevel);
 
       return {
         ...state,
@@ -130,7 +129,6 @@ const locationsSlice = createSlice({
       }
     },
     getDepartureLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
-      console.log('locationsDepartureBySubstring with', payload)
       const locationsBySubstring = getLocationsBySubstring(payload);
 
       return {
@@ -143,7 +141,6 @@ const locationsSlice = createSlice({
       }
     },
     getDestinationLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
-      console.log('locationsDestinationBySubstring with', payload)
       const locationsBySubstring = getLocationsBySubstring(payload);
 
       return {
@@ -156,7 +153,6 @@ const locationsSlice = createSlice({
       }
     },
     getLocationsByIdArray: (state, { payload }: PayloadAction<number[]>) => {
-      console.log('locationsDestinationByIdArray with', payload)
       const locationsByIdArray = getLocationsByIdArray(payload);
 
       return {

@@ -187,6 +187,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     const bounds = mapRef.current.getBounds();
     const northEast = bounds.getNorthEast();
     const southWest = bounds.getSouthWest();
+    const zoomLevel = mapRef.current.getZoom();
 
     dispatch(getLocationsByCoordinatesActionCreator({
       upperLeft: {
@@ -196,7 +197,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       bottomRight: {
         lng: southWest.lng(),
         lat: southWest.lat()
-      }
+      },
+      zoomLevel: zoomLevel,
     }))
   }
 
