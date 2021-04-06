@@ -90,18 +90,18 @@ const locationsInitialState: LocationsSliceState = {
 // fake API calls where allLocations would be a source on backend
 const getDefaultLocations = () => locationsInitialState;
 const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates) => {
-  const longituteScaleFacotr = 1.2;
-  const latitudeScaleFactor = 1.1;
+  const longituteOffset = 5;
+  const latitudeOffset = 5;
 
   return allLocations.filter(location => {
-    return (location.coordinates.lat * latitudeScaleFactor >= bottomRight.lat &&
-      location.coordinates.lat <= upperLeft.lat * latitudeScaleFactor &&
-      location.coordinates.lng * longituteScaleFacotr >= bottomRight.lng &&
-      location.coordinates.lng <= upperLeft.lng * longituteScaleFacotr) ||
-      (location.coordinates.lat >= bottomRight.lat * latitudeScaleFactor &&
-        location.coordinates.lat * latitudeScaleFactor <= upperLeft.lat &&
-        location.coordinates.lng >= bottomRight.lng * longituteScaleFacotr &&
-        location.coordinates.lng * longituteScaleFacotr <= upperLeft.lng)
+    return (location.coordinates.lat + latitudeOffset >= bottomRight.lat &&
+      location.coordinates.lat <= upperLeft.lat + latitudeOffset &&
+      location.coordinates.lng + longituteOffset >= bottomRight.lng &&
+      location.coordinates.lng <= upperLeft.lng + longituteOffset) ||
+      (location.coordinates.lat >= bottomRight.lat + latitudeOffset &&
+        location.coordinates.lat + latitudeOffset <= upperLeft.lat &&
+        location.coordinates.lng >= bottomRight.lng + longituteOffset &&
+        location.coordinates.lng + longituteOffset <= upperLeft.lng)
   })
 }
 const getLocationsBySubstring = (substring: string) => {
@@ -117,6 +117,7 @@ const locationsSlice = createSlice({
   reducers: {
     getDefaultLocations: () => getDefaultLocations(),
     getLocationsByCoordinates: (state, { payload }: PayloadAction<{ upperLeft: Coordinates, bottomRight: Coordinates }>) => {
+      console.log('locationsByCoordinates')
       const locationsByCoordinates = getLocationsByCoordinates(payload.upperLeft, payload.bottomRight);
 
       return {
@@ -129,6 +130,7 @@ const locationsSlice = createSlice({
       }
     },
     getDepartureLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
+      console.log('locationsDepartureBySubstring with', payload)
       const locationsBySubstring = getLocationsBySubstring(payload);
 
       return {
@@ -141,6 +143,7 @@ const locationsSlice = createSlice({
       }
     },
     getDestinationLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
+      console.log('locationsDestinationBySubstring with', payload)
       const locationsBySubstring = getLocationsBySubstring(payload);
 
       return {
@@ -153,6 +156,7 @@ const locationsSlice = createSlice({
       }
     },
     getLocationsByIdArray: (state, { payload }: PayloadAction<number[]>) => {
+      console.log('locationsDestinationByIdArray with', payload)
       const locationsByIdArray = getLocationsByIdArray(payload);
 
       return {

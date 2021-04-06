@@ -268,7 +268,11 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
 
   useEffect(() => {
     if (departure && !destination) {
-      dispatch(getLocationsByIdArrayActionCreator(basicTrips.map(trip => trip.endLocationId)))
+      const ids = basicTrips.map(trip => trip.endLocationId);
+
+      if (ids.length > 0) {
+        dispatch(getLocationsByIdArrayActionCreator(basicTrips.map(trip => trip.endLocationId)));
+      }
     }
   }, [departure, destination, basicTrips, dispatch])
 
