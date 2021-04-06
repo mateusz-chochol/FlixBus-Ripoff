@@ -33,7 +33,7 @@ Current TODOs:
   - <del> trips column should display some "not found" message if the user input doesnt match to anything </del> (Done)
   - clicking on the available trip should redirect the user to the page of that trip (also create a page of a particular trip)
   - <del> error snackbar about no such trips found should only show up after clicking the search button </del> (Won't do)
-  - map should load only markers of the locations that the user can actually see (depending on the zoom level) and should display only set amount of them with system that selects which ones to show and that depends on the "importance" level of the locations (every location should have some "importance" level)
+  - <del> map should load only markers of the locations that the user can actually see (depending on the zoom level) and should display only set amount of them with system that selects which ones to show and that depends on the "importance" level of the locations (every location should have some "importance" level) </del> (Done)
   - map should ask for the permission to locate the user and set its center to the user location (and if user denies then the center should remain as the center of Europe)
 - plan your journey page:
   - create blank page with some static info
