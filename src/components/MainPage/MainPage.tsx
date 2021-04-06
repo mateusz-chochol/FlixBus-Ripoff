@@ -24,7 +24,10 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
 import {
   getDepartureLocationsBySubstringActionCreator,
   getDestinationLocationsBySubstringActionCreator,
@@ -50,6 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const MainPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const isSmallScreen = width === 'xs' || width === 'sm';
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
@@ -63,6 +67,15 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const [isReturnDateWindowOpen, setIsReturnDateWindowOpen] = useState<boolean>(false);
   const [departureDate, setDepartureDate] = React.useState<Date | null>(moment().toDate());
   const [returnDate, setReturnDate] = React.useState<Date | null>(moment().add(1, 'days').toDate());
+
+  useEffect(() => {
+    if (departure) {
+      dispatch(getDepartureLocationsBySubstringActionCreator(departure.name))
+    }
+    if (destination) {
+      dispatch(getDestinationLocationsBySubstringActionCreator(destination.name))
+    }
+  }, [departure, destination])
 
   useEffect(() => {
     if (history.location.pathname !== routes.mainPage) {
