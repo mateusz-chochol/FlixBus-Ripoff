@@ -99,8 +99,8 @@ const locationsInitialState: LocationsSliceState = {
 const getDefaultLocations = () => locationsInitialState;
 const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
   const maxZoom = 14;
-  const longituteOffset = (maxZoom * 50) / (zoomLevel * zoomLevel * zoomLevel);
-  const latitudeOffset = (maxZoom * 50) / (zoomLevel * zoomLevel * zoomLevel);
+  const longituteOffset = (maxZoom * 80) / (zoomLevel * zoomLevel * zoomLevel);
+  const latitudeOffset = (maxZoom * 80) / (zoomLevel * zoomLevel * zoomLevel);
 
   const fitsOnScreen = (location: Location) => {
     return (location.coordinates.lat + latitudeOffset >= bottomRight.lat &&
