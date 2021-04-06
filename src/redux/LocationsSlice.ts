@@ -21,6 +21,7 @@ const allLocations: Location[] = new Array<Location>(
       lat: 50.0682709,
       lng: 19.9601472
     },
+    importance: 1,
   },
   {
     id: 2,
@@ -29,6 +30,7 @@ const allLocations: Location[] = new Array<Location>(
       lat: 52.5065133,
       lng: 13.1445545
     },
+    importance: 1,
   },
   {
     id: 3,
@@ -37,6 +39,7 @@ const allLocations: Location[] = new Array<Location>(
       lat: 53.1275431,
       lng: 23.0159837
     },
+    importance: 1,
   },
   {
     id: 4,
@@ -44,7 +47,8 @@ const allLocations: Location[] = new Array<Location>(
     coordinates: {
       lat: 52.2326063,
       lng: 20.7810167
-    }
+    },
+    importance: 1,
   },
   {
     id: 5,
@@ -52,7 +56,8 @@ const allLocations: Location[] = new Array<Location>(
     coordinates: {
       lat: 48.8588377,
       lng: 2.2770205
-    }
+    },
+    importance: 1,
   },
   {
     id: 6,
@@ -60,7 +65,8 @@ const allLocations: Location[] = new Array<Location>(
     coordinates: {
       lat: 41.3947688,
       lng: 2.0787282
-    }
+    },
+    importance: 1,
   },
   {
     id: 7,
@@ -68,15 +74,17 @@ const allLocations: Location[] = new Array<Location>(
     coordinates: {
       lat: 52.3546449,
       lng: 4.8339211
-    }
+    },
+    importance: 1,
   },
   {
     id: 8,
-    name: 'Prague',
+    name: 'Praga',
     coordinates: {
       lat: 50.073658,
       lng: 14.418540
-    }
+    },
+    importance: 7,
   },
 );
 
@@ -90,10 +98,11 @@ const locationsInitialState: LocationsSliceState = {
 // fake API calls where allLocations would be a source on backend
 const getDefaultLocations = () => locationsInitialState;
 const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
-  const longituteOffset = 5;
-  const latitudeOffset = 5;
+  const maxZoom = 14;
+  const longituteOffset = (maxZoom * 50) / (zoomLevel * zoomLevel * zoomLevel);
+  const latitudeOffset = (maxZoom * 50) / (zoomLevel * zoomLevel * zoomLevel);
 
-  return allLocations.filter(location => {
+  const fitsOnScreen = (location: Location) => {
     return (location.coordinates.lat + latitudeOffset >= bottomRight.lat &&
       location.coordinates.lat <= upperLeft.lat + latitudeOffset &&
       location.coordinates.lng + longituteOffset >= bottomRight.lng &&
@@ -102,7 +111,13 @@ const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordina
         location.coordinates.lat + latitudeOffset <= upperLeft.lat &&
         location.coordinates.lng >= bottomRight.lng + longituteOffset &&
         location.coordinates.lng + longituteOffset <= upperLeft.lng)
-  })
+  }
+
+  const isImportantEnough = (location: Location) => {
+    return location.importance <= zoomLevel;
+  }
+
+  return allLocations.filter(location => fitsOnScreen(location) && isImportantEnough(location));
 }
 const getLocationsBySubstring = (substring: string) => {
   return allLocations.filter(location => location.name.startsWith(substring));
