@@ -35,6 +35,9 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
     if (options.find(option => option === placeTextValue)) {
       setPlace(locations.find(location => location.name === placeTextValue));
     }
+    else {
+      setPlace(undefined);
+    }
   };
 
   const capitalizeFirstLetter = (value: string) => {

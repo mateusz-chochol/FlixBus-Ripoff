@@ -441,6 +441,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                   <Box display='flex' justifyContent='center' alignItems='center'>
                     <TripPlaceForm
                       locations={destinationLocationsForTextFields}
+                      trips={basicTrips}
                       place={destination}
                       setPlace={setDestination}
                       toDispatch={getDestinationLocationsBySubstringActionCreator}
