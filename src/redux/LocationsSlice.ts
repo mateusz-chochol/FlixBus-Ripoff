@@ -40,8 +40,6 @@ export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>
       locationsToReturn = locationsToReturn.concat(api.getLocationsByIdArray(idsToAskFor));
     }
 
-    console.log(locations.allLocations);
-
     return locationsToReturn;
   }
 );
