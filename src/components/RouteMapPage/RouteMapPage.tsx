@@ -198,7 +198,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         lng: southWest.lng(),
         lat: southWest.lat()
       },
-      zoomLevel: zoomLevel,
+      zoomLevel,
     }))
   }
 
@@ -240,9 +240,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         setIsValidTripSelected(true);
       }
     }
-    else if (!departure && !destination) {
-
-    }
     else if (destination && !departure) {
       setDestination(undefined);
     }
@@ -250,10 +247,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       if (lastDepartureId !== departure.id) {
         dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
         dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
+        dispatch(setLastDepartureIdActionCreator(departure.id));
       }
 
-      dispatch(setLastDepartureIdActionCreator(departure.id));
-      dispatch(setLastDestinationIdActionCreator(0));
+      if (lastDestinationId !== 0) {
+        dispatch(setLastDestinationIdActionCreator(0));
+      }
     }
   }, [departure, destination, showInfo, dispatch, trips, lastDepartureId, lastDestinationId]);
 

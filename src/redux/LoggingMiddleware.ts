@@ -5,8 +5,7 @@ const LoggingMiddleware: Middleware<
   {},
   AppState
 > = store => next => action => {
-  console.log(store.getState())
-  console.log('Dispatched: ', action.type)
+  console.log('Dispatched: ', action, '\nwith state: ', store.getState())
   next(action);
 }
 
