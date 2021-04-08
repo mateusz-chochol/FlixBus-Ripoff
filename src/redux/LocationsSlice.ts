@@ -1,6 +1,6 @@
 import {
   createSlice,
-  PayloadAction,
+  createAsyncThunk,
 } from '@reduxjs/toolkit'
 import Coordinates from 'types/Objects/Coordinates';
 import Location from 'types/Objects/Location';
@@ -25,21 +25,21 @@ const locationsInitialState: LocationsSliceState = {
   locationsForMap: [],
 }
 
-// fake API calls where allLocations would be a source on backend
+// fake API calls
 const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
   const maxZoom = 14;
-  const longituteOffset = (maxZoom * 80) / (zoomLevel * zoomLevel * zoomLevel);
-  const latitudeOffset = (maxZoom * 80) / (zoomLevel * zoomLevel * zoomLevel);
+  const offset = (maxZoom * 80) / (zoomLevel * zoomLevel * zoomLevel);
+  // offset to expand the rectangle a bit so its a bit bigger than the map bounds
 
   const fitsOnScreen = (location: Location) => {
-    return (location.coordinates.lat + latitudeOffset >= bottomRight.lat &&
-      location.coordinates.lat <= upperLeft.lat + latitudeOffset &&
-      location.coordinates.lng + longituteOffset >= bottomRight.lng &&
-      location.coordinates.lng <= upperLeft.lng + longituteOffset) ||
-      (location.coordinates.lat >= bottomRight.lat + latitudeOffset &&
-        location.coordinates.lat + latitudeOffset <= upperLeft.lat &&
-        location.coordinates.lng >= bottomRight.lng + longituteOffset &&
-        location.coordinates.lng + longituteOffset <= upperLeft.lng)
+    return (location.coordinates.lat + offset >= bottomRight.lat &&
+      location.coordinates.lat <= upperLeft.lat + offset &&
+      location.coordinates.lng + offset >= bottomRight.lng &&
+      location.coordinates.lng <= upperLeft.lng + offset) ||
+      (location.coordinates.lat >= bottomRight.lat + offset &&
+        location.coordinates.lat + offset <= upperLeft.lat &&
+        location.coordinates.lng >= bottomRight.lng + offset &&
+        location.coordinates.lng + offset <= upperLeft.lng)
   }
 
   const isImportantEnough = (location: Location) => {
@@ -55,61 +55,100 @@ const getLocationsByIdArray = (ids: number[]) => {
   return allLocations.filter(location => ids.includes(location.id));
 }
 
+export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>(
+  'locations/getLocationsByIdArrayAsync',
+  async (ids) => {
+    return getLocationsByIdArray(ids);
+  }
+);
+export const getDepartureLocationsBySubstringAsync = createAsyncThunk<Location[], string>(
+  'locations/getDepartureLocationsBySubstringAsync',
+  async (substring) => {
+    return getLocationsBySubstring(substring);
+  }
+);
+export const getDestinationLocationsBySubstringAsync = createAsyncThunk<Location[], string>(
+  'locations/getDestinationLocationsBySubstringAsync',
+  async (substring) => {
+    return getLocationsBySubstring(substring);
+  }
+);
+export const getLocationsByCoordinatesAsync = createAsyncThunk<
+  { locationsForMap: Location[], upperLeft: Coordinates, bottomRight: Coordinates },
+  { upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number }
+>(
+  'locations/getLocationsByCoordinatesAsync',
+  async ({ upperLeft, bottomRight, zoomLevel }) => {
+    return {
+      locationsForMap: getLocationsByCoordinates(upperLeft, bottomRight, zoomLevel),
+      upperLeft: upperLeft,
+      bottomRight: bottomRight
+    };
+  },
+  {
+    condition: ({ upperLeft, bottomRight }, { getState }) => {
+      const { locations } = getState() as AppState;
+
+      if (!locations.lastUpperLeft || !locations.lastBottomRight ||
+        (upperLeft.lat !== locations.lastUpperLeft.lat ||
+          upperLeft.lng !== locations.lastUpperLeft.lng ||
+          bottomRight.lat !== locations.lastBottomRight.lat ||
+          bottomRight.lng !== locations.lastBottomRight.lng)) {
+        return true;
+      }
+
+      return false;
+    }
+  }
+);
+
 const locationsSlice = createSlice({
   name: 'locations',
   initialState: locationsInitialState,
-  reducers: {
-    getLocationsByCoordinates: (state, { payload }: PayloadAction<{ upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number }>) => {
-      if (payload.upperLeft !== state.lastUpperLeft || payload.bottomRight !== state.lastBottomRight) {
-        const locationsByCoordinates = getLocationsByCoordinates(payload.upperLeft, payload.bottomRight, payload.zoomLevel);
-
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(getLocationsByCoordinatesAsync.fulfilled, (state, action) => {
         return {
           ...state,
-          locationsForMap: locationsByCoordinates,
-          lastUpperLeft: payload.upperLeft,
-          lastBottomRight: payload.bottomRight,
+          locationsForMap: action.payload.locationsForMap,
+          lastUpperLeft: action.payload.upperLeft,
+          lastBottomRight: action.payload.bottomRight,
           allLocations: [
             ...state.allLocations,
-            ...locationsByCoordinates,
+            ...action.payload.locationsForMap,
           ]
         }
-      }
-    },
-    getDepartureLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
-      const locationsBySubstring = getLocationsBySubstring(payload);
-
-      return {
-        ...state,
-        locationsForDepartureTextField: locationsBySubstring,
-        allLocations: [
-          ...state.allLocations,
-          ...locationsBySubstring,
-        ]
-      }
-    },
-    getDestinationLocationsBySubstring: (state, { payload }: PayloadAction<string>) => {
-      const locationsBySubstring = getLocationsBySubstring(payload);
-
-      return {
-        ...state,
-        locationsForDestinationTextField: locationsBySubstring,
-        allLocations: [
-          ...state.allLocations,
-          ...locationsBySubstring,
-        ]
-      }
-    },
-    getLocationsByIdArray: (state, { payload }: PayloadAction<number[]>) => {
-      const locationsByIdArray = getLocationsByIdArray(payload);
-
-      return {
-        ...state,
-        allLocations: [
-          ...state.allLocations,
-          ...locationsByIdArray,
-        ]
-      }
-    }
+      })
+      .addCase(getDepartureLocationsBySubstringAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          locationsForDepartureTextField: action.payload,
+          allLocations: [
+            ...state.allLocations,
+            ...action.payload,
+          ]
+        }
+      })
+      .addCase(getDestinationLocationsBySubstringAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          locationsForDestinationTextField: action.payload,
+          allLocations: [
+            ...state.allLocations,
+            ...action.payload,
+          ]
+        }
+      })
+      .addCase(getLocationsByIdArrayAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          allLocations: [
+            ...state.allLocations,
+            ...action.payload,
+          ]
+        }
+      })
   }
 })
 
@@ -117,12 +156,5 @@ export const getAllLocations = (state: AppState) => state.locations.allLocations
 export const getLocationsForDepartureTextField = (state: AppState) => state.locations.locationsForDepartureTextField;
 export const getLocationsForDestinationTextField = (state: AppState) => state.locations.locationsForDestinationTextField;
 export const getLocationsForMap = (state: AppState) => state.locations.locationsForMap;
-
-export const {
-  getLocationsByCoordinates: getLocationsByCoordinatesActionCreator,
-  getDepartureLocationsBySubstring: getDepartureLocationsBySubstringActionCreator,
-  getDestinationLocationsBySubstring: getDestinationLocationsBySubstringActionCreator,
-  getLocationsByIdArray: getLocationsByIdArrayActionCreator,
-} = locationsSlice.actions;
 
 export default locationsSlice.reducer

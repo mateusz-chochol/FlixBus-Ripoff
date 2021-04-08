@@ -25,13 +25,13 @@ import {
 } from 'redux/BasicTripsSlice';
 import {
   getAllLocations,
-  getDepartureLocationsBySubstringActionCreator,
-  getDestinationLocationsBySubstringActionCreator,
+  getDepartureLocationsBySubstringAsync,
+  getDestinationLocationsBySubstringAsync,
   getLocationsForDepartureTextField,
   getLocationsForDestinationTextField,
   getLocationsForMap,
-  getLocationsByCoordinatesActionCreator,
-  getLocationsByIdArrayActionCreator,
+  getLocationsByCoordinatesAsync,
+  getLocationsByIdArrayAsync,
 } from 'redux/LocationsSlice';
 import {
   getTrips,
@@ -189,7 +189,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     const southWest = bounds.getSouthWest();
     const zoomLevel = mapRef.current.getZoom();
 
-    dispatch(getLocationsByCoordinatesActionCreator({
+    dispatch(getLocationsByCoordinatesAsync({
       upperLeft: {
         lng: northEast.lng(),
         lat: northEast.lat()
@@ -228,8 +228,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     if (departure && destination) {
       if (lastDepartureId !== departure.id || lastDestinationId !== destination.id) {
         dispatch(getTripsByDepartureAndDestinationIdsActionCreator({ departureId: departure.id, destinationId: destination.id }));
-        dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
-        dispatch(getDestinationLocationsBySubstringActionCreator(destination.name));
       }
 
       if (lastDepartureId !== departure.id) {
@@ -245,7 +243,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     }
     else if (departure) {
       if (lastDepartureId !== departure.id) {
-        dispatch(getDepartureLocationsBySubstringActionCreator(departure.name));
         dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
         dispatch(setLastDepartureIdActionCreator(departure.id));
       }
@@ -260,7 +257,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     const ids = basicTrips.map(trip => trip.endLocationId);
 
     if (ids.length > 0) {
-      dispatch(getLocationsByIdArrayActionCreator(ids));
+      dispatch(getLocationsByIdArrayAsync(ids));
     }
   }, [basicTrips, dispatch]);
 
@@ -301,7 +298,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                   locations={departureLocationsForTextFields}
                   place={departure}
                   setPlace={setDeparture}
-                  toDispatch={getDepartureLocationsBySubstringActionCreator}
+                  toDispatch={getDepartureLocationsBySubstringAsync}
                   label="From"
                   placeholder="Start from..."
                   disableClearable={isSmallScreen}
@@ -315,7 +312,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                   trips={basicTrips}
                   place={destination}
                   setPlace={setDestination}
-                  toDispatch={getDestinationLocationsBySubstringActionCreator}
+                  toDispatch={getDestinationLocationsBySubstringAsync}
                   shouldHideOptions={departure === undefined}
                   label="To"
                   placeholder="Finish in..."
@@ -418,7 +415,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                       locations={departureLocationsForTextFields}
                       place={departure}
                       setPlace={setDeparture}
-                      toDispatch={getDepartureLocationsBySubstringActionCreator}
+                      toDispatch={getDepartureLocationsBySubstringAsync}
                       label="From"
                       placeholder="Start from..."
                       disableClearable={isSmallScreen}
@@ -443,7 +440,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                       trips={basicTrips}
                       place={destination}
                       setPlace={setDestination}
-                      toDispatch={getDestinationLocationsBySubstringActionCreator}
+                      toDispatch={getDestinationLocationsBySubstringAsync}
                       shouldHideOptions={departure === undefined}
                       label="To"
                       placeholder="Finish in..."

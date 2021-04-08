@@ -40,17 +40,18 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
     }
   };
 
+  const handleOnChange = (value: string | null) => {
+    setPlace(locations.find(location => location.name.toUpperCase() === value?.toUpperCase()));
+  }
+
   const capitalizeFirstLetter = (value: string) => {
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   };
 
   useEffect(() => {
     setPlaceText(place?.name ?? null);
+    setPlaceTextValue(place?.name ?? '')
   }, [place])
-
-  useEffect(() => {
-    setPlace(locations.find(location => location.name.toUpperCase() === placeText?.toUpperCase()));
-  }, [placeText, locations, setPlace])
 
   useEffect(() => {
     let locationsToShow = locations.filter(location => location.name.toUpperCase().startsWith(placeTextValue.toUpperCase()));
@@ -72,16 +73,11 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
         setIsLoading(false);
         setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
       }
-      else if (place && place.name.toUpperCase() === placeTextValue.toUpperCase()) {
-        setIsLoading(false);
-        setNoOptionsText(`You chose ${place.name}`)
-      }
       else {
-        setNoOptionsText('No results found');
-
         const delayCallForOptions = setTimeout(() => {
           dispatch(toDispatch(placeTextValue));
           setIsLoading(false);
+          setNoOptionsText('No results found');
         }, 1000)
 
         return () => clearTimeout(delayCallForOptions)
@@ -96,7 +92,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   return (
     <Autocomplete
       value={placeText}
-      onChange={(event: any, value) => setPlaceText(value ?? null)}
+      onChange={(event: any, value) => handleOnChange(value)}
       inputValue={placeTextValue}
       onInputChange={(event, value) => setPlaceTextValue(capitalizeFirstLetter(value))}
       onBlur={handleOnBlur}

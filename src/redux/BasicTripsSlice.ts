@@ -17,18 +17,18 @@ const basicTripsInitialState: BasicTripsSliceState = {
 }
 
 // fake calls to API
-const getTripsFromDepartureId = (id: number) => allTrips.filter(trip => trip.startLocationId === id);
-const getTripsFromDestinationId = (id: number) => allTrips.filter(trip => trip.endLocationId === id);
+const getBasicTripsFromDepartureId = (id: number) => allTrips.filter(trip => trip.startLocationId === id);
+const getBasicTripsFromDestinationId = (id: number) => allTrips.filter(trip => trip.endLocationId === id);
 
 const basicTripsSlice = createSlice({
   name: 'basicTrips',
   initialState: basicTripsInitialState,
   reducers: {
-    getTripsFromDepartureId: (state, { payload }: PayloadAction<number>) => {
-      state.trips = getTripsFromDepartureId(payload);
+    getBasicTripsFromDepartureId: (state, { payload }: PayloadAction<number>) => {
+      state.trips = getBasicTripsFromDepartureId(payload);
     },
-    getTripsFromDestinationId: (state, { payload }: PayloadAction<number>) => {
-      state.trips = getTripsFromDestinationId(payload);
+    getBasicTripsFromDestinationId: (state, { payload }: PayloadAction<number>) => {
+      state.trips = getBasicTripsFromDestinationId(payload);
     },
   }
 })
@@ -36,8 +36,8 @@ const basicTripsSlice = createSlice({
 export const getBasicTrips = (state: AppState) => state.basicTrips;
 
 export const {
-  getTripsFromDepartureId: getBasicTripsFromDepartureIdActionCreator,
-  getTripsFromDestinationId: getBasicTripsFromDestinationIdActionCreator
+  getBasicTripsFromDepartureId: getBasicTripsFromDepartureIdActionCreator,
+  getBasicTripsFromDestinationId: getBasicTripsFromDestinationIdActionCreator
 } = basicTripsSlice.actions;
 
 export default basicTripsSlice.reducer

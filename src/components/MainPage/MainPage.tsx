@@ -29,8 +29,8 @@ import {
   useDispatch,
 } from 'react-redux';
 import {
-  getDepartureLocationsBySubstringActionCreator,
-  getDestinationLocationsBySubstringActionCreator,
+  getDepartureLocationsBySubstringAsync,
+  getDestinationLocationsBySubstringAsync,
   getLocationsForDepartureTextField,
   getLocationsForDestinationTextField,
 } from 'redux/LocationsSlice';
@@ -70,10 +70,10 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
 
   useEffect(() => {
     if (departure) {
-      dispatch(getDepartureLocationsBySubstringActionCreator(departure.name))
+      dispatch(getDepartureLocationsBySubstringAsync(departure.name))
     }
     if (destination) {
-      dispatch(getDestinationLocationsBySubstringActionCreator(destination.name))
+      dispatch(getDestinationLocationsBySubstringAsync(destination.name))
     }
   }, [departure, destination, dispatch])
 
@@ -221,7 +221,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       locations={departureLocations}
                       place={departure}
                       setPlace={setDeparture}
-                      toDispatch={getDepartureLocationsBySubstringActionCreator}
+                      toDispatch={getDepartureLocationsBySubstringAsync}
                       label="From"
                       placeholder="Start from..."
                       disableClearable={isSmallScreen}
@@ -248,7 +248,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
                       locations={destinationLocations}
                       place={destination}
                       setPlace={setDestination}
-                      toDispatch={getDestinationLocationsBySubstringActionCreator}
+                      toDispatch={getDestinationLocationsBySubstringAsync}
                       label="To"
                       placeholder="Finish in..."
                       disableClearable={isSmallScreen}
