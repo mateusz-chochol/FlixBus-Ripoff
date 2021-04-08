@@ -3,7 +3,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit'
 import Trip from 'types/Objects/Trip';
-import { AppState } from './Store';
+import { AppState } from './RootReducer';
 
 interface TripSliceState {
   lastDepartureId: number,

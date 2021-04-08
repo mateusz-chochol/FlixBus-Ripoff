@@ -20,7 +20,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
 }) => {
   const dispatch = useDispatch();
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
-  const [placeText, setPlaceText] = useState<string>(place?.name ?? '');
+  const [placeText, setPlaceText] = useState<string | null>(place?.name ?? null);
   const [options, setOptions] = useState<string[]>([]);
   const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   };
 
   useEffect(() => {
-    setPlaceText(place?.name ?? '');
+    setPlaceText(place?.name ?? null);
   }, [place])
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   return (
     <Autocomplete
       value={placeText}
-      onChange={(event: any, value) => setPlaceText(value ?? '')}
+      onChange={(event: any, value) => setPlaceText(value ?? null)}
       inputValue={placeTextValue}
       onInputChange={(event, value) => setPlaceTextValue(capitalizeFirstLetter(value))}
       onBlur={handleOnBlur}

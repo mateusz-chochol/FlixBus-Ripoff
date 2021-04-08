@@ -1,18 +1,10 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import NotificationsReducer from './NotificationsSlice';
-import TabsReducer from './TabsSlice';
-import TripsReducer from './TripsSlice';
-import LocationsReducer from './LocationsSlice';
-import BasicTripsReducer from './BasicTripsSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from './RootReducer';
+import LoggingMiddleware from './LoggingMiddleware';
 
 const store = configureStore({
-  reducer: combineReducers({
-    notifications: NotificationsReducer,
-    tab: TabsReducer,
-    basicTrips: BasicTripsReducer,
-    trips: TripsReducer,
-    locations: LocationsReducer,
-  })
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(LoggingMiddleware)
 })
 
 export type AppState = ReturnType<typeof store.getState>

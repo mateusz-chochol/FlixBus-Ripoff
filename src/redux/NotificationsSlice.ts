@@ -4,7 +4,7 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 import Notification from 'types/Objects/Notification';
-import { AppState } from './Store';
+import { AppState } from './RootReducer';
 
 const notificationsInitialState: Notification[] = new Array<Notification>()
 

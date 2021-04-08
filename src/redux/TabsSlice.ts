@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction
 } from '@reduxjs/toolkit'
-import { AppState } from './Store';
+import { AppState } from './RootReducer';
 
 const tabsInitialState: number | false = false;
 

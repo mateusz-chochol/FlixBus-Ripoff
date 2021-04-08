@@ -4,7 +4,7 @@ import {
 } from '@reduxjs/toolkit'
 import Coordinates from 'types/Objects/Coordinates';
 import Location from 'types/Objects/Location';
-import { AppState } from './Store';
+import { AppState } from './RootReducer';
 
 interface LocationsSliceState {
   allLocations: Location[],

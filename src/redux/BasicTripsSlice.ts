@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction
 } from '@reduxjs/toolkit'
-import { AppState } from './Store';
+import { AppState } from './RootReducer';
 import BasicTrip from 'types/Objects/BasicTrip';
 
 interface BasicTripsSliceState {
