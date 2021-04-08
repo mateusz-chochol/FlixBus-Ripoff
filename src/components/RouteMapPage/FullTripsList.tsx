@@ -5,6 +5,7 @@ import {
   ListItemText,
   Grid,
   Typography,
+  Divider,
 } from '@material-ui/core';
 import {
   makeStyles,
@@ -36,24 +37,27 @@ const FullTripsList: React.FC<FullTripsProps> = ({
   return (
     <>
       {(trips.length > 0 ? trips.map(trip => (
-        <ListItem button key={trip.id} className={listItemClassName}>
-          <Grid container className={classes.grid} direction='row'>
-            <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
-              <Grid item xs={5}>
-                <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+        <>
+          <Divider orientation="vertical" flexItem />
+          <ListItem button key={trip.id} className={listItemClassName}>
+            <Grid container className={classes.grid} direction='row'>
+              <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
+                <Grid item>
+                  <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                </Grid>
+                <Grid item xs={2}>
+                  <ArrowRightAltIcon />
+                </Grid>
+                <Grid item>
+                  <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                </Grid>
               </Grid>
-              <Grid item xs={2}>
-                <ArrowRightAltIcon />
-              </Grid>
-              <Grid item xs={4}>
-                <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+              <Grid item>
+                <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
               </Grid>
             </Grid>
-            <Grid item>
-              <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
-            </Grid>
-          </Grid>
-        </ListItem>
+          </ListItem>
+        </>
       )) :
         <Box {...messageBoxProps}>
           <Typography {...typographyProps}>

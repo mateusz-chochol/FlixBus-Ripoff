@@ -32,7 +32,7 @@ export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>
   async (ids, thunkAPI) => {
     const { locations } = thunkAPI.getState() as AppState;
     const uniqueIds = Array.from(new Set(ids));
-    const idsToAskFor = uniqueIds.filter(id => !locations.allLocations.map(location => location.id).includes(id))
+    const idsToAskFor = uniqueIds.filter(id => !locations.allLocations.map(location => location.id).includes(id));
 
     let locationsToReturn = locations.allLocations.filter(location => uniqueIds.includes(location.id));
 
@@ -130,4 +130,4 @@ export const getLocationsForDepartureTextField = (state: AppState) => state.loca
 export const getLocationsForDestinationTextField = (state: AppState) => state.locations.locationsForDestinationTextField;
 export const getLocationsForMap = (state: AppState) => state.locations.locationsForMap;
 
-export default locationsSlice.reducer
+export default locationsSlice.reducer;

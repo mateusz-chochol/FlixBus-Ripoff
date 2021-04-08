@@ -5,6 +5,7 @@ import {
   ListItemText,
   Grid,
   Typography,
+  Divider,
 } from '@material-ui/core';
 import {
   makeStyles,
@@ -36,21 +37,24 @@ const BasicTripsList: React.FC<BasicTripsProps> = ({
   return (
     <>
       {basicTrips.length > 0 ? basicTrips.map(trip => (
-        <ListItem button key={trip.id} className={listItemClassName}>
-          <Grid container className={classes.grid} direction='column'>
-            <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
-              <Grid item xs={5}>
-                <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
-              </Grid>
-              <Grid item xs={2}>
-                <ArrowRightAltIcon />
-              </Grid>
-              <Grid item xs={4}>
-                <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+        <>
+          <Divider orientation="vertical" flexItem />
+          <ListItem button key={trip.id} className={listItemClassName}>
+            <Grid container className={classes.grid} direction='column'>
+              <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
+                <Grid item>
+                  <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                </Grid>
+                <Grid item xs={2}>
+                  <ArrowRightAltIcon />
+                </Grid>
+                <Grid item>
+                  <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </ListItem>
+          </ListItem>
+        </>
       )) :
         <Box {...messageBoxProps}>
           <Typography {...typographyProps}>

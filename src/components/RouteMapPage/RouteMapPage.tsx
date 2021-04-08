@@ -120,6 +120,7 @@ const useStyles = makeStyles((theme: Theme) =>
     smallListItem: {
       minWidth: '220px',
       minHeight: '80px',
+      overflow: 'hidden'
     }
   }),
 );
