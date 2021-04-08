@@ -23,10 +23,26 @@ const locationsInitialState: LocationsSliceState = {
   locationsForMap: [],
 }
 
+const filterExistingLocations = (allLocations: Location[], locationsToAdd: Location[]) => {
+  return allLocations.concat(locationsToAdd.filter(locationToAdd => !allLocations.map(location => location.id).includes(locationToAdd.id)))
+}
+
 export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>(
   'locations/getLocationsByIdArrayAsync',
-  async (ids) => {
-    return api.getLocationsByIdArray(ids);
+  async (ids, thunkAPI) => {
+    const { locations } = thunkAPI.getState() as AppState;
+    const uniqueIds = Array.from(new Set(ids));
+    const idsToAskFor = uniqueIds.filter(id => !locations.allLocations.map(location => location.id).includes(id))
+
+    let locationsToReturn = locations.allLocations.filter(location => uniqueIds.includes(location.id));
+
+    if (idsToAskFor.length > 0) {
+      locationsToReturn = locationsToReturn.concat(api.getLocationsByIdArray(idsToAskFor));
+    }
+
+    console.log(locations.allLocations);
+
+    return locationsToReturn;
   }
 );
 
@@ -85,39 +101,27 @@ const locationsSlice = createSlice({
           locationsForMap: action.payload.locationsForMap,
           lastUpperLeft: action.payload.upperLeft,
           lastBottomRight: action.payload.bottomRight,
-          allLocations: [
-            ...state.allLocations,
-            ...action.payload.locationsForMap,
-          ]
+          allLocations: filterExistingLocations(state.allLocations, action.payload.locationsForMap)
         }
       })
       .addCase(getDepartureLocationsBySubstringAsync.fulfilled, (state, action) => {
         return {
           ...state,
           locationsForDepartureTextField: action.payload,
-          allLocations: [
-            ...state.allLocations,
-            ...action.payload,
-          ]
+          allLocations: filterExistingLocations(state.allLocations, action.payload)
         }
       })
       .addCase(getDestinationLocationsBySubstringAsync.fulfilled, (state, action) => {
         return {
           ...state,
           locationsForDestinationTextField: action.payload,
-          allLocations: [
-            ...state.allLocations,
-            ...action.payload,
-          ]
+          allLocations: filterExistingLocations(state.allLocations, action.payload)
         }
       })
       .addCase(getLocationsByIdArrayAsync.fulfilled, (state, action) => {
         return {
           ...state,
-          allLocations: [
-            ...state.allLocations,
-            ...action.payload,
-          ]
+          allLocations: filterExistingLocations(state.allLocations, action.payload)
         }
       })
   }
