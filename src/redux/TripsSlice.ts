@@ -1,10 +1,11 @@
 import {
   createSlice,
-  PayloadAction
+  PayloadAction,
+  createAsyncThunk,
 } from '@reduxjs/toolkit'
 import Trip from 'types/Objects/Trip';
 import { AppState } from './RootReducer';
-import trips from 'tempDataSources/trips.json';
+import * as api from 'api/TripsApi';
 
 interface TripSliceState {
   lastDepartureId: number,
@@ -12,48 +13,56 @@ interface TripSliceState {
   list: Trip[]
 }
 
-const allTrips = trips.trips;
-
 const tripsInitialState: TripSliceState = {
   lastDepartureId: 0,
   lastDestinationId: 0,
   list: []
 };
 
-// fake API calls
-const getTripsByDepartureId = (id: number) => allTrips.filter(trip => trip.startLocationId === id);
-const getTripsByDestinationId = (id: number) => allTrips.filter(trip => trip.endLocationId === id);
-const getTripsByDepartureAndDestinationIds = (departureId: number, destinationId: number) =>
-  allTrips.filter(trip => trip.startLocationId === departureId && trip.endLocationId === destinationId);
+export const getTripsByDepartureIdAsync = createAsyncThunk<
+  { list: Trip[], lastDepartureId: number },
+  number
+>(
+  'trips/getTripsByDepartureIdAsync',
+  async (id) => {
+    return {
+      lastDepartureId: id,
+      list: api.getTripsByDepartureId(id)
+    }
+  }
+);
+
+export const getTripsByDestinationIdAsync = createAsyncThunk<
+  { list: Trip[], lastDestinationId: number },
+  number
+>(
+  'trips/getTripsByDestinationIdAsync',
+  async (id) => {
+    return {
+      lastDestinationId: id,
+      list: api.getTripsByDestinationId(id)
+    }
+  }
+);
+
+export const getTripsByDepartureAndDestinationIdsAsync = createAsyncThunk<
+  { list: Trip[], lastDepartureId: number, lastDestinationId: number },
+  { departureId: number, destinationId: number }
+>(
+  'trips/getTripsByDepartureAndDestinationIdsAsync',
+  async ({ departureId, destinationId }) => {
+    return {
+      lastDepartureId: departureId,
+      lastDestinationId: destinationId,
+      list: api.getTripsByDepartureAndDestinationIds(departureId, destinationId)
+    }
+  }
+);
 
 const tripsSlice = createSlice({
   name: 'trips',
   initialState: tripsInitialState,
   reducers: {
-    getTripsByDepartureId: (state, { payload }: PayloadAction<number>) => {
-      return {
-        ...state,
-        lastDepartureId: payload,
-        lastDestinationId: 0,
-        list: getTripsByDepartureId(payload)
-      }
-    },
-    getTripsByDestinationId: (state, { payload }: PayloadAction<number>) => {
-      return {
-        ...state,
-        lastDepartureId: 0,
-        lastDestinationId: payload,
-        list: getTripsByDestinationId(payload)
-      }
-    },
-    getTripsByDepartureAndDestinationIds: (state, { payload }: PayloadAction<{ departureId: number, destinationId: number }>) => {
-      return {
-        ...state,
-        lastDepartureId: payload.departureId,
-        lastDestinationId: payload.destinationId,
-        list: getTripsByDepartureAndDestinationIds(payload.departureId, payload.destinationId)
-      }
-    },
     setLastDepartureId: (state, { payload }: PayloadAction<number>) => {
       return {
         ...state,
@@ -66,6 +75,33 @@ const tripsSlice = createSlice({
         lastDestinationId: payload
       }
     },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(getTripsByDepartureIdAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          lastDepartureId: action.payload.lastDepartureId,
+          lastDestinationId: 0,
+          list: action.payload.list
+        }
+      })
+      .addCase(getTripsByDestinationIdAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          lastDepartureId: 0,
+          lastDestinationId: action.payload.lastDestinationId,
+          list: action.payload.list
+        }
+      })
+      .addCase(getTripsByDepartureAndDestinationIdsAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          lastDepartureId: action.payload.lastDepartureId,
+          lastDestinationId: action.payload.lastDestinationId,
+          list: action.payload.list
+        }
+      })
   }
 })
 
@@ -74,9 +110,6 @@ export const getLastDepartureId = (state: AppState) => state.trips.lastDeparture
 export const getLastDestinationId = (state: AppState) => state.trips.lastDestinationId;
 
 export const {
-  getTripsByDepartureId: getTripsByDepartureIdActionCreator,
-  getTripsByDestinationId: getTripsByDestinationIdActionCreator,
-  getTripsByDepartureAndDestinationIds: getTripsByDepartureAndDestinationIdsActionCreator,
   setLastDepartureId: setLastDepartureIdActionCreator,
   setLastDestinationId: setLastDestinationIdActionCreator,
 } = tripsSlice.actions;

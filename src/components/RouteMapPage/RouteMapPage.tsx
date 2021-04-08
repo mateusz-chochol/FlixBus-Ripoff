@@ -21,7 +21,7 @@ import {
 } from 'react-redux';
 import {
   getBasicTrips,
-  getBasicTripsFromDepartureIdActionCreator,
+  getBasicTripsFromDepartureIdAsync,
 } from 'redux/BasicTripsSlice';
 import {
   getAllLocations,
@@ -37,7 +37,7 @@ import {
   getTrips,
   getLastDepartureId,
   getLastDestinationId,
-  getTripsByDepartureAndDestinationIdsActionCreator,
+  getTripsByDepartureAndDestinationIdsAsync,
   setLastDepartureIdActionCreator,
   setLastDestinationIdActionCreator,
 } from 'redux/TripsSlice';
@@ -227,11 +227,11 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
 
     if (departure && destination) {
       if (lastDepartureId !== departure.id || lastDestinationId !== destination.id) {
-        dispatch(getTripsByDepartureAndDestinationIdsActionCreator({ departureId: departure.id, destinationId: destination.id }));
+        dispatch(getTripsByDepartureAndDestinationIdsAsync({ departureId: departure.id, destinationId: destination.id }));
       }
 
       if (lastDepartureId !== departure.id) {
-        dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
+        dispatch(getBasicTripsFromDepartureIdAsync(departure.id));
       }
 
       if (trips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id) !== undefined) {
@@ -243,7 +243,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     }
     else if (departure) {
       if (lastDepartureId !== departure.id) {
-        dispatch(getBasicTripsFromDepartureIdActionCreator(departure.id));
+        dispatch(getBasicTripsFromDepartureIdAsync(departure.id));
         dispatch(setLastDepartureIdActionCreator(departure.id));
       }
 
