@@ -22,7 +22,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
   const [placeText, setPlaceText] = useState<string | null>(place?.name ?? null);
   const [options, setOptions] = useState<string[]>([]);
-  const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character');
+  const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character...');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleOnFocus = () => {
@@ -40,7 +40,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
     }
   };
 
-  const handleOnChange = (value: string | null) => {
+  const handleOnChange = (value: string | null, reason: string) => {
     setPlace(locations.find(location => location.name.toUpperCase() === value?.toUpperCase()));
   }
 
@@ -50,7 +50,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
 
   useEffect(() => {
     setPlaceText(place?.name ?? null);
-    setPlaceTextValue(place?.name ?? '')
+    setPlaceTextValue(place?.name ?? '');
   }, [place])
 
   useEffect(() => {
@@ -74,11 +74,13 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
         setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
       }
       else {
+        const delay = (place && place.name === placeTextValue) ? 0 : 1000;
+
         const delayCallForOptions = setTimeout(() => {
           dispatch(toDispatch(placeTextValue));
           setIsLoading(false);
           setNoOptionsText('No results found');
-        }, 1000)
+        }, delay);
 
         return () => clearTimeout(delayCallForOptions)
       }
@@ -92,7 +94,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   return (
     <Autocomplete
       value={placeText}
-      onChange={(event: any, value) => handleOnChange(value)}
+      onChange={(event: any, value, reason) => handleOnChange(value, reason)}
       inputValue={placeTextValue}
       onInputChange={(event, value) => setPlaceTextValue(capitalizeFirstLetter(value))}
       onBlur={handleOnBlur}
