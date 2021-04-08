@@ -80,7 +80,6 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
         setNoOptionsText('No results found');
 
         const delayCallForOptions = setTimeout(() => {
-          console.log('dispatch')
           dispatch(toDispatch(placeTextValue));
           setIsLoading(false);
         }, 1000)
