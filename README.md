@@ -4,9 +4,9 @@ Like the name suggests it's a bus travel website that tries to imitate FlixBus
 It uses firebase as a hosting service: https://flixbus-development.web.app/ (demo so far)
 
 As of now the things that work are:
-- login
-- singup
-- password reseting (it sends a message to the registered email)
+- login (as of now api keys have expired so it throws an error)
+- singup (as of now api keys have expired so it throws an error)
+- password reseting (it sends a message to the registered email) (as of now api keys have expired so it throws an error)
 - notifications
 - main page
 - routing (to the pages that already exist)
