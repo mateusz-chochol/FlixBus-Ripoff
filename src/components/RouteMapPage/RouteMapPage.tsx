@@ -1,10 +1,8 @@
 import React, {
   useRef,
-  useCallback,
   useState,
   useEffect,
 } from 'react';
-import CSS from 'csstype';
 import {
   Box,
   Hidden,
@@ -31,7 +29,6 @@ import {
   getLocationsForDepartureTextField,
   getLocationsForDestinationTextField,
   getLocationsForMap,
-  getLocationsByCoordinatesAsync,
   getLocationsByIdArrayAsync,
 } from 'redux/LocationsSlice';
 import {
@@ -47,19 +44,13 @@ import SearchButton from 'components/Misc/SearchButton';
 import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  Polyline,
-} from "@react-google-maps/api";
-import mapStyles from "./mapStyles";
-import {
   makeStyles,
   Theme,
   createStyles
 } from '@material-ui/core/styles';
 import Location from 'types/Objects/Location';
 import TripsList from './TripsList';
+import GoogleMap from './GoogleMap';
 
 const drawerWidth = 260;
 
@@ -134,21 +125,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const options = {
-  styles: mapStyles,
-  disableDefaultUI: true,
-  zoomControl: true,
-  gestureHandling: "greedy",
-};
-
-const center = {
-  lat: 50.0682709,
-  lng: 19.9601472,
-};
-
 const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
-  const mapRef = useRef<any>();
   const isSmallScreen = width === 'xs' || width === 'sm';
   const dispatch = useDispatch();
   const allLocations = useSelector(getAllLocations);
@@ -164,75 +142,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
-  });
   const navBarHeight = '75px';
   const smallScreenFormsHeight = '200px';
-  const mapContainerStyle: CSS.Properties = {
-    height: isSmallScreen ? `calc(100vh - ${navBarHeight} - ${smallScreenFormsHeight})` : `calc(100vh - ${navBarHeight})`,
-    width: '100%',
-  };
-
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-
-  const handleSelectMarker = (location: Location) => {
-    mapRef.current.panTo(location.coordinates);
-
-    if (location === departure) {
-      setDeparture(undefined);
-    }
-    else if (location === destination) {
-      setDestination(undefined);
-    }
-    else if (departure) {
-      setDestination(location);
-    }
-    else {
-      setDeparture(location);
-    }
-  }
-
-  const getLocationsToShow = () => {
-    const bounds = mapRef.current.getBounds();
-    const northEast = bounds.getNorthEast();
-    const southWest = bounds.getSouthWest();
-    const zoomLevel = mapRef.current.getZoom();
-
-    dispatch(getLocationsByCoordinatesAsync({
-      upperLeft: {
-        lng: northEast.lng(),
-        lat: northEast.lat()
-      },
-      bottomRight: {
-        lng: southWest.lng(),
-        lat: southWest.lat()
-      },
-      zoomLevel,
-    }))
-  }
-
-  const getMarkerColor = (location: Location) => {
-    if (location === departure || location === destination) {
-      return `${process.env.PUBLIC_URL}/map_markers/default_marker.png`;
-    }
-
-    return `${process.env.PUBLIC_URL}/map_markers/orange_marker.png`;
-  }
-
-  const isMarkerVisible = (location: Location) => {
-    if ((!departure && !destination) || (location === departure || location === destination)) {
-      return true;
-    }
-    if (departure) {
-      return basicTrips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === location.id) !== undefined;
-    }
-    if (destination && !departure) {
-      return basicTrips.find(trip => trip.startLocationId === location.id && trip.endLocationId === destination.id) !== undefined;
-    }
-  }
 
   useEffect(() => {
     setIsValidTripSelected(false);
@@ -272,9 +183,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       dispatch(getLocationsByIdArrayAsync(ids));
     }
   }, [basicTrips, dispatch]);
-
-  if (loadError) return <>Error</>;
-  if (!isLoaded) return <>Loading...</>;
 
   return (
     <Box
@@ -377,36 +285,17 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         </Drawer>
       </Hidden>
       <GoogleMap
-        id="map"
-        mapContainerStyle={mapContainerStyle}
-        zoom={6}
-        center={center}
-        options={options}
-        onLoad={onMapLoad}
-        onIdle={getLocationsToShow}
-        mapContainerClassName='map'
-      >
-        {locationsForMap.map((location) => (
-          <Marker
-            key={location.name}
-            position={location.coordinates}
-            icon={getMarkerColor(location)}
-            onClick={() => handleSelectMarker(location)}
-            visible={isMarkerVisible(location)}
-          />
-        ))}
-        {departure && destination && isValidTripSelected && (locationsForMap.includes(departure) || locationsForMap.includes(destination)) && (
-          <Polyline
-            path={[
-              departure.coordinates,
-              destination.coordinates
-            ]}
-            options={{
-              strokeColor: "#ff2527",
-            }}
-          />
-        )}
-      </GoogleMap>
+        departure={departure}
+        setDeparture={setDeparture}
+        destination={destination}
+        setDestination={setDestination}
+        locationsForMap={locationsForMap}
+        basicTrips={basicTrips}
+        isValidTripSelected={isValidTripSelected}
+        isSmallScreen={isSmallScreen}
+        navBarHeight={navBarHeight}
+        smallScreenFormsHeight={smallScreenFormsHeight}
+      />
       <Hidden mdUp>
         <Box width='100vw' height={smallScreenFormsHeight}>
           <Paper square className={classes.footerPaper}>
