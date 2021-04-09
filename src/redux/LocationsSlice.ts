@@ -74,15 +74,11 @@ export const getLocationsByCoordinatesAsync = createAsyncThunk<
     condition: ({ upperLeft, bottomRight }, { getState }) => {
       const { locations } = getState() as AppState;
 
-      if (!locations.lastUpperLeft || !locations.lastBottomRight ||
+      return !locations.lastUpperLeft || !locations.lastBottomRight ||
         (upperLeft.lat !== locations.lastUpperLeft.lat ||
           upperLeft.lng !== locations.lastUpperLeft.lng ||
           bottomRight.lat !== locations.lastBottomRight.lat ||
-          bottomRight.lng !== locations.lastBottomRight.lng)) {
-        return true;
-      }
-
-      return false;
+          bottomRight.lng !== locations.lastBottomRight.lng);
     }
   }
 );
