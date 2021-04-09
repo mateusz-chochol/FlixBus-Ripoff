@@ -8,11 +8,11 @@ As of now the things that work are:
 - singup
 - password reseting (it sends a message to the registered email)
 - notifications
-- main page (view only)
+- main page
 - routing (to the pages that already exist, which is: main page, route map, login, signup, password reset)
 - private routing (i.e. you cannot go to the login page if you are already logged in)
 - transitioning to mobile view on smaller screens (i.e. drawer with tabs instead of tabs in the app bar)
-- displaying map
+- route map page
 
 Current TODOs:
 - main page:
@@ -35,7 +35,7 @@ Current TODOs:
   - <del> error snackbar about no such trips found should only show up after clicking the search button </del> (Won't do)
   - <del> map should load only markers of the locations that the user can actually see (depending on the zoom level) and should display only set amount of them with system that selects which ones to show and that depends on the "importance" level of the locations (every location should have some "importance" level) </del> (Done)
   - <del> map should ask for the permission to locate the user and set its center to the user location (and if user denies then the center should remain as the center of Europe) </del> (Done)
-  - if marker is picked it should always be visible
+  - <del> if marker is picked it should always be visible </del> (Done)
 - plan your journey page:
   - create blank page with some static info
   - think about what this page should contain
