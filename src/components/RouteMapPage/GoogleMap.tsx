@@ -2,6 +2,7 @@ import React, {
   useState,
   useRef,
   useCallback,
+  useEffect,
 } from 'react';
 import CSS from 'csstype';
 import { useDispatch } from 'react-redux';
@@ -38,7 +39,10 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
 }) => {
   const dispatch = useDispatch();
   const mapRef = useRef<any>();
-  const [center, setCenter] = useState<Coordinates>();
+  const [center, setCenter] = useState<Coordinates>({
+    lat: 50.0682709,
+    lng: 19.9601472,
+  });
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
@@ -47,18 +51,17 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     width: '100%',
   };
 
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
   const getUserPosition = useCallback(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(setMap, positionGetterError);
+      navigator.geolocation.getCurrentPosition(setMap, positionGetterOnError);
     }
   }, [])
 
-  const positionGetterError = () => {
-    setCenter({
-      lat: 50.0682709,
-      lng: 19.9601472,
-    });
-  }
+  const positionGetterOnError = () => { };
 
   const setMap = (position: GeolocationPosition) => {
     setCenter({
@@ -66,11 +69,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       lng: position.coords.longitude,
     });
   }
-
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-    getUserPosition();
-  }, [getUserPosition]);
 
   const getMarkerColor = (location: Location) => {
     if (location === departure || location === destination) {
@@ -141,6 +139,16 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
 
     return array;
   }
+
+  useEffect(() => {
+    getUserPosition();
+  }, [getUserPosition])
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.panTo(center);
+    }
+  }, [center])
 
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
