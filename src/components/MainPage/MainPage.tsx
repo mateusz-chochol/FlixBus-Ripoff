@@ -140,8 +140,8 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      height={isSmallScreen ? "100vh" : "80vh"}
-      width="100vw"
+      height={isSmallScreen ? "100%" : "80%"}
+      width="100%"
     >
       <Box width={isSmallScreen ? 2 / 5 : undefined} minWidth={300}>
         <Hidden smDown>
