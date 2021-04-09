@@ -14,6 +14,7 @@ const TripsList: React.FC<TripsListProps> = ({
   locations,
   basicTrips,
   trips,
+  isSmallScreen,
   listClassName,
   listItemClassName,
   listSubheader,
@@ -21,12 +22,13 @@ const TripsList: React.FC<TripsListProps> = ({
   messageBoxProps,
 }) => {
   return (
-    (departure || destination) ?
-      <List subheader={listSubheader} className={listClassName}>
-        {departure && destination ?
+    <List subheader={listSubheader} className={listClassName}>
+      {departure || destination ?
+        (departure && destination ?
           <FullTripsList
             locations={locations}
             trips={trips}
+            isSmallScreen={isSmallScreen}
             listItemClassName={listItemClassName}
             typographyProps={typographyProps}
             messageBoxProps={messageBoxProps}
@@ -34,17 +36,19 @@ const TripsList: React.FC<TripsListProps> = ({
           <BasicTripsList
             locations={locations}
             basicTrips={basicTrips}
+            isSmallScreen={isSmallScreen}
             listItemClassName={listItemClassName}
             typographyProps={typographyProps}
             messageBoxProps={messageBoxProps}
           />
-        }
-      </List> :
-      <Box {...messageBoxProps}>
-        <Typography {...typographyProps}>
-          <Box m={2} mt={3} color="text.disabled">Choose departure, destination or both to display trips</Box>
-        </Typography>
-      </Box>
+        ) :
+        <Box {...messageBoxProps}>
+          <Typography {...typographyProps}>
+            <Box padding={2} color="text.disabled">Choose departure, destination or both to display trips</Box>
+          </Typography>
+        </Box>
+      }
+    </List>
   )
 }
 

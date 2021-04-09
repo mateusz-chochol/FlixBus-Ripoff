@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
+import CSS from 'csstype';
 import {
   Box,
   Hidden,
@@ -81,9 +82,12 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: 4,
     },
     footerGrid: {
+      height: '100%',
+      padding: 0
+    },
+    formsGrid: {
       margin: 0,
       width: '100%',
-      height: '100%',
       paddingTop: 4,
     },
     list: {
@@ -115,12 +119,17 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       display: 'flex',
       flexDirection: 'row',
-      padding: 0,
+      height: '100%',
     },
     smallListItem: {
       minWidth: '220px',
       minHeight: '80px',
       overflow: 'hidden'
+    },
+    divider: {
+      width: '100%',
+      height: '1px',
+      alignSelf: 'flex-start'
     }
   }),
 );
@@ -158,9 +167,11 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
-  const mapContainerStyle = {
-    height: isSmallScreen ? '70vh' : '92vh',
-    width: "100vw",
+  const navBarHeight = '75px';
+  const smallScreenFormsHeight = '200px';
+  const mapContainerStyle: CSS.Properties = {
+    height: isSmallScreen ? `calc(100vh - ${navBarHeight} - ${smallScreenFormsHeight})` : `calc(100vh - ${navBarHeight})`,
+    width: '100%',
   };
 
   const onMapLoad = useCallback((map) => {
@@ -354,6 +365,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
             locations={allLocations}
             basicTrips={basicTrips}
             trips={trips}
+            isSmallScreen={isSmallScreen}
             listClassName={classes.list}
             typographyProps={{
               variant: 'h5',
@@ -372,6 +384,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         options={options}
         onLoad={onMapLoad}
         onIdle={getLocationsToShow}
+        mapContainerClassName='map'
       >
         {locationsForMap.map((location) => (
           <Marker
@@ -395,17 +408,18 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         )}
       </GoogleMap>
       <Hidden mdUp>
-        <Box width='100vw' height='22vh'>
+        <Box width='100vw' height={smallScreenFormsHeight}>
           <Paper square className={classes.footerPaper}>
             <Grid
               container
-              direction='column'
+              direction='row'
+              className={classes.footerGrid}
             >
               <Grid
                 item
                 container
                 spacing={2}
-                className={classes.footerGrid}
+                className={classes.formsGrid}
                 alignItems='center'
                 justify='center'
                 xs={12}
@@ -454,9 +468,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                     <SearchButton departure={departure} destination={destination} />
                   </Box>
                 </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
+                <Divider className={classes.divider} />
               </Grid>
               <Grid item container xs={12} justify='center'>
                 <Box height='100%' width='100%'>
@@ -466,12 +478,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
                     locations={allLocations}
                     basicTrips={basicTrips}
                     trips={trips}
+                    isSmallScreen={isSmallScreen}
                     listClassName={classes.smallList}
                     listItemClassName={classes.smallListItem}
                     typographyProps={{
                       variant: 'subtitle1',
                       align: 'center',
-                      noWrap: true,
                     }}
                     messageBoxProps={{
                       height: '100%',

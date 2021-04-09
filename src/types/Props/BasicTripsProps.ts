@@ -8,6 +8,7 @@ import {
 export default interface BasicTripsProps {
   locations: Location[],
   basicTrips: BasicTrip[],
+  isSmallScreen: boolean,
   listItemClassName?: string,
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps

@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const BasicTripsList: React.FC<BasicTripsProps> = ({
   locations,
   basicTrips,
+  isSmallScreen,
   listItemClassName,
   typographyProps,
   messageBoxProps,
@@ -37,28 +38,28 @@ const BasicTripsList: React.FC<BasicTripsProps> = ({
   return (
     <>
       {basicTrips.length > 0 ? basicTrips.map(trip => (
-        <>
+        <React.Fragment key={trip.id}>
           <Divider orientation="vertical" flexItem />
           <ListItem button key={trip.id} className={listItemClassName}>
-            <Grid container className={classes.grid} direction='column'>
-              <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
-                <Grid item>
+            <Grid container className={classes.grid} direction='row'>
+              <Grid item container className={classes.grid} alignItems='flex-end' justify={isSmallScreen ? 'space-evenly' : 'space-between'}>
+                <Grid item xs={isSmallScreen ? undefined : 4}>
                   <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
                 </Grid>
                 <Grid item xs={2}>
                   <ArrowRightAltIcon />
                 </Grid>
-                <Grid item>
+                <Grid item xs={isSmallScreen ? undefined : 4}>
                   <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
                 </Grid>
               </Grid>
             </Grid>
           </ListItem>
-        </>
+        </React.Fragment>
       )) :
         <Box {...messageBoxProps}>
           <Typography {...typographyProps}>
-            <Box m={2} mt={3} color="text.disabled">Sorry, no trips found</Box>
+            <Box padding={2} color="text.disabled">Sorry, no trips found</Box>
           </Typography>
         </Box>
       }

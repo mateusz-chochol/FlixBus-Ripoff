@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
     grid: {
       margin: 0,
       width: '100%',
-      paddingTop: 4,
     },
   }),
 );
@@ -28,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const FullTripsList: React.FC<FullTripsProps> = ({
   locations,
   trips,
+  isSmallScreen,
   listItemClassName,
   typographyProps,
   messageBoxProps,
@@ -37,15 +37,15 @@ const FullTripsList: React.FC<FullTripsProps> = ({
   return (
     <>
       {(trips.length > 0 ? trips.map(trip => (
-        <>
+        <React.Fragment key={trip.id}>
           <Divider orientation="vertical" flexItem />
           <ListItem button key={trip.id} className={listItemClassName}>
             <Grid container className={classes.grid} direction='row'>
-              <Grid item container className={classes.grid} alignItems='flex-end' justify='space-around'>
+              <Grid item container className={classes.grid} alignItems='flex-end' justify={isSmallScreen ? 'space-evenly' : 'space-between'}>
                 <Grid item>
                   <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item>
                   <ArrowRightAltIcon />
                 </Grid>
                 <Grid item>
@@ -53,18 +53,18 @@ const FullTripsList: React.FC<FullTripsProps> = ({
                 </Grid>
               </Grid>
               <Grid item>
-                <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
+                <ListItemText secondary={`${trip.date}, ${trip.price}$, seats: ${trip.seatsLeft}`} />
               </Grid>
             </Grid>
           </ListItem>
-        </>
+        </React.Fragment>
       )) :
         <Box {...messageBoxProps}>
           <Typography {...typographyProps}>
-            <Box m={2} mt={3} color="text.disabled">Sorry, no trips found</Box>
+            <Box padding={2} color="text.disabled">Sorry, no trips found</Box>
           </Typography>
-        </Box>)
-      }
+        </Box>
+      )}
     </>
   )
 }

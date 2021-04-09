@@ -12,6 +12,7 @@ export default interface TripsListProps {
   locations: Location[],
   basicTrips: BasicTrip[],
   trips: Trip[],
+  isSmallScreen: boolean,
   listClassName?: string,
   listItemClassName?: string,
   listSubheader?: React.ReactElement<any, string | React.JSXElementConstructor<any>>,

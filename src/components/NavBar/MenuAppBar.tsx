@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     toolbar: {
-      height: '8vh'
+      height: '75px'
     },
   }),
 );
