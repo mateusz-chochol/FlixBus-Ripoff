@@ -9,7 +9,7 @@ As of now the things that work are:
 - password reseting (it sends a message to the registered email)
 - notifications
 - main page
-- routing (to the pages that already exist, which is: main page, route map, login, signup, password reset)
+- routing (to the pages that already exist)
 - private routing (i.e. you cannot go to the login page if you are already logged in)
 - transitioning to mobile view on smaller screens (i.e. drawer with tabs instead of tabs in the app bar)
 - route map page
