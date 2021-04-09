@@ -128,6 +128,20 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }
 
+  const getAdditionalLocationsToShow = () => {
+    let array: Location[] = [];
+
+    if (departure && !locationsForMap.find(location => location.id === departure.id)) {
+      array.push(departure);
+    }
+
+    if (destination && !locationsForMap.find(location => location.id === destination.id)) {
+      array.push(destination);
+    }
+
+    return array;
+  }
+
   if (loadError) return <>Error</>;
   if (!isLoaded) return <>Loading...</>;
 
@@ -142,7 +156,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       onIdle={getLocationsToShow}
       mapContainerClassName='map'
     >
-      {locationsForMap.map((location) => (
+      {locationsForMap.concat(getAdditionalLocationsToShow()).map((location) => (
         <Marker
           key={location.name}
           position={location.coordinates}
@@ -151,7 +165,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
           visible={isMarkerVisible(location)}
         />
       ))}
-      {departure && destination && isValidTripSelected && (locationsForMap.includes(departure) || locationsForMap.includes(destination)) && (
+      {departure && destination && isValidTripSelected && (
         <Polyline
           path={[
             departure.coordinates,
