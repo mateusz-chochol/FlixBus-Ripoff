@@ -21,7 +21,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="92vh"
+        height="calc(100vh - 75px)"
         width="100vw"
       >
         <Typography variant='h1'>
