@@ -58,7 +58,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
   const notificationsFunctionsRef = useRef(useNotifications());
-  const { showError } = notificationsFunctionsRef.current;
+  const { showInfo } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<TripType>(TripType.OneWay);
@@ -93,7 +93,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
 
   const handleDepartureDateChange = (date: Date | null) => {
     if (moment(date).isBefore(moment(), 'day')) {
-      showError('Departure date cannot be from the past');
+      showInfo('Departure date cannot be from the past');
     }
     else if (tripType === TripType.OneWay || moment(date).isSameOrBefore(returnDate, 'day')) {
       setDepartureDate(date);
@@ -110,7 +110,7 @@ const MainPage: React.FC<WithWidth> = ({ width }) => {
     }
     else {
       setIsReturnDateWindowOpen(false);
-      showError('Return date cannot be before departure date');
+      showInfo('Return date cannot be before departure date');
     }
   }
 
