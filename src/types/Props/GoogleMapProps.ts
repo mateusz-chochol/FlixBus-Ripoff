@@ -11,5 +11,5 @@ export default interface GoogleMapProps {
   isValidTripSelected: boolean,
   isSmallScreen: boolean,
   navBarHeight: string,
-  smallScreenFormsHeight: string,
+  footerMenuHeight: string,
 }

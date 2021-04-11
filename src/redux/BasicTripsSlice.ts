@@ -17,7 +17,7 @@ const basicTripsInitialState: BasicTripsSliceState = {
 export const getBasicTripsFromDepartureIdAsync = createAsyncThunk<BasicTrip[], number>(
   'basicTrips/getBasicTripsFromDepartureIdAsync',
   async (id) => {
-    return api.getBasicTripsFromDepartureId(id);
+    return await api.getBasicTripsFromDepartureId(id);
   }
 )
 

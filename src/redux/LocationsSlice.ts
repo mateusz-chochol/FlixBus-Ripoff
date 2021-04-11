@@ -37,7 +37,7 @@ export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>
     let locationsToReturn = locations.allLocations.filter(location => uniqueIds.includes(location.id));
 
     if (idsToAskFor.length > 0) {
-      locationsToReturn = locationsToReturn.concat(api.getLocationsByIdArray(idsToAskFor));
+      locationsToReturn = locationsToReturn.concat(await api.getLocationsByIdArray(idsToAskFor));
     }
 
     return locationsToReturn;
@@ -47,14 +47,14 @@ export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>
 export const getDepartureLocationsBySubstringAsync = createAsyncThunk<Location[], string>(
   'locations/getDepartureLocationsBySubstringAsync',
   async (substring) => {
-    return api.getLocationsBySubstring(substring);
+    return await api.getLocationsBySubstring(substring);
   }
 );
 
 export const getDestinationLocationsBySubstringAsync = createAsyncThunk<Location[], string>(
   'locations/getDestinationLocationsBySubstringAsync',
   async (substring) => {
-    return api.getLocationsBySubstring(substring);
+    return await api.getLocationsBySubstring(substring);
   }
 );
 
@@ -65,7 +65,7 @@ export const getLocationsByCoordinatesAsync = createAsyncThunk<
   'locations/getLocationsByCoordinatesAsync',
   async ({ upperLeft, bottomRight, zoomLevel }) => {
     return {
-      locationsForMap: api.getLocationsByCoordinates(upperLeft, bottomRight, zoomLevel),
+      locationsForMap: await api.getLocationsByCoordinates(upperLeft, bottomRight, zoomLevel),
       upperLeft: upperLeft,
       bottomRight: bottomRight
     };

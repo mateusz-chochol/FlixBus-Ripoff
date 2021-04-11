@@ -27,7 +27,7 @@ export const getTripsByDepartureIdAsync = createAsyncThunk<
   async (id) => {
     return {
       lastDepartureId: id,
-      list: api.getTripsByDepartureId(id)
+      list: await api.getTripsByDepartureId(id)
     }
   }
 );
@@ -40,7 +40,7 @@ export const getTripsByDestinationIdAsync = createAsyncThunk<
   async (id) => {
     return {
       lastDestinationId: id,
-      list: api.getTripsByDestinationId(id)
+      list: await api.getTripsByDestinationId(id)
     }
   }
 );
@@ -54,7 +54,7 @@ export const getTripsByDepartureAndDestinationIdsAsync = createAsyncThunk<
     return {
       lastDepartureId: departureId,
       lastDestinationId: destinationId,
-      list: api.getTripsByDepartureAndDestinationIds(departureId, destinationId)
+      list: await api.getTripsByDepartureAndDestinationIds(departureId, destinationId)
     }
   }
 );

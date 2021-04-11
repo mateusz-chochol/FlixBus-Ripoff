@@ -4,4 +4,4 @@ import basicTrips from './tempDataSources/basicTrips.json';
 const allTrips: BasicTrip[] = basicTrips.basicTrips;
 
 // fake API calls
-export const getBasicTripsFromDepartureId = (id: number) => allTrips.filter(trip => trip.startLocationId === id);
+export const getBasicTripsFromDepartureId = async (id: number) => allTrips.filter(trip => trip.startLocationId === id);

@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
     divider: {
       width: '100%',
       height: '1px',
-      alignSelf: 'flex-start'
+      alignSelf: 'flex-end'
     }
   }),
 );
@@ -73,13 +73,13 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
   allLocations,
   departureLocationsForTextFields,
   destinationLocationsForTextFields,
-  smallScreenFormsHeight,
+  footerMenuHeight,
   isSmallScreen
 }) => {
   const classes = useStyles();
 
   return (
-    <Box width='100vw' height={smallScreenFormsHeight}>
+    <Box width='100vw' height={footerMenuHeight}>
       <Paper square className={classes.footerPaper}>
         <Grid
           container

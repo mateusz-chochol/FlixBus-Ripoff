@@ -35,7 +35,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   isValidTripSelected,
   isSmallScreen,
   navBarHeight,
-  smallScreenFormsHeight
+  footerMenuHeight
 }) => {
   const dispatch = useDispatch();
   const mapRef = useRef<any>();
@@ -47,7 +47,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string
   });
   const mapContainerStyle: CSS.Properties = {
-    height: isSmallScreen ? `calc(100vh - ${navBarHeight} - ${smallScreenFormsHeight})` : `calc(100vh - ${navBarHeight})`,
+    height: isSmallScreen ? `calc(100vh - ${navBarHeight} - ${footerMenuHeight})` : `calc(100vh - ${navBarHeight})`,
     width: '100%',
   };
 

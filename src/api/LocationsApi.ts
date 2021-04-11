@@ -5,7 +5,7 @@ import locations from './tempDataSources/locations.json';
 const allLocations: Location[] = locations.locations;
 
 // fake API calls
-export const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
+export const getLocationsByCoordinates = async (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
   const maxZoom = 14;
   const offset = (maxZoom * 80) / (zoomLevel * zoomLevel * zoomLevel);
   // offset to expand the rectangle a bit so its a bit bigger than the map bounds
@@ -28,10 +28,10 @@ export const getLocationsByCoordinates = (upperLeft: Coordinates, bottomRight: C
   return allLocations.filter(location => fitsOnScreen(location) && isImportantEnough(location));
 }
 
-export const getLocationsBySubstring = (substring: string) => {
+export const getLocationsBySubstring = async (substring: string) => {
   return allLocations.filter(location => location.name.startsWith(substring));
 }
 
-export const getLocationsByIdArray = (ids: number[]) => {
+export const getLocationsByIdArray = async (ids: number[]) => {
   return allLocations.filter(location => ids.includes(location.id));
 }

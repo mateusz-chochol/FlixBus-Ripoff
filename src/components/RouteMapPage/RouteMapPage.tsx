@@ -55,7 +55,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const [destination, setDestination] = useState<Location>();
   const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
   const navBarHeight = '75px';
-  const smallScreenFormsHeight = '200px';
+  const footerMenuHeight = '200px';
 
   useEffect(() => {
     setIsValidTripSelected(false);
@@ -129,7 +129,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         isValidTripSelected={isValidTripSelected}
         isSmallScreen={isSmallScreen}
         navBarHeight={navBarHeight}
-        smallScreenFormsHeight={smallScreenFormsHeight}
+        footerMenuHeight={footerMenuHeight}
       />
       <Hidden mdUp>
         <FooterMenu
@@ -142,7 +142,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           allLocations={allLocations}
           departureLocationsForTextFields={departureLocationsForTextFields}
           destinationLocationsForTextFields={departureLocationsForTextFields}
-          smallScreenFormsHeight={smallScreenFormsHeight}
+          footerMenuHeight={footerMenuHeight}
           isSmallScreen={isSmallScreen}
         />
       </Hidden>
