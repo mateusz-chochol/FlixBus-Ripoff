@@ -13,7 +13,12 @@ const notificationsSlice = createSlice({
   initialState: notificationsInitialState,
   reducers: {
     addNotification: (state, { payload }: PayloadAction<Notification>) => {
-      state.push(payload)
+      if (!state.find(notification => notification.message === payload.message)) {
+        return [
+          ...state,
+          payload
+        ]
+      }
     },
     removeNotification: (state, { payload }: PayloadAction<{ id: string }>) => {
       const notificationToRemoveIndex = current(state).findIndex(notification => notification.id === payload.id)
@@ -25,7 +30,7 @@ const notificationsSlice = createSlice({
   }
 })
 
-export const selectNotifications = (state: AppState) => state.notifications;
+export const getNotifications = (state: AppState) => state.notifications;
 
 export const {
   addNotification: addNotificationActionCreator,

@@ -29,7 +29,7 @@ import {
 } from 'react-redux';
 import {
   removeNotificationActionCreator,
-  selectNotifications
+  getNotifications
 } from 'redux/NotificationsSlice';
 import { routes } from 'routes';
 
@@ -42,7 +42,7 @@ const styles = {
 
 const App = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const notifications = useSelector(selectNotifications);
+  const notifications = useSelector(getNotifications);
   const dispatch = useDispatch();
 
   useEffect(() => {
