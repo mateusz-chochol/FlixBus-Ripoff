@@ -155,7 +155,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }, [center])
 
-  if (loadError) {
+  if (!loadError) {
     return (
       <Box
         display='flex'
@@ -166,7 +166,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
         bgcolor="warning.main"
       >
         <Typography variant='h2' align='center'>
-          <Box fontWeight={500} letterSpacing={6}> Error loading map</Box>
+          <Box fontWeight={500} letterSpacing={6} color="text.disabled"> Error loading map</Box>
         </Typography>
       </Box>
     );
