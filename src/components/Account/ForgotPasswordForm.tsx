@@ -36,17 +36,17 @@ const ForgotPasswordForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { resetPassword } = useAuth();
   const history = useHistory();
-  const { showError, showSuccess } = useNotifications();
+  const { showError, showSuccess, showInfo } = useNotifications();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
     e?.preventDefault();
 
     if (!emailRef.current?.value) {
-      return showError('All text fields must be filled out');
+      return showInfo('All text fields must be filled out');
     }
 
     if (!emailRef.current.value.includes('@')) {
-      return showError('Email must contain \'@\' sign');
+      return showInfo('Email must contain \'@\' sign');
     }
 
     try {
