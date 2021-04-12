@@ -37,19 +37,19 @@ Current TODOs:
   - <del> map should ask for the permission to locate the user and set its center to the user location (and if user denies then the center should remain as the center of Europe) </del> (Done)
   - <del> if marker is picked it should always be visible </del> (Done)
 - plan your journey page:
-  - create blank page with some static info
+  - <del> create blank page with some static info </del
   - think about what this page should contain
 - services page:
-  - create blank page with some static info
+  - <del> create blank page with some static info </del>
   - think about what this page should contain
 - company page:
-  - create blank page with some static info
+  - <del> create blank page with some static info </del>
 - newsletter page:
-  - create blank page with some static info
+  - <del> create blank page with some static info </del>
 - send feedback page:
-  - create blank page with some static info
+  - <del> create blank page with some static info </del>
 - help page:
-  - create blank page with some static info
+  - <del> create blank page with some static info </del>
 - results page:
   - fill the results page with results
 - general:
