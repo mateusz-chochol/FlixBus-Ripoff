@@ -155,7 +155,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }, [center])
 
-  if (!loadError) {
+  if (loadError) {
     return (
       <Box
         display='flex'
