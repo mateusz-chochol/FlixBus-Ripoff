@@ -15,7 +15,8 @@ import {
 } from "@react-google-maps/api";
 import {
   Box,
-  Typography
+  Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import mapStyles from "./mapStyles";
 import Location from 'types/Objects/Location';
@@ -156,19 +157,35 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
 
   if (loadError) {
     return (
-      <Box width={mapContainerStyle.width} height={mapContainerStyle.height} >
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        width={mapContainerStyle.width}
+        height={mapContainerStyle.height}
+        bgcolor="warning.main"
+      >
         <Typography variant='h2' align='center'>
-          <Box fontWeight={500} letterSpacing={6} color="text.disabled">Error loading map</Box>
+          <Box fontWeight={500} letterSpacing={6}> Error loading map</Box>
         </Typography>
       </Box>
     );
   }
   if (!isLoaded) {
     return (
-      <Box width={mapContainerStyle.width} height={mapContainerStyle.height} >
+      <Box
+        display='flex'
+        flexDirection='column'
+        justifyContent='space-evenly'
+        alignItems='center'
+        width={mapContainerStyle.width}
+        height={mapContainerStyle.height}
+        bgcolor="grey.300"
+      >
         <Typography variant='h2' align='center'>
-          <Box fontWeight={500} letterSpacing={6} color="text.disabled">Loading...</Box>
+          <Box fontWeight={500} letterSpacing={6} color="text.disabled">Loading map</Box>
         </Typography>
+        <CircularProgress size={125} thickness={2} />
       </Box>
     );
   }
