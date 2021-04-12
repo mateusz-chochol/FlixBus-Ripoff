@@ -44,13 +44,18 @@ Current TODOs:
   - think about what this page should contain
 - company page:
   - <del> create blank page with some static info </del>
+  - think about what this page should contain
 - newsletter page:
   - <del> create blank page with some static info </del>
+  - think about what this page should contain
 - send feedback page:
   - <del> create blank page with some static info </del>
+  - think about what this page should contain
 - help page:
   - <del> create blank page with some static info </del>
+  - think about what this page should contain
 - results page:
+  - <del> create blank page with some static info </del>
   - fill the results page with results
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
