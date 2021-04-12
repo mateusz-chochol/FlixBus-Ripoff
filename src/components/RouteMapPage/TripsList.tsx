@@ -20,7 +20,9 @@ const TripsList: React.FC<TripsListProps> = ({
   listSubheader,
   typographyProps,
   messageBoxProps,
+  handleBasicTripsListItemClick,
 }) => {
+
   return (
     <List subheader={listSubheader} className={listClassName}>
       {departure || destination ?
@@ -40,6 +42,7 @@ const TripsList: React.FC<TripsListProps> = ({
             listItemClassName={listItemClassName}
             typographyProps={typographyProps}
             messageBoxProps={messageBoxProps}
+            handleBasicTripsListItemClick={handleBasicTripsListItemClick}
           />
         ) :
         <Box {...messageBoxProps}>

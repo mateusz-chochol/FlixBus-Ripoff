@@ -32,6 +32,7 @@ const BasicTripsList: React.FC<BasicTripsProps> = ({
   listItemClassName,
   typographyProps,
   messageBoxProps,
+  handleBasicTripsListItemClick
 }) => {
   const classes = useStyles();
 
@@ -40,7 +41,7 @@ const BasicTripsList: React.FC<BasicTripsProps> = ({
       {basicTrips.length > 0 ? basicTrips.map(trip => (
         <React.Fragment key={trip.id}>
           <Divider orientation="vertical" flexItem />
-          <ListItem button key={trip.id} className={listItemClassName}>
+          <ListItem button key={trip.id} className={listItemClassName} onClick={() => handleBasicTripsListItemClick(trip)}>
             <Grid container className={classes.grid} direction='row'>
               <Grid item container className={classes.grid} alignItems='flex-end' justify={isSmallScreen ? 'space-evenly' : 'space-between'}>
                 <Grid item xs={isSmallScreen ? undefined : 4}>

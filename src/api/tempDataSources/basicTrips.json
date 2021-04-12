@@ -66,11 +66,6 @@
       "endLocationId": 6
     },
     {
-      "id": 14,
-      "startLocationId": 3,
-      "endLocationId": 2
-    },
-    {
       "id": 15,
       "startLocationId": 1,
       "endLocationId": 5
@@ -81,29 +76,9 @@
       "endLocationId": 7
     },
     {
-      "id": 17,
-      "startLocationId": 6,
-      "endLocationId": 2
-    },
-    {
-      "id": 18,
-      "startLocationId": 5,
-      "endLocationId": 1
-    },
-    {
-      "id": 19,
-      "startLocationId": 2,
-      "endLocationId": 3
-    },
-    {
       "id": 20,
       "startLocationId": 3,
       "endLocationId": 6
-    },
-    {
-      "id": 21,
-      "startLocationId": 5,
-      "endLocationId": 2
     },
     {
       "id": 22,
@@ -146,39 +121,14 @@
       "endLocationId": 5
     },
     {
-      "id": 30,
-      "startLocationId": 1,
-      "endLocationId": 4
-    },
-    {
-      "id": 31,
-      "startLocationId": 4,
-      "endLocationId": 2
-    },
-    {
       "id": 32,
       "startLocationId": 6,
       "endLocationId": 1
     },
     {
-      "id": 33,
-      "startLocationId": 3,
-      "endLocationId": 2
-    },
-    {
       "id": 34,
       "startLocationId": 4,
       "endLocationId": 5
-    },
-    {
-      "id": 35,
-      "startLocationId": 6,
-      "endLocationId": 3
-    },
-    {
-      "id": 36,
-      "startLocationId": 2,
-      "endLocationId": 1
     }
   ]
 }

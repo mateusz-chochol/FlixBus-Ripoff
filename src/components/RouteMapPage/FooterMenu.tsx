@@ -73,7 +73,8 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
   allLocations,
   departureLocationsForTextFields,
   destinationLocationsForTextFields,
-  footerMenuHeight
+  footerMenuHeight,
+  handleBasicTripsListItemClick
 }) => {
   const classes = useStyles();
 
@@ -159,6 +160,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                   height: '100%',
                   width: '100%',
                 }}
+                handleBasicTripsListItemClick={handleBasicTripsListItemClick}
               />
             </Box>
           </Grid>

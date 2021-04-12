@@ -37,6 +37,7 @@ import Location from 'types/Objects/Location';
 import GoogleMap from './GoogleMap';
 import RouteMapDrawer from './RouteMapDrawer';
 import FooterMenu from './FooterMenu';
+import BasicTrip from 'types/Objects/BasicTrip';
 
 const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
@@ -56,6 +57,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
   const navBarHeight = '75px';
   const footerMenuHeight = '200px';
+
+  const handleBasicTripsListItemClick = (trip: BasicTrip) => {
+    setDestination(allLocations.find(location => location.id === trip.endLocationId));
+  }
 
   useEffect(() => {
     setIsValidTripSelected(false);
@@ -116,6 +121,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           allLocations={allLocations}
           departureLocationsForTextFields={departureLocationsForTextFields}
           destinationLocationsForTextFields={destinationLocationsForTextFields}
+          handleBasicTripsListItemClick={handleBasicTripsListItemClick}
         />
       </Hidden>
       <GoogleMap
@@ -142,6 +148,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           departureLocationsForTextFields={departureLocationsForTextFields}
           destinationLocationsForTextFields={departureLocationsForTextFields}
           footerMenuHeight={footerMenuHeight}
+          handleBasicTripsListItemClick={handleBasicTripsListItemClick}
         />
       </Hidden>
     </Box>

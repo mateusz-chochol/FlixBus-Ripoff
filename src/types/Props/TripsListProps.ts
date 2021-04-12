@@ -18,4 +18,5 @@ export default interface TripsListProps {
   listSubheader?: React.ReactElement<any, string | React.JSXElementConstructor<any>>,
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps,
+  handleBasicTripsListItemClick: (trip: BasicTrip) => void,
 }

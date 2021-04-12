@@ -11,5 +11,6 @@ export default interface BasicTripsProps {
   isSmallScreen: boolean,
   listItemClassName?: string,
   typographyProps?: TypographyProps,
-  messageBoxProps?: BoxProps
+  messageBoxProps?: BoxProps,
+  handleBasicTripsListItemClick: (trip: BasicTrip) => void,
 }

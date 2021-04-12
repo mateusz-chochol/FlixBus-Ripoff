@@ -65,7 +65,8 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
   trips,
   allLocations,
   departureLocationsForTextFields,
-  destinationLocationsForTextFields
+  destinationLocationsForTextFields,
+  handleBasicTripsListItemClick,
 }) => {
   const classes = useStyles();
 
@@ -157,6 +158,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
         messageBoxProps={{
           height: '100%',
         }}
+        handleBasicTripsListItemClick={handleBasicTripsListItemClick}
       />
     </Drawer>
   )
