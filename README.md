@@ -18,7 +18,7 @@ Current TODOs:
 - main page:
   - <del> fix vertical scaling on mobile devices </del> (Done)
   - <del> add autocompletion for destination / departure text fields </del> (Done)
-  - change background paper to something code generated so it's never to small no matter the resolution
+  - <del> change background paper to something code generated so it's never to small no matter the resolution </del> (kinda Won't do [code for gradient commented out])
   - <del> fix return / departure date fields so they have separate data sources and departure cannot be after return date and none can be before current date </del>  (Done)
   - <del> make search button actually do something </del> (Done)
 - route map page:
