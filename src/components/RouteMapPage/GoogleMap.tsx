@@ -13,6 +13,10 @@ import {
   Marker,
   Polyline,
 } from "@react-google-maps/api";
+import {
+  Box,
+  Typography
+} from '@material-ui/core';
 import mapStyles from "./mapStyles";
 import Location from 'types/Objects/Location';
 import Coordinates from 'types/Objects/Coordinates';
@@ -150,8 +154,24 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }, [center])
 
-  if (loadError) return <>Error</>;
-  if (!isLoaded) return <>Loading...</>;
+  if (loadError) {
+    return (
+      <Box width={mapContainerStyle.width} height={mapContainerStyle.height} >
+        <Typography variant='h2' align='center'>
+          <Box fontWeight={500} letterSpacing={6} color="text.disabled">Error loading map</Box>
+        </Typography>
+      </Box>
+    );
+  }
+  if (!isLoaded) {
+    return (
+      <Box width={mapContainerStyle.width} height={mapContainerStyle.height} >
+        <Typography variant='h2' align='center'>
+          <Box fontWeight={500} letterSpacing={6} color="text.disabled">Loading...</Box>
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Map
