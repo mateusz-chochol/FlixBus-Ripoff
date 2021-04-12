@@ -53,6 +53,9 @@ const BasicTripsList: React.FC<BasicTripsProps> = ({
                 <Grid item xs={isSmallScreen ? undefined : 4}>
                   <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
                 </Grid>
+                <Grid item>
+                  <ListItemText secondary={`Available trips: ${trip.tripCount}`} />
+                </Grid>
               </Grid>
             </Grid>
           </ListItem>
