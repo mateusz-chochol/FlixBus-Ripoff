@@ -12,6 +12,12 @@ import DefaultRoute from './Misc/DefaultRoute';
 import PrivateRoute from './Misc/PrivateRoute';
 import ForgotPasswordPage from './Account/ForgotPasswordPage';
 import ResultsPage from './ResultsPage/ResultsPage';
+import PlanYourJourneyPage from './PlanYourJourneyPage/PlanYourJourneyPage';
+import ServicesPage from './ServicesPage/ServicesPage';
+import CompanyPage from './CompanyPage/CompanyPage';
+import NewsetterPage from './NewsletterPage/NewsetterPage';
+import SendFeedbackPage from './SendFeedbackPage/SendFeedbackPage';
+import HelpPage from './HelpPage/HelpPage';
 import { Paper } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
@@ -67,6 +73,12 @@ const App = () => {
             <Switch>
               <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
               <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
+              <DefaultRoute exact path={routes.planYourJourneyPage} component={PlanYourJourneyPage} />
+              <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} />
+              <DefaultRoute exact path={routes.companyPage} component={CompanyPage} />
+              <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} />
+              <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} />
+              <DefaultRoute exact path={routes.helpPage} component={HelpPage} />
               <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
               <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
               <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />

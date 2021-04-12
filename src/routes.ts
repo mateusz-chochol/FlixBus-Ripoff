@@ -4,5 +4,11 @@ export const routes = {
   forgotPasswordPage: "/forgotpassword",
   routeMapPage: "/routemap",
   resultsPage: "/results/:departureId/:destinationId",
+  planYourJourneyPage: "/planyourjourney",
+  servicesPage: "/services",
+  companyPage: "/company",
+  newsletterPage: "/newsletter",
+  sendFeedbackPage: "/sendfeedback",
+  helpPage: "/help",
   mainPage: "/",
 }
