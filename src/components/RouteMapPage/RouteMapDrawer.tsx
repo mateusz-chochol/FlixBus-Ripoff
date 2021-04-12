@@ -65,8 +65,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
   trips,
   allLocations,
   departureLocationsForTextFields,
-  destinationLocationsForTextFields,
-  isSmallScreen
+  destinationLocationsForTextFields
 }) => {
   const classes = useStyles();
 
@@ -98,7 +97,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
               toDispatch={getDepartureLocationsBySubstringAsync}
               label="From"
               placeholder="Start from..."
-              disableClearable={isSmallScreen}
+              disableClearable={false}
             />
           </Box>
         </Grid>
@@ -113,7 +112,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
               shouldHideOptions={departure === undefined}
               label="To"
               placeholder="Finish in..."
-              disableClearable={isSmallScreen}
+              disableClearable={false}
             />
           </Box>
         </Grid>
@@ -150,7 +149,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
         locations={allLocations}
         basicTrips={basicTrips}
         trips={trips}
-        isSmallScreen={isSmallScreen}
+        isSmallScreen={false}
         listClassName={classes.list}
         typographyProps={{
           variant: 'h5',

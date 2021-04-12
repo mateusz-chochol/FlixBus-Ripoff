@@ -11,6 +11,5 @@ export default interface RouteMapDrawerProps {
   trips: Trip[],
   allLocations: Location[],
   departureLocationsForTextFields: Location[],
-  destinationLocationsForTextFields: Location[],
-  isSmallScreen: boolean,
+  destinationLocationsForTextFields: Location[]
 }

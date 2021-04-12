@@ -116,7 +116,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           allLocations={allLocations}
           departureLocationsForTextFields={departureLocationsForTextFields}
           destinationLocationsForTextFields={destinationLocationsForTextFields}
-          isSmallScreen={isSmallScreen}
         />
       </Hidden>
       <GoogleMap
@@ -143,7 +142,6 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           departureLocationsForTextFields={departureLocationsForTextFields}
           destinationLocationsForTextFields={departureLocationsForTextFields}
           footerMenuHeight={footerMenuHeight}
-          isSmallScreen={isSmallScreen}
         />
       </Hidden>
     </Box>

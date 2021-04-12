@@ -13,5 +13,4 @@ export default interface FooterMenuProps {
   departureLocationsForTextFields: Location[],
   destinationLocationsForTextFields: Location[],
   footerMenuHeight: string,
-  isSmallScreen: boolean,
 }

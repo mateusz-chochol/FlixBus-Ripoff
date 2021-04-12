@@ -73,8 +73,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
   allLocations,
   departureLocationsForTextFields,
   destinationLocationsForTextFields,
-  footerMenuHeight,
-  isSmallScreen
+  footerMenuHeight
 }) => {
   const classes = useStyles();
 
@@ -104,7 +103,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                   toDispatch={getDepartureLocationsBySubstringAsync}
                   label="From"
                   placeholder="Start from..."
-                  disableClearable={isSmallScreen}
+                  disableClearable={true}
                 />
               </Box>
             </Grid>
@@ -130,7 +129,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                   shouldHideOptions={departure === undefined}
                   label="To"
                   placeholder="Finish in..."
-                  disableClearable={isSmallScreen}
+                  disableClearable={true}
                 />
               </Box>
             </Grid>
@@ -149,7 +148,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                 locations={allLocations}
                 basicTrips={basicTrips}
                 trips={trips}
-                isSmallScreen={isSmallScreen}
+                isSmallScreen={true}
                 listClassName={classes.smallList}
                 listItemClassName={classes.smallListItem}
                 typographyProps={{
