@@ -49,6 +49,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'row',
       height: '100%',
+      paddingBottom: 0,
+      paddingTop: 0,
     },
     smallListItem: {
       minWidth: '220px',
