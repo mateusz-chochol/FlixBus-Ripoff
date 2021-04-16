@@ -25,7 +25,7 @@ const DateFields: React.FC<MainPageDateFieldsProps> = ({
             variant="inline"
             label="Departure"
             value={departureDate}
-            onChange={(date: Date | null) => handleDepartureDateChange(date)}
+            onChange={(date: Date | null) => handleDepartureDateChange(date, setIsDepartureDateWindowOpen)}
             color='secondary'
             inputVariant="outlined"
             open={isDepartureDateWindowOpen}

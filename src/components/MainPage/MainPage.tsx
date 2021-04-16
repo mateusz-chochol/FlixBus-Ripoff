@@ -60,8 +60,9 @@ const MainPage: React.FC = () => {
     }
   }
 
-  const handleDepartureDateChange = (date: Date | null) => {
+  const handleDepartureDateChange = (date: Date | null, setIsDepartureDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => {
     if (moment(date).isBefore(moment(), 'day')) {
+      setIsDepartureDateWindowOpen(false);
       showInfo('Departure date cannot be from the past');
     }
     else if (tripType === TripType.OneWay || moment(date).isSameOrBefore(returnDate, 'day')) {

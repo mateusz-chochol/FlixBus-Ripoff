@@ -35,3 +35,7 @@ export const getLocationsBySubstring = async (substring: string) => {
 export const getLocationsByIdArray = async (ids: number[]) => {
   return allLocations.filter(location => ids.includes(location.id));
 }
+
+export const getLocationById = async (id: number) => {
+  return allLocations.find(location => location.id === id);
+}

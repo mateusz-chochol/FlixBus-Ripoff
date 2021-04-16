@@ -11,7 +11,7 @@ export default interface FullMainPageProps {
   numberOfPassengers?: number,
   tripType: TripType,
   handleTripTypeChange: (tripType: TripType) => void,
-  handleDepartureDateChange: (date: Date | null) => void,
+  handleDepartureDateChange: (date: Date | null, setIsDepartureDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => void,
   handleReturnDateChange: (date: Date | null, setIsReturnDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => void,
   handlePassengersNumberChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
   departureLocations: Location[],

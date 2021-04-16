@@ -23,9 +23,29 @@ const locationsInitialState: LocationsSliceState = {
   locationsForMap: [],
 }
 
-const filterExistingLocations = (allLocations: Location[], locationsToAdd: Location[]) => {
-  return allLocations.concat(locationsToAdd.filter(locationToAdd => !allLocations.map(location => location.id).includes(locationToAdd.id)))
+const filterExistingLocations = (allLocations: Location[], locationsToAdd?: Location[], locationToAdd?: Location) => {
+  let locationsToReturn = allLocations;
+
+  if (locationsToAdd) {
+    locationsToReturn = locationsToReturn.concat(locationsToAdd.filter(locationToAdd => !locationsToReturn.map(location => location.id).includes(locationToAdd.id)));
+  }
+
+  if (locationToAdd && !locationsToReturn.map(location => location.id).includes(locationToAdd.id)) {
+    locationsToReturn = locationsToReturn.concat(locationToAdd);
+  }
+
+  return locationsToReturn;
 }
+
+export const getLocationsByIdAsync = createAsyncThunk<Location | undefined, number>(
+  'locations/getLocationsByIdAsync',
+  async (id, thunkAPI) => {
+    const { locations } = thunkAPI.getState() as AppState;
+    const localLocation = locations.allLocations.find(location => location.id === id);
+
+    return localLocation ?? await api.getLocationById(id);
+  }
+);
 
 export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>(
   'locations/getLocationsByIdArrayAsync',
@@ -116,6 +136,12 @@ const locationsSlice = createSlice({
         return {
           ...state,
           allLocations: filterExistingLocations(state.allLocations, action.payload)
+        }
+      })
+      .addCase(getLocationsByIdAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          allLocations: filterExistingLocations(state.allLocations, undefined, action.payload)
         }
       })
   }
