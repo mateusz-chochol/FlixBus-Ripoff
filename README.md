@@ -63,3 +63,4 @@ Current TODOs:
   - <del> think if user should be able to search trips if only one of departure / destination fields are filled </del> (Done)
   - <del> redo redux for locations (like it was done with trips) </del> (Done)
   - <del> redo some redux slices (the ones that are suppose to contact firebase) so they use createAsyncThunk </del> (Done)
+  - move components functions to proper places
