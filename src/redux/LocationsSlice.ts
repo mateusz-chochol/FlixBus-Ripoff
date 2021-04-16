@@ -39,11 +39,15 @@ const filterExistingLocations = (allLocations: Location[], locationsToAdd?: Loca
 
 export const getLocationsByIdAsync = createAsyncThunk<Location | undefined, number>(
   'locations/getLocationsByIdAsync',
-  async (id, thunkAPI) => {
-    const { locations } = thunkAPI.getState() as AppState;
-    const localLocation = locations.allLocations.find(location => location.id === id);
+  async (id) => {
+    return await api.getLocationById(id);
+  },
+  {
+    condition: (id, { getState }) => {
+      const { locations } = getState() as AppState;
 
-    return localLocation ?? await api.getLocationById(id);
+      return !locations.allLocations.map(location => location.id).includes(id);
+    }
   }
 );
 
