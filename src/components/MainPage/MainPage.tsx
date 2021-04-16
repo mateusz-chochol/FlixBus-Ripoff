@@ -34,8 +34,8 @@ const MainPage: React.FC = () => {
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<TripType>(TripType.OneWay);
   const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
-  const [departureDate, setDepartureDate] = React.useState<Date | null>(moment().toDate());
-  const [returnDate, setReturnDate] = React.useState<Date | null>(moment().add(1, 'days').toDate());
+  const [departureDate, setDepartureDate] = useState<Date | null>(moment().toDate());
+  const [returnDate, setReturnDate] = useState<Date | null>(moment().add(1, 'days').toDate());
 
   useEffect(() => {
     if (departure) {

@@ -7,6 +7,8 @@ import {
   Box,
   Typography,
   Paper,
+  Divider,
+  Grid,
 } from '@material-ui/core';
 import DepartureDestinationFormFull from 'components/DepartureDestinationForm/DepartureDestinationFormFull';
 import ResultsPageProps from 'types/Props/ResultsPageProps';
@@ -16,22 +18,28 @@ import {
   useDispatch,
 } from 'react-redux';
 import {
-  // getAllLocations,
+  getAllLocations,
   getLocationsByIdArrayAsync,
   getDepartureLocationsBySubstringAsync,
   getDestinationLocationsBySubstringAsync,
   getLocationsForDepartureTextField,
   getLocationsForDestinationTextField,
 } from 'redux/LocationsSlice';
+import {
+  getTrips,
+  getTripsByDepartureAndDestinationIdsAsync,
+} from 'redux/TripsSlice';
+import { setTab } from 'redux/TabsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
 
 const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   const dispatch = useDispatch();
-  // const allLocations = useSelector(getAllLocations);
+  const allLocations = useSelector(getAllLocations);
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
+  const trips = useSelector(getTrips);
   const notificationsFunctionsRef = useRef(useNotifications());
   const { showInfo, showError } = notificationsFunctionsRef.current;
   const { departureIdAsString, destinationIdAsString } = match.params;
@@ -40,8 +48,13 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<TripType>(TripType.OneWay);
   const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
-  const [departureDate, setDepartureDate] = React.useState<Date | null>(moment().toDate());
-  const [returnDate, setReturnDate] = React.useState<Date | null>(moment().add(1, 'days').toDate());
+  const [departureDate, setDepartureDate] = useState<Date | null>(moment().toDate());
+  const [returnDate, setReturnDate] = useState<Date | null>(moment().add(1, 'days').toDate());
+  const [hasSetup, setHasSetup] = useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch(setTab(false));
+  }, [dispatch])
 
   useEffect(() => {
     if (isNaN(departureId)) {
@@ -56,6 +69,18 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
     }
   }, [departureId, destinationId, departureIdAsString, destinationIdAsString, dispatch, showError])
+
+  useEffect(() => {
+    if (!hasSetup) {
+      const allLocationsIds = allLocations.map(location => location.id);
+
+      if (allLocationsIds.includes(departureId) && allLocationsIds.includes(destinationId)) {
+        setDeparture(allLocations.find(location => location.id === departureId));
+        setDestination(allLocations.find(location => location.id === destinationId));
+        setHasSetup(true);
+      }
+    }
+  }, [departureId, destinationId, allLocations, hasSetup])
 
   useEffect(() => {
     if (departure) {
@@ -128,29 +153,58 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
         height="calc(100vh - 75px)"
         width="100vw"
         flexDirection="column"
-        padding={5}
         paddingTop={2}
       >
-        <DepartureDestinationFormFull
-          departure={departure}
-          setDeparture={setDeparture}
-          destination={destination}
-          setDestination={setDestination}
-          departureDate={departureDate}
-          returnDate={returnDate}
-          numberOfPassengers={numberOfPassengers}
-          tripType={tripType}
-          handleTripTypeChange={handleTripTypeChange}
-          handleDepartureDateChange={handleDepartureDateChange}
-          handleReturnDateChange={handleReturnDateChange}
-          handlePassengersNumberChange={handlePassengersNumberChange}
-          departureLocations={departureLocations}
-          destinationLocations={destinationLocations}
-          fullWidth
-        />
-        <Typography variant='h1'>
-          <Box>Results page (work in progress)</Box>
-        </Typography>
+        <Grid
+          container
+          alignItems="flex-start"
+          justify="space-evenly"
+        >
+          <Grid
+            item
+            container
+            direction='column'
+            xs={2}
+          >
+            <Typography variant='h4'>
+              <Box>Sliders and such</Box>
+            </Typography>
+          </Grid>
+          <Divider orientation='vertical' />
+          <Grid
+            item
+            container
+            direction='column'
+            justify='flex-end'
+            xs={9}
+          >
+            <Grid item>
+              <DepartureDestinationFormFull
+                departure={departure}
+                setDeparture={setDeparture}
+                destination={destination}
+                setDestination={setDestination}
+                departureDate={departureDate}
+                returnDate={returnDate}
+                numberOfPassengers={numberOfPassengers}
+                tripType={tripType}
+                handleTripTypeChange={handleTripTypeChange}
+                handleDepartureDateChange={handleDepartureDateChange}
+                handleReturnDateChange={handleReturnDateChange}
+                handlePassengersNumberChange={handlePassengersNumberChange}
+                departureLocations={departureLocations}
+                destinationLocations={destinationLocations}
+                fullWidth
+              />
+            </Grid>
+            <Divider />
+            <Grid item>
+              <Typography variant='h1'>
+                <Box>Results page (work in progress)</Box>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
       </Box>
     </Paper>
   )
