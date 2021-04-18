@@ -174,7 +174,6 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                   indicatorColor="secondary"
                   variant="scrollable"
                   scrollButtons="on"
-                  onChange={(event: React.ChangeEvent<{}>, tabIndex: number) => dispatch(setTab(tabIndex))}
                 >
                   {menuItems.map(item =>
                     <Tab

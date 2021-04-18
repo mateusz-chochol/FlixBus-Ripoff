@@ -71,14 +71,14 @@ const App = () => {
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <MenuAppBar />
             <Switch>
-              <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} />
+              <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
               <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
-              <DefaultRoute exact path={routes.planYourJourneyPage} component={PlanYourJourneyPage} />
-              <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} />
-              <DefaultRoute exact path={routes.companyPage} component={CompanyPage} />
-              <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} />
-              <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} />
-              <DefaultRoute exact path={routes.helpPage} component={HelpPage} />
+              <DefaultRoute exact path={routes.planYourJourneyPage} component={PlanYourJourneyPage} tabIndex={1} />
+              <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} tabIndex={2} />
+              <DefaultRoute exact path={routes.companyPage} component={CompanyPage} tabIndex={3} />
+              <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} tabIndex={4} />
+              <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} tabIndex={5} />
+              <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={6} />
               <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
               <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
               <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
