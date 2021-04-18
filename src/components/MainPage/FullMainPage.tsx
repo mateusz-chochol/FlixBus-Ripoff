@@ -12,13 +12,13 @@ const FullMainPage: React.FC<FullMainPageProps> = ({
   destination,
   setDestination,
   departureDate,
+  setDepartureDate,
   returnDate,
-  numberOfPassengers,
+  setReturnDate,
   tripType,
-  handleTripTypeChange,
-  handleDepartureDateChange,
-  handleReturnDateChange,
-  handlePassengersNumberChange,
+  setTripType,
+  numberOfPassengers,
+  setNumberOfPassengers,
   departureLocations,
   destinationLocations,
 }) => {
@@ -37,13 +37,13 @@ const FullMainPage: React.FC<FullMainPageProps> = ({
         destination={destination}
         setDestination={setDestination}
         departureDate={departureDate}
+        setDepartureDate={setDepartureDate}
         returnDate={returnDate}
+        setReturnDate={setReturnDate}
         numberOfPassengers={numberOfPassengers}
+        setNumberOfPassengers={setNumberOfPassengers}
         tripType={tripType}
-        handleTripTypeChange={handleTripTypeChange}
-        handleDepartureDateChange={handleDepartureDateChange}
-        handleReturnDateChange={handleReturnDateChange}
-        handlePassengersNumberChange={handlePassengersNumberChange}
+        setTripType={setTripType}
         departureLocations={departureLocations}
         destinationLocations={destinationLocations}
         contentAbove={

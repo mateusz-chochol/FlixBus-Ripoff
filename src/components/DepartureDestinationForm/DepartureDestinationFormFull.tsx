@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Box,
   Paper,
@@ -16,12 +16,14 @@ import {
   getDepartureLocationsBySubstringAsync,
   getDestinationLocationsBySubstringAsync,
 } from 'redux/LocationsSlice';
+import { useNotifications } from 'components/Misc/Notifications';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import TripType from 'types/Objects/TripType';
 import SearchButton from 'components/Misc/SearchButton';
 import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
 import DepartureDestinationFormFullProps from 'types/Props/DepartureDestinationFormFullProps';
 import DateFields from './DateFields';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,13 +40,13 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
   destination,
   setDestination,
   departureDate,
+  setDepartureDate,
   returnDate,
-  numberOfPassengers,
+  setReturnDate,
   tripType,
-  handleTripTypeChange,
-  handleDepartureDateChange,
-  handleReturnDateChange,
-  handlePassengersNumberChange,
+  setTripType,
+  numberOfPassengers,
+  setNumberOfPassengers,
   departureLocations,
   destinationLocations,
   fullWidth,
@@ -52,6 +54,61 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
   contentBelow,
 }) => {
   const classes = useStyles();
+  const notificationsFunctionsRef = useRef(useNotifications());
+  const { showInfo } = notificationsFunctionsRef.current;
+
+  const handleTripTypeChange = (tripType: TripType) => {
+    setTripType(tripType);
+
+    if (moment(departureDate).isAfter(returnDate)) {
+      setReturnDate(moment(departureDate).add(1, 'days').toDate());
+    }
+  }
+
+  const handleDepartureDateChange = (date: Date | null, setIsDepartureDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => {
+    if (moment(date).isBefore(moment(), 'day')) {
+      setIsDepartureDateWindowOpen(false);
+      showInfo('Departure date cannot be from the past');
+    }
+    else if (tripType === TripType.OneWay || moment(date).isSameOrBefore(returnDate, 'day')) {
+      setDepartureDate(date);
+    }
+    else {
+      setDepartureDate(date);
+      setReturnDate(moment(departureDate).add(1, 'days').toDate());
+    }
+  }
+
+  const handleReturnDateChange = (date: Date | null, setIsReturnDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => {
+    if (moment(date).isSameOrAfter(departureDate, 'day')) {
+      setReturnDate(date);
+    }
+    else {
+      setIsReturnDateWindowOpen(false);
+      showInfo('Return date cannot be before departure date');
+    }
+  }
+
+  const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const max = 10;
+
+    if (event.target.value) {
+      const numberOfPassengers = Number(event.target.value);
+
+      if (numberOfPassengers > max) {
+        setNumberOfPassengers(max);
+      }
+      else if (numberOfPassengers < 0) {
+        setNumberOfPassengers(0);
+      }
+      else {
+        setNumberOfPassengers(numberOfPassengers);
+      }
+    }
+    else {
+      setNumberOfPassengers(undefined);
+    }
+  }
 
   return (
     <Box minWidth={300} width={fullWidth ? '100%' : undefined}>

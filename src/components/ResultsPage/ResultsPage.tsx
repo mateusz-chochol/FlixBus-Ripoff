@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useRef,
 } from 'react';
 import {
   Box,
@@ -30,7 +29,6 @@ import {
   getTripsByDepartureAndDestinationIdsAsync,
 } from 'redux/TripsSlice';
 import { setTab } from 'redux/TabsSlice';
-import { useNotifications } from 'components/Misc/Notifications';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
 
@@ -40,8 +38,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
   const trips = useSelector(getTrips);
-  const notificationsFunctionsRef = useRef(useNotifications());
-  const { showInfo, showError } = notificationsFunctionsRef.current;
   const { departureIdAsString, destinationIdAsString } = match.params;
   const [departureId, destinationId] = [parseInt(departureIdAsString), parseInt(destinationIdAsString)]
   const [departure, setDeparture] = useState<Location>();
@@ -57,18 +53,10 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   }, [dispatch])
 
   useEffect(() => {
-    if (isNaN(departureId)) {
-      showError(`Departure id is not a number: ${departureIdAsString}`)
-    }
-
-    if (isNaN(destinationId)) {
-      showError(`Destination id is not a number: ${destinationIdAsString}`)
-    }
-
     if (!isNaN(departureId) && !isNaN(destinationId)) {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
     }
-  }, [departureId, destinationId, departureIdAsString, destinationIdAsString, dispatch, showError])
+  }, [departureId, destinationId, departureIdAsString, destinationIdAsString, dispatch])
 
   useEffect(() => {
     if (!hasSetup) {
@@ -90,59 +78,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
       dispatch(getDestinationLocationsBySubstringAsync(destination.name))
     }
   }, [departure, destination, dispatch])
-
-  const handleTripTypeChange = (tripType: TripType) => {
-    setTripType(tripType);
-
-    if (moment(departureDate).isAfter(returnDate)) {
-      setReturnDate(moment(departureDate).add(1, 'days').toDate());
-    }
-  }
-
-  const handleDepartureDateChange = (date: Date | null, setIsDepartureDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => {
-    if (moment(date).isBefore(moment(), 'day')) {
-      setIsDepartureDateWindowOpen(false);
-      showInfo('Departure date cannot be from the past');
-    }
-    else if (tripType === TripType.OneWay || moment(date).isSameOrBefore(returnDate, 'day')) {
-      setDepartureDate(date);
-    }
-    else {
-      setDepartureDate(date);
-      setReturnDate(moment(departureDate).add(1, 'days').toDate());
-    }
-  }
-
-  const handleReturnDateChange = (date: Date | null, setIsReturnDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => {
-    if (moment(date).isSameOrAfter(departureDate, 'day')) {
-      setReturnDate(date);
-    }
-    else {
-      setIsReturnDateWindowOpen(false);
-      showInfo('Return date cannot be before departure date');
-    }
-  }
-
-  const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const max = 10;
-
-    if (event.target.value) {
-      const numberOfPassengers = Number(event.target.value);
-
-      if (numberOfPassengers > max) {
-        setNumberOfPassengers(max);
-      }
-      else if (numberOfPassengers < 0) {
-        setNumberOfPassengers(0);
-      }
-      else {
-        setNumberOfPassengers(numberOfPassengers);
-      }
-    }
-    else {
-      setNumberOfPassengers(undefined);
-    }
-  }
 
   return (
     <Paper square>
@@ -185,13 +120,13 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
                 destination={destination}
                 setDestination={setDestination}
                 departureDate={departureDate}
+                setDepartureDate={setDepartureDate}
                 returnDate={returnDate}
+                setReturnDate={setReturnDate}
                 numberOfPassengers={numberOfPassengers}
+                setNumberOfPassengers={setNumberOfPassengers}
                 tripType={tripType}
-                handleTripTypeChange={handleTripTypeChange}
-                handleDepartureDateChange={handleDepartureDateChange}
-                handleReturnDateChange={handleReturnDateChange}
-                handlePassengersNumberChange={handlePassengersNumberChange}
+                setTripType={setTripType}
                 departureLocations={departureLocations}
                 destinationLocations={destinationLocations}
                 fullWidth

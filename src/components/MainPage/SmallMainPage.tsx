@@ -1,21 +1,21 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
-import DepartureDestinationFormSmallProps from 'types/Props/DepartureDestinationFormSmallProps';
+import SmallMainPageProps from 'types/Props/SmallMainPageProps';
 import DepartureDestinationFormSmall from 'components/DepartureDestinationForm/DepartureDestinationFormSmall';
 
-const SmallMainPage: React.FC<DepartureDestinationFormSmallProps> = ({
+const SmallMainPage: React.FC<SmallMainPageProps> = ({
   departure,
   setDeparture,
   destination,
   setDestination,
   departureDate,
+  setDepartureDate,
   returnDate,
-  numberOfPassengers,
+  setReturnDate,
   tripType,
-  handleTripTypeChange,
-  handleDepartureDateChange,
-  handleReturnDateChange,
-  handlePassengersNumberChange,
+  setTripType,
+  numberOfPassengers,
+  setNumberOfPassengers,
   departureLocations,
   destinationLocations,
 }) => {
@@ -33,13 +33,13 @@ const SmallMainPage: React.FC<DepartureDestinationFormSmallProps> = ({
         destination={destination}
         setDestination={setDestination}
         departureDate={departureDate}
+        setDepartureDate={setDepartureDate}
         returnDate={returnDate}
+        setReturnDate={setReturnDate}
         numberOfPassengers={numberOfPassengers}
+        setNumberOfPassengers={setNumberOfPassengers}
         tripType={tripType}
-        handleTripTypeChange={handleTripTypeChange}
-        handleDepartureDateChange={handleDepartureDateChange}
-        handleReturnDateChange={handleReturnDateChange}
-        handlePassengersNumberChange={handlePassengersNumberChange}
+        setTripType={setTripType}
         departureLocations={departureLocations}
         destinationLocations={destinationLocations}
       />
