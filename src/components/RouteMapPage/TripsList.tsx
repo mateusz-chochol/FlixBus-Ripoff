@@ -21,6 +21,7 @@ const TripsList: React.FC<TripsListProps> = ({
   typographyProps,
   messageBoxProps,
   handleBasicTripsListItemClick,
+  handleFullTripsListItemClick,
 }) => {
 
   return (
@@ -34,6 +35,7 @@ const TripsList: React.FC<TripsListProps> = ({
             listItemClassName={listItemClassName}
             typographyProps={typographyProps}
             messageBoxProps={messageBoxProps}
+            handleFullTripsListItemClick={handleFullTripsListItemClick}
           /> :
           <BasicTripsList
             locations={locations}

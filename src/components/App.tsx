@@ -3,6 +3,22 @@ import {
   BrowserRouter as Router,
   Switch,
 } from 'react-router-dom';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import {
+  removeNotificationActionCreator,
+  getNotifications
+} from 'redux/NotificationsSlice';
+import DateFnsUtils from '@date-io/date-fns';
+import { routes } from 'routes';
+import {
+  Paper,
+  Box
+} from '@material-ui/core';
+import { useSnackbar } from 'notistack';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MainPage from './MainPage/MainPage';
 import SignupPage from './Account/SignupPage';
 import LoginPage from './Account/LoginPage';
@@ -18,20 +34,7 @@ import CompanyPage from './CompanyPage/CompanyPage';
 import NewsetterPage from './NewsletterPage/NewsetterPage';
 import SendFeedbackPage from './SendFeedbackPage/SendFeedbackPage';
 import HelpPage from './HelpPage/HelpPage';
-import { Paper } from '@material-ui/core';
-import { Box } from '@material-ui/core';
-import { useSnackbar } from 'notistack';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import {
-  useSelector,
-  useDispatch
-} from 'react-redux';
-import {
-  removeNotificationActionCreator,
-  getNotifications
-} from 'redux/NotificationsSlice';
-import { routes } from 'routes';
+import TripPage from './TripPage/TripPage';
 
 const styles = {
   paperContainer: {
@@ -71,8 +74,9 @@ const App = () => {
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <MenuAppBar />
             <Switch>
-              <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
               <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
+              <DefaultRoute exact path={routes.tripPage} component={TripPage} />
+              <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
               <DefaultRoute exact path={routes.planYourJourneyPage} component={PlanYourJourneyPage} tabIndex={1} />
               <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} tabIndex={2} />
               <DefaultRoute exact path={routes.companyPage} component={CompanyPage} tabIndex={3} />

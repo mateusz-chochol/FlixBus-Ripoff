@@ -13,6 +13,8 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { routes } from 'routes';
 import {
   getBasicTrips,
   getBasicTripsFromDepartureIdAsync,
@@ -38,10 +40,12 @@ import GoogleMap from './GoogleMap';
 import RouteMapDrawer from './RouteMapDrawer';
 import FooterMenu from './FooterMenu';
 import BasicTrip from 'types/Objects/BasicTrip';
+import Trip from 'types/Objects/Trip';
 
 const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const dispatch = useDispatch();
+  const history = useHistory();
   const allLocations = useSelector(getAllLocations);
   const departureLocationsForTextFields = useSelector(getLocationsForDepartureTextField);
   const destinationLocationsForTextFields = useSelector(getLocationsForDestinationTextField);
@@ -60,6 +64,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
 
   const handleBasicTripsListItemClick = (trip: BasicTrip) => {
     setDestination(allLocations.find(location => location.id === trip.endLocationId));
+  }
+
+  const handleFullTripsListItemClick = (trip: Trip) => {
+    history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
   }
 
   useEffect(() => {
@@ -122,6 +130,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           departureLocationsForTextFields={departureLocationsForTextFields}
           destinationLocationsForTextFields={destinationLocationsForTextFields}
           handleBasicTripsListItemClick={handleBasicTripsListItemClick}
+          handleFullTripsListItemClick={handleFullTripsListItemClick}
         />
       </Hidden>
       <GoogleMap
@@ -149,6 +158,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           destinationLocationsForTextFields={departureLocationsForTextFields}
           footerMenuHeight={footerMenuHeight}
           handleBasicTripsListItemClick={handleBasicTripsListItemClick}
+          handleFullTripsListItemClick={handleFullTripsListItemClick}
         />
       </Hidden>
     </Box>

@@ -31,6 +31,7 @@ const FullTripsList: React.FC<FullTripsProps> = ({
   listItemClassName,
   typographyProps,
   messageBoxProps,
+  handleFullTripsListItemClick,
 }) => {
   const classes = useStyles();
 
@@ -39,7 +40,7 @@ const FullTripsList: React.FC<FullTripsProps> = ({
       {(trips.length > 0 ? trips.map(trip => (
         <React.Fragment key={trip.id}>
           <Divider orientation="vertical" flexItem />
-          <ListItem button key={trip.id} className={listItemClassName}>
+          <ListItem button key={trip.id} className={listItemClassName} onClick={() => handleFullTripsListItemClick(trip)}>
             <Grid container className={classes.grid} direction='row'>
               <Grid item container className={classes.grid} alignItems='flex-end' justify={isSmallScreen ? 'space-evenly' : 'space-between'}>
                 <Grid item>

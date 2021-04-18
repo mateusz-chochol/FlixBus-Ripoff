@@ -19,4 +19,5 @@ export default interface TripsListProps {
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps,
   handleBasicTripsListItemClick: (trip: BasicTrip) => void,
+  handleFullTripsListItemClick: (trip: Trip) => void,
 }

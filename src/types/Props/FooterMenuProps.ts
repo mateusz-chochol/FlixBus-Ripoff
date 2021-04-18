@@ -14,4 +14,5 @@ export default interface FooterMenuProps {
   destinationLocationsForTextFields: Location[],
   footerMenuHeight: string,
   handleBasicTripsListItemClick: (trip: BasicTrip) => void,
+  handleFullTripsListItemClick: (trip: Trip) => void,
 }

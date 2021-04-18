@@ -11,5 +11,6 @@ export default interface FullTripsProps {
   isSmallScreen: boolean,
   listItemClassName?: string,
   typographyProps?: TypographyProps,
-  messageBoxProps?: BoxProps
+  messageBoxProps?: BoxProps,
+  handleFullTripsListItemClick: (trip: Trip) => void,
 }
