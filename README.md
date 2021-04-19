@@ -42,6 +42,7 @@ Site should be visible under the address "http://localhost:5000"
   - <del> change background paper to something code generated so it's never to small no matter the resolution </del> (kinda Won't do [code for gradient commented out])
   - <del> fix return / departure date fields so they have separate data sources and departure cannot be after return date and none can be before current date </del>  (Done)
   - <del> make search button actually do something </del> (Done)
+  - fix mobile keyboard that bumps departure form nearly out of the user view
 - route map page:
   - <del> fix autocompletion so it generates results after typing at least 2 characters </del>  (Done)
   - <del> use RxJS to delay call for autocompletion data (1-2 seconds after last typed character) </del> (Done [found easier way than with RxJS])
