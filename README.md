@@ -3,6 +3,27 @@ Like the name suggests it's a bus travel website that tries to imitate FlixBus
 
 It uses firebase as a hosting service: https://flixbus-development.web.app/ (demo so far)
 
+To run locally, do:
+
+```
+  git clone https://github.com/mateusz-chochol/FlixBus-Ripoff.git
+  cd flixbus-ripoff
+  npm install
+  npm install -g serve
+  npm run build
+  serve -s build
+```
+
+or
+
+```
+  git clone https://github.com/mateusz-chochol/FlixBus-Ripoff.git
+  cd flixbus-ripoff
+  docker-compose up
+```
+
+Site should be visible under the address "http://localhost:5000"
+
 As of now the things that work are:
 - login (as of now api keys have expired so it throws an error)
 - singup (as of now api keys have expired so it throws an error)
