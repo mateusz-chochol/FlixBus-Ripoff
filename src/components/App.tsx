@@ -83,9 +83,9 @@ const App = () => {
               <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} tabIndex={4} />
               <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} tabIndex={5} />
               <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={6} />
-              <PrivateRoute path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
-              <PrivateRoute path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
-              <PrivateRoute path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
+              <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
+              <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
+              <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
               <DefaultRoute path={routes.mainPage} component={MainPage} />
             </Switch>
           </MuiPickersUtilsProvider>
