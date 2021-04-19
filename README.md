@@ -5,7 +5,8 @@ It uses firebase as a hosting service: https://flixbus-development.web.app/ (dem
 
 ## Prerequisites
 
-[npm](https://nodejs.org/en/download/) or [docker](https://www.docker.com/products/docker-desktop)
+- [npm](https://nodejs.org/en/download/) or [docker](https://www.docker.com/products/docker-desktop)
+- .env file that contains all the firebase and Google Maps API keys
 
 ## To run locally, do:
 
