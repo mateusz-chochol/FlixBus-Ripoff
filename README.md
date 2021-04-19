@@ -30,7 +30,7 @@ Site should be visible under the address "http://localhost:5000"
 - password reseting (it sends a message to the registered email) (as of now api keys have expired so it throws an error)
 - notifications
 - main page
-- routing (to the pages that already exist)
+- routing
 - private routing (i.e. you cannot go to the login page if you are already logged in)
 - transitioning to mobile view on smaller screens (i.e. drawer with tabs instead of tabs in the app bar)
 - route map page
