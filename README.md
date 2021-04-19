@@ -3,6 +3,18 @@ Like the name suggests it's a bus travel website that tries to imitate FlixBus
 
 It uses firebase as a hosting service: https://flixbus-development.web.app/ (demo so far)
 
+## Prerequisites
+
+```
+  npm - https://nodejs.org/en/download/
+```
+
+or
+
+```
+  docker - https://www.docker.com/products/docker-desktop
+```
+
 ## To run locally, do:
 
 ```
