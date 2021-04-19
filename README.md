@@ -3,7 +3,7 @@ Like the name suggests it's a bus travel website that tries to imitate FlixBus
 
 It uses firebase as a hosting service: https://flixbus-development.web.app/ (demo so far)
 
-To run locally, do:
+## To run locally, do:
 
 ```
   git clone https://github.com/mateusz-chochol/FlixBus-Ripoff.git
@@ -24,7 +24,7 @@ or
 
 Site should be visible under the address "http://localhost:5000"
 
-As of now the things that work are:
+## As of now the things that work are:
 - login (as of now api keys have expired so it throws an error)
 - singup (as of now api keys have expired so it throws an error)
 - password reseting (it sends a message to the registered email) (as of now api keys have expired so it throws an error)
@@ -35,7 +35,7 @@ As of now the things that work are:
 - transitioning to mobile view on smaller screens (i.e. drawer with tabs instead of tabs in the app bar)
 - route map page
 
-Current TODOs:
+## Current TODOs:
 - main page:
   - <del> fix vertical scaling on mobile devices </del> (Done)
   - <del> add autocompletion for destination / departure text fields </del> (Done)
