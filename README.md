@@ -26,7 +26,7 @@ or
   docker-compose up
 ```
 
-Site should be visible under the address "http://localhost:5000"
+Site should be visible under the address: http://localhost:5000
 
 ## As of now the things that work are:
 - login (as of now api keys have expired so it throws an error)
