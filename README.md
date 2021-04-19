@@ -5,15 +5,13 @@ It uses firebase as a hosting service: https://flixbus-development.web.app/ (dem
 
 ## Prerequisites
 
-```
-  npm - https://nodejs.org/en/download/
-```
+-  npm \([download](https://nodejs.org/en/download/))
+
 
 or
 
-```
-  docker - https://www.docker.com/products/docker-desktop
-```
+-  docker \([download](https://www.docker.com/products/docker-desktop))
+
 
 ## To run locally, do:
 
