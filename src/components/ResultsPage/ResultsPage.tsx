@@ -115,7 +115,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
             xs={2}
           >
             <Paper elevation={0} square className={classes.menuPaper}>
-              <Typography variant='h4'>
+              <Typography variant='h4' align='center'>
                 <Box>Sliders and such</Box>
               </Typography>
             </Paper>
@@ -153,7 +153,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
             </Grid>
             <Divider />
             <Grid item>
-              <Typography variant='h1'>
+              <Typography variant='h1' align='center'>
                 <Box>Results page (work in progress)</Box>
               </Typography>
               {/* <FullTripsList
