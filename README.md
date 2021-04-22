@@ -75,6 +75,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> map should load only markers of the locations that the user can actually see (depending on the zoom level) and should display only set amount of them with system that selects which ones to show and that depends on the "importance" level of the locations (every location should have some "importance" level) </del> (Done)
   - <del> map should ask for the permission to locate the user and set its center to the user location (and if user denies then the center should remain as the center of Europe) </del> (Done)
   - <del> if marker is picked it should always be visible </del> (Done)
+  - optimize calls for locations even more with adding previous search history, previous map bounds history and calculating only necessarry area of locations to ask for (based on previous map bounds history)
 - plan your journey page:
   - <del> create blank page with some static info </del> (Done)
   - think about what this page should contain
