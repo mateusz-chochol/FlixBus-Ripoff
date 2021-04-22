@@ -24,7 +24,7 @@ import {
   getLocationsForDestinationTextField,
 } from 'redux/LocationsSlice';
 import {
-  getTrips,
+  // getTrips,
   getTripsByDepartureAndDestinationIdsAsync,
 } from 'redux/TripsSlice';
 import { setTab } from 'redux/TabsSlice';
@@ -32,7 +32,7 @@ import ResultsPageProps from 'types/Props/ResultsPageProps';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
 import DepartureDestinationFormFull from 'components/DepartureDestinationForm/DepartureDestinationFormFull';
-import FullTripsList from 'components/RouteMapPage/FullTripsList';
+// import FullTripsList from 'components/RouteMapPage/FullTripsList';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,7 +52,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   const allLocations = useSelector(getAllLocations);
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
-  const trips = useSelector(getTrips);
+  // const trips = useSelector(getTrips);
   const { departureIdAsString, destinationIdAsString } = match.params;
   const [departureId, destinationId] = [parseInt(departureIdAsString), parseInt(destinationIdAsString)]
   const [departure, setDeparture] = useState<Location>();
