@@ -6,7 +6,19 @@ It uses firebase as a hosting service: https://flixbus-development.web.app/ (dem
 ## Prerequisites
 
 - [npm](https://nodejs.org/en/download/) or [docker](https://www.docker.com/products/docker-desktop)
-- .env file that contains all the firebase and Google Maps API keys
+- .env file that contains all the firebase and Google Maps API keys with below structure:
+
+```
+  REACT_APP_FIREBASE_API_KEY=<your_firebase_api_key>
+  REACT_APP_FIREBASE_AUTH_DOMAIN=<your_firebase_auth_domain>
+  REACT_APP_FIREBASE_DATABASE_URL=<your_firebase_database>
+  REACT_APP_FIREBASE_PROJECT_ID=<your_firebase_project_id>
+  REACT_APP_FIREBASE_STORAGE_BUCKET=<your_firebase_storage_bucket>
+  REACT_APP_FIREBASE_MESSAGING_SENDER_ID=<your_firebase_messaging_sender>
+  REACT_APP_FIREBASE_APP_ID=<your_firebase_app_id>
+
+  REACT_APP_GOOGLE_MAPS_API_KEY=<your_googlemaps_api_key>
+```
 
 ## To run locally, do:
 
