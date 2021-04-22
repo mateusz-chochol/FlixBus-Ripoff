@@ -9,8 +9,7 @@ import {
   Divider,
   Grid,
 } from '@material-ui/core';
-import DepartureDestinationFormFull from 'components/DepartureDestinationForm/DepartureDestinationFormFull';
-import ResultsPageProps from 'types/Props/ResultsPageProps';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import {
   useSelector,
@@ -29,10 +28,26 @@ import {
   getTripsByDepartureAndDestinationIdsAsync,
 } from 'redux/TripsSlice';
 import { setTab } from 'redux/TabsSlice';
+import ResultsPageProps from 'types/Props/ResultsPageProps';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
+import DepartureDestinationFormFull from 'components/DepartureDestinationForm/DepartureDestinationFormFull';
+import FullTripsList from 'components/RouteMapPage/FullTripsList';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    parentGrid: {
+      flexWrap: 'nowrap',
+      height: "calc(100vh - 75px)",
+      width: "100vw"
+    },
+    menuPaper: {
+      height: "calc(100vh - 75px)",
+    },
+  }),
+);
 const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const allLocations = useSelector(getAllLocations);
   const departureLocations = useSelector(getLocationsForDepartureTextField);
@@ -55,6 +70,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   useEffect(() => {
     if (!isNaN(departureId) && !isNaN(destinationId)) {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
+      dispatch(getTripsByDepartureAndDestinationIdsAsync({ departureId: departureId, destinationId: destinationId }))
     }
   }, [departureId, destinationId, departureIdAsString, destinationIdAsString, dispatch])
 
@@ -85,15 +101,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
         display="flex"
         justifyContent="flex-start"
         alignItems="flex-start"
-        height="calc(100vh - 75px)"
-        width="100vw"
         flexDirection="column"
-        paddingTop={2}
       >
         <Grid
           container
-          alignItems="flex-start"
-          justify="space-evenly"
+          className={classes.parentGrid}
+          alignItems='flex-start'
         >
           <Grid
             item
@@ -101,42 +114,54 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
             direction='column'
             xs={2}
           >
-            <Typography variant='h4'>
-              <Box>Sliders and such</Box>
-            </Typography>
+            <Paper elevation={0} square className={classes.menuPaper}>
+              <Typography variant='h4'>
+                <Box>Sliders and such</Box>
+              </Typography>
+            </Paper>
           </Grid>
-          <Divider orientation='vertical' />
+          <Box height='100%'>
+            <Divider orientation='vertical' />
+          </Box>
           <Grid
             item
             container
             direction='column'
             justify='flex-end'
-            xs={9}
+            xs={10}
           >
             <Grid item>
-              <DepartureDestinationFormFull
-                departure={departure}
-                setDeparture={setDeparture}
-                destination={destination}
-                setDestination={setDestination}
-                departureDate={departureDate}
-                setDepartureDate={setDepartureDate}
-                returnDate={returnDate}
-                setReturnDate={setReturnDate}
-                numberOfPassengers={numberOfPassengers}
-                setNumberOfPassengers={setNumberOfPassengers}
-                tripType={tripType}
-                setTripType={setTripType}
-                departureLocations={departureLocations}
-                destinationLocations={destinationLocations}
-                fullWidth
-              />
+              <Box paddingTop={2}>
+                <DepartureDestinationFormFull
+                  departure={departure}
+                  setDeparture={setDeparture}
+                  destination={destination}
+                  setDestination={setDestination}
+                  departureDate={departureDate}
+                  setDepartureDate={setDepartureDate}
+                  returnDate={returnDate}
+                  setReturnDate={setReturnDate}
+                  numberOfPassengers={numberOfPassengers}
+                  setNumberOfPassengers={setNumberOfPassengers}
+                  tripType={tripType}
+                  setTripType={setTripType}
+                  departureLocations={departureLocations}
+                  destinationLocations={destinationLocations}
+                  fullWidth
+                />
+              </Box>
             </Grid>
             <Divider />
             <Grid item>
               <Typography variant='h1'>
                 <Box>Results page (work in progress)</Box>
               </Typography>
+              {/* <FullTripsList
+                locations={allLocations}
+                trips={trips}
+                isSmallScreen={true}
+                handleFullTripsListItemClick={() => { }}
+              /> */}
             </Grid>
           </Grid>
         </Grid>
