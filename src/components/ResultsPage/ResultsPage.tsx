@@ -133,7 +133,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
             xs={10}
           >
             <Grid item>
-              <Box>
+              <Box paddingTop={2}>
                 <DepartureDestinationFormFull
                   departure={departure}
                   setDeparture={setDeparture}
