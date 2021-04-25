@@ -43,9 +43,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuPaper: {
       height: "calc(100vh - 75px)",
+      backgroundColor: "whitesmoke"
     },
   }),
 );
+
 const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -72,7 +74,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
       dispatch(getTripsByDepartureAndDestinationIdsAsync({ departureId: departureId, destinationId: destinationId }))
     }
-  }, [departureId, destinationId, departureIdAsString, destinationIdAsString, dispatch])
+  }, [departureId, destinationId, dispatch])
 
   useEffect(() => {
     if (!hasSetup) {
@@ -131,7 +133,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match }) => {
             xs={10}
           >
             <Grid item>
-              <Box paddingTop={2}>
+              <Box>
                 <DepartureDestinationFormFull
                   departure={departure}
                   setDeparture={setDeparture}
