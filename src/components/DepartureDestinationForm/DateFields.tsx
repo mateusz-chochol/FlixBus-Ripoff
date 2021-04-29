@@ -32,6 +32,7 @@ const DateFields: React.FC<MainPageDateFieldsProps> = ({
             onOpen={() => setIsDepartureDateWindowOpen(true)}
             onClose={() => setIsDepartureDateWindowOpen(false)}
             fullWidth
+            aria-label='departure date'
           />
         </Box>
       </Grid>
@@ -49,6 +50,7 @@ const DateFields: React.FC<MainPageDateFieldsProps> = ({
               onOpen={() => setIsReturnDateWindowOpen(true)}
               onClose={() => setIsReturnDateWindowOpen(false)}
               fullWidth
+              aria-label='return date'
             />
           </Box>
         </Grid>
