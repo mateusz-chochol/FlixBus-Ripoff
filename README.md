@@ -110,4 +110,3 @@ Site should be visible under the address: http://localhost:5000
   - <del> move components functions to proper places </del>
   - <del> change setting tab id so its done in default route component </del>
   - add creating ids of everything with uuid.v4()
-  
