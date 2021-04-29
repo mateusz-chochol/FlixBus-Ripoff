@@ -34,7 +34,7 @@ const SwitchLocationsButton: React.FC<SwitchLocationsButtonProps> = ({
   }
 
   return (
-    <IconButton size={size} onClick={handleSwitchClick}>
+    <IconButton size={size} onClick={handleSwitchClick} aria-label='switch locations button'>
       <LoopIcon fontSize={fontSize} />
     </IconButton>
   )

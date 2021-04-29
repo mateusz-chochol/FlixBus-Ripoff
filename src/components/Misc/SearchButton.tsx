@@ -25,7 +25,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ departure, destination }) =
   }
 
   return (
-    <IconButton color="secondary" onClick={handleSearchButtonClick}>
+    <IconButton color="secondary" onClick={handleSearchButtonClick} aria-label='search button'>
       <SearchIcon fontSize='large' />
     </IconButton>
   )
