@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       '&&:hover': {
         backgroundColor: 'transparent',
       },
+      padding: 0,
     },
     toolbar: {
       height: '75px'
