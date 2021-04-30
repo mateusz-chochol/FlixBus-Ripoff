@@ -3,12 +3,6 @@
   "short_name": "Travel",
   "icons": [
     {
-      "src": "logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
       "src": "icons/manifest-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
