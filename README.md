@@ -3,6 +3,9 @@ Like the name suggests it's a bus travel website that tries to imitate FlixBus
 
 It uses firebase as a hosting service: https://flixbus-development.web.app/ (demo so far)
 
+App is installable as a PWA (Progressive Web App) on Android mobile devices
+To install the app open the site from the URL above and press "Add to home screen" bar that shows up at the bottom of the screen
+
 ## Prerequisites
 
 - [npm](https://nodejs.org/en/download/) or [docker](https://www.docker.com/products/docker-desktop)
@@ -51,6 +54,7 @@ Site should be visible under the address: http://localhost:5000
 - private routing (i.e. you cannot go to the login page if you are already logged in)
 - transitioning to mobile view on smaller screens (i.e. drawer with tabs instead of tabs in the app bar)
 - route map page
+- running as mobile app
 
 ## Current TODOs:
 - main page:
