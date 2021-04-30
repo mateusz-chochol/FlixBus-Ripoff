@@ -1,0 +1,37 @@
+{
+  "name": "Bus Travel",
+  "short_name": "Travel",
+  "icons": [
+    {
+      "src": "map_markers/default_marker.png",
+      "sizes": "27x43",
+      "type": "image/png"
+    },
+    {
+      "src": "map_markers/green_marker.png",
+      "sizes": "27x43",
+      "type": "image/png"
+    },
+    {
+      "src": "map_markers/grey_marker.png",
+      "sizes": "27x43",
+      "type": "image/png"
+    },
+    {
+      "src": "map_markers/orange_marker.png",
+      "sizes": "27x43",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.ico",
+      "sizes": "128x128",
+      "type": "image/ico"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "description": "Bus Travel website that tries to imitate FlixBus.",
+  "orientation": "portrait"
+}
