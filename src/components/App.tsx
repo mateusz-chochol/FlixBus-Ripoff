@@ -39,7 +39,7 @@ import TripPage from './TripPage/TripPage';
 const styles = {
   paperContainer: {
     //background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,223,166,1) 0%, rgba(0,119,232,1) 100%)',
-    backgroundImage: `url(${process.env.PUBLIC_URL}/background.jpg)`,
+    backgroundImage: `url(${process.env.PUBLIC_URL}/background.webp)`,
     backgroundSize: 'cover',
     backgroundPosition: '50% 50%',
     backgroundColor: 'whitesmoke'
