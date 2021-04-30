@@ -54,20 +54,14 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
-// An example runtime caching route for requests that aren't handled by the
-// precache, in this case same-origin .png requests like those from in public/
 registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ request }) => { console.log("request", request); return request.destination === 'image' },
-  // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  ({ request }) => request.destination === 'image',
   new CacheFirst({
     cacheName: 'images',
     plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
       new ExpirationPlugin({
-        maxEntries: 60,
-        maxAgeSeconds: 30 * 24 * 60 * 60
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+        maxEntries: 60
       }),
     ],
   })
@@ -87,7 +81,6 @@ registerRoute(
   })
 );
 
-// Cache the underlying font files with a cache-first strategy for 1 year.
 registerRoute(
   ({ url }) => url.origin === 'https://fonts.gstatic.com',
   new CacheFirst({
@@ -104,12 +97,8 @@ registerRoute(
   })
 );
 
-// This allows the web app to trigger skipWaiting via
-// registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
-
-// Any other custom service worker logic can go here.
