@@ -5,7 +5,7 @@ It uses firebase as a hosting service: https://flixbus-development.web.app/ (dem
 
 App is installable as a PWA (Progressive Web App) on mobile devices. To install the app open the site from the URL above and press "Add to home screen" bar that shows up at the bottom of the screen
 
-## Prerequisites
+## Prerequisites for local deployment
 
 - [npm](https://nodejs.org/en/download/) or [docker](https://www.docker.com/products/docker-desktop)
 - .env file that contains all the firebase and Google Maps API keys with below structure:
