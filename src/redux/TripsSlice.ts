@@ -62,16 +62,12 @@ export const getTripsByDepartureAndDestinationIdsAsync = createAsyncThunk<
 );
 
 export const getTripsByDepartureAndDestinationIdsAndDateAsync = createAsyncThunk<
-  { list: Trip[], lastDepartureId: number, lastDestinationId: number },
+  Trip[],
   { departureId: number, destinationId: number, departureDate: Date }
 >(
   'trips/getTripsByDepartureAndDestinationIdsAndDateAsync',
   async ({ departureId, destinationId, departureDate }) => {
-    return {
-      lastDepartureId: departureId,
-      lastDestinationId: destinationId,
-      list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate)
-    }
+    return await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate);
   }
 );
 
@@ -120,12 +116,20 @@ const tripsSlice = createSlice({
           list: action.payload.list
         }
       })
-      .addCase(getTripsByDepartureAndDestinationIdsAndDateAsync.fulfilled, (state, action) => {
+      .addCase(getTripsByDepartureAndDestinationIdsAsync.fulfilled, (state, action) => {
         return {
           ...state,
           lastDepartureId: action.payload.lastDepartureId,
           lastDestinationId: action.payload.lastDestinationId,
           list: action.payload.list
+        }
+      })
+      .addCase(getTripsByDepartureAndDestinationIdsAndDateAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          lastDepartureId: 0,
+          lastDestinationId: 0,
+          list: action.payload
         }
       })
       .addCase(getReturnTripsByReturnDateAsync.fulfilled, (state, action) => {

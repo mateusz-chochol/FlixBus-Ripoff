@@ -42,8 +42,6 @@ import {
 import {
   getTrips,
   getTripsByDepartureAndDestinationIdsAndDateAsync,
-  getLastDepartureId,
-  getLastDestinationId,
   getReturnTrips,
   getReturnTripsByReturnDateAsync,
 } from 'redux/TripsSlice';
@@ -122,8 +120,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
   const trips = useSelector(getTrips);
   const returnTrips = useSelector(getReturnTrips);
-  const lastDepartureId = useSelector(getLastDepartureId);
-  const lastDestinationId = useSelector(getLastDestinationId);
   const [departureId, destinationId] = [parseInt(departureIdAsString), parseInt(destinationIdAsString)]
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
@@ -288,7 +284,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
             <Grid item container className={classes.listsGrid}>
               <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
                 <List className={classes.list} subheader={<ListSubheader component="div">Departure trips</ListSubheader>}>
-                  {departure?.id === lastDepartureId && destination?.id === lastDestinationId ?
+                  {departure?.id === departureId && destination?.id === destinationId ?
                     (trips.length > 0 ? trips.map(trip => (
                       <React.Fragment key={trip.id}>
                         <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
@@ -318,7 +314,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     )) :
                       <Box>
                         <Typography variant='h5' align='center'>
-                          <Box padding={8} color="text.disabled">Sorry, no trips from {departure.name} to {destination.name} found on {departureDateAsString}</Box>
+                          <Box padding={8} color="text.disabled">
+                            {departureDateAsString ?
+                              `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}` :
+                              "Press search to search for the results"
+                            }
+                          </Box>
                         </Typography>
                       </Box>
                     ) :
@@ -342,7 +343,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <List className={classes.list} subheader={<ListSubheader component="div">Return trips</ListSubheader>}>
-                      {departure?.id === lastDepartureId && destination?.id === lastDestinationId ?
+                      {departure?.id === departureId && destination?.id === destinationId ?
                         (returnTrips.length > 0 ? returnTrips.map(trip => (
                           <React.Fragment key={trip.id}>
                             <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
@@ -372,7 +373,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         )) :
                           <Box>
                             <Typography variant='h5' align='center'>
-                              <Box padding={8} color="text.disabled">Sorry, no trips from {destination.name} to {departure.name} found on {returnDateAsString}</Box>
+                              <Box padding={8} color="text.disabled">
+                                {returnDateAsString ?
+                                  `Sorry, no trips from ${destination.name} to ${departure.name} found on ${returnDateAsString}` :
+                                  "Press search to search for the results"
+                                }
+                              </Box>
                             </Typography>
                           </Box>
                         ) :
