@@ -75,12 +75,13 @@ export const getTripsByDepartureAndDestinationIdsAndDateAsync = createAsyncThunk
   }
 );
 
-export const getReturnTripsByReturnDateAsync = createAsyncThunk<Trip[], Date>(
+export const getReturnTripsByReturnDateAsync = createAsyncThunk<
+  Trip[],
+  { departureId: number, destinationId: number, returnDate: Date }
+>(
   'trips/getReturnTripsByReturnDateAsync',
-  async (returnDate, thunkAPI) => {
-    const { trips: { lastDepartureId, lastDestinationId } } = thunkAPI.getState() as AppState;
-
-    return await api.getTripsByDepartureAndDestinationIdsAndDate(lastDestinationId, lastDepartureId, returnDate)
+  async ({ departureId, destinationId, returnDate }) => {
+    return await api.getTripsByDepartureAndDestinationIdsAndDate(destinationId, departureId, returnDate)
   }
 );
 

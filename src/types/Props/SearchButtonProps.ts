@@ -5,4 +5,5 @@ export default interface SearchButtonProps {
   destination?: Location,
   departureDate?: Date | null,
   returnDate?: Date | null,
+  shouldGetReturnTrips?: boolean,
 }

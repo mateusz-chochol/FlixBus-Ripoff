@@ -1,8 +1,10 @@
 import React from 'react';
 import { routes } from 'routes';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { useNotifications } from 'components/Misc/Notifications';
+import { getReturnTripsByReturnDateAsync } from 'redux/TripsSlice';
 import SearchButtonProps from 'types/Props/SearchButtonProps';
 import { IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -12,8 +14,10 @@ const SearchButton: React.FC<SearchButtonProps> = ({
   destination,
   departureDate,
   returnDate,
+  shouldGetReturnTrips
 }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { showInfo } = useNotifications();
 
   const handleSearchButtonClick = () => {
@@ -30,6 +34,10 @@ const SearchButton: React.FC<SearchButtonProps> = ({
 
         if (returnDate) {
           newRoute = newRoute.replace(':returnDateAsString', moment(returnDate.toISOString()).format('YYYY-MM-DD'));
+
+          if (shouldGetReturnTrips) {
+            dispatch(getReturnTripsByReturnDateAsync({ departureId: departure.id, destinationId: destination.id, returnDate: moment(returnDate.toISOString()).toDate() }));
+          }
         }
         else {
           newRoute = newRoute.replace(':returnDateAsString', '');

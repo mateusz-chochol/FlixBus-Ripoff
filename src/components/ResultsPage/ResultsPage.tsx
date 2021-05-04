@@ -151,8 +151,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     if (!isNaN(departureId) && !isNaN(destinationId)) {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
       dispatch(getTripsByDepartureAndDestinationIdsAndDateAsync({ departureId: departureId, destinationId: destinationId, departureDate: moment.utc(departureDateAsString).toDate() }))
+
+      if (returnDateAsString) {
+        dispatch(getReturnTripsByReturnDateAsync({ departureId: departureId, destinationId: destinationId, returnDate: moment.utc(returnDateAsString).toDate() }))
+      }
     }
-  }, [departureId, destinationId, departureDateAsString, dispatch])
+  }, [departureId, destinationId, departureDateAsString, returnDateAsString, dispatch])
 
   useEffect(() => {
     if (!hasSetup) {
@@ -174,12 +178,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
       dispatch(getDestinationLocationsBySubstringAsync(destination.name))
     }
   }, [departure, destination, dispatch])
-
-  useEffect(() => {
-    if (tripType === TripType.RoundTrip && departure?.id === lastDepartureId && destination?.id === lastDestinationId && returnDate) {
-      dispatch(getReturnTripsByReturnDateAsync(returnDate));
-    }
-  }, [tripType, departure, destination, lastDepartureId, lastDestinationId, returnDate, dispatch])
 
   return (
     <Paper square className={classes.paper}>
@@ -320,7 +318,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     )) :
                       <Box>
                         <Typography variant='h5' align='center'>
-                          <Box padding={8} color="text.disabled">Sorry, no trips from {departure.name} to {destination.name} found</Box>
+                          <Box padding={8} color="text.disabled">Sorry, no trips from {departure.name} to {destination.name} found on {departureDateAsString}</Box>
                         </Typography>
                       </Box>
                     ) :
@@ -374,7 +372,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         )) :
                           <Box>
                             <Typography variant='h5' align='center'>
-                              <Box padding={8} color="text.disabled">Sorry, no trips from {destination.name} to {departure.name} found</Box>
+                              <Box padding={8} color="text.disabled">Sorry, no trips from {destination.name} to {departure.name} found on {returnDateAsString}</Box>
                             </Typography>
                           </Box>
                         ) :

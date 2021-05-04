@@ -254,6 +254,7 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
                   destination={destination}
                   departureDate={departureDate}
                   returnDate={tripType === TripType.RoundTrip ? returnDate : null}
+                  shouldGetReturnTrips={tripType === TripType.RoundTrip}
                 />
               </Box>
             </Grid>

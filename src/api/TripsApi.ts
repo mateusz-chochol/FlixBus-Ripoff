@@ -11,8 +11,5 @@ export const getTripsByDepartureAndDestinationIds = async (departureId: number, 
   allTrips.filter(trip => trip.startLocationId === departureId && trip.endLocationId === destinationId);
 
 export const getTripsByDepartureAndDestinationIdsAndDate = async (departureId: number, destinationId: number, date: Date) => {
-  console.log('allTripsFound', allTrips.filter(trip => trip.startLocationId === departureId && trip.endLocationId === destinationId && trip.date === date.toISOString().split('T')[0]))
-  console.log(allTrips)
-  console.log(date.toISOString().split('T')[0])
   return allTrips.filter(trip => trip.startLocationId === departureId && trip.endLocationId === destinationId && trip.date === date.toISOString().split('T')[0]);
 }
