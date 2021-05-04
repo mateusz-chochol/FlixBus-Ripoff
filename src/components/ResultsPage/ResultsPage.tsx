@@ -175,6 +175,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     }
   }, [departure, destination, dispatch])
 
+  console.log(moment.utc(returnDate?.toLocaleDateString()).toDate().toISOString().split('T')[0])
+
   return (
     <Paper square className={classes.paper}>
       <Box
@@ -284,7 +286,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
             <Grid item container className={classes.listsGrid}>
               <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
                 <List className={classes.list} subheader={<ListSubheader component="div">Departure trips</ListSubheader>}>
-                  {departure?.id === departureId && destination?.id === destinationId ?
+                  {departure?.id === departureId && destination?.id === destinationId && departureDateAsString === moment.utc(departureDate?.toLocaleDateString()).toDate().toISOString().split('T')[0] ?
                     (trips.length > 0 ? trips.map(trip => (
                       <React.Fragment key={trip.id}>
                         <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
@@ -301,7 +303,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                               </Grid>
                             </Grid>
                             <Grid item>
-                              <ListItemText secondary={`Departure date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
+                              <ListItemText secondary={`Departure date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
                             </Grid>
                           </Grid>
                           <ListItemSecondaryAction>
@@ -314,7 +316,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     )) :
                       <Box>
                         <Typography variant='h5' align='center'>
-                          <Box padding={8} color="text.disabled">
+                          <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
                             {departureDateAsString ?
                               `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}` :
                               "Press search to search for the results"
@@ -325,7 +327,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     ) :
                     <Box>
                       <Typography variant='h5' align='center'>
-                        <Box padding={8} color="text.disabled">
+                        <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
                           {departure && destination ?
                             "Press search to search for the results" :
                             "Fill the forms above to search for the trips"
@@ -343,7 +345,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <List className={classes.list} subheader={<ListSubheader component="div">Return trips</ListSubheader>}>
-                      {departure?.id === departureId && destination?.id === destinationId ?
+                      {departure?.id === departureId && destination?.id === destinationId && returnDateAsString === moment.utc(returnDate?.toLocaleDateString()).toDate().toISOString().split('T')[0] ?
                         (returnTrips.length > 0 ? returnTrips.map(trip => (
                           <React.Fragment key={trip.id}>
                             <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
@@ -360,7 +362,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                   </Grid>
                                 </Grid>
                                 <Grid item>
-                                  <ListItemText secondary={`Return date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
+                                  <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
                                 </Grid>
                               </Grid>
                               <ListItemSecondaryAction>
@@ -373,7 +375,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         )) :
                           <Box>
                             <Typography variant='h5' align='center'>
-                              <Box padding={8} color="text.disabled">
+                              <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
                                 {returnDateAsString ?
                                   `Sorry, no trips from ${destination.name} to ${departure.name} found on ${returnDateAsString}` :
                                   "Press search to search for the results"
@@ -384,7 +386,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         ) :
                         <Box>
                           <Typography variant='h5' align='center'>
-                            <Box padding={8} color="text.disabled">
+                            <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
                               {departure && destination ?
                                 "Press search to search for the results" :
                                 "Fill the forms above to search for the trips"
