@@ -110,7 +110,7 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
 
   return (
     <Box width={fullWidth ? '100%' : 2 / 5} minWidth={300}>
-      <Paper elevation={4}>
+      <Paper elevation={fullWidth ? 0 : 4}>
         <Grid
           container
           direction='column'
@@ -118,8 +118,7 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
           className={classes.grid}
         >
           <Grid item container justify='center'>
-            <Grid item md={1} />
-            <Grid item md={2}>
+            <Grid item>
               <Box
                 display='flex'
                 justifyContent='center'
@@ -137,7 +136,7 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
                 />
               </Box>
             </Grid>
-            <Grid item md={2}>
+            <Grid item>
               <Box
                 display='flex'
                 justifyContent='center'
@@ -155,7 +154,6 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
                 />
               </Box>
             </Grid>
-            <Grid item xs={7} />
           </Grid>
           <Grid
             item

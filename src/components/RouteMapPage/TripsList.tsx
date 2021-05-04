@@ -23,7 +23,6 @@ const TripsList: React.FC<TripsListProps> = ({
   handleBasicTripsListItemClick,
   handleFullTripsListItemClick,
 }) => {
-
   return (
     <List subheader={listSubheader} className={listClassName}>
       {departure || destination ?

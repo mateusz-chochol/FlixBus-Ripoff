@@ -1,3 +1,4 @@
+import { WithWidth } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface ResultsPageParams {
@@ -5,4 +6,4 @@ interface ResultsPageParams {
   destinationIdAsString: string,
 }
 
-export default interface ResultsPageProps extends RouteComponentProps<ResultsPageParams> { }
+export default interface ResultsPageProps extends RouteComponentProps<ResultsPageParams>, WithWidth { }
