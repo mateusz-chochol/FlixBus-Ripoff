@@ -15,7 +15,7 @@ export default interface TripsListProps {
   isSmallScreen: boolean,
   listClassName?: string,
   listItemClassName?: string,
-  listSubheader?: React.ReactElement<any, string | React.JSXElementConstructor<any>>,
+  listSubheader?: string,
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps,
   handleBasicTripsListItemClick: (trip: BasicTrip) => void,

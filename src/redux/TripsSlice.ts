@@ -61,12 +61,26 @@ export const getTripsByDepartureAndDestinationIdsAsync = createAsyncThunk<
   }
 );
 
-export const getReturnTripsAsync = createAsyncThunk<Trip[]>(
-  'trips/getReturnTripsAsync',
-  async (params, thunkAPI) => {
+export const getTripsByDepartureAndDestinationIdsAndDateAsync = createAsyncThunk<
+  { list: Trip[], lastDepartureId: number, lastDestinationId: number },
+  { departureId: number, destinationId: number, departureDate: Date }
+>(
+  'trips/getTripsByDepartureAndDestinationIdsAndDateAsync',
+  async ({ departureId, destinationId, departureDate }) => {
+    return {
+      lastDepartureId: departureId,
+      lastDestinationId: destinationId,
+      list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate)
+    }
+  }
+);
+
+export const getReturnTripsByReturnDateAsync = createAsyncThunk<Trip[], Date>(
+  'trips/getReturnTripsByReturnDateAsync',
+  async (returnDate, thunkAPI) => {
     const { trips: { lastDepartureId, lastDestinationId } } = thunkAPI.getState() as AppState;
 
-    return await api.getTripsByDepartureAndDestinationIds(lastDestinationId, lastDepartureId)
+    return await api.getTripsByDepartureAndDestinationIdsAndDate(lastDestinationId, lastDepartureId, returnDate)
   }
 );
 
@@ -105,7 +119,7 @@ const tripsSlice = createSlice({
           list: action.payload.list
         }
       })
-      .addCase(getTripsByDepartureAndDestinationIdsAsync.fulfilled, (state, action) => {
+      .addCase(getTripsByDepartureAndDestinationIdsAndDateAsync.fulfilled, (state, action) => {
         return {
           ...state,
           lastDepartureId: action.payload.lastDepartureId,
@@ -113,7 +127,7 @@ const tripsSlice = createSlice({
           list: action.payload.list
         }
       })
-      .addCase(getReturnTripsAsync.fulfilled, (state, action) => {
+      .addCase(getReturnTripsByReturnDateAsync.fulfilled, (state, action) => {
         return {
           ...state,
           returnList: action.payload

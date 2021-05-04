@@ -3,6 +3,7 @@ import {
   Box,
   List,
   Typography,
+  ListSubheader,
 } from '@material-ui/core';
 import TripsListProps from 'types/Props/TripsListProps';
 import BasicTripsList from './BasicTripsList';
@@ -24,7 +25,7 @@ const TripsList: React.FC<TripsListProps> = ({
   handleFullTripsListItemClick,
 }) => {
   return (
-    <List subheader={listSubheader} className={listClassName}>
+    <List subheader={<ListSubheader>{listSubheader}</ListSubheader>} className={listClassName}>
       {departure || destination ?
         (departure && destination ?
           <FullTripsList

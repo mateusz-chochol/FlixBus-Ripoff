@@ -41,11 +41,11 @@ import {
 } from 'redux/LocationsSlice';
 import {
   getTrips,
-  getTripsByDepartureAndDestinationIdsAsync,
+  getTripsByDepartureAndDestinationIdsAndDateAsync,
   getLastDepartureId,
   getLastDestinationId,
   getReturnTrips,
-  getReturnTripsAsync,
+  getReturnTripsByReturnDateAsync,
 } from 'redux/TripsSlice';
 import { setTab } from 'redux/TabsSlice';
 import ResultsPageProps from 'types/Props/ResultsPageProps';
@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const classes = useStyles();
   const isSmallScreen = width === 'xs' || width === 'sm' || width === 'md';
-  const { departureIdAsString, destinationIdAsString } = match.params;
+  const { departureIdAsString, destinationIdAsString, departureDateAsString, returnDateAsString } = match.params;
   const dispatch = useDispatch();
   const history = useHistory();
   const allLocations = useSelector(getAllLocations);
@@ -127,10 +127,16 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [departureId, destinationId] = [parseInt(departureIdAsString), parseInt(destinationIdAsString)]
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
-  const [tripType, setTripType] = useState<TripType>(TripType.OneWay);
+  const [tripType, setTripType] = useState<TripType>(returnDateAsString ? TripType.RoundTrip : TripType.OneWay);
   const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
-  const [departureDate, setDepartureDate] = useState<Date | null>(moment().toDate());
-  const [returnDate, setReturnDate] = useState<Date | null>(moment().add(1, 'days').toDate());
+  const [departureDate, setDepartureDate] = useState<Date | null>(moment(departureDateAsString).isSameOrAfter(moment()) ?
+    moment.utc(departureDateAsString).toDate() :
+    moment().toDate()
+  );
+  const [returnDate, setReturnDate] = useState<Date | null>(returnDateAsString && moment(returnDateAsString).isSameOrAfter(departureDate) ?
+    moment.utc(returnDateAsString).toDate() :
+    moment(departureDate).add(1, 'days').toDate()
+  );
   const [hasSetup, setHasSetup] = useState<boolean>(false);
 
   const handleFullTripsListItemClick = (trip: Trip) => {
@@ -144,9 +150,9 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   useEffect(() => {
     if (!isNaN(departureId) && !isNaN(destinationId)) {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
-      dispatch(getTripsByDepartureAndDestinationIdsAsync({ departureId: departureId, destinationId: destinationId }))
+      dispatch(getTripsByDepartureAndDestinationIdsAndDateAsync({ departureId: departureId, destinationId: destinationId, departureDate: moment.utc(departureDateAsString).toDate() }))
     }
-  }, [departureId, destinationId, dispatch])
+  }, [departureId, destinationId, departureDateAsString, dispatch])
 
   useEffect(() => {
     if (!hasSetup) {
@@ -170,10 +176,10 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   }, [departure, destination, dispatch])
 
   useEffect(() => {
-    if (tripType === TripType.RoundTrip && departure?.id === lastDepartureId && destination?.id === lastDestinationId) {
-      dispatch(getReturnTripsAsync());
+    if (tripType === TripType.RoundTrip && departure?.id === lastDepartureId && destination?.id === lastDestinationId && returnDate) {
+      dispatch(getReturnTripsByReturnDateAsync(returnDate));
     }
-  }, [tripType, departure, destination, lastDepartureId, lastDestinationId, dispatch])
+  }, [tripType, departure, destination, lastDepartureId, lastDestinationId, returnDate, dispatch])
 
   return (
     <Paper square className={classes.paper}>

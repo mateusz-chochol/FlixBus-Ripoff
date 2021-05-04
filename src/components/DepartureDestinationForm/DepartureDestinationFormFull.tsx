@@ -272,7 +272,12 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
                     alignItems='flex-end'
                     justifyContent='center'
                   >
-                    <SearchButton departure={departure} destination={destination} />
+                    <SearchButton
+                      departure={departure}
+                      destination={destination}
+                      departureDate={departureDate}
+                      returnDate={tripType === TripType.RoundTrip ? returnDate : null}
+                    />
                   </Box>
                 </Grid>
               </Grid>
