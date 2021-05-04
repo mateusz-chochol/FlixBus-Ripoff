@@ -359,6 +359,86 @@
       "price": 80,
       "maxSeats": 20,
       "seatsLeft": 7
+    },
+    {
+      "id": 37,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 8
+    },
+    {
+      "id": 38,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 9
+    },
+    {
+      "id": 39,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 10
+    },
+    {
+      "id": 40,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 11
+    },
+    {
+      "id": 41,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 12
+    },
+    {
+      "id": 42,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 13
+    },
+    {
+      "id": 43,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 14
+    },
+    {
+      "id": 44,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2005-04-02",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 15
     }
   ]
 }

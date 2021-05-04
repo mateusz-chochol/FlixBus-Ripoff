@@ -53,24 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       width: '100%',
-      overflow: 'hidden'
-    },
-    parentGrid: {
-      flexWrap: 'nowrap',
-      height: "calc(100vh - 75px)",
-    },
-    menuPaper: {
-      height: "calc(100vh - 75px)",
-      backgroundColor: "whitesmoke"
-    },
-    listItem: {
-      paddingLeft: 60,
-      paddingRight: 60,
-    },
-    list: {
-      padding: 0,
-      overflow: 'hidden',
-      backgroundColor: theme.palette.background.paper,
+      overflow: 'auto',
       '&::-webkit-scrollbar': {
         width: '0.4em'
       },
@@ -80,7 +63,30 @@ const useStyles = makeStyles((theme: Theme) =>
       '&::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.2)',
       }
-    }
+    },
+    parentGrid: {
+      flexWrap: 'nowrap',
+      height: "calc(100vh - 75px)",
+    },
+    menuPaper: {
+      height: "calc(100vh - 75px)",
+      width: "100%",
+      backgroundColor: "whitesmoke",
+      position: "fixed",
+      maxWidth: 'inherit'
+    },
+    listItem: {
+      paddingLeft: 60,
+      paddingRight: 60,
+    },
+    list: {
+      padding: 0,
+      backgroundColor: theme.palette.background.paper
+    },
+    leftDivider: {
+      height: "calc(100vh - 75px)",
+      marginRight: "1px"
+    },
   }),
 );
 
@@ -162,14 +168,28 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
               xs={2}
             >
               <Paper elevation={0} square className={classes.menuPaper}>
-                <Typography variant='h4' align='center'>
-                  <Box>Sliders and such</Box>
-                </Typography>
+                <Grid
+                  item
+                  container
+                  direction='row'
+                  justify='flex-end'
+                  className={classes.parentGrid}
+                >
+                  <Grid
+                    item
+                    container
+                    direction='column'
+                  >
+                    <Typography variant='h4' align='center'>
+                      Sliders and such
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Divider orientation='vertical' className={classes.leftDivider} />
+                  </Grid>
+                </Grid>
               </Paper>
             </Grid>
-            <Box height='100%'>
-              <Divider orientation='vertical' />
-            </Box>
           </Hidden>
           <Grid
             item
@@ -180,7 +200,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
           >
             <Grid item>
               <Hidden smDown>
-                <Box paddingTop={2}>
+                <Box paddingTop={2} color='white'>
                   <DepartureDestinationFormFull
                     departure={departure}
                     setDeparture={setDeparture}
