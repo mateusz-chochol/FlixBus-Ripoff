@@ -13,9 +13,12 @@ import {
   ListItem,
   ListItemText,
   ListSubheader,
+  ListItemSecondaryAction,
+  IconButton,
   withWidth,
 } from '@material-ui/core';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {
   makeStyles,
   Theme,
@@ -71,12 +74,16 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: 'nowrap',
       height: "calc(100vh - 75px)",
     },
-    menuPaper: {
+    bigMenuPaper: {
       height: "calc(100vh - 75px)",
       width: "100%",
       backgroundColor: "whitesmoke",
       position: "fixed",
       maxWidth: 'inherit'
+    },
+    smallMenuPaper: {
+      backgroundColor: "whitesmoke",
+      width: "100%",
     },
     listsGrid: {
       flexWrap: 'nowrap'
@@ -106,7 +113,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const classes = useStyles();
-  const isSmallScreen = width === 'xs' || width === 'sm';
+  const isSmallScreen = width === 'xs' || width === 'sm' || width === 'md';
   const { departureIdAsString, destinationIdAsString } = match.params;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -181,14 +188,14 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
           className={classes.parentGrid}
           alignItems='flex-start'
         >
-          <Hidden smDown>
+          <Hidden mdDown>
             <Grid
               item
               container
               direction='column'
               xs={2}
             >
-              <Paper elevation={0} square className={classes.menuPaper}>
+              <Paper elevation={0} square className={classes.bigMenuPaper}>
                 <Grid
                   item
                   container
@@ -263,6 +270,14 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     />
                   </Box>
                 </Hidden>
+                <Hidden lgUp>
+                  <Divider />
+                  <Paper elevation={0} square className={classes.smallMenuPaper}>
+                    <Typography variant='h4' align='center'>
+                      Sliders and such
+                    </Typography>
+                  </Paper>
+                </Hidden>
               </Paper>
             </Grid>
             <Divider />
@@ -289,6 +304,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                               <ListItemText secondary={`Departure date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
                             </Grid>
                           </Grid>
+                          <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="add to cart">
+                              <AddCircleIcon color='secondary' />
+                            </IconButton>
+                          </ListItemSecondaryAction>
                         </ListItem>
                       </React.Fragment>
                     )) :
@@ -338,6 +358,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                   <ListItemText secondary={`Return date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}`} />
                                 </Grid>
                               </Grid>
+                              <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="add to cart">
+                                  <AddCircleIcon color='secondary' />
+                                </IconButton>
+                              </ListItemSecondaryAction>
                             </ListItem>
                           </React.Fragment>
                         )) :
