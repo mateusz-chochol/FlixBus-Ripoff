@@ -175,8 +175,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     }
   }, [departure, destination, dispatch])
 
-  console.log(moment.utc(returnDate?.toLocaleDateString()).toDate().toISOString().split('T')[0])
-
   return (
     <Paper square className={classes.paper}>
       <Box
