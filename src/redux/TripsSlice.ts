@@ -10,13 +10,15 @@ import * as api from 'api/TripsApi';
 interface TripSliceState {
   lastDepartureId: number,
   lastDestinationId: number,
-  list: Trip[]
+  list: Trip[],
+  returnList: Trip[],
 }
 
 const tripsInitialState: TripSliceState = {
   lastDepartureId: 0,
   lastDestinationId: 0,
-  list: []
+  list: [],
+  returnList: [],
 };
 
 export const getTripsByDepartureIdAsync = createAsyncThunk<
@@ -56,6 +58,15 @@ export const getTripsByDepartureAndDestinationIdsAsync = createAsyncThunk<
       lastDestinationId: destinationId,
       list: await api.getTripsByDepartureAndDestinationIds(departureId, destinationId)
     }
+  }
+);
+
+export const getReturnTripsAsync = createAsyncThunk<Trip[]>(
+  'trips/getReturnTripsAsync',
+  async (params, thunkAPI) => {
+    const { trips: { lastDepartureId, lastDestinationId } } = thunkAPI.getState() as AppState;
+
+    return await api.getTripsByDepartureAndDestinationIds(lastDestinationId, lastDepartureId)
   }
 );
 
@@ -102,10 +113,17 @@ const tripsSlice = createSlice({
           list: action.payload.list
         }
       })
+      .addCase(getReturnTripsAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          returnList: action.payload
+        }
+      })
   }
 })
 
 export const getTrips = (state: AppState) => state.trips.list;
+export const getReturnTrips = (state: AppState) => state.trips.returnList;
 export const getLastDepartureId = (state: AppState) => state.trips.lastDepartureId;
 export const getLastDestinationId = (state: AppState) => state.trips.lastDestinationId;
 
