@@ -303,7 +303,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                               </Grid>
                             </Grid>
                             <Grid item>
-                              <ListItemText secondary={`Departure date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
+                              <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
                             </Grid>
                           </Grid>
                           <ListItemSecondaryAction>
