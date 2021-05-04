@@ -286,7 +286,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
             <Grid item container className={classes.listsGrid}>
               <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
                 <List className={classes.list} subheader={<ListSubheader component="div">Departure trips</ListSubheader>}>
-                  {departure?.id === departureId && destination?.id === destinationId && departureDateAsString === moment.utc(departureDate?.toLocaleDateString()).toDate().toISOString().split('T')[0] ?
+                  {departure?.id === departureId && destination?.id === destinationId ?
                     (trips.length > 0 ? trips.map(trip => (
                       <React.Fragment key={trip.id}>
                         <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
@@ -345,7 +345,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <List className={classes.list} subheader={<ListSubheader component="div">Return trips</ListSubheader>}>
-                      {departure?.id === departureId && destination?.id === destinationId && returnDateAsString === moment.utc(returnDate?.toLocaleDateString()).toDate().toISOString().split('T')[0] ?
+                      {departure?.id === departureId && destination?.id === destinationId ?
                         (returnTrips.length > 0 ? returnTrips.map(trip => (
                           <React.Fragment key={trip.id}>
                             <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
