@@ -145,9 +145,26 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     moment(departureDate).add(1, 'days').toDate()
   );
   const [hasSetup, setHasSetup] = useState<boolean>(false);
+  const [priceFilter, setPriceFilter] = useState<number[]>([20, 80]);
+  const [durationFilter, setDurationFilter] = useState<number[]>([0, 6]);
+  const [departureHourFilter, setDepartureHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
+  const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
+  const [passengersCount, setPassengersCount] = useState<number>(1);
 
   const handleFullTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
+  }
+
+  const handleRemovePassenger = () => {
+    if (passengersCount > 1) {
+      setPassengersCount(passengersCount - 1);
+    }
+  }
+
+  const handleAddPassenger = () => {
+    if (passengersCount < 99) {
+      setPassengersCount(passengersCount + 1);
+    }
   }
 
   useEffect(() => {
@@ -226,7 +243,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         </Typography>
                         <Box paddingTop={6}>
                           <Slider
-                            value={[20, 80]}
+                            value={priceFilter}
+                            onChange={(event, newValue) => setPriceFilter(newValue as number[])}
                             max={100}
                             min={0}
                             marks={[
@@ -254,7 +272,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         </Typography>
                         <Box paddingTop={6}>
                           <Slider
-                            value={[0, 8]}
+                            value={durationFilter}
+                            onChange={(event, newValue) => setDurationFilter(newValue as number[])}
                             max={10}
                             min={0}
                             marks={[
@@ -283,13 +302,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         <Box paddingTop={3}>
                           <TimePicker
                             ampm={false}
-                            value={new Date(new Date().setHours(0, 0, 0, 0))}
-                            onChange={(newValue) => { }}
-                            variant='inline'
+                            value={departureHourFilter}
+                            onChange={(newDate) => setDepartureHourFilter(newDate as Date)}
                             inputVariant='outlined'
                             color='secondary'
                             views={['hours', 'minutes']}
-                            minutesStep={30}
+                            minutesStep={5}
                             fullWidth
                           />
                         </Box>
@@ -304,13 +322,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         <Box paddingTop={3}>
                           <TimePicker
                             ampm={false}
-                            value={new Date(new Date().setHours(0, 0, 0, 0))}
-                            onChange={(newValue) => { }}
-                            variant='inline'
+                            value={returnHourFilter}
+                            onChange={(newDate) => setReturnHourFilter(newDate as Date)}
                             inputVariant='outlined'
                             color='secondary'
                             views={['hours', 'minutes']}
-                            minutesStep={30}
+                            minutesStep={5}
                             fullWidth
                           />
                         </Box>
@@ -318,16 +335,18 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                       <Divider variant="middle" />
                     </Grid>
                     <Grid item>
-                      <Box padding={3}>
-                        <Typography variant='h6'>
-                          Passengers:
-                        </Typography>
-                        <Box paddingTop={2} display='flex' flexWrap='noWrap' justifyContent='space-evenly'>
-                          <IconButton color='secondary' aria-label="remove passenger">
+                      <Box paddingTop={3}>
+                        <Box paddingLeft={3} paddingRight={3}>
+                          <Typography variant='h6'>
+                            Passengers:
+                          </Typography>
+                        </Box>
+                        <Box paddingTop={2} display='flex' flexWrap='noWrap' justifyContent='space-evenly' alignItems='center'>
+                          <IconButton color='secondary' aria-label="remove passenger" onClick={handleRemovePassenger}>
                             <RemoveCircleIcon fontSize='large' />
                           </IconButton>
-                          <Typography variant='h2'>1</Typography>
-                          <IconButton color='secondary' aria-label="add passenger">
+                          <Typography variant='h2'>{passengersCount}</Typography>
+                          <IconButton color='secondary' aria-label="add passenger" onClick={handleAddPassenger}>
                             <AddCircleIcon fontSize='large' />
                           </IconButton>
                         </Box>

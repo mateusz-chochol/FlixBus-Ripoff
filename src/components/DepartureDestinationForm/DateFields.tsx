@@ -22,7 +22,6 @@ const DateFields: React.FC<MainPageDateFieldsProps> = ({
       <Grid item xs={12} md={tripType === TripType.OneWay ? 6 : 4}>
         <Box display='flex' justifyContent='center' alignItems='center'>
           <DatePicker
-            variant="inline"
             label="Departure"
             value={departureDate}
             onChange={(date: Date | null) => handleDepartureDateChange(date, setIsDepartureDateWindowOpen)}
@@ -42,7 +41,6 @@ const DateFields: React.FC<MainPageDateFieldsProps> = ({
         <Grid item xs={12} md={4}>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <DatePicker
-              variant="inline"
               label="Return"
               value={returnDate}
               onChange={(date: Date | null) => handleReturnDateChange(date, setIsReturnDateWindowOpen)}
