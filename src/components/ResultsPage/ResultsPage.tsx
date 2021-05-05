@@ -170,6 +170,25 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     }
   }
 
+  const compareHours = (current: string, toCompare: string) => {
+    const [currentHour, currentMinutes] = current.split(':');
+    const [toCompareHour, toCompareMinutes] = toCompare.split(':');
+
+    if (currentHour > toCompareHour) {
+      return true;
+    }
+
+    if (currentHour === toCompareHour) {
+      if (currentMinutes >= toCompareMinutes) {
+        return true;
+      }
+
+      return false;
+    }
+
+    return false;
+  }
+
   useEffect(() => {
     dispatch(setTab(false));
   }, [dispatch])
@@ -218,8 +237,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
       )
     }
 
-    setTripsToDisplay(filterTrips(trips));
-    setReturnTripsToDisplay(filterTrips(returnTrips));
+    setTripsToDisplay(filterTrips(trips).filter(trip => compareHours(trip.hour, `${departureHourFilter.getHours()}:${departureHourFilter.getMinutes()}`)));
+    setReturnTripsToDisplay(filterTrips(returnTrips).filter(trip => compareHours(trip.hour, `${returnHourFilter.getHours()}:${returnHourFilter.getMinutes()}`)));
   }, [priceFilter, durationFilter, departureHourFilter, returnHourFilter, passengersCount, trips, returnTrips])
 
   return (
@@ -458,7 +477,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                               </Grid>
                             </Grid>
                             <Grid item>
-                              <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
+                              <ListItemText secondary={`Date: ${trip.hour} - ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
                             </Grid>
                           </Grid>
                           <ListItemSecondaryAction>
@@ -519,7 +538,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                   </Grid>
                                 </Grid>
                                 <Grid item>
-                                  <ListItemText secondary={`Date: ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
+                                  <ListItemText secondary={`Date: ${trip.hour} - ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
                                 </Grid>
                               </Grid>
                               <ListItemSecondaryAction>
