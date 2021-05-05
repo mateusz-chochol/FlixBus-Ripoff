@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import {
   Box,
   Paper,
-  TextField,
   Grid,
   Radio,
   FormControlLabel,
@@ -45,8 +44,6 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
   setReturnDate,
   tripType,
   setTripType,
-  numberOfPassengers,
-  setNumberOfPassengers,
   departureLocations,
   destinationLocations,
   fullWidth,
@@ -89,29 +86,8 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
     }
   }
 
-  const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const max = 10;
-
-    if (event.target.value) {
-      const numberOfPassengers = Number(event.target.value);
-
-      if (numberOfPassengers > max) {
-        setNumberOfPassengers(max);
-      }
-      else if (numberOfPassengers < 0) {
-        setNumberOfPassengers(0);
-      }
-      else {
-        setNumberOfPassengers(numberOfPassengers);
-      }
-    }
-    else {
-      setNumberOfPassengers(undefined);
-    }
-  }
-
   return (
-    <Box minWidth={300} width={fullWidth ? '100%' : undefined}>
+    <Box minWidth='75vw' width={fullWidth ? '100%' : undefined}>
       {contentAbove}
       <Paper elevation={fullWidth ? 0 : 4} square={fullWidth ? true : false}>
         <Grid
@@ -121,12 +97,12 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
           alignItems='center'
           className={classes.grid}
         >
-          <Grid item container justify='center'>
+          <Grid item container justify='flex-start'>
             <Grid item md={1} />
-            <Grid item md={2}>
+            <Grid item md={4}>
               <Box
                 display='flex'
-                justifyContent='flex-start'
+                justifyContent='space-around'
                 alignItems='center'
                 mt={1}
               >
@@ -139,15 +115,6 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
                   name="one-way-radio"
                   label='One way'
                 />
-              </Box>
-            </Grid>
-            <Grid item md={2}>
-              <Box
-                display='flex'
-                justifyContent='flex-start'
-                alignItems='center'
-                mt={1}
-              >
                 <FormControlLabel
                   value='round trip'
                   control={<Radio
@@ -159,7 +126,6 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
                 />
               </Box>
             </Grid>
-            <Grid item xs={7} />
           </Grid>
           <Grid
             item
@@ -235,25 +201,6 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
                 handleDepartureDateChange={handleDepartureDateChange}
                 handleReturnDateChange={handleReturnDateChange}
               />
-              <Grid item xs={12} md={tripType === TripType.OneWay ? 3 : 2}>
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                  <TextField
-                    id="passengers-number"
-                    label="Passengers"
-                    type="number"
-                    value={numberOfPassengers}
-                    onChange={handlePassengersNumberChange}
-                    color='secondary'
-                    inputProps={{ dir: "rtl" }}
-                    InputLabelProps={{ shrink: true, }}
-                    variant="outlined"
-                    fullWidth
-                  />
-                </Box>
-              </Grid>
-              {tripType === TripType.OneWay &&
-                <Grid item md={1} />
-              }
               <Grid
                 item
                 container
@@ -261,15 +208,12 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
                 alignItems='center'
                 justify='center'
                 xs={12}
-                md={2}
+                md={4}
               >
-                {tripType === TripType.RoundTrip &&
-                  <Grid item md={6} />
-                }
                 <Grid item md={6}>
                   <Box
                     display='flex'
-                    alignItems='flex-end'
+                    alignItems='center'
                     justifyContent='center'
                   >
                     <SearchButton

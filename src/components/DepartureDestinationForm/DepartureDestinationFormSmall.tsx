@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import {
   Box,
   Paper,
-  TextField,
   Grid,
   Radio,
   FormControlLabel,
@@ -84,27 +83,6 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
     else {
       setIsReturnDateWindowOpen(false);
       showInfo('Return date cannot be before departure date');
-    }
-  }
-
-  const handlePassengersNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const max = 10;
-
-    if (event.target.value) {
-      const numberOfPassengers = Number(event.target.value);
-
-      if (numberOfPassengers > max) {
-        setNumberOfPassengers(max);
-      }
-      else if (numberOfPassengers < 0) {
-        setNumberOfPassengers(0);
-      }
-      else {
-        setNumberOfPassengers(numberOfPassengers);
-      }
-    }
-    else {
-      setNumberOfPassengers(undefined);
     }
   }
 
@@ -228,22 +206,6 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
                 handleDepartureDateChange={handleDepartureDateChange}
                 handleReturnDateChange={handleReturnDateChange}
               />
-              <Grid item xs={12} md={tripType === TripType.OneWay ? 3 : 2}>
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                  <TextField
-                    id="passengers-number"
-                    label="Passengers"
-                    type="number"
-                    value={numberOfPassengers}
-                    onChange={handlePassengersNumberChange}
-                    color='secondary'
-                    inputProps={{ dir: "rtl" }}
-                    InputLabelProps={{ shrink: true, }}
-                    variant="outlined"
-                    fullWidth
-                  />
-                </Box>
-              </Grid>
               <Box
                 display='flex'
                 alignItems='flex-end'

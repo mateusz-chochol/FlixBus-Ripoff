@@ -15,10 +15,14 @@ import {
   ListSubheader,
   ListItemSecondaryAction,
   IconButton,
+  Slider,
+  Tooltip,
   withWidth,
 } from '@material-ui/core';
+import { TimePicker } from '@material-ui/pickers';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import {
   makeStyles,
   Theme,
@@ -69,7 +73,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     parentGrid: {
-      flexWrap: 'nowrap',
       height: "calc(100vh - 75px)",
     },
     bigMenuPaper: {
@@ -77,7 +80,17 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       backgroundColor: "whitesmoke",
       position: "fixed",
-      maxWidth: 'inherit'
+      maxWidth: 'inherit',
+      overflow: 'auto',
+      '&::-webkit-scrollbar': {
+        width: '0.4em'
+      },
+      '&::-webkit-scrollbar-track': {
+        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgba(0,0,0,.2)',
+      }
     },
     smallMenuPaper: {
       backgroundColor: "whitesmoke",
@@ -95,15 +108,13 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       backgroundColor: theme.palette.background.paper
     },
-    leftDivider: {
-      height: "calc(100vh - 75px)",
-      marginRight: "1px"
-    },
     formGrid: {
       zIndex: 3,
     },
     listsDivider: {
+      position: 'fixed',
       left: 'auto',
+      height: '100%',
       zIndex: 2,
     }
   }),
@@ -208,12 +219,120 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     container
                     direction='column'
                   >
-                    <Typography variant='h4' align='center'>
-                      Sliders and such
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Divider orientation='vertical' className={classes.leftDivider} />
+                    <Grid item>
+                      <Box padding={3}>
+                        <Typography variant='h6'>
+                          Price range:
+                        </Typography>
+                        <Box paddingTop={6}>
+                          <Slider
+                            value={[20, 80]}
+                            max={100}
+                            min={0}
+                            marks={[
+                              {
+                                value: 0,
+                                label: '0$'
+                              },
+                              {
+                                value: 100,
+                                label: '100$'
+                              }
+                            ]}
+                            valueLabelDisplay="on"
+                            aria-labelledby="price slider"
+                            color='secondary'
+                          />
+                        </Box>
+                      </Box>
+                      <Divider variant="middle" />
+                    </Grid>
+                    <Grid item>
+                      <Box padding={3}>
+                        <Typography variant='h6'>
+                          Duration range:
+                        </Typography>
+                        <Box paddingTop={6}>
+                          <Slider
+                            value={[0, 8]}
+                            max={10}
+                            min={0}
+                            marks={[
+                              {
+                                value: 0,
+                                label: '0h'
+                              },
+                              {
+                                value: 10,
+                                label: '10h'
+                              }
+                            ]}
+                            valueLabelDisplay="on"
+                            aria-labelledby="duration slider"
+                            color='secondary'
+                          />
+                        </Box>
+                      </Box>
+                      <Divider variant="middle" />
+                    </Grid>
+                    <Grid item>
+                      <Box padding={3}>
+                        <Typography variant='h6'>
+                          Departure hour:
+                        </Typography>
+                        <Box paddingTop={3}>
+                          <TimePicker
+                            ampm={false}
+                            value={new Date(new Date().setHours(0, 0, 0, 0))}
+                            onChange={(newValue) => { }}
+                            variant='inline'
+                            inputVariant='outlined'
+                            color='secondary'
+                            views={['hours', 'minutes']}
+                            minutesStep={30}
+                            fullWidth
+                          />
+                        </Box>
+                      </Box>
+                      <Divider variant="middle" />
+                    </Grid>
+                    <Grid item>
+                      <Box padding={3}>
+                        <Typography variant='h6'>
+                          Return hour:
+                        </Typography>
+                        <Box paddingTop={3}>
+                          <TimePicker
+                            ampm={false}
+                            value={new Date(new Date().setHours(0, 0, 0, 0))}
+                            onChange={(newValue) => { }}
+                            variant='inline'
+                            inputVariant='outlined'
+                            color='secondary'
+                            views={['hours', 'minutes']}
+                            minutesStep={30}
+                            fullWidth
+                          />
+                        </Box>
+                      </Box>
+                      <Divider variant="middle" />
+                    </Grid>
+                    <Grid item>
+                      <Box padding={3}>
+                        <Typography variant='h6'>
+                          Passengers:
+                        </Typography>
+                        <Box paddingTop={2} display='flex' flexWrap='noWrap' justifyContent='space-evenly'>
+                          <IconButton color='secondary' aria-label="remove passenger">
+                            <RemoveCircleIcon fontSize='large' />
+                          </IconButton>
+                          <Typography variant='h2'>1</Typography>
+                          <IconButton color='secondary' aria-label="add passenger">
+                            <AddCircleIcon fontSize='large' />
+                          </IconButton>
+                        </Box>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Paper>
@@ -305,9 +424,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                             </Grid>
                           </Grid>
                           <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="add to cart">
-                              <AddCircleIcon color='secondary' />
-                            </IconButton>
+                            <Tooltip title='Add to cart'>
+                              <IconButton edge="end" aria-label="add to cart">
+                                <AddCircleIcon color='secondary' />
+                              </IconButton>
+                            </Tooltip>
                           </ListItemSecondaryAction>
                         </ListItem>
                       </React.Fragment>
@@ -364,9 +485,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                 </Grid>
                               </Grid>
                               <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="add to cart">
-                                  <AddCircleIcon color='secondary' />
-                                </IconButton>
+                                <Tooltip title='Add to cart'>
+                                  <IconButton edge="end" aria-label="add to cart">
+                                    <AddCircleIcon color='secondary' />
+                                  </IconButton>
+                                </Tooltip>
                               </ListItemSecondaryAction>
                             </ListItem>
                           </React.Fragment>
