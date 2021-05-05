@@ -102,10 +102,11 @@ Site should be visible under the address: http://localhost:5000
   - <del> create basic layout for the page </del> (Done)
   - <del> fill the results page with results </del> (Done)
   - <del> add displaying return trips </del> (Done)
-  - add searching by using dates
-  - add price filter
+  - <del> add searching by using dates </del> (Done)
+  - <del> add price filter </del> (Done)
   - add hours filter
-  - add seats left filter
+  - <del> add seats left filter </del> (Done)
+  - refactor everything and split it into multiple components at the end
 - trip page:
   - <del> create blank page with some trip info </del> (Done)
   - think about what this page should contain
