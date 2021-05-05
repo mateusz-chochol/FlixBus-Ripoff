@@ -150,6 +150,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [departureHourFilter, setDepartureHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [passengersCount, setPassengersCount] = useState<number>(1);
+  const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
+  const [returnTripsToDisplay, setReturnTripsToDisplay] = useState<Trip[]>(returnTrips);
 
   const handleFullTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
@@ -202,6 +204,19 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
       dispatch(getDestinationLocationsBySubstringAsync(destination.name))
     }
   }, [departure, destination, dispatch])
+
+  useEffect(() => {
+    const filterTrips = (tripsToFilter: Trip[]) => {
+      return tripsToFilter.filter(trip =>
+        trip.price <= priceFilter[1] && trip.price >= priceFilter[0] &&
+        trip.tripDuration <= durationFilter[1] && trip.tripDuration >= durationFilter[0] &&
+        trip.seatsLeft >= passengersCount
+      )
+    }
+
+    setTripsToDisplay(filterTrips(trips));
+    setReturnTripsToDisplay(filterTrips(returnTrips));
+  }, [priceFilter, durationFilter, departureHourFilter, returnHourFilter, passengersCount, trips, returnTrips])
 
   return (
     <Paper square className={classes.paper}>
@@ -423,7 +438,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
               <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
                 <List className={classes.list} subheader={<ListSubheader component="div">Departure trips</ListSubheader>}>
                   {departure?.id === departureId && destination?.id === destinationId ?
-                    (trips.length > 0 ? trips.map(trip => (
+                    (tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
                       <React.Fragment key={trip.id}>
                         <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
                           <Grid container direction='row'>
@@ -484,7 +499,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                   <Grid item xs={6}>
                     <List className={classes.list} subheader={<ListSubheader component="div">Return trips</ListSubheader>}>
                       {departure?.id === departureId && destination?.id === destinationId ?
-                        (returnTrips.length > 0 ? returnTrips.map(trip => (
+                        (returnTripsToDisplay.length > 0 ? returnTripsToDisplay.map(trip => (
                           <React.Fragment key={trip.id}>
                             <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
                               <Grid container direction='row'>
