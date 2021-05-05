@@ -106,6 +106,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> add price filter </del> (Done)
   - add hours filter
   - <del> add seats left filter </del> (Done)
+  - add additional check if user has changed any of the date fields
   - refactor everything and split it into multiple components at the end
 - trip page:
   - <del> create blank page with some trip info </del> (Done)
