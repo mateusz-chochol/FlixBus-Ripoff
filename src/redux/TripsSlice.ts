@@ -97,6 +97,12 @@ const tripsSlice = createSlice({
         lastDestinationId: payload
       }
     },
+    clearReturnTrips: (state) => {
+      return {
+        ...state,
+        returnList: []
+      }
+    }
   },
   extraReducers: builder => {
     builder
@@ -149,6 +155,7 @@ export const getLastDestinationId = (state: AppState) => state.trips.lastDestina
 export const {
   setLastDepartureId: setLastDepartureIdActionCreator,
   setLastDestinationId: setLastDestinationIdActionCreator,
+  clearReturnTrips: clearReturnTripsActionCreator
 } = tripsSlice.actions;
 
 export default tripsSlice.reducer

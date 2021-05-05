@@ -48,6 +48,7 @@ import {
   getTripsByDepartureAndDestinationIdsAndDateAsync,
   getReturnTrips,
   getReturnTripsByReturnDateAsync,
+  clearReturnTripsActionCreator,
 } from 'redux/TripsSlice';
 import { setTab } from 'redux/TabsSlice';
 import ResultsPageProps from 'types/Props/ResultsPageProps';
@@ -180,6 +181,9 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
 
       if (returnDateAsString) {
         dispatch(getReturnTripsByReturnDateAsync({ departureId: departureId, destinationId: destinationId, returnDate: moment.utc(returnDateAsString).toDate() }))
+      }
+      else {
+        dispatch(clearReturnTripsActionCreator());
       }
     }
   }, [departureId, destinationId, departureDateAsString, returnDateAsString, dispatch])
