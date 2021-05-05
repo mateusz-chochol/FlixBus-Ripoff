@@ -435,6 +435,126 @@
       "startLocationId": 2,
       "endLocationId": 1,
       "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 11
+    },
+    {
+      "id": 45,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 12
+    },
+    {
+      "id": 46,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 13
+    },
+    {
+      "id": 47,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 14
+    },
+    {
+      "id": 48,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 11
+    },
+    {
+      "id": 49,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 12
+    },
+    {
+      "id": 50,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 13
+    },
+    {
+      "id": 51,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 14
+    },
+    {
+      "id": 52,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 11
+    },
+    {
+      "id": 53,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 12
+    },
+    {
+      "id": 54,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 13
+    },
+    {
+      "id": 55,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
+      "date": "2021-05-06",
+      "price": 80,
+      "maxSeats": 20,
+      "seatsLeft": 14
+    },
+    {
+      "id": 56,
+      "startLocationId": 2,
+      "endLocationId": 1,
+      "tripDuration": 6,
       "date": "2021-05-07",
       "price": 80,
       "maxSeats": 20,
