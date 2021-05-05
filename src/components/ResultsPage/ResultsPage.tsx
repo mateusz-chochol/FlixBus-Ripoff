@@ -273,6 +273,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     item
                     container
                     direction='column'
+                    justify='space-evenly'
                   >
                     <Grid item>
                       <Box padding={3}>
