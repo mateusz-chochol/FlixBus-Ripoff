@@ -17,12 +17,21 @@ import {
   IconButton,
   Slider,
   Tooltip,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
   withWidth,
 } from '@material-ui/core';
 import { TimePicker } from '@material-ui/pickers';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import TuneIcon from '@material-ui/icons/Tune';
 import {
   makeStyles,
   Theme,
@@ -117,7 +126,22 @@ const useStyles = makeStyles((theme: Theme) =>
       left: 'auto',
       height: '100%',
       zIndex: 2,
-    }
+    },
+    filtersButton: {
+      textTransform: 'none',
+      display: 'block'
+    },
+    filtersDialog: {
+      '&::-webkit-scrollbar': {
+        width: '0.4em'
+      },
+      '&::-webkit-scrollbar-track': {
+        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgba(0,0,0,.2)',
+      }
+    },
   }),
 );
 
@@ -153,6 +177,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [passengersCount, setPassengersCount] = useState<number>(1);
   const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
   const [returnTripsToDisplay, setReturnTripsToDisplay] = useState<Trip[]>(returnTrips);
+  const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState<boolean>(false);
 
   const handleFullTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
@@ -449,11 +474,209 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                 </Hidden>
                 <Hidden lgUp>
                   <Divider />
-                  <Paper elevation={0} square className={classes.smallMenuPaper}>
-                    <Typography variant='h4' align='center'>
-                      Sliders and such
-                    </Typography>
-                  </Paper>
+                  <Box display='flex' justifyContent='center'>
+                    <Button className={classes.filtersButton} fullWidth variant="text" onClick={() => setIsFiltersDialogOpen(true)}>
+                      {/* <Box paddingLeft={6}>
+                        <Typography align='left' variant='h4' color='textSecondary'>
+                          <TuneIcon />
+                          <Box display='inline' paddingLeft={2}>Filters</Box>
+                        </Typography>
+                      </Box> */}
+                      <Box paddingTop={1} paddingLeft={4} paddingRight={4}>
+                        <Grid container>
+                          <Grid item xs={4}>
+                            <Typography align='left'>Price</Typography>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <KeyboardArrowRightIcon />
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Typography align='right'>{priceFilter[0]}$ - {priceFilter[1]}$</Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container>
+                          <Grid item xs={4}>
+                            <Typography align='left'>Duration</Typography>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <KeyboardArrowRightIcon />
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Typography align='right'>{durationFilter[0]}h - {durationFilter[1]}h</Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container>
+                          <Grid item xs={4}>
+                            <Typography align='left'>Departure</Typography>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <KeyboardArrowRightIcon />
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Typography align='right'>{moment(departureHourFilter).format('HH:mm')}</Typography>
+                          </Grid>
+                        </Grid>
+                        {tripType === TripType.RoundTrip &&
+                          <Grid container>
+                            <Grid item xs={4}>
+                              <Typography align='left'>Return</Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <KeyboardArrowRightIcon />
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Typography align='right'>{moment(returnHourFilter).format('HH:mm')}</Typography>
+                            </Grid>
+                          </Grid>
+                        }
+                        <Grid container>
+                          <Grid item xs={4}>
+                            <Typography align='left'>Passengers</Typography>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <KeyboardArrowRightIcon />
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Typography align='right'>{passengersCount}</Typography>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Button>
+                    <Dialog open={isFiltersDialogOpen} onClose={() => setIsFiltersDialogOpen(false)} aria-labelledby="form-dialog-title">
+                      <DialogTitle>Filters</DialogTitle>
+                      <Divider variant='middle' />
+                      <DialogContent className={classes.filtersDialog}>
+                        <Grid
+                          item
+                          container
+                          direction='column'
+                          justify='space-evenly'
+                        >
+                          <Grid item>
+                            <Box padding={3}>
+                              <Typography variant='h6'>
+                                Price range:
+                              </Typography>
+                              <Box paddingTop={6}>
+                                <Slider
+                                  value={priceFilter}
+                                  onChange={(event, newValue) => setPriceFilter(newValue as number[])}
+                                  max={100}
+                                  min={0}
+                                  marks={[
+                                    {
+                                      value: 0,
+                                      label: '0$'
+                                    },
+                                    {
+                                      value: 100,
+                                      label: '100$'
+                                    }
+                                  ]}
+                                  valueLabelDisplay="on"
+                                  aria-labelledby="price slider"
+                                  color='secondary'
+                                />
+                              </Box>
+                            </Box>
+                            <Divider variant="middle" />
+                          </Grid>
+                          <Grid item>
+                            <Box padding={3}>
+                              <Typography variant='h6'>
+                                Duration range:
+                              </Typography>
+                              <Box paddingTop={6}>
+                                <Slider
+                                  value={durationFilter}
+                                  onChange={(event, newValue) => setDurationFilter(newValue as number[])}
+                                  max={10}
+                                  min={0}
+                                  marks={[
+                                    {
+                                      value: 0,
+                                      label: '0h'
+                                    },
+                                    {
+                                      value: 10,
+                                      label: '10h'
+                                    }
+                                  ]}
+                                  valueLabelDisplay="on"
+                                  aria-labelledby="duration slider"
+                                  color='secondary'
+                                />
+                              </Box>
+                            </Box>
+                            <Divider variant="middle" />
+                          </Grid>
+                          <Grid item>
+                            <Box padding={3}>
+                              <Typography variant='h6'>
+                                Departure hour:
+                              </Typography>
+                              <Box paddingTop={3}>
+                                <TimePicker
+                                  ampm={false}
+                                  value={departureHourFilter}
+                                  onChange={(newDate) => setDepartureHourFilter(newDate as Date)}
+                                  inputVariant='outlined'
+                                  color='secondary'
+                                  views={['hours', 'minutes']}
+                                  minutesStep={5}
+                                  fullWidth
+                                />
+                              </Box>
+                            </Box>
+                            <Divider variant="middle" />
+                          </Grid>
+                          <Grid item>
+                            <Box padding={3}>
+                              <Typography variant='h6'>
+                                Return hour:
+                              </Typography>
+                              <Box paddingTop={3}>
+                                <TimePicker
+                                  ampm={false}
+                                  value={returnHourFilter}
+                                  onChange={(newDate) => setReturnHourFilter(newDate as Date)}
+                                  inputVariant='outlined'
+                                  color='secondary'
+                                  views={['hours', 'minutes']}
+                                  minutesStep={5}
+                                  fullWidth
+                                />
+                              </Box>
+                            </Box>
+                            <Divider variant="middle" />
+                          </Grid>
+                          <Grid item>
+                            <Box paddingTop={3}>
+                              <Box paddingLeft={3} paddingRight={3}>
+                                <Typography variant='h6'>
+                                  Passengers:
+                                </Typography>
+                              </Box>
+                              <Box paddingTop={2} display='flex' flexWrap='noWrap' justifyContent='space-evenly' alignItems='center'>
+                                <IconButton color='secondary' aria-label="remove passenger" onClick={handleRemovePassenger}>
+                                  <RemoveCircleIcon fontSize='large' />
+                                </IconButton>
+                                <Typography variant='h2'>{passengersCount}</Typography>
+                                <IconButton color='secondary' aria-label="add passenger" onClick={handleAddPassenger}>
+                                  <AddCircleIcon fontSize='large' />
+                                </IconButton>
+                              </Box>
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={() => setIsFiltersDialogOpen(false)} color="primary">
+                          Close
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </Box>
                 </Hidden>
               </Paper>
             </Grid>
