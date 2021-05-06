@@ -22,8 +22,6 @@ import {
   DialogActions,
   DialogTitle,
   DialogContent,
-  DialogContentText,
-  TextField,
   withWidth,
 } from '@material-ui/core';
 import { TimePicker } from '@material-ui/pickers';
@@ -31,7 +29,6 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import TuneIcon from '@material-ui/icons/Tune';
 import {
   makeStyles,
   Theme,
