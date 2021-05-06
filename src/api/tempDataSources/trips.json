@@ -615,6 +615,17 @@
       "price": 80,
       "maxSeats": 20,
       "seatsLeft": 15
+    },
+    {
+      "id": 57,
+      "startLocationId": 1,
+      "endLocationId": 2,
+      "tripDuration": 5,
+      "date": "2021-05-07",
+      "hour": "12:00",
+      "price": 70,
+      "maxSeats": 18,
+      "seatsLeft": 3
     }
   ]
 }
