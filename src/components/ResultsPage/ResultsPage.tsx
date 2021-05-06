@@ -452,7 +452,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                   </Box>
                 </Hidden>
                 <Hidden mdUp>
-                  <Box paddingTop={2} paddingLeft={6} paddingRight={6}>
+                  <Box paddingTop={2}>
                     <DepartureDestinationFormSmall
                       departure={departure}
                       setDeparture={setDeparture}
