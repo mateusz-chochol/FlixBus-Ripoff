@@ -82,6 +82,7 @@ Site should be visible under the address: http://localhost:5000
   - optimize calls for locations even more with adding previous search history, previous map bounds history and calculating only necessarry area of locations to ask for (based on previous map bounds history)
   - restrict showing only trips from today
   - remove basicTrips.json collection and work only on trips.json
+  - remove horizontal list of trips on mobile devices
 - plan your journey page:
   - <del> create blank page with some static info </del> (Done)
   - think about what this page should contain
