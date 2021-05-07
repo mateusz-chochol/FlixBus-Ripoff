@@ -22,6 +22,10 @@ import {
   DialogActions,
   DialogTitle,
   DialogContent,
+  Select,
+  MenuItem,
+  ListItemIcon,
+  FormControl,
   withWidth,
 } from '@material-ui/core';
 import { TimePicker } from '@material-ui/pickers';
@@ -29,6 +33,10 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import {
   makeStyles,
   Theme,
@@ -139,6 +147,15 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: 'rgba(0,0,0,.2)',
       }
     },
+    sortSelectInput: {
+      whiteSpace: 'break-spaces',
+    },
+    sortSelectIcon: {
+      minWidth: '25%',
+    },
+    sortSelectPopoverPaper: {
+      width: '20%'
+    },
   }),
 );
 
@@ -175,6 +192,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
   const [returnTripsToDisplay, setReturnTripsToDisplay] = useState<Trip[]>(returnTrips);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState<boolean>(false);
+  const [sortBySetting, setSortBySetting] = useState<string>("departure-increasing");
 
   const handleFullTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
@@ -189,6 +207,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const handleAddPassenger = () => {
     if (passengersCount < 99) {
       setPassengersCount(passengersCount + 1);
+    }
+  }
+
+  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    if (event.target.value !== undefined) {
+      setSortBySetting(event.target.value as string);
     }
   }
 
@@ -297,6 +321,121 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     direction='column'
                     justify='space-evenly'
                   >
+                    <Grid item >
+                      <Box paddingTop={3}>
+                        <Box paddingLeft={3} paddingRight={3}>
+                          <Typography variant='h6'>
+                            Sort by ({sortBySetting.split('-')[1]}):
+                          </Typography>
+                          <Box paddingTop={3} paddingBottom={3}>
+                            <FormControl variant="outlined" size="small" fullWidth color='secondary'>
+                              <Select
+                                MenuProps={{
+                                  PopoverClasses: {
+                                    paper: isSmallScreen ? undefined : classes.sortSelectPopoverPaper
+                                  }
+                                }}
+                                inputProps={{
+                                  className: classes.sortSelectInput
+                                }}
+                                value={sortBySetting}
+                                fullWidth
+                                onChange={(event) => handleSelectChange(event)}
+                              >
+                                <ListSubheader>Increasing</ListSubheader>
+                                <MenuItem value={"price-increasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <AttachMoneyIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Price' />
+                                  </ListItem>
+                                </MenuItem>
+                                <MenuItem value={"duration-increasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <AccessTimeIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Duration' />
+                                  </ListItem>
+                                </MenuItem>
+                                <MenuItem value={"departure-increasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <DirectionsCarIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Departure hour' />
+                                  </ListItem>
+                                </MenuItem>
+                                {tripType === TripType.RoundTrip &&
+                                  <MenuItem value={"return-increasing"}>
+                                    <ListItem disableGutters>
+                                      <ListItemIcon className={classes.sortSelectIcon}>
+                                        <DirectionsCarIcon />
+                                      </ListItemIcon>
+                                      <ListItemText primary='Return hour' />
+                                    </ListItem>
+                                  </MenuItem>
+                                }
+                                <MenuItem value={"passengers-increasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <SupervisorAccountIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Seats left' />
+                                  </ListItem>
+                                </MenuItem>
+                                <Divider variant="fullWidth" />
+                                <ListSubheader>Decreasing</ListSubheader>
+                                <MenuItem value={"price-decreasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <AttachMoneyIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Price' />
+                                  </ListItem>
+                                </MenuItem>
+                                <MenuItem value={"duration-decreasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <AccessTimeIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Duration' />
+                                  </ListItem>
+                                </MenuItem>
+                                <MenuItem value={"departure-decreasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <DirectionsCarIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Departure hour' />
+                                  </ListItem>
+                                </MenuItem>
+                                {tripType === TripType.RoundTrip &&
+                                  <MenuItem value={"return-decreasing"}>
+                                    <ListItem disableGutters>
+                                      <ListItemIcon className={classes.sortSelectIcon}>
+                                        <DirectionsCarIcon />
+                                      </ListItemIcon>
+                                      <ListItemText primary='Return hour' />
+                                    </ListItem>
+                                  </MenuItem>
+                                }
+                                <MenuItem value={"passengers-decreasing"}>
+                                  <ListItem disableGutters>
+                                    <ListItemIcon className={classes.sortSelectIcon}>
+                                      <SupervisorAccountIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary='Seats left' />
+                                  </ListItem>
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          </Box>
+                        </Box>
+                      </Box>
+                      <Divider variant="middle" />
+                    </Grid>
                     <Grid item>
                       <Box padding={3}>
                         <Typography variant='h6'>
@@ -396,7 +535,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                       <Divider variant="middle" />
                     </Grid>
                     <Grid item>
-                      <Box paddingTop={3}>
+                      <Box paddingTop={3} paddingBottom={3}>
                         <Box paddingLeft={3} paddingRight={3}>
                           <Typography variant='h6'>
                             Passengers:
@@ -549,6 +688,121 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                           direction='column'
                           justify='space-evenly'
                         >
+                          <Grid item>
+                            <Box paddingTop={3}>
+                              <Box paddingLeft={3} paddingRight={3}>
+                                <Typography variant='h6'>
+                                  Sort by ({sortBySetting.split('-')[1]}):
+                                </Typography>
+                                <Box paddingTop={3} paddingBottom={3}>
+                                  <FormControl variant="outlined" size="small" fullWidth color='secondary'>
+                                    <Select
+                                      MenuProps={{
+                                        PopoverClasses: {
+                                          paper: isSmallScreen ? undefined : classes.sortSelectPopoverPaper
+                                        }
+                                      }}
+                                      inputProps={{
+                                        className: classes.sortSelectInput
+                                      }}
+                                      value={sortBySetting}
+                                      fullWidth
+                                      onChange={(event) => handleSelectChange(event)}
+                                    >
+                                      <ListSubheader>Increasing</ListSubheader>
+                                      <MenuItem value={"price-increasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <AttachMoneyIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Price' />
+                                        </ListItem>
+                                      </MenuItem>
+                                      <MenuItem value={"duration-increasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <AccessTimeIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Duration' />
+                                        </ListItem>
+                                      </MenuItem>
+                                      <MenuItem value={"departure-increasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <DirectionsCarIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Departure hour' />
+                                        </ListItem>
+                                      </MenuItem>
+                                      {tripType === TripType.RoundTrip &&
+                                        <MenuItem value={"return-increasing"}>
+                                          <ListItem disableGutters>
+                                            <ListItemIcon className={classes.sortSelectIcon}>
+                                              <DirectionsCarIcon />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Return hour' />
+                                          </ListItem>
+                                        </MenuItem>
+                                      }
+                                      <MenuItem value={"passengers-increasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <SupervisorAccountIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Seats left' />
+                                        </ListItem>
+                                      </MenuItem>
+                                      <Divider variant="fullWidth" />
+                                      <ListSubheader>Decreasing</ListSubheader>
+                                      <MenuItem value={"price-decreasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <AttachMoneyIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Price' />
+                                        </ListItem>
+                                      </MenuItem>
+                                      <MenuItem value={"duration-decreasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <AccessTimeIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Duration' />
+                                        </ListItem>
+                                      </MenuItem>
+                                      <MenuItem value={"departure-decreasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <DirectionsCarIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Departure hour' />
+                                        </ListItem>
+                                      </MenuItem>
+                                      {tripType === TripType.RoundTrip &&
+                                        <MenuItem value={"return-decreasing"}>
+                                          <ListItem disableGutters>
+                                            <ListItemIcon className={classes.sortSelectIcon}>
+                                              <DirectionsCarIcon />
+                                            </ListItemIcon>
+                                            <ListItemText primary='Return hour' />
+                                          </ListItem>
+                                        </MenuItem>
+                                      }
+                                      <MenuItem value={"passengers-decreasing"}>
+                                        <ListItem disableGutters>
+                                          <ListItemIcon className={classes.sortSelectIcon}>
+                                            <SupervisorAccountIcon />
+                                          </ListItemIcon>
+                                          <ListItemText primary='Seats left' />
+                                        </ListItem>
+                                      </MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </Box>
+                              </Box>
+                            </Box>
+                            <Divider variant="middle" />
+                          </Grid>
                           <Grid item>
                             <Box padding={3}>
                               <Typography variant='h6'>
