@@ -287,6 +287,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     setReturnTripsToDisplay(filterTrips(returnTrips).filter(trip => compareHours(trip.hour, `${returnHourFilter.getHours()}:${returnHourFilter.getMinutes()}`)));
   }, [priceFilter, durationFilter, departureHourFilter, returnHourFilter, passengersCount, trips, returnTrips])
 
+  useEffect(() => {
+    if (tripType === TripType.OneWay && sortBySetting.match('return-*')) {
+      setSortBySetting(`departure-${sortBySetting.split('-')[1]}`);
+    }
+  }, [tripType, sortBySetting])
+
   return (
     <Paper square className={classes.paper}>
       <Box
