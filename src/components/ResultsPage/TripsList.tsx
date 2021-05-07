@@ -75,6 +75,10 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
     }
   }
 
+  const getTitle = () => {
+    return isReadyToRender ? `${title}: ${tripsToDisplay.length}` : title;
+  }
+
   useEffect(() => {
     setIsReadyToRender(
       departure?.id === departureId &&
@@ -85,12 +89,22 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
   }, [departure?.id, destination?.id, departureDate, departureDateAsString, departureId, destinationId, tripsToDisplay.length])
 
   return (
-    <List className={classes.list} subheader={<ListSubheader component="div">{title}</ListSubheader>}>
+    <List className={classes.list} subheader={<ListSubheader component="div">{getTitle()}</ListSubheader>}>
       {isReadyToRender ? tripsToDisplay.map(trip => (
         <React.Fragment key={trip.id}>
-          <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
+          <ListItem
+            button
+            className={isSmallScreen ? undefined : classes.listItem}
+            key={trip.id}
+            onClick={() => handleFullTripsListItemClick(trip)}
+          >
             <Grid container direction='row'>
-              <Grid item container alignItems='flex-end' justify='space-evenly'>
+              <Grid
+                item
+                container
+                alignItems='flex-end'
+                justify='space-evenly'
+              >
                 <Grid item>
                   <ListItemText primary={allLocations.find(location => location.id === trip.startLocationId)?.name} />
                 </Grid>
