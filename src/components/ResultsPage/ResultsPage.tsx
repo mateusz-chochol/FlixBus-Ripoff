@@ -37,6 +37,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
+import TuneIcon from '@material-ui/icons/Tune';
 import {
   makeStyles,
   Theme,
@@ -684,7 +685,14 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                       </Box>
                     </Button>
                     <Dialog open={isFiltersDialogOpen} onClose={() => setIsFiltersDialogOpen(false)} aria-labelledby="form-dialog-title">
-                      <DialogTitle>Filters</DialogTitle>
+                      <DialogTitle >
+                        <Grid item xs={7}>
+                          <Box display='flex' alignItems='center' justifyContent='space-evenly'>
+                            <TuneIcon fontSize='large' />
+                            <Typography variant='h4'>Filters</Typography>
+                          </Box>
+                        </Grid>
+                      </DialogTitle>
                       <Divider variant='middle' />
                       <DialogContent className={classes.filtersDialog}>
                         <Grid
