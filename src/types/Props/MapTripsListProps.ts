@@ -6,7 +6,7 @@ import {
   BoxProps,
 } from '@material-ui/core';
 
-export default interface TripsListProps {
+export default interface MapTripsListProps {
   departure?: Location,
   destination?: Location,
   locations: Location[],

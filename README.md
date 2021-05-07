@@ -125,3 +125,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> change setting tab id so its done in default route component </del>
   - add creating ids of everything with uuid.v4()
   - <del> enable PWA capabilities </del>
+  - divide props folder into multiple smaller folders

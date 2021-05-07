@@ -5,11 +5,11 @@ import {
   Typography,
   ListSubheader,
 } from '@material-ui/core';
-import TripsListProps from 'types/Props/TripsListProps';
+import MapTripsListProps from 'types/Props/MapTripsListProps';
 import BasicTripsList from './BasicTripsList';
 import FullTripsList from './FullTripsList';
 
-const TripsList: React.FC<TripsListProps> = ({
+const TripsList: React.FC<MapTripsListProps> = ({
   departure,
   destination,
   locations,
