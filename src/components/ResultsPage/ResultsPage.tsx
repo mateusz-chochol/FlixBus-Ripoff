@@ -313,7 +313,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     if (returnTripsToDisplay.length > 1) {
       setReturnTripsToDisplay(returnTripsToDisplay => sortTrips(returnTripsToDisplay, sortBy, direction === 'increasing' ? 1 : -1));
     }
-  }, [sortBySetting, tripsToDisplay.length, returnTripsToDisplay.length])
+  }, [sortBySetting, tripsToDisplay.length, returnTripsToDisplay.length, trips, returnTrips])
 
   useEffect(() => {
     if (!isSmallScreen) {
@@ -628,57 +628,57 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     <Button className={classes.filtersButton} fullWidth variant="text" onClick={() => setIsFiltersDialogOpen(true)}>
                       <Box paddingTop={1} paddingLeft={4} paddingRight={4}>
                         <Grid container>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='left'>Sorting by</Typography>
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={2}>
                             <KeyboardArrowRightIcon />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='right'>{sortBySetting.split('-')[0]}</Typography>
                           </Grid>
                         </Grid>
                         <Grid container>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='left'>Price</Typography>
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={2}>
                             <KeyboardArrowRightIcon />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='right'>{priceFilter[0]}$ - {priceFilter[1]}$</Typography>
                           </Grid>
                         </Grid>
                         <Grid container>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='left'>Duration</Typography>
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={2}>
                             <KeyboardArrowRightIcon />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='right'>{durationFilter[0]}h - {durationFilter[1]}h</Typography>
                           </Grid>
                         </Grid>
                         <Grid container>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='left'>Departure</Typography>
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={2}>
                             <KeyboardArrowRightIcon />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='right'>{moment(departureHourFilter).format('HH:mm')}</Typography>
                           </Grid>
                         </Grid>
                         <Grid container>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='left'>Passengers</Typography>
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={2}>
                             <KeyboardArrowRightIcon />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <Typography align='right'>{passengersCount}</Typography>
                           </Grid>
                         </Grid>
