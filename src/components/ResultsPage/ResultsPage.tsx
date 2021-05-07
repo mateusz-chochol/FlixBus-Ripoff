@@ -157,6 +157,9 @@ const useStyles = makeStyles((theme: Theme) =>
     sortSelectPopoverPaper: {
       width: '20%'
     },
+    sortSelectGrid: {
+      flexWrap: 'nowrap'
+    }
   }),
 );
 
@@ -354,6 +357,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     container
                     direction='column'
                     justify='space-evenly'
+                    className={classes.sortSelectGrid}
                   >
                     <Grid item >
                       <Box paddingTop={3}>
@@ -700,6 +704,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                           container
                           direction='column'
                           justify='space-evenly'
+                          className={classes.sortSelectGrid}
                         >
                           <Grid item>
                             <Box paddingTop={3}>
