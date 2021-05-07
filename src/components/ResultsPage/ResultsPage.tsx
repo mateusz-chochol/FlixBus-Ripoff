@@ -192,7 +192,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
   const [returnTripsToDisplay, setReturnTripsToDisplay] = useState<Trip[]>(returnTrips);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState<boolean>(false);
-  const [sortBySetting, setSortBySetting] = useState<string>("departure-increasing");
+  const [sortBySetting, setSortBySetting] = useState<string>("Departure hour-increasing");
 
   const handleFullTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
@@ -288,10 +288,31 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   }, [priceFilter, durationFilter, departureHourFilter, returnHourFilter, passengersCount, trips, returnTrips])
 
   useEffect(() => {
-    if (tripType === TripType.OneWay && sortBySetting.match('return-*')) {
-      setSortBySetting(`departure-${sortBySetting.split('-')[1]}`);
+    const sortTrips = (tripsToSort: Trip[], sortBy: string, factor: number) => {
+      switch (sortBy) {
+        case 'Price':
+          return tripsToSort.slice().sort((a, b) => a.price > b.price ? 1 * factor : -1 * factor);
+        case 'Duration':
+          return tripsToSort.slice().sort((a, b) => a.tripDuration > b.tripDuration ? 1 * factor : -1 * factor);
+        case 'Departure hour':
+          return tripsToSort.slice().sort((a, b) => a.hour.split(':').join() > b.hour.split(':').join() ? 1 * factor : -1 * factor);
+        case 'Seats left':
+          return tripsToSort.slice().sort((a, b) => a.seatsLeft > b.seatsLeft ? 1 * factor : -1 * factor);
+        default:
+          return tripsToSort;
+      }
     }
-  }, [tripType, sortBySetting])
+
+    const [sortBy, direction] = sortBySetting.split('-');
+
+    if (tripsToDisplay.length > 1) {
+      setTripsToDisplay(tripsToDisplay => sortTrips(tripsToDisplay, sortBy, direction === 'increasing' ? 1 : -1));
+    }
+
+    if (returnTripsToDisplay.length > 1) {
+      setReturnTripsToDisplay(returnTripsToDisplay => sortTrips(returnTripsToDisplay, sortBy, direction === 'increasing' ? 1 : -1));
+    }
+  }, [sortBySetting, tripsToDisplay.length, returnTripsToDisplay.length])
 
   return (
     <Paper square className={classes.paper}>
@@ -349,7 +370,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                 onChange={(event) => handleSelectChange(event)}
                               >
                                 <ListSubheader>Increasing</ListSubheader>
-                                <MenuItem value={"price-increasing"}>
+                                <MenuItem value={"Price-increasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <AttachMoneyIcon />
@@ -357,7 +378,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                     <ListItemText primary='Price' />
                                   </ListItem>
                                 </MenuItem>
-                                <MenuItem value={"duration-increasing"}>
+                                <MenuItem value={"Duration-increasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <AccessTimeIcon />
@@ -365,7 +386,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                     <ListItemText primary='Duration' />
                                   </ListItem>
                                 </MenuItem>
-                                <MenuItem value={"departure-increasing"}>
+                                <MenuItem value={"Departure hour-increasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <DirectionsCarIcon />
@@ -373,17 +394,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                     <ListItemText primary='Departure hour' />
                                   </ListItem>
                                 </MenuItem>
-                                {tripType === TripType.RoundTrip &&
-                                  <MenuItem value={"return-increasing"}>
-                                    <ListItem disableGutters>
-                                      <ListItemIcon className={classes.sortSelectIcon}>
-                                        <DirectionsCarIcon />
-                                      </ListItemIcon>
-                                      <ListItemText primary='Return hour' />
-                                    </ListItem>
-                                  </MenuItem>
-                                }
-                                <MenuItem value={"passengers-increasing"}>
+                                <MenuItem value={"Seats left-increasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <SupervisorAccountIcon />
@@ -393,7 +404,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                 </MenuItem>
                                 <Divider variant="fullWidth" />
                                 <ListSubheader>Decreasing</ListSubheader>
-                                <MenuItem value={"price-decreasing"}>
+                                <MenuItem value={"Price-decreasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <AttachMoneyIcon />
@@ -401,7 +412,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                     <ListItemText primary='Price' />
                                   </ListItem>
                                 </MenuItem>
-                                <MenuItem value={"duration-decreasing"}>
+                                <MenuItem value={"Duration-decreasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <AccessTimeIcon />
@@ -409,7 +420,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                     <ListItemText primary='Duration' />
                                   </ListItem>
                                 </MenuItem>
-                                <MenuItem value={"departure-decreasing"}>
+                                <MenuItem value={"Departure hour-decreasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <DirectionsCarIcon />
@@ -417,17 +428,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                     <ListItemText primary='Departure hour' />
                                   </ListItem>
                                 </MenuItem>
-                                {tripType === TripType.RoundTrip &&
-                                  <MenuItem value={"return-decreasing"}>
-                                    <ListItem disableGutters>
-                                      <ListItemIcon className={classes.sortSelectIcon}>
-                                        <DirectionsCarIcon />
-                                      </ListItemIcon>
-                                      <ListItemText primary='Return hour' />
-                                    </ListItem>
-                                  </MenuItem>
-                                }
-                                <MenuItem value={"passengers-decreasing"}>
+                                <MenuItem value={"Seats left-decreasing"}>
                                   <ListItem disableGutters>
                                     <ListItemIcon className={classes.sortSelectIcon}>
                                       <SupervisorAccountIcon />
@@ -618,13 +619,18 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                   <Divider />
                   <Box display='flex' justifyContent='center'>
                     <Button className={classes.filtersButton} fullWidth variant="text" onClick={() => setIsFiltersDialogOpen(true)}>
-                      {/* <Box paddingLeft={6}>
-                        <Typography align='left' variant='h4' color='textSecondary'>
-                          <TuneIcon />
-                          <Box display='inline' paddingLeft={2}>Filters</Box>
-                        </Typography>
-                      </Box> */}
                       <Box paddingTop={1} paddingLeft={4} paddingRight={4}>
+                        <Grid container>
+                          <Grid item xs={4}>
+                            <Typography align='left'>Sorting by</Typography>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <KeyboardArrowRightIcon />
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Typography align='right'>{sortBySetting.split('-')[0]}</Typography>
+                          </Grid>
+                        </Grid>
                         <Grid container>
                           <Grid item xs={4}>
                             <Typography align='left'>Price</Typography>
@@ -658,19 +664,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                             <Typography align='right'>{moment(departureHourFilter).format('HH:mm')}</Typography>
                           </Grid>
                         </Grid>
-                        {tripType === TripType.RoundTrip &&
-                          <Grid container>
-                            <Grid item xs={4}>
-                              <Typography align='left'>Return</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <KeyboardArrowRightIcon />
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Typography align='right'>{moment(returnHourFilter).format('HH:mm')}</Typography>
-                            </Grid>
-                          </Grid>
-                        }
                         <Grid container>
                           <Grid item xs={4}>
                             <Typography align='left'>Passengers</Typography>
@@ -716,7 +709,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                       onChange={(event) => handleSelectChange(event)}
                                     >
                                       <ListSubheader>Increasing</ListSubheader>
-                                      <MenuItem value={"price-increasing"}>
+                                      <MenuItem value={"Price-increasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <AttachMoneyIcon />
@@ -724,7 +717,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                           <ListItemText primary='Price' />
                                         </ListItem>
                                       </MenuItem>
-                                      <MenuItem value={"duration-increasing"}>
+                                      <MenuItem value={"Duration-increasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <AccessTimeIcon />
@@ -732,7 +725,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                           <ListItemText primary='Duration' />
                                         </ListItem>
                                       </MenuItem>
-                                      <MenuItem value={"departure-increasing"}>
+                                      <MenuItem value={"Departure hour-increasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <DirectionsCarIcon />
@@ -740,17 +733,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                           <ListItemText primary='Departure hour' />
                                         </ListItem>
                                       </MenuItem>
-                                      {tripType === TripType.RoundTrip &&
-                                        <MenuItem value={"return-increasing"}>
-                                          <ListItem disableGutters>
-                                            <ListItemIcon className={classes.sortSelectIcon}>
-                                              <DirectionsCarIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Return hour' />
-                                          </ListItem>
-                                        </MenuItem>
-                                      }
-                                      <MenuItem value={"passengers-increasing"}>
+                                      <MenuItem value={"Seats left-increasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <SupervisorAccountIcon />
@@ -760,7 +743,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                       </MenuItem>
                                       <Divider variant="fullWidth" />
                                       <ListSubheader>Decreasing</ListSubheader>
-                                      <MenuItem value={"price-decreasing"}>
+                                      <MenuItem value={"Price-decreasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <AttachMoneyIcon />
@@ -768,7 +751,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                           <ListItemText primary='Price' />
                                         </ListItem>
                                       </MenuItem>
-                                      <MenuItem value={"duration-decreasing"}>
+                                      <MenuItem value={"Duration-decreasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <AccessTimeIcon />
@@ -776,7 +759,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                           <ListItemText primary='Duration' />
                                         </ListItem>
                                       </MenuItem>
-                                      <MenuItem value={"departure-decreasing"}>
+                                      <MenuItem value={"Departure hour-decreasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <DirectionsCarIcon />
@@ -784,17 +767,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                                           <ListItemText primary='Departure hour' />
                                         </ListItem>
                                       </MenuItem>
-                                      {tripType === TripType.RoundTrip &&
-                                        <MenuItem value={"return-decreasing"}>
-                                          <ListItem disableGutters>
-                                            <ListItemIcon className={classes.sortSelectIcon}>
-                                              <DirectionsCarIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Return hour' />
-                                          </ListItem>
-                                        </MenuItem>
-                                      }
-                                      <MenuItem value={"passengers-decreasing"}>
+                                      <MenuItem value={"Seats left-decreasing"}>
                                         <ListItem disableGutters>
                                           <ListItemIcon className={classes.sortSelectIcon}>
                                             <SupervisorAccountIcon />
