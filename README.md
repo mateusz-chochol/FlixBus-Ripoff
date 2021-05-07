@@ -54,7 +54,7 @@ Site should be visible under the address: http://localhost:5000
 - transitioning to mobile view on smaller screens (i.e. drawer with tabs instead of tabs in the app bar)
 - route map page
 - results page
-- running as mobile app
+- running as mobile app (PWA)
 
 ## Current TODOs:
 - main page:
