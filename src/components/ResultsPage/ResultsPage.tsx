@@ -914,7 +914,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
             <Grid item container className={classes.listsGrid}>
               <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
                 <List className={classes.list} subheader={<ListSubheader component="div">Departure trips</ListSubheader>}>
-                  {departure?.id === departureId && destination?.id === destinationId ?
+                  {departure?.id === departureId && destination?.id === destinationId && departureDateAsString === moment(departureDate).format('YYYY-MM-DD') ?
                     (tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
                       <React.Fragment key={trip.id}>
                         <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
@@ -947,7 +947,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                       <Box>
                         <Typography variant='h5' align='center'>
                           <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
-                            {departureDateAsString ?
+                            {departureDateAsString === moment(departureDate).format('YYYY-MM-DD') ?
                               `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}` :
                               "Press search to search for the results"
                             }
@@ -975,7 +975,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <List className={classes.list} subheader={<ListSubheader component="div">Return trips</ListSubheader>}>
-                      {departure?.id === departureId && destination?.id === destinationId ?
+                      {departure?.id === departureId && destination?.id === destinationId && returnDateAsString === moment(returnDate).format('YYYY-MM-DD') ?
                         (returnTripsToDisplay.length > 0 ? returnTripsToDisplay.map(trip => (
                           <React.Fragment key={trip.id}>
                             <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
@@ -1009,7 +1009,9 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                             <Typography variant='h5' align='center'>
                               <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
                                 {returnDateAsString ?
-                                  `Sorry, no trips from ${destination.name} to ${departure.name} found on ${returnDateAsString}` :
+                                  returnDateAsString === moment(returnDate).format('YYYY-MM-DD') ?
+                                    `Sorry, no trips from ${destination.name} to ${departure.name} found on ${returnDateAsString}` :
+                                    "Press search to search for the results" :
                                   "Press search to search for the results"
                                 }
                               </Box>
