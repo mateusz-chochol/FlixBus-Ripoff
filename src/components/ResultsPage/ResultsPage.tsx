@@ -81,10 +81,6 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: 'rgba(0,0,0,.2)',
       }
     },
-    smallMenuPaper: {
-      backgroundColor: "whitesmoke",
-      width: "100%",
-    },
     listsGrid: {
       flexWrap: 'nowrap'
     },
