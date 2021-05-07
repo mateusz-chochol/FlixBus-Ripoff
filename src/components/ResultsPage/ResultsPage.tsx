@@ -314,6 +314,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     }
   }, [sortBySetting, tripsToDisplay.length, returnTripsToDisplay.length])
 
+  useEffect(() => {
+    if (!isSmallScreen) {
+      setIsFiltersDialogOpen(false);
+    }
+  }, [isSmallScreen])
+
   return (
     <Paper square className={classes.paper}>
       <Box
