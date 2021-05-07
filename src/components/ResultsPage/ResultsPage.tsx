@@ -917,129 +917,131 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
               </Paper>
             </Grid>
             <Divider />
-            <Grid item container className={classes.listsGrid}>
-              <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
-                <List className={classes.list} subheader={<ListSubheader component="div">Departure trips</ListSubheader>}>
-                  {departure?.id === departureId && destination?.id === destinationId && departureDateAsString === moment(departureDate).format('YYYY-MM-DD') ?
-                    (tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
-                      <React.Fragment key={trip.id}>
-                        <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
-                          <Grid container direction='row'>
-                            <Grid item container alignItems='flex-end' justify='space-evenly'>
-                              <Grid item>
-                                <ListItemText primary={allLocations.find(location => location.id === trip.startLocationId)?.name} />
-                              </Grid>
-                              <Grid item>
-                                <ArrowRightAltIcon />
-                              </Grid>
-                              <Grid item>
-                                <ListItemText primary={allLocations.find(location => location.id === trip.endLocationId)?.name} />
-                              </Grid>
-                            </Grid>
-                            <Grid item>
-                              <ListItemText secondary={`Date: ${trip.hour} - ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
-                            </Grid>
-                          </Grid>
-                          <ListItemSecondaryAction>
-                            <Tooltip title='Add to cart'>
-                              <IconButton edge="end" aria-label="add to cart">
-                                <AddCircleIcon color='secondary' />
-                              </IconButton>
-                            </Tooltip>
-                          </ListItemSecondaryAction>
-                        </ListItem>
-                      </React.Fragment>
-                    )) :
-                      <Box>
-                        <Typography variant='h5' align='center'>
-                          <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
-                            {departureDateAsString === moment(departureDate).format('YYYY-MM-DD') ?
-                              `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}` :
-                              "Press search to search for the results"
-                            }
-                          </Box>
-                        </Typography>
-                      </Box>
-                    ) :
-                    <Box>
-                      <Typography variant='h5' align='center'>
-                        <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
-                          {departure && destination ?
-                            "Press search to search for the results" :
-                            "Fill the forms above to search for the trips"
-                          }
-                        </Box>
-                      </Typography>
-                    </Box>
-                  }
-                </List>
-              </Grid>
-              {tripType === TripType.RoundTrip &&
-                <>
-                  <Grid item>
-                    <Divider orientation='vertical' absolute className={classes.listsDivider} />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <List className={classes.list} subheader={<ListSubheader component="div">Return trips</ListSubheader>}>
-                      {departure?.id === departureId && destination?.id === destinationId && returnDateAsString === moment(returnDate).format('YYYY-MM-DD') ?
-                        (returnTripsToDisplay.length > 0 ? returnTripsToDisplay.map(trip => (
-                          <React.Fragment key={trip.id}>
-                            <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
-                              <Grid container direction='row'>
-                                <Grid item container alignItems='flex-end' justify='space-evenly'>
-                                  <Grid item>
-                                    <ListItemText primary={allLocations.find(location => location.id === trip.startLocationId)?.name} />
-                                  </Grid>
-                                  <Grid item>
-                                    <ArrowRightAltIcon />
-                                  </Grid>
-                                  <Grid item>
-                                    <ListItemText primary={allLocations.find(location => location.id === trip.endLocationId)?.name} />
-                                  </Grid>
+            <Box paddingBottom={2}>
+              <Grid item container className={classes.listsGrid}>
+                <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
+                  <List className={classes.list} subheader={<ListSubheader component="div">Departure trips</ListSubheader>}>
+                    {departure?.id === departureId && destination?.id === destinationId && departureDateAsString === moment(departureDate).format('YYYY-MM-DD') ?
+                      (tripsToDisplay.length > 0 ? tripsToDisplay.map(trip => (
+                        <React.Fragment key={trip.id}>
+                          <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
+                            <Grid container direction='row'>
+                              <Grid item container alignItems='flex-end' justify='space-evenly'>
+                                <Grid item>
+                                  <ListItemText primary={allLocations.find(location => location.id === trip.startLocationId)?.name} />
                                 </Grid>
                                 <Grid item>
-                                  <ListItemText secondary={`Date: ${trip.hour} - ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
+                                  <ArrowRightAltIcon />
+                                </Grid>
+                                <Grid item>
+                                  <ListItemText primary={allLocations.find(location => location.id === trip.endLocationId)?.name} />
                                 </Grid>
                               </Grid>
-                              <ListItemSecondaryAction>
-                                <Tooltip title='Add to cart'>
-                                  <IconButton edge="end" aria-label="add to cart">
-                                    <AddCircleIcon color='secondary' />
-                                  </IconButton>
-                                </Tooltip>
-                              </ListItemSecondaryAction>
-                            </ListItem>
-                          </React.Fragment>
-                        )) :
-                          <Box>
-                            <Typography variant='h5' align='center'>
-                              <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
-                                {returnDateAsString ?
-                                  returnDateAsString === moment(returnDate).format('YYYY-MM-DD') ?
-                                    `Sorry, no trips from ${destination.name} to ${departure.name} found on ${returnDateAsString}` :
-                                    "Press search to search for the results" :
-                                  "Press search to search for the results"
-                                }
-                              </Box>
-                            </Typography>
-                          </Box>
-                        ) :
+                              <Grid item>
+                                <ListItemText secondary={`Date: ${trip.hour} - ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
+                              </Grid>
+                            </Grid>
+                            <ListItemSecondaryAction>
+                              <Tooltip title='Add to cart'>
+                                <IconButton edge="end" aria-label="add to cart">
+                                  <AddCircleIcon color='secondary' />
+                                </IconButton>
+                              </Tooltip>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        </React.Fragment>
+                      )) :
                         <Box>
                           <Typography variant='h5' align='center'>
                             <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
-                              {departure && destination ?
-                                "Press search to search for the results" :
-                                "Fill the forms above to search for the trips"
+                              {departureDateAsString === moment(departureDate).format('YYYY-MM-DD') ?
+                                `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}` :
+                                "Press search to search for the results"
                               }
                             </Box>
                           </Typography>
                         </Box>
-                      }
-                    </List>
-                  </Grid>
-                </>
-              }
-            </Grid>
+                      ) :
+                      <Box>
+                        <Typography variant='h5' align='center'>
+                          <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
+                            {departure && destination ?
+                              "Press search to search for the results" :
+                              "Fill the forms above to search for the trips"
+                            }
+                          </Box>
+                        </Typography>
+                      </Box>
+                    }
+                  </List>
+                </Grid>
+                {tripType === TripType.RoundTrip &&
+                  <>
+                    <Grid item>
+                      <Divider orientation='vertical' absolute className={classes.listsDivider} />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <List className={classes.list} subheader={<ListSubheader component="div">Return trips</ListSubheader>}>
+                        {departure?.id === departureId && destination?.id === destinationId && returnDateAsString === moment(returnDate).format('YYYY-MM-DD') ?
+                          (returnTripsToDisplay.length > 0 ? returnTripsToDisplay.map(trip => (
+                            <React.Fragment key={trip.id}>
+                              <ListItem button className={isSmallScreen ? undefined : classes.listItem} key={trip.id} onClick={() => handleFullTripsListItemClick(trip)}>
+                                <Grid container direction='row'>
+                                  <Grid item container alignItems='flex-end' justify='space-evenly'>
+                                    <Grid item>
+                                      <ListItemText primary={allLocations.find(location => location.id === trip.startLocationId)?.name} />
+                                    </Grid>
+                                    <Grid item>
+                                      <ArrowRightAltIcon />
+                                    </Grid>
+                                    <Grid item>
+                                      <ListItemText primary={allLocations.find(location => location.id === trip.endLocationId)?.name} />
+                                    </Grid>
+                                  </Grid>
+                                  <Grid item>
+                                    <ListItemText secondary={`Date: ${trip.hour} - ${trip.date}, price: ${trip.price}$, seats left: ${trip.seatsLeft}, duration: ${trip.tripDuration}h`} />
+                                  </Grid>
+                                </Grid>
+                                <ListItemSecondaryAction>
+                                  <Tooltip title='Add to cart'>
+                                    <IconButton edge="end" aria-label="add to cart">
+                                      <AddCircleIcon color='secondary' />
+                                    </IconButton>
+                                  </Tooltip>
+                                </ListItemSecondaryAction>
+                              </ListItem>
+                            </React.Fragment>
+                          )) :
+                            <Box>
+                              <Typography variant='h5' align='center'>
+                                <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
+                                  {returnDateAsString ?
+                                    returnDateAsString === moment(returnDate).format('YYYY-MM-DD') ?
+                                      `Sorry, no trips from ${destination.name} to ${departure.name} found on ${returnDateAsString}` :
+                                      "Press search to search for the results" :
+                                    "Press search to search for the results"
+                                  }
+                                </Box>
+                              </Typography>
+                            </Box>
+                          ) :
+                          <Box>
+                            <Typography variant='h5' align='center'>
+                              <Box padding={isSmallScreen ? 2 : 8} color="text.disabled">
+                                {departure && destination ?
+                                  "Press search to search for the results" :
+                                  "Fill the forms above to search for the trips"
+                                }
+                              </Box>
+                            </Typography>
+                          </Box>
+                        }
+                      </List>
+                    </Grid>
+                  </>
+                }
+              </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Box>
