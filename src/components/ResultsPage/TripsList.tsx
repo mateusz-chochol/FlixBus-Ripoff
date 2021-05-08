@@ -59,7 +59,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
   const { showSuccess } = useNotifications();
   const [isReadyToRender, setIsReadyToRender] = useState<boolean>(false);
 
-  const handleFullTripsListItemClick = (trip: Trip) => {
+  const handleTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
   }
 
@@ -102,7 +102,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
             button
             className={isSmallScreen ? undefined : classes.listItem}
             key={trip.id}
-            onClick={() => handleFullTripsListItemClick(trip)}
+            onClick={() => handleTripsListItemClick(trip)}
           >
             <Grid container direction='row'>
               <Grid
