@@ -47,7 +47,7 @@ export const getTripsByDepartureIdAndDateAsync = createAsyncThunk<
     return {
       lastDepartureId: departureId,
       lastDepartureDate: moment(departureDate).format('YYYY-MM-DD'),
-      list: await api.getTripsByDepartureIdAndDate(departureId, departureDate)
+      list: await api.getTripsByDepartureIdAndDate(departureId, moment(departureDate).format('YYYY-MM-DD'))
     }
   }
 );
@@ -77,7 +77,7 @@ export const getTripsByDepartureAndDestinationIdsAndDateAsync = createAsyncThunk
         lastDepartureId: 0,
         lastDestinationId: 0,
         lastDepartureDate: moment().format('YYYY-MM-DD'),
-        list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate)
+        list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, moment(departureDate).format('YYYY-MM-DD'))
       }
     }
 
@@ -85,7 +85,7 @@ export const getTripsByDepartureAndDestinationIdsAndDateAsync = createAsyncThunk
       lastDepartureId: departureId,
       lastDestinationId: destinationId,
       lastDepartureDate: moment(departureDate).format('YYYY-MM-DD'),
-      list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate)
+      list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, moment(departureDate).format('YYYY-MM-DD'))
     }
   }
 );
@@ -96,7 +96,7 @@ export const getReturnTripsByReturnDateAsync = createAsyncThunk<
 >(
   'trips/getReturnTripsByReturnDateAsync',
   async ({ departureId, destinationId, returnDate }) => {
-    return await api.getTripsByDepartureAndDestinationIdsAndDate(destinationId, departureId, returnDate)
+    return await api.getTripsByDepartureAndDestinationIdsAndDate(destinationId, departureId, moment(returnDate).format('YYYY-MM-DD'))
   }
 );
 
