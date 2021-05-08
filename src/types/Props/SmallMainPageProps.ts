@@ -10,8 +10,6 @@ export default interface SmallMainPageProps {
   setDepartureDate: (value: React.SetStateAction<Date | null>) => void,
   returnDate: Date | null,
   setReturnDate: (value: React.SetStateAction<Date | null>) => void,
-  numberOfPassengers?: number,
-  setNumberOfPassengers: (value: React.SetStateAction<number | undefined>) => void,
   tripType: TripType,
   setTripType: (value: React.SetStateAction<TripType>) => void,
   departureLocations: Location[],

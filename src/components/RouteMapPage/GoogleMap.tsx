@@ -36,7 +36,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   destination,
   setDestination,
   locationsForMap,
-  basicTrips,
+  trips,
   isValidTripSelected,
   isSmallScreen,
   navBarHeight,
@@ -124,10 +124,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       return true;
     }
     if (departure) {
-      return basicTrips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === location.id) !== undefined;
-    }
-    if (destination && !departure) {
-      return basicTrips.find(trip => trip.startLocationId === location.id && trip.endLocationId === destination.id) !== undefined;
+      return trips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === location.id) !== undefined;
     }
   }
 

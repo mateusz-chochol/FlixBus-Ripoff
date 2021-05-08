@@ -16,13 +16,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import { routes } from 'routes';
 import {
-  getBasicTrips,
-  getBasicTripsFromDepartureIdAsync,
-} from 'redux/BasicTripsSlice';
-import {
   getAllLocations,
-  getLocationsForDepartureTextField,
-  getLocationsForDestinationTextField,
   getLocationsForMap,
   getLocationsByIdArrayAsync,
 } from 'redux/LocationsSlice';
@@ -30,56 +24,60 @@ import {
   getTrips,
   getLastDepartureId,
   getLastDestinationId,
-  getTripsByDepartureAndDestinationIdsAsync,
-  setLastDepartureIdActionCreator,
-  setLastDestinationIdActionCreator,
+  getLastDepartureDate,
+  getTripsByDepartureIdAndDateAsync,
+  getTripsByDepartureAndDestinationIdsAndDateAsync,
 } from 'redux/TripsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import Location from 'types/Objects/Location';
 import GoogleMap from './GoogleMap';
 import RouteMapDrawer from './RouteMapDrawer';
 import FooterMenu from './FooterMenu';
-import BasicTrip from 'types/Objects/BasicTrip';
 import Trip from 'types/Objects/Trip';
+import moment from 'moment';
 
 const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const dispatch = useDispatch();
   const history = useHistory();
   const allLocations = useSelector(getAllLocations);
-  const departureLocationsForTextFields = useSelector(getLocationsForDepartureTextField);
-  const destinationLocationsForTextFields = useSelector(getLocationsForDestinationTextField);
   const locationsForMap = useSelector(getLocationsForMap);
-  const basicTrips = useSelector(getBasicTrips).trips;
   const trips = useSelector(getTrips);
   const lastDepartureId = useSelector(getLastDepartureId);
   const lastDestinationId = useSelector(getLastDestinationId);
+  const lastDepartureDate = useSelector(getLastDepartureDate);
   const notificationsFunctionsRef = useRef(useNotifications());
   const { showInfo } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
+  const [departureDate, setDepartureDate] = useState<Date | null>(moment().toDate());
+  const [tripsDestinations, setTripsDestinations] = useState<Trip[]>([]);
   const navBarHeight = '75px';
   const footerMenuHeight = '200px';
 
-  const handleBasicTripsListItemClick = (trip: BasicTrip) => {
-    setDestination(allLocations.find(location => location.id === trip.endLocationId));
+  const handleTripsSummariesListItemClick = (endLocationId: number) => {
+    setDestination(allLocations.find(location => location.id === endLocationId));
   }
 
   const handleFullTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
   }
 
+  const areDatesTheSame = (first: Date, second: Date) => {
+    if (first.getFullYear() === second.getFullYear() && first.getMonth() === second.getMonth() && first.getDay() === second.getDay()) {
+      return true;
+    }
+
+    return false;
+  }
+
   useEffect(() => {
     setIsValidTripSelected(false);
 
-    if (departure && destination) {
-      if (lastDepartureId !== departure.id || lastDestinationId !== destination.id) {
-        dispatch(getTripsByDepartureAndDestinationIdsAsync({ departureId: departure.id, destinationId: destination.id }));
-      }
-
-      if (lastDepartureId !== departure.id) {
-        dispatch(getBasicTripsFromDepartureIdAsync(departure.id));
+    if (departure && destination && departureDate) {
+      if (lastDepartureId !== departure.id || lastDestinationId !== destination.id || !areDatesTheSame(departureDate, lastDepartureDate)) {
+        dispatch(getTripsByDepartureAndDestinationIdsAndDateAsync({ departureId: departure.id, destinationId: destination.id, departureDate: departureDate }));
       }
 
       if (trips.find(trip => trip.startLocationId === departure.id && trip.endLocationId === destination.id) !== undefined) {
@@ -89,25 +87,26 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     else if (destination && !departure) {
       setDestination(undefined);
     }
-    else if (departure) {
-      if (lastDepartureId !== departure.id) {
-        dispatch(getBasicTripsFromDepartureIdAsync(departure.id));
-        dispatch(setLastDepartureIdActionCreator(departure.id));
-      }
-
-      if (lastDestinationId !== 0) {
-        dispatch(setLastDestinationIdActionCreator(0));
+    else if (departure && departureDate) {
+      if (lastDepartureId !== departure.id || !areDatesTheSame(departureDate, lastDepartureDate)) {
+        dispatch(getTripsByDepartureIdAndDateAsync({ departureId: departure.id, departureDate: departureDate }));
       }
     }
-  }, [departure, destination, showInfo, dispatch, trips, lastDepartureId, lastDestinationId]);
+  }, [departure, destination, departureDate, showInfo, dispatch, trips, lastDepartureId, lastDestinationId, lastDepartureDate]);
 
   useEffect(() => {
-    const ids = basicTrips.map(trip => trip.endLocationId);
+    const ids = trips.map(trip => trip.endLocationId);
 
     if (ids.length > 0) {
       dispatch(getLocationsByIdArrayAsync(ids));
     }
-  }, [basicTrips, dispatch]);
+  }, [trips, dispatch]);
+
+  useEffect(() => {
+    if (departure) {
+      setTripsDestinations(trips.filter(trip => trip.startLocationId === departure.id));
+    }
+  }, [departure, trips])
 
   return (
     <Box
@@ -124,12 +123,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           setDeparture={setDeparture}
           destination={destination}
           setDestination={setDestination}
-          basicTrips={basicTrips}
+          departureDate={departureDate}
+          setDepartureDate={setDepartureDate}
+          tripsDestinations={tripsDestinations}
           trips={trips}
           allLocations={allLocations}
-          departureLocationsForTextFields={departureLocationsForTextFields}
-          destinationLocationsForTextFields={destinationLocationsForTextFields}
-          handleBasicTripsListItemClick={handleBasicTripsListItemClick}
+          handleTripsSummariesListItemClick={handleTripsSummariesListItemClick}
           handleFullTripsListItemClick={handleFullTripsListItemClick}
         />
       </Hidden>
@@ -139,7 +138,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         destination={destination}
         setDestination={setDestination}
         locationsForMap={locationsForMap}
-        basicTrips={basicTrips}
+        trips={tripsDestinations}
         isValidTripSelected={isValidTripSelected}
         isSmallScreen={isSmallScreen}
         navBarHeight={navBarHeight}
@@ -151,14 +150,11 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           setDeparture={setDeparture}
           destination={destination}
           setDestination={setDestination}
-          basicTrips={basicTrips}
-          trips={trips}
+          departureDate={departureDate}
+          setDepartureDate={setDepartureDate}
           allLocations={allLocations}
-          departureLocationsForTextFields={departureLocationsForTextFields}
-          destinationLocationsForTextFields={departureLocationsForTextFields}
+          trips={tripsDestinations}
           footerMenuHeight={footerMenuHeight}
-          handleBasicTripsListItemClick={handleBasicTripsListItemClick}
-          handleFullTripsListItemClick={handleFullTripsListItemClick}
         />
       </Hidden>
     </Box>

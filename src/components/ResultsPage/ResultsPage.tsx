@@ -110,7 +110,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<TripType>(returnDateAsString ? TripType.RoundTrip : TripType.OneWay);
-  const [numberOfPassengers, setNumberOfPassengers] = useState<number | undefined>(1);
   const [departureDate, setDepartureDate] = useState<Date | null>(moment(departureDateAsString).isSameOrAfter(moment()) ?
     moment.utc(departureDateAsString).toDate() :
     moment().toDate()
@@ -136,7 +135,12 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   useEffect(() => {
     if (!isNaN(departureId) && !isNaN(destinationId)) {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
-      dispatch(getTripsByDepartureAndDestinationIdsAndDateAsync({ departureId: departureId, destinationId: destinationId, departureDate: moment.utc(departureDateAsString).toDate() }))
+      dispatch(getTripsByDepartureAndDestinationIdsAndDateAsync({
+        departureId: departureId,
+        destinationId: destinationId,
+        departureDate: moment.utc(departureDateAsString).toDate(),
+        shouldZeroLastProperties: true,
+      }))
 
       if (returnDateAsString) {
         dispatch(getReturnTripsByReturnDateAsync({ departureId: departureId, destinationId: destinationId, returnDate: moment.utc(returnDateAsString).toDate() }))
@@ -294,8 +298,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                       setDepartureDate={setDepartureDate}
                       returnDate={returnDate}
                       setReturnDate={setReturnDate}
-                      numberOfPassengers={numberOfPassengers}
-                      setNumberOfPassengers={setNumberOfPassengers}
                       tripType={tripType}
                       setTripType={setTripType}
                       departureLocations={departureLocations}
@@ -315,8 +317,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                       setDepartureDate={setDepartureDate}
                       returnDate={returnDate}
                       setReturnDate={setReturnDate}
-                      numberOfPassengers={numberOfPassengers}
-                      setNumberOfPassengers={setNumberOfPassengers}
                       tripType={tripType}
                       setTripType={setTripType}
                       departureLocations={departureLocations}

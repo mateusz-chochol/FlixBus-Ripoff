@@ -1,5 +1,4 @@
 import Location from 'types/Objects/Location';
-import BasicTrip from 'types/Objects/BasicTrip';
 import Trip from 'types/Objects/Trip';
 
 export default interface RouteMapDrawerProps {
@@ -7,11 +6,11 @@ export default interface RouteMapDrawerProps {
   setDeparture: (value: React.SetStateAction<Location | undefined>) => void,
   destination?: Location,
   setDestination: (value: React.SetStateAction<Location | undefined>) => void,
-  basicTrips: BasicTrip[],
+  departureDate: Date | null,
+  setDepartureDate: (value: React.SetStateAction<Date | null>) => void,
+  tripsDestinations: Trip[],
   trips: Trip[],
   allLocations: Location[],
-  departureLocationsForTextFields: Location[],
-  destinationLocationsForTextFields: Location[],
-  handleBasicTripsListItemClick: (trip: BasicTrip) => void,
+  handleTripsSummariesListItemClick: (endLocationId: number) => void,
   handleFullTripsListItemClick: (trip: Trip) => void,
 }

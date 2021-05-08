@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {
+  useState,
+  useRef,
+} from 'react';
 import {
   Box,
   Grid,
-  Divider,
   Paper,
 } from '@material-ui/core';
+import { DatePicker } from '@material-ui/pickers';
 import {
   getDepartureLocationsBySubstringAsync,
   getDestinationLocationsBySubstringAsync,
 } from 'redux/LocationsSlice';
+import { useNotifications } from 'components/Misc/Notifications';
 import SearchButton from 'components/Misc/SearchButton';
 import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
@@ -17,8 +21,8 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import TripsList from './TripsList';
 import FooterMenuProps from 'types/Props/FooterMenuProps';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,34 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       paddingTop: 4,
     },
-    smallList: {
-      overflow: 'auto',
-      backgroundColor: theme.palette.background.paper,
-      '&::-webkit-scrollbar': {
-        height: '1em'
-      },
-      '&::-webkit-scrollbar-track': {
-        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-      },
-      '&::-webkit-scrollbar-thumb': {
-        backgroundColor: 'rgba(0,0,0,.2)',
-      },
-      display: 'flex',
-      flexDirection: 'row',
-      height: '100%',
-      paddingBottom: 0,
-      paddingTop: 0,
-    },
-    smallListItem: {
-      minWidth: '220px',
-      minHeight: '80px',
-      overflow: 'hidden'
-    },
-    divider: {
-      width: '100%',
-      height: '1px',
-      alignSelf: 'flex-end'
-    }
   }),
 );
 
@@ -70,16 +46,25 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
   setDeparture,
   destination,
   setDestination,
-  basicTrips,
-  trips,
+  departureDate,
+  setDepartureDate,
   allLocations,
-  departureLocationsForTextFields,
-  destinationLocationsForTextFields,
   footerMenuHeight,
-  handleBasicTripsListItemClick,
-  handleFullTripsListItemClick,
 }) => {
   const classes = useStyles();
+  const notificationsFunctionsRef = useRef(useNotifications());
+  const { showInfo } = notificationsFunctionsRef.current;
+  const [isDepartureDateWindowOpen, setIsDepartureDateWindowOpen] = useState<boolean>(false);
+
+  const handleDepartureDateChange = (date: Date | null) => {
+    if (moment(date).isBefore(moment(), 'day')) {
+      setIsDepartureDateWindowOpen(false);
+      showInfo('Departure date cannot be from the past');
+    }
+    else {
+      setDepartureDate(date);
+    }
+  }
 
   return (
     <Box width='100vw' height={footerMenuHeight}>
@@ -98,10 +83,10 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
             justify='center'
             xs={12}
           >
-            <Grid item xs={4}>
+            <Grid item xs={5}>
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <TripPlaceForm
-                  locations={departureLocationsForTextFields}
+                  locations={allLocations}
                   place={departure}
                   setPlace={setDeparture}
                   toDispatch={getDepartureLocationsBySubstringAsync}
@@ -111,22 +96,10 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                 />
               </Box>
             </Grid>
-            <Grid item xs={1}>
-              <Box display='flex' justifyContent='center' alignItems='center'>
-                <SwitchLocationsButton
-                  departure={departure}
-                  setDeparture={setDeparture}
-                  destination={destination}
-                  setDestination={setDestination}
-                  fontSize='large'
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={5}>
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <TripPlaceForm
-                  locations={destinationLocationsForTextFields}
-                  trips={basicTrips}
+                  locations={allLocations}
                   place={destination}
                   setPlace={setDestination}
                   toDispatch={getDestinationLocationsBySubstringAsync}
@@ -137,36 +110,52 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                 />
               </Box>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={2}>
               <Box display='flex' justifyContent='center' alignItems='center'>
-                <SearchButton departure={departure} destination={destination} />
+                <SwitchLocationsButton
+                  departure={departure}
+                  setDeparture={setDeparture}
+                  destination={destination}
+                  setDestination={setDestination}
+                  fontSize='large'
+                />
               </Box>
             </Grid>
-            <Divider className={classes.divider} />
           </Grid>
-          <Grid item container xs={12} justify='center'>
-            <Box height='100%' width='100%'>
-              <TripsList
-                departure={departure}
-                destination={destination}
-                locations={allLocations}
-                basicTrips={basicTrips}
-                trips={trips}
-                isSmallScreen={true}
-                listClassName={classes.smallList}
-                listItemClassName={classes.smallListItem}
-                typographyProps={{
-                  variant: 'subtitle1',
-                  align: 'center',
-                }}
-                messageBoxProps={{
-                  height: '100%',
-                  width: '100%',
-                }}
-                handleBasicTripsListItemClick={handleBasicTripsListItemClick}
-                handleFullTripsListItemClick={handleFullTripsListItemClick}
-              />
-            </Box>
+          <Grid
+            item
+            container
+            xs={12}
+            spacing={2}
+            className={classes.formsGrid}
+          >
+            <Grid item xs={10}>
+              <Box display='flex' justifyContent='center' alignItems='center'>
+                <DatePicker
+                  label="Departure"
+                  value={departureDate}
+                  onChange={(date: Date | null) => handleDepartureDateChange(date)}
+                  color='secondary'
+                  inputVariant="outlined"
+                  open={isDepartureDateWindowOpen}
+                  onOpen={() => setIsDepartureDateWindowOpen(true)}
+                  onClose={() => setIsDepartureDateWindowOpen(false)}
+                  fullWidth
+                  inputProps={{
+                    "aria-label": 'departure date'
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Box display='flex' justifyContent='center' alignItems='center'>
+                <SearchButton
+                  departure={departure}
+                  destination={destination}
+                  departureDate={departureDate}
+                />
+              </Box>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>

@@ -6,10 +6,12 @@ import {
 import Trip from 'types/Objects/Trip';
 import { AppState } from './RootReducer';
 import * as api from 'api/TripsApi';
+import moment from 'moment';
 
 interface TripSliceState {
   lastDepartureId: number,
   lastDestinationId: number,
+  lastDepartureDate: string | null
   list: Trip[],
   returnList: Trip[],
 }
@@ -17,6 +19,7 @@ interface TripSliceState {
 const tripsInitialState: TripSliceState = {
   lastDepartureId: 0,
   lastDestinationId: 0,
+  lastDepartureDate: null,
   list: [],
   returnList: [],
 };
@@ -34,15 +37,16 @@ export const getTripsByDepartureIdAsync = createAsyncThunk<
   }
 );
 
-export const getTripsByDestinationIdAsync = createAsyncThunk<
-  { list: Trip[], lastDestinationId: number },
-  number
+export const getTripsByDepartureIdAndDateAsync = createAsyncThunk<
+  { list: Trip[], lastDepartureId: number, lastDepartureDate: Date },
+  { departureId: number, departureDate: Date }
 >(
-  'trips/getTripsByDestinationIdAsync',
-  async (id) => {
+  'trips/getTripsByDepartureIdAndDateAsync',
+  async ({ departureId, departureDate }) => {
     return {
-      lastDestinationId: id,
-      list: await api.getTripsByDestinationId(id)
+      lastDepartureId: departureId,
+      lastDepartureDate: departureDate,
+      list: await api.getTripsByDepartureAndDateId(departureId, departureDate)
     }
   }
 );
@@ -62,12 +66,26 @@ export const getTripsByDepartureAndDestinationIdsAsync = createAsyncThunk<
 );
 
 export const getTripsByDepartureAndDestinationIdsAndDateAsync = createAsyncThunk<
-  Trip[],
-  { departureId: number, destinationId: number, departureDate: Date }
+  { list: Trip[], lastDepartureId: number, lastDestinationId: number, lastDepartureDate: Date },
+  { departureId: number, destinationId: number, departureDate: Date, shouldZeroLastProperties?: boolean }
 >(
   'trips/getTripsByDepartureAndDestinationIdsAndDateAsync',
-  async ({ departureId, destinationId, departureDate }) => {
-    return await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate);
+  async ({ departureId, destinationId, departureDate, shouldZeroLastProperties }) => {
+    if (shouldZeroLastProperties) {
+      return {
+        lastDepartureId: 0,
+        lastDestinationId: 0,
+        lastDepartureDate: new Date(),
+        list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate)
+      }
+    }
+
+    return {
+      lastDepartureId: departureId,
+      lastDestinationId: destinationId,
+      lastDepartureDate: departureDate,
+      list: await api.getTripsByDepartureAndDestinationIdsAndDate(departureId, destinationId, departureDate)
+    }
   }
 );
 
@@ -114,11 +132,12 @@ const tripsSlice = createSlice({
           list: action.payload.list
         }
       })
-      .addCase(getTripsByDestinationIdAsync.fulfilled, (state, action) => {
+      .addCase(getTripsByDepartureIdAndDateAsync.fulfilled, (state, action) => {
         return {
           ...state,
-          lastDepartureId: 0,
-          lastDestinationId: action.payload.lastDestinationId,
+          lastDepartureId: action.payload.lastDepartureId,
+          lastDestinationId: 0,
+          lastDepartureDate: moment(action.payload.lastDepartureDate).format('YYYY-MM-DD'),
           list: action.payload.list
         }
       })
@@ -133,9 +152,10 @@ const tripsSlice = createSlice({
       .addCase(getTripsByDepartureAndDestinationIdsAndDateAsync.fulfilled, (state, action) => {
         return {
           ...state,
-          lastDepartureId: 0,
-          lastDestinationId: 0,
-          list: action.payload
+          lastDepartureId: action.payload.lastDepartureId,
+          lastDestinationId: action.payload.lastDestinationId,
+          lastDepartureDate: moment(action.payload.lastDepartureDate).format('YYYY-MM-DD'),
+          list: action.payload.list
         }
       })
       .addCase(getReturnTripsByReturnDateAsync.fulfilled, (state, action) => {
@@ -151,6 +171,7 @@ export const getTrips = (state: AppState) => state.trips.list;
 export const getReturnTrips = (state: AppState) => state.trips.returnList;
 export const getLastDepartureId = (state: AppState) => state.trips.lastDepartureId;
 export const getLastDestinationId = (state: AppState) => state.trips.lastDestinationId;
+export const getLastDepartureDate = (state: AppState) => moment(state.trips.lastDepartureDate).toDate();
 
 export const {
   setLastDepartureId: setLastDepartureIdActionCreator,

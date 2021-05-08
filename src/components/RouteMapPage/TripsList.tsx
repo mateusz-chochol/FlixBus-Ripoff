@@ -6,14 +6,14 @@ import {
   ListSubheader,
 } from '@material-ui/core';
 import MapTripsListProps from 'types/Props/MapTripsListProps';
-import BasicTripsList from './BasicTripsList';
+import TripsSummariesList from './TripsSummariesList';
 import FullTripsList from './FullTripsList';
 
 const TripsList: React.FC<MapTripsListProps> = ({
   departure,
   destination,
   locations,
-  basicTrips,
+  tripsDestinations,
   trips,
   isSmallScreen,
   listClassName,
@@ -21,7 +21,7 @@ const TripsList: React.FC<MapTripsListProps> = ({
   listSubheader,
   typographyProps,
   messageBoxProps,
-  handleBasicTripsListItemClick,
+  handleTripsSummariesListItemClick,
   handleFullTripsListItemClick,
 }) => {
   return (
@@ -37,14 +37,15 @@ const TripsList: React.FC<MapTripsListProps> = ({
             messageBoxProps={messageBoxProps}
             handleFullTripsListItemClick={handleFullTripsListItemClick}
           /> :
-          <BasicTripsList
+          <TripsSummariesList
+            departure={departure}
             locations={locations}
-            basicTrips={basicTrips}
+            tripsDestinations={tripsDestinations}
             isSmallScreen={isSmallScreen}
             listItemClassName={listItemClassName}
             typographyProps={typographyProps}
             messageBoxProps={messageBoxProps}
-            handleBasicTripsListItemClick={handleBasicTripsListItemClick}
+            handleTripsSummariesListItemClick={handleTripsSummariesListItemClick}
           />
         ) :
         <Box {...messageBoxProps}>

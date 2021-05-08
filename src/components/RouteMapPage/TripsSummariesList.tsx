@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import {
   Box,
   ListItem,
@@ -13,7 +16,7 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import BasicTripsProps from 'types/Props/BasicTripsProps'
+import TripsSummariesListProps from 'types/Props/TripsSummariesListProps'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,36 +28,58 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const BasicTripsList: React.FC<BasicTripsProps> = ({
+interface TripCount {
+  endLocationId: number,
+  count: number,
+}
+
+const TripsSummariesList: React.FC<TripsSummariesListProps> = ({
+  departure,
   locations,
-  basicTrips,
+  tripsDestinations,
   isSmallScreen,
   listItemClassName,
   typographyProps,
   messageBoxProps,
-  handleBasicTripsListItemClick
+  handleTripsSummariesListItemClick
 }) => {
   const classes = useStyles();
+  const [tripsSummary, setTripsSummary] = useState<TripCount[]>([]);
+
+  useEffect(() => {
+    const endLocationsIds = tripsDestinations.map(trip => trip.endLocationId)
+
+    const uniqueEndLocationsIds = Array.from(new Set(endLocationsIds));
+
+    let summaries = uniqueEndLocationsIds.map(endLocationId => {
+      return {
+        endLocationId: endLocationId,
+        count: endLocationsIds.filter(id => id === endLocationId).length,
+      }
+    })
+
+    setTripsSummary(summaries)
+  }, [tripsDestinations])
 
   return (
     <>
-      {basicTrips.length > 0 ? basicTrips.map(trip => (
-        <React.Fragment key={trip.id}>
+      {tripsSummary.length > 0 ? tripsSummary.map(summary => (
+        <React.Fragment key={summary.endLocationId}>
           <Divider orientation="vertical" flexItem />
-          <ListItem button key={trip.id} className={listItemClassName} onClick={() => handleBasicTripsListItemClick(trip)}>
+          <ListItem button key={summary.endLocationId} className={listItemClassName} onClick={() => handleTripsSummariesListItemClick(summary.endLocationId)}>
             <Grid container className={classes.grid} direction='row'>
               <Grid item container className={classes.grid} alignItems='flex-end' justify={isSmallScreen ? 'space-evenly' : 'space-between'}>
                 <Grid item xs={isSmallScreen ? undefined : 4}>
-                  <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                  <ListItemText primary={departure?.name} />
                 </Grid>
                 <Grid item xs={2}>
                   <ArrowRightAltIcon />
                 </Grid>
                 <Grid item xs={isSmallScreen ? undefined : 4}>
-                  <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                  <ListItemText primary={locations.find(location => location.id === summary.endLocationId)?.name} />
                 </Grid>
                 <Grid item>
-                  <ListItemText secondary={`Available trips: ${trip.tripCount}`} />
+                  <ListItemText secondary={`Available trips: ${summary.count}`} />
                 </Grid>
               </Grid>
             </Grid>
@@ -71,4 +96,4 @@ const BasicTripsList: React.FC<BasicTripsProps> = ({
   )
 }
 
-export default BasicTripsList;
+export default TripsSummariesList;

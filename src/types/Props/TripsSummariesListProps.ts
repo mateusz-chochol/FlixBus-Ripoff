@@ -1,16 +1,17 @@
 import Location from 'types/Objects/Location';
-import BasicTrip from 'types/Objects/BasicTrip';
+import Trip from 'types/Objects/Trip';
 import {
   TypographyProps,
   BoxProps,
 } from '@material-ui/core';
 
-export default interface BasicTripsProps {
+export default interface TripsSummariesListProps {
+  departure?: Location,
   locations: Location[],
-  basicTrips: BasicTrip[],
+  tripsDestinations: Trip[],
   isSmallScreen: boolean,
   listItemClassName?: string,
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps,
-  handleBasicTripsListItemClick: (trip: BasicTrip) => void,
+  handleTripsSummariesListItemClick: (endLocationId: number) => void,
 }

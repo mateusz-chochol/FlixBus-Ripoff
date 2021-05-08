@@ -14,8 +14,6 @@ const SmallMainPage: React.FC<SmallMainPageProps> = ({
   setReturnDate,
   tripType,
   setTripType,
-  numberOfPassengers,
-  setNumberOfPassengers,
   departureLocations,
   destinationLocations,
 }) => {
@@ -36,8 +34,6 @@ const SmallMainPage: React.FC<SmallMainPageProps> = ({
         setDepartureDate={setDepartureDate}
         returnDate={returnDate}
         setReturnDate={setReturnDate}
-        numberOfPassengers={numberOfPassengers}
-        setNumberOfPassengers={setNumberOfPassengers}
         tripType={tripType}
         setTripType={setTripType}
         departureLocations={departureLocations}

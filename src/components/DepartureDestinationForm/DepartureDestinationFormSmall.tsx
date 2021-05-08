@@ -44,8 +44,6 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
   setReturnDate,
   tripType,
   setTripType,
-  numberOfPassengers,
-  setNumberOfPassengers,
   departureLocations,
   destinationLocations,
   fullWidth,

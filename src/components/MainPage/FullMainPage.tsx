@@ -17,8 +17,6 @@ const FullMainPage: React.FC<FullMainPageProps> = ({
   setReturnDate,
   tripType,
   setTripType,
-  numberOfPassengers,
-  setNumberOfPassengers,
   departureLocations,
   destinationLocations,
 }) => {
@@ -40,8 +38,6 @@ const FullMainPage: React.FC<FullMainPageProps> = ({
         setDepartureDate={setDepartureDate}
         returnDate={returnDate}
         setReturnDate={setReturnDate}
-        numberOfPassengers={numberOfPassengers}
-        setNumberOfPassengers={setNumberOfPassengers}
         tripType={tripType}
         setTripType={setTripType}
         departureLocations={departureLocations}

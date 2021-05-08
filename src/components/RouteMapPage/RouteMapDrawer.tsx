@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useState,
+  useRef,
+} from 'react';
 import {
   Box,
   Drawer,
@@ -6,10 +9,12 @@ import {
   Grid,
   Divider,
 } from '@material-ui/core';
+import { DatePicker } from '@material-ui/pickers';
 import {
   getDepartureLocationsBySubstringAsync,
   getDestinationLocationsBySubstringAsync,
 } from 'redux/LocationsSlice';
+import { useNotifications } from 'components/Misc/Notifications';
 import SearchButton from 'components/Misc/SearchButton';
 import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
@@ -20,6 +25,7 @@ import {
 } from '@material-ui/core/styles';
 import TripsList from './TripsList';
 import RouteMapDrawerProps from 'types/Props/RouteMapDrawerProps';
+import moment from 'moment';
 
 const drawerWidth = 260;
 
@@ -61,15 +67,28 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
   setDeparture,
   destination,
   setDestination,
-  basicTrips,
+  departureDate,
+  setDepartureDate,
+  tripsDestinations,
   trips,
   allLocations,
-  departureLocationsForTextFields,
-  destinationLocationsForTextFields,
-  handleBasicTripsListItemClick,
+  handleTripsSummariesListItemClick,
   handleFullTripsListItemClick,
 }) => {
   const classes = useStyles();
+  const notificationsFunctionsRef = useRef(useNotifications());
+  const { showInfo } = notificationsFunctionsRef.current;
+  const [isDepartureDateWindowOpen, setIsDepartureDateWindowOpen] = useState<boolean>(false);
+
+  const handleDepartureDateChange = (date: Date | null) => {
+    if (moment(date).isBefore(moment(), 'day')) {
+      setIsDepartureDateWindowOpen(false);
+      showInfo('Departure date cannot be from the past');
+    }
+    else {
+      setDepartureDate(date);
+    }
+  }
 
   return (
     <Drawer
@@ -93,7 +112,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
         <Grid item>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <TripPlaceForm
-              locations={departureLocationsForTextFields}
+              locations={allLocations}
               place={departure}
               setPlace={setDeparture}
               toDispatch={getDepartureLocationsBySubstringAsync}
@@ -106,8 +125,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
         <Grid item>
           <Box display='flex' justifyContent='center' alignItems='center'>
             <TripPlaceForm
-              locations={destinationLocationsForTextFields}
-              trips={basicTrips}
+              locations={allLocations}
               place={destination}
               setPlace={setDestination}
               toDispatch={getDestinationLocationsBySubstringAsync}
@@ -115,6 +133,24 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
               label="To"
               placeholder="Finish in..."
               disableClearable={false}
+            />
+          </Box>
+        </Grid>
+        <Grid item>
+          <Box display='flex' justifyContent='center' alignItems='center'>
+            <DatePicker
+              label="Departure"
+              value={departureDate}
+              onChange={(date: Date | null) => handleDepartureDateChange(date)}
+              color='secondary'
+              inputVariant="outlined"
+              open={isDepartureDateWindowOpen}
+              onOpen={() => setIsDepartureDateWindowOpen(true)}
+              onClose={() => setIsDepartureDateWindowOpen(false)}
+              fullWidth
+              inputProps={{
+                "aria-label": 'departure date'
+              }}
             />
           </Box>
         </Grid>
@@ -137,7 +173,11 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
           </Grid>
           <Grid item xs={6}>
             <Box display='flex' justifyContent='flex-start' alignItems='center'>
-              <SearchButton departure={departure} destination={destination} />
+              <SearchButton
+                departure={departure}
+                destination={destination}
+                departureDate={departureDate}
+              />
             </Box>
           </Grid>
         </Grid>
@@ -149,7 +189,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
         departure={departure}
         destination={destination}
         locations={allLocations}
-        basicTrips={basicTrips}
+        tripsDestinations={tripsDestinations}
         trips={trips}
         isSmallScreen={false}
         listClassName={classes.list}
@@ -159,7 +199,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
         messageBoxProps={{
           height: '100%',
         }}
-        handleBasicTripsListItemClick={handleBasicTripsListItemClick}
+        handleTripsSummariesListItemClick={handleTripsSummariesListItemClick}
         handleFullTripsListItemClick={handleFullTripsListItemClick}
       />
     </Drawer>

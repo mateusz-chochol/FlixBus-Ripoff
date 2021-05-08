@@ -1,4 +1,3 @@
-import BasicTrip from 'types/Objects/BasicTrip';
 import Trip from 'types/Objects/Trip';
 import Location from 'types/Objects/Location';
 import {
@@ -10,7 +9,7 @@ export default interface MapTripsListProps {
   departure?: Location,
   destination?: Location,
   locations: Location[],
-  basicTrips: BasicTrip[],
+  tripsDestinations: Trip[],
   trips: Trip[],
   isSmallScreen: boolean,
   listClassName?: string,
@@ -18,6 +17,6 @@ export default interface MapTripsListProps {
   listSubheader?: string,
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps,
-  handleBasicTripsListItemClick: (trip: BasicTrip) => void,
+  handleTripsSummariesListItemClick: (endLocationId: number) => void,
   handleFullTripsListItemClick: (trip: Trip) => void,
 }

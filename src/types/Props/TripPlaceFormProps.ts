@@ -1,9 +1,9 @@
 import Location from 'types/Objects/Location';
-import BasicTrip from 'types/Objects/BasicTrip';
+import Trip from 'types/Objects/Trip';
 
 export default interface TripPlaceFormProps {
   locations: Location[],
-  trips?: BasicTrip[],
+  trips?: Trip[],
   place: Location | undefined,
   setPlace: React.Dispatch<React.SetStateAction<Location | undefined>>,
   toDispatch: (value: string) => void,
