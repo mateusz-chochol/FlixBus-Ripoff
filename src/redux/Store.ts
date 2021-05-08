@@ -1,11 +1,11 @@
 import { configureStore, Middleware } from '@reduxjs/toolkit';
 import rootReducer from './RootReducer';
 import LoggingMiddleware from './LoggingMiddleware';
-import config from 'config.json'
+import reduxConfig from 'reduxConfig.json'
 
 let middlewares: Middleware[] = [];
 
-if (config.logRedux) {
+if (reduxConfig.logRedux) {
   middlewares.push(LoggingMiddleware);
 }
 

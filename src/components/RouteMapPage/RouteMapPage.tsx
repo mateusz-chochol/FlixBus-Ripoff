@@ -88,7 +88,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       setDestination(undefined);
     }
     else if (departure && departureDate) {
-      if (lastDepartureId !== departure.id || !areDatesTheSame(departureDate, lastDepartureDate)) {
+      if (lastDepartureId !== departure.id || !areDatesTheSame(departureDate, lastDepartureDate) || lastDestinationId) {
         dispatch(getTripsByDepartureIdAndDateAsync({ departureId: departure.id, departureDate: departureDate }));
       }
     }
@@ -103,10 +103,10 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }, [trips, dispatch]);
 
   useEffect(() => {
-    if (departure) {
+    if (departure && !destination) {
       setTripsDestinations(trips.filter(trip => trip.startLocationId === departure.id));
     }
-  }, [departure, trips])
+  }, [departure, destination, trips])
 
   return (
     <Box
