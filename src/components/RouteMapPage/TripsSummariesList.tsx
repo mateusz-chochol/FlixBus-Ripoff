@@ -16,7 +16,8 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import TripsSummariesListProps from 'types/Props/TripsSummariesListProps'
+import TripsSummariesListProps from 'types/Props/TripsSummariesListProps';
+import TripSummary from 'types/Objects/TripSummary';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,11 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
-interface TripCount {
-  endLocationId: number,
-  count: number,
-}
 
 const TripsSummariesList: React.FC<TripsSummariesListProps> = ({
   departure,
@@ -44,7 +40,7 @@ const TripsSummariesList: React.FC<TripsSummariesListProps> = ({
   handleTripsSummariesListItemClick
 }) => {
   const classes = useStyles();
-  const [tripsSummary, setTripsSummary] = useState<TripCount[]>([]);
+  const [tripsSummary, setTripsSummary] = useState<TripSummary[]>([]);
 
   useEffect(() => {
     const endLocationsIds = tripsDestinations.map(trip => trip.endLocationId)
