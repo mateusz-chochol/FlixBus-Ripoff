@@ -21,6 +21,7 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
+import { useNotifications } from 'components/Misc/Notifications';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { routes } from 'routes';
@@ -55,10 +56,15 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
 }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { showSuccess } = useNotifications();
   const [isReadyToRender, setIsReadyToRender] = useState<boolean>(false);
 
   const handleFullTripsListItemClick = (trip: Trip) => {
     history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
+  }
+
+  const handleAddToCartButtonClick = (tripId: number) => {
+    showSuccess(`Added trip with id ${tripId} to cart (not really for now)`);
   }
 
   const getNoResultsMessage = () => {
@@ -121,7 +127,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
             </Grid>
             <ListItemSecondaryAction>
               <Tooltip title='Add to cart'>
-                <IconButton edge="end" aria-label="add to cart">
+                <IconButton edge="end" aria-label="add to cart" onClick={() => handleAddToCartButtonClick(trip.id)}>
                   <AddCircleIcon color='secondary' />
                 </IconButton>
               </Tooltip>
