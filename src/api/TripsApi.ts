@@ -14,3 +14,6 @@ export const getTripsByDepartureAndDestinationIds = async (departureId: number, 
 
 export const getTripsByDepartureAndDestinationIdsAndDate = async (departureId: number, destinationId: number, date: string) =>
   allTrips.filter(trip => trip.startLocationId === departureId && trip.endLocationId === destinationId && trip.date === date);
+
+export const getTripById = async (id: number) =>
+  allTrips.find(trip => trip.id === id);

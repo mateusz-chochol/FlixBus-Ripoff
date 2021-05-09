@@ -1,4 +1,4 @@
 {
-  "logRedux": true,
+  "logRedux": false,
   "logPending": false
 }

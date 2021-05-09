@@ -35,7 +35,6 @@ import {
   getReturnTripsByReturnDateAsync,
   clearReturnTripsActionCreator,
 } from 'redux/TripsSlice';
-import { setTab } from 'redux/TabsSlice';
 import ResultsPageProps from 'types/Props/ResultsPageProps';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
@@ -127,10 +126,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [departureHourFilter, setDepartureHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [passengersCount, setPassengersCount] = useState<number>(1);
-
-  useEffect(() => {
-    dispatch(setTab(false));
-  }, [dispatch])
 
   useEffect(() => {
     if (!isNaN(departureId) && !isNaN(destinationId)) {

@@ -100,6 +100,20 @@ export const getReturnTripsByReturnDateAsync = createAsyncThunk<
   }
 );
 
+export const getTripById = createAsyncThunk<Trip | undefined, number>(
+  'trips/getTripById',
+  async (id) => {
+    return await api.getTripById(id);
+  },
+  {
+    condition: (id, { getState }) => {
+      const { trips } = getState() as AppState;
+
+      return trips.list.find(trip => trip.id === id) === undefined;
+    }
+  }
+);
+
 const tripsSlice = createSlice({
   name: 'trips',
   initialState: tripsInitialState,
@@ -163,6 +177,16 @@ const tripsSlice = createSlice({
         return {
           ...state,
           returnList: action.payload
+        }
+      })
+      .addCase(getTripById.fulfilled, (state, action) => {
+        if (action.payload === undefined) {
+          return state;
+        }
+
+        return {
+          ...state,
+          list: state.list.concat(action.payload)
         }
       })
   }
