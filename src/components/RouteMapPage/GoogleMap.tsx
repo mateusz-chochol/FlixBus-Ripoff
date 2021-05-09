@@ -188,37 +188,47 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   }
 
   return (
-    <Map
-      id="map"
-      mapContainerStyle={mapContainerStyle}
-      zoom={6}
-      center={center}
-      options={options}
-      onLoad={onMapLoad}
-      onIdle={getLocationsToShow}
-      mapContainerClassName='map'
+    <Box
+      display='flex'
+      flexDirection='column'
+      justifyContent='space-evenly'
+      alignItems='center'
+      width={mapContainerStyle.width}
+      height={mapContainerStyle.height}
+      bgcolor="grey.300"
     >
-      {locationsForMap.concat(getAdditionalLocationsToShow()).map((location) => (
-        <Marker
-          key={location.name}
-          position={location.coordinates}
-          icon={getMarkerColor(location)}
-          onClick={() => handleSelectMarker(location)}
-          visible={isMarkerVisible(location)}
-        />
-      ))}
-      {departure && destination && isValidTripSelected && (
-        <Polyline
-          path={[
-            departure.coordinates,
-            destination.coordinates
-          ]}
-          options={{
-            strokeColor: "#ff2527",
-          }}
-        />
-      )}
-    </Map>
+      <Map
+        id="map"
+        mapContainerStyle={mapContainerStyle}
+        zoom={6}
+        center={center}
+        options={options}
+        onLoad={onMapLoad}
+        onIdle={getLocationsToShow}
+        mapContainerClassName='map'
+      >
+        {locationsForMap.concat(getAdditionalLocationsToShow()).map((location) => (
+          <Marker
+            key={location.name}
+            position={location.coordinates}
+            icon={getMarkerColor(location)}
+            onClick={() => handleSelectMarker(location)}
+            visible={isMarkerVisible(location)}
+          />
+        ))}
+        {departure && destination && isValidTripSelected && (
+          <Polyline
+            path={[
+              departure.coordinates,
+              destination.coordinates
+            ]}
+            options={{
+              strokeColor: "#ff2527",
+            }}
+          />
+        )}
+      </Map>
+    </Box>
   )
 }
 

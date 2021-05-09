@@ -98,6 +98,15 @@ const TripPage: React.FC<TripPageProps> = ({ match }) => {
               height="calc(65vh)"
               width="100vw"
             >
+              {/* <Grid container direction='column' justify='flex-start'>
+                <Grid item container>
+                  <Grid item>
+                    <Typography variant='h1'>
+                      <Box alignSelf='center' justifySelf='center'>Summary</Box>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid> */}
             </Box>
           </Paper>
         </Grid>
