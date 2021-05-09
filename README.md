@@ -115,6 +115,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> refactor everything and split it into multiple components at the end </del> (Done)
 - trip page:
   - <del> create blank page with some trip info </del> (Done)
+  - <del> create basic layout for the page </del> (Done)
   - think about what this page should contain
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
