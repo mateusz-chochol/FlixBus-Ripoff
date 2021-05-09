@@ -168,6 +168,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       </Box>
     );
   }
+
   if (!isLoaded) {
     return (
       <Box
@@ -190,9 +191,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   return (
     <Box
       display='flex'
-      flexDirection='column'
-      justifyContent='space-evenly'
-      alignItems='center'
       width={mapContainerStyle.width}
       height={mapContainerStyle.height}
       bgcolor="grey.300"
