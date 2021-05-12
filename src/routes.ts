@@ -4,7 +4,6 @@ export const routes = {
   forgotPasswordPage: "/forgotpassword",
   routeMapPage: "/routemap",
   resultsPage: "/results/:departureIdAsString/:destinationIdAsString/:departureDateAsString/:returnDateAsString?",
-  tripPage: "/trip/:tripId",
   planYourJourneyPage: "/planyourjourney",
   servicesPage: "/services",
   companyPage: "/company",

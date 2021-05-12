@@ -57,6 +57,7 @@ const FiltersMobileSummary: React.FC<FiltersMobileSummaryProps> = ({
   setReturnHourFilter,
   passengersCount,
   setPassengersCount,
+  displayReturnHour,
   isSmallScreen,
 }) => {
   const classes = useStyles();
@@ -119,6 +120,19 @@ const FiltersMobileSummary: React.FC<FiltersMobileSummaryProps> = ({
                 <Typography align='right'>{moment(departureHourFilter).format('HH:mm')}</Typography>
               </Grid>
             </Grid>
+            {displayReturnHour &&
+              <Grid container>
+                <Grid item xs={5}>
+                  <Typography align='left'>Return</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <KeyboardArrowRightIcon />
+                </Grid>
+                <Grid item xs={5}>
+                  <Typography align='right'>{moment(returnHourFilter).format('HH:mm')}</Typography>
+                </Grid>
+              </Grid>
+            }
             <Grid container>
               <Grid item xs={5}>
                 <Typography align='left'>Passengers</Typography>
@@ -156,6 +170,7 @@ const FiltersMobileSummary: React.FC<FiltersMobileSummaryProps> = ({
               setReturnHourFilter={setReturnHourFilter}
               passengersCount={passengersCount}
               setPassengersCount={setPassengersCount}
+              displayReturnHour={displayReturnHour}
               isSmallScreen={isSmallScreen}
             />
           </DialogContent>

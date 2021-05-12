@@ -23,9 +23,6 @@ import {
 } from '@material-ui/core/styles';
 import { useNotifications } from 'components/Misc/Notifications';
 import moment from 'moment';
-import { useHistory } from 'react-router-dom';
-import { routes } from 'routes';
-import Trip from 'types/Objects/Trip';
 import ResultsTripsListProps from 'types/Props/ResultsTripsListProps';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,13 +52,8 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
   isSmallScreen
 }) => {
   const classes = useStyles();
-  const history = useHistory();
   const { showSuccess } = useNotifications();
   const [isReadyToRender, setIsReadyToRender] = useState<boolean>(false);
-
-  const handleTripsListItemClick = (trip: Trip) => {
-    history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
-  }
 
   const handleAddToCartButtonClick = (tripId: number) => {
     showSuccess(`Added trip with id ${tripId} to cart (not really for now)`);
@@ -98,12 +90,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
     <List className={classes.list} subheader={<ListSubheader component="div">{getTitle()}</ListSubheader>}>
       {isReadyToRender ? tripsToDisplay.map(trip => (
         <React.Fragment key={trip.id}>
-          <ListItem
-            button
-            className={isSmallScreen ? undefined : classes.listItem}
-            key={trip.id}
-            onClick={() => handleTripsListItemClick(trip)}
-          >
+          <ListItem className={isSmallScreen ? undefined : classes.listItem} key={trip.id}>
             <Grid container direction='row'>
               <Grid
                 item

@@ -34,6 +34,7 @@ const DateFields: React.FC<MainPageDateFieldsProps> = ({
             inputProps={{
               "aria-label": 'departure date'
             }}
+            disablePast
           />
         </Box>
       </Grid>
@@ -53,6 +54,7 @@ const DateFields: React.FC<MainPageDateFieldsProps> = ({
               inputProps={{
                 "aria-label": 'return date'
               }}
+              disablePast
             />
           </Box>
         </Grid>

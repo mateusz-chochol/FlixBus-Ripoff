@@ -267,6 +267,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     setReturnHourFilter={setReturnHourFilter}
                     passengersCount={passengersCount}
                     setPassengersCount={setPassengersCount}
+                    displayReturnHour={tripType === TripType.RoundTrip}
                     isSmallScreen={isSmallScreen}
                   />
                 </Grid>
@@ -334,6 +335,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     setReturnHourFilter={setReturnHourFilter}
                     passengersCount={passengersCount}
                     setPassengersCount={setPassengersCount}
+                    displayReturnHour={tripType === TripType.RoundTrip}
                     isSmallScreen={isSmallScreen}
                   />
                 </Hidden>

@@ -34,7 +34,6 @@ import CompanyPage from './CompanyPage/CompanyPage';
 import NewsetterPage from './NewsletterPage/NewsetterPage';
 import SendFeedbackPage from './SendFeedbackPage/SendFeedbackPage';
 import HelpPage from './HelpPage/HelpPage';
-import TripPage from './TripPage/TripPage';
 
 const styles = {
   paperContainer: {
@@ -78,7 +77,6 @@ const App = () => {
             <MenuAppBar />
             <Switch>
               <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
-              <DefaultRoute exact path={routes.tripPage} component={TripPage} />
               <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
               <DefaultRoute exact path={routes.planYourJourneyPage} component={PlanYourJourneyPage} tabIndex={1} />
               <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} tabIndex={2} />

@@ -11,5 +11,6 @@ export default interface FiltersMobileSummaryProps {
   setReturnHourFilter: (value: React.SetStateAction<Date>) => void,
   passengersCount: number,
   setPassengersCount: (value: React.SetStateAction<number>) => void,
+  displayReturnHour: boolean,
   isSmallScreen: boolean
 }

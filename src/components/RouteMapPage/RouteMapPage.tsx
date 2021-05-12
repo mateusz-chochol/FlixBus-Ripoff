@@ -6,6 +6,12 @@ import React, {
 import {
   Box,
   Hidden,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
   withWidth,
   WithWidth,
 } from '@material-ui/core';
@@ -13,8 +19,6 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { routes } from 'routes';
 import {
   getAllLocations,
   getLocationsForMap,
@@ -39,7 +43,6 @@ import moment from 'moment';
 const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const dispatch = useDispatch();
-  const history = useHistory();
   const allLocations = useSelector(getAllLocations);
   const locationsForMap = useSelector(getLocationsForMap);
   const trips = useSelector(getTrips);
@@ -47,12 +50,14 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const lastDestinationId = useSelector(getLastDestinationId);
   const lastDepartureDate = useSelector(getLastDepartureDate);
   const notificationsFunctionsRef = useRef(useNotifications());
-  const { showInfo } = notificationsFunctionsRef.current;
+  const { showInfo, showSuccess } = notificationsFunctionsRef.current;
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [isValidTripSelected, setIsValidTripSelected] = useState<boolean>(false);
   const [departureDate, setDepartureDate] = useState<Date | null>(moment().toDate());
   const [tripsDestinations, setTripsDestinations] = useState<Trip[]>([]);
+  const [tripDialogOpen, setTripDialogOpen] = useState<boolean>(false);
+  const [selectedTrip, setSelectedTrip] = useState<Trip>();
   const navBarHeight = '75px';
   const footerMenuHeight = '200px';
 
@@ -61,7 +66,13 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleFullTripsListItemClick = (trip: Trip) => {
-    history.push(routes.tripPage.replace(':tripId', trip.id.toString()));
+    setSelectedTrip(trip);
+    setTripDialogOpen(true);
+  }
+
+  const handleAddTripToCartClick = () => {
+    showSuccess(`Added trip with id ${selectedTrip?.id} to cart (not really for now)`);
+    setTripDialogOpen(false);
   }
 
   const areDatesTheSame = (first: Date, second: Date) => {
@@ -108,6 +119,12 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
     }
   }, [departure, destination, trips])
 
+  useEffect(() => {
+    if (isSmallScreen) {
+      setTripDialogOpen(false);
+    }
+  }, [isSmallScreen])
+
   return (
     <Box
       display="flex"
@@ -117,6 +134,28 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       width="100vw"
       flexDirection={isSmallScreen ? 'column' : 'row'}
     >
+      <Dialog
+        open={tripDialogOpen}
+        onClose={() => setTripDialogOpen(false)}
+      >
+        <DialogTitle>Add trip to cart</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {selectedTrip !== undefined ?
+              `Do you want to add the trip from ${allLocations.find(location => location.id === selectedTrip.startLocationId)?.name} to ${allLocations.find(location => location.id === selectedTrip.endLocationId)?.name} at ${selectedTrip.hour}, ${selectedTrip.date} for ${selectedTrip.price}$ to you cart?` :
+              'Error, please reload the page'
+            }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setTripDialogOpen(false)} color="primary" autoFocus>
+            Close
+          </Button>
+          <Button onClick={handleAddTripToCartClick} color="primary">
+            Add to cart
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Hidden smDown>
         <RouteMapDrawer
           departure={departure}

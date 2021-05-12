@@ -58,6 +58,7 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
   setReturnHourFilter,
   passengersCount,
   setPassengersCount,
+  displayReturnHour,
   isSmallScreen,
 }) => {
   const classes = useStyles();
@@ -261,26 +262,28 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
         </Box>
         <Divider variant="middle" />
       </Grid>
-      <Grid item>
-        <Box padding={3}>
-          <Typography variant='h6'>
-            Return hour:
-          </Typography>
-          <Box paddingTop={3}>
-            <TimePicker
-              ampm={false}
-              value={returnHourFilter}
-              onChange={(newDate) => setReturnHourFilter(newDate as Date)}
-              inputVariant='outlined'
-              color='secondary'
-              views={['hours', 'minutes']}
-              minutesStep={5}
-              fullWidth
-            />
+      {displayReturnHour &&
+        <Grid item>
+          <Box padding={3}>
+            <Typography variant='h6'>
+              Return hour:
+            </Typography>
+            <Box paddingTop={3}>
+              <TimePicker
+                ampm={false}
+                value={returnHourFilter}
+                onChange={(newDate) => setReturnHourFilter(newDate as Date)}
+                inputVariant='outlined'
+                color='secondary'
+                views={['hours', 'minutes']}
+                minutesStep={5}
+                fullWidth
+              />
+            </Box>
           </Box>
-        </Box>
-        <Divider variant="middle" />
-      </Grid>
+          <Divider variant="middle" />
+        </Grid>
+      }
       <Grid item>
         <Box paddingTop={3} paddingBottom={3}>
           <Box paddingLeft={3} paddingRight={3}>
