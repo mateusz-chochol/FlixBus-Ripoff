@@ -54,7 +54,7 @@ const FullTripsList: React.FC<FullTripsProps> = ({
                 </Grid>
               </Grid>
               <Grid item>
-                <ListItemText secondary={`${trip.date}, ${trip.price}$, seats: ${trip.seatsLeft}`} />
+                <ListItemText secondary={`${trip.hour}, ${trip.price}$, seats: ${trip.seatsLeft}`} />
               </Grid>
             </Grid>
           </ListItem>
