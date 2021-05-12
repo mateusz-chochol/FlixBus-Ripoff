@@ -14,6 +14,7 @@ import {
   Button,
   withWidth,
   WithWidth,
+  Typography,
 } from '@material-ui/core';
 import {
   useDispatch,
@@ -142,8 +143,11 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {selectedTrip !== undefined ?
-              `Do you want to add the trip from ${allLocations.find(location => location.id === selectedTrip.startLocationId)?.name} to ${allLocations.find(location => location.id === selectedTrip.endLocationId)?.name} at ${selectedTrip.hour}, ${selectedTrip.date} for ${selectedTrip.price}$ to you cart?` :
-              'Error, please reload the page'
+              <>
+                <Typography>Do you want to add to cart trip from {allLocations.find(location => location.id === selectedTrip.startLocationId)?.name} to {allLocations.find(location => location.id === selectedTrip.endLocationId)?.name}?</Typography>
+                <Typography>Departure: {selectedTrip.hour} | {selectedTrip.date}, price: {selectedTrip.price}$, trip duration: {selectedTrip.tripDuration}h, seats left: {selectedTrip.seatsLeft}</Typography>
+              </> :
+              <Typography>Error, please reload the page</Typography>
             }
           </DialogContentText>
         </DialogContent>
