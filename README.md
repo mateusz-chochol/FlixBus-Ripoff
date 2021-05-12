@@ -83,6 +83,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> restrict showing only trips from today </del> (Done [added date field instead])
   - <del> remove basicTrips.json collection and work only on trips.json </del> (Done)
   - <del> remove horizontal list of trips on mobile devices </del> (Done)
+  - <del> add ability to add trips to cart directly from list </del> (Done)
 - plan your journey page:
   - <del> create blank page with some static info </del> (Done)
   - think about what this page should contain
@@ -113,10 +114,10 @@ Site should be visible under the address: http://localhost:5000
   - <del> add additional check if user has changed any of the date fields </del> (Done)
   - <del> add sorting </del> (Done)
   - <del> refactor everything and split it into multiple components at the end </del> (Done)
-- trip page:
+- <del> trip page: </del> (Won't do [decided that creating a page for one trip makes little sense])
   - <del> create blank page with some trip info </del> (Done)
   - <del> create basic layout for the page </del> (Done)
-  - think about what this page should contain
+  - <del> think about what this page should contain </del> (Won't do)
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - move all data to the firebase backend and create api calls that will fetch them when needed
