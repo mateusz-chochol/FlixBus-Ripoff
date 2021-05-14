@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import MainPage from './MainPage/MainPage';
 import SignupPage from './Account/SignupPage';
 import LoginPage from './Account/LoginPage';
@@ -44,6 +45,15 @@ const styles = {
   }
 };
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'light',
+    primary: {
+      main: '#1976d2'
+    },
+  },
+})
+
 const App = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const notifications = useSelector(getNotifications);
@@ -62,35 +72,37 @@ const App = () => {
   }, [notifications, closeSnackbar, dispatch, enqueueSnackbar]);
 
   return (
-    <Router>
-      <Paper style={styles.paperContainer} square>
-        <Box
-          display="flex"
-          flexDirection='column'
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          height="100vh"
-          width="100vw"
-        >
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <MenuAppBar />
-            <Switch>
-              <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
-              <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
-              <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} tabIndex={1} />
-              <DefaultRoute exact path={routes.companyPage} component={CompanyPage} tabIndex={2} />
-              <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} tabIndex={3} />
-              <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} tabIndex={4} />
-              <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={5} />
-              <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} tabIndex={6} />
-              <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} tabIndex={7} />
-              <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
-              <DefaultRoute path={routes.mainPage} component={MainPage} />
-            </Switch>
-          </MuiPickersUtilsProvider>
-        </Box>
-      </Paper>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Paper style={styles.paperContainer} square>
+          <Box
+            display="flex"
+            flexDirection='column'
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            height="100vh"
+            width="100vw"
+          >
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <MenuAppBar />
+              <Switch>
+                <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
+                <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
+                <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} tabIndex={1} />
+                <DefaultRoute exact path={routes.companyPage} component={CompanyPage} tabIndex={2} />
+                <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} tabIndex={3} />
+                <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} tabIndex={4} />
+                <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={5} />
+                <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} tabIndex={6} />
+                <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} tabIndex={7} />
+                <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
+                <DefaultRoute path={routes.mainPage} component={MainPage} />
+              </Switch>
+            </MuiPickersUtilsProvider>
+          </Box>
+        </Paper>
+      </Router>
+    </ThemeProvider>
   );
 }
 

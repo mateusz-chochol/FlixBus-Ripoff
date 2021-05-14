@@ -193,6 +193,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                   indicatorColor="secondary"
                   variant="scrollable"
                   scrollButtons="on"
+                  centered
                 >
                   {menuItems.map(item =>
                     <Tab
@@ -208,6 +209,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
             <Grid item md={1}>
               <Cart />
             </Grid>
+            {/* TODO: show logged in icon on mobile*/}
             <Hidden smDown>
               <Grid item xs={4} md={2} >
                 <AccountOptions />
