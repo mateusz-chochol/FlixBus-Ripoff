@@ -193,7 +193,6 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                   indicatorColor="secondary"
                   variant="scrollable"
                   scrollButtons="on"
-                  centered
                 >
                   {menuItems.map(item =>
                     <Tab
