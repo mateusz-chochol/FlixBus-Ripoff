@@ -41,7 +41,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
 
   return (
     <Paper square className={classes.paper}>
-      <Box padding={5}>
+      <Box paddingLeft={5} paddingRight={5} paddingTop={2} paddingBottom={2}>
         <Grid container className={classes.parentGrid} alignItems='center' justify='center'>
           <Grid item xs={isSmallScreen ? 12 : 5}>
             <Box>
@@ -72,7 +72,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
             </Typography>
             </Box>
             <Hidden mdUp>
-              <Box display='flex' justifyContent='center' paddingBottom={3}>
+              <Box display='flex' justifyContent='center' paddingBottom={2}>
                 <ServicesSvg width='95%' height='100%' />
               </Box>
             </Hidden>
