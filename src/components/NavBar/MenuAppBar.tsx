@@ -208,12 +208,11 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
             <Grid item md={1}>
               <Cart />
             </Grid>
-            {/* TODO: show logged in icon on mobile*/}
-            <Hidden smDown>
-              <Grid item xs={4} md={2} >
+            {(currentUser || !isSmallScreen) &&
+              <Grid item xs={currentUser ? 1 : 2}>
                 <AccountOptions />
               </Grid>
-            </Hidden>
+            }
           </Grid>
         </Toolbar>
       </AppBar>
