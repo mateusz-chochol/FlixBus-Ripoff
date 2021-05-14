@@ -82,7 +82,11 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
     }
 
     if (tripsToDisplayWithourCartTrips.length === 0) {
-      return `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}`
+      if (tripsToDisplay.length === 0) {
+        return `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}`
+      }
+
+      return `Sorry, no more trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}`
     }
   }
 
@@ -95,9 +99,9 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
       departure?.id === departureId &&
       destination?.id === destinationId &&
       departureDateAsString === moment(departureDate).format('YYYY-MM-DD') &&
-      tripsToDisplay.length > 0
+      tripsToDisplayWithourCartTrips.length > 0
     )
-  }, [departure?.id, destination?.id, departureDate, departureDateAsString, departureId, destinationId, tripsToDisplay.length])
+  }, [departure?.id, destination?.id, departureDate, departureDateAsString, departureId, destinationId, tripsToDisplayWithourCartTrips.length])
 
   return (
     <List className={classes.list} subheader={<ListSubheader component="div">{getTitle()}</ListSubheader>}>
