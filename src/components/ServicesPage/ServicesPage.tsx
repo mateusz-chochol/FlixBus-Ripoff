@@ -67,7 +67,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
               Main flow
             </Typography>
             <Typography variant='subtitle1' gutterBottom>
-              After finding appriopriate trips user can add them to their cart (which is going to be saved on their user profile granted that they are logged in) and from there by clicking the checkout button user can proceed to simulate seats reservation on the selected trips.
+              After finding appropriate trips user can add them to their cart (which is going to be saved on their user profile granted that they are logged in) and from there by clicking the checkout button user can proceed to simulate seats reservation on the selected trips.
             </Typography>
           </Box>
           <Hidden mdUp>
