@@ -87,7 +87,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 Data
               </Typography>
               <Typography variant='subtitle1' gutterBottom>
-                Website uses firebase as a backend service for both authentication and for storing any user data. If you can see error snackbars showing after trying to logged in it means that API keys have probably expired and the site cannot contact the backend.
+                Website uses firebase as a backend service for both authentication and for storing any user data. If you can see error snackbars showing after trying to log in it means that API keys have probably expired and the site cannot contact the backend.
               </Typography>
             </Box>
             <Hidden mdUp>
