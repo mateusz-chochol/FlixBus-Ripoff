@@ -5,8 +5,9 @@ import React, {
 import {
   createStyles,
   makeStyles,
-  Theme
+  Theme,
 } from '@material-ui/core/styles';
+import grey from '@material-ui/core/colors/grey';
 import {
   Box,
   IconButton,
@@ -87,7 +88,9 @@ const Cart: React.FC = () => {
     <Box display='flex' justifyContent='flex-end'>
       <IconButton color="inherit" onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)}>
         <Badge badgeContent={cart.length} color="secondary">
-          <ShoppingCartIcon />
+          <Box display='flex' color={cart.length === 0 ? grey[300] : 'white'}>
+            <ShoppingCartIcon />
+          </Box>
         </Badge>
       </IconButton>
       <Popper

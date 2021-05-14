@@ -81,7 +81,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
       return "Press search to search for the results"
     }
 
-    if (tripsToDisplay.length === 0) {
+    if (tripsToDisplayWithourCartTrips.length === 0) {
       return `Sorry, no trips from ${departure.name} to ${destination.name} found on ${departureDateAsString}`
     }
   }
