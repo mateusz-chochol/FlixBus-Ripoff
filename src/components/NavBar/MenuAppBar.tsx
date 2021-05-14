@@ -179,7 +179,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
               </Typography>
             </Grid>
             <Hidden smDown>
-              <Grid item md={6} xl={8} >
+              <Grid item md={7}>
                 <Tabs
                   value={tabIndex}
                   indicatorColor="secondary"
@@ -198,7 +198,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
               </Grid>
             </Hidden>
             <Hidden smDown>
-              <Grid item xs={4} md={2}>
+              <Grid item md={1}>
                 <Cart />
               </Grid>
             </Hidden>
