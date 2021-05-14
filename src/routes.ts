@@ -10,5 +10,6 @@ export const routes = {
   newsletterPage: "/newsletter",
   sendFeedbackPage: "/sendfeedback",
   helpPage: "/help",
+  cartPage: "/cart",
   mainPage: "/",
 }

@@ -21,9 +21,18 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import { useNotifications } from 'components/Misc/Notifications';
 import moment from 'moment';
+import { useNotifications } from 'components/Misc/Notifications';
+import {
+  getCart,
+  addToCartActionCreator
+} from 'redux/CartSlice';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import ResultsTripsListProps from 'types/Props/ResultsTripsListProps';
+import Trip from 'types/Objects/Trip';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,11 +61,15 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
   isSmallScreen
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { showSuccess } = useNotifications();
+  const cart = useSelector(getCart);
   const [isReadyToRender, setIsReadyToRender] = useState<boolean>(false);
+  const tripsToDisplayWithourCartTrips = tripsToDisplay.filter(trip => !cart.map(cartTrip => cartTrip.id).includes(trip.id));
 
-  const handleAddToCartButtonClick = (tripId: number) => {
-    showSuccess(`Added trip with id ${tripId} to cart (not really for now)`);
+  const handleAddToCartButtonClick = (trip: Trip) => {
+    dispatch(addToCartActionCreator(trip));
+    showSuccess(`Trip has been added to your cart (id: ${trip.id})`);
   }
 
   const getNoResultsMessage = () => {
@@ -74,7 +87,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
   }
 
   const getTitle = () => {
-    return isReadyToRender ? `${title}: ${tripsToDisplay.length}` : title;
+    return isReadyToRender ? `${title}: ${tripsToDisplayWithourCartTrips.length}` : title;
   }
 
   useEffect(() => {
@@ -88,7 +101,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
 
   return (
     <List className={classes.list} subheader={<ListSubheader component="div">{getTitle()}</ListSubheader>}>
-      {isReadyToRender ? tripsToDisplay.map(trip => (
+      {isReadyToRender ? tripsToDisplayWithourCartTrips.map(trip => (
         <React.Fragment key={trip.id}>
           <ListItem className={isSmallScreen ? undefined : classes.listItem} key={trip.id}>
             <Grid container direction='row'>
@@ -114,7 +127,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
             </Grid>
             <ListItemSecondaryAction>
               <Tooltip title='Add to cart'>
-                <IconButton edge="end" aria-label="add to cart" onClick={() => handleAddToCartButtonClick(trip.id)}>
+                <IconButton edge="end" aria-label="add to cart" onClick={() => handleAddToCartButtonClick(trip)}>
                   <AddCircleIcon color='secondary' />
                 </IconButton>
               </Tooltip>

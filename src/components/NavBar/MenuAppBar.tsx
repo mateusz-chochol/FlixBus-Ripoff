@@ -3,6 +3,7 @@ import React, {
   useEffect,
 } from 'react';
 import { useHistory } from 'react-router-dom';
+import { routes } from 'routes';
 import {
   getTab,
   setTab,
@@ -31,10 +32,6 @@ import {
   Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from './Drawer';
-import AccountOptions from './AccountOptions';
-import { routes } from 'routes';
-import AppBarMenuItem from 'types/Objects/AppBarMenuItem';
 import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 import StreetviewRoundedIcon from '@material-ui/icons/StreetviewRounded';
 import DevicesRoundedIcon from '@material-ui/icons/DevicesRounded';
@@ -42,6 +39,11 @@ import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 import HelpRoundedIcon from '@material-ui/icons/HelpRounded';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import FeedbackIcon from '@material-ui/icons/Feedback';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Drawer from './Drawer';
+import AccountOptions from './AccountOptions';
+import Cart from './Cart';
+import AppBarMenuItem from 'types/Objects/AppBarMenuItem';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -113,12 +115,20 @@ const menuItems: AppBarMenuItem[] = [
   },
 ]
 
+const cartTab: AppBarMenuItem = {
+  index: 7,
+  key: 'Cart',
+  text: 'Cart',
+  icon: <ShoppingCartIcon />,
+  route: routes.cartPage,
+}
+
 const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const classes = useStyles();
   const [openDrawerMenu, setOpenDrawerMenu] = useState<boolean>(false);
   const history = useHistory();
-  const tabIndex = useSelector(getTab)
+  const tabIndex = useSelector(getTab);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -148,7 +158,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 >
                   <MenuIcon />
                 </IconButton>
-                <Drawer items={menuItems} open={openDrawerMenu} setOpen={setOpenDrawerMenu} />
+                <Drawer items={menuItems.concat(cartTab)} open={openDrawerMenu} setOpen={setOpenDrawerMenu} />
               </Grid>
             </Hidden>
             <Grid item xs={6} md={2}>
@@ -185,6 +195,11 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                     />
                   )}
                 </Tabs>
+              </Grid>
+            </Hidden>
+            <Hidden smDown>
+              <Grid item xs={4} md={2}>
+                <Cart />
               </Grid>
             </Hidden>
             <Grid item xs={4} md={2} >

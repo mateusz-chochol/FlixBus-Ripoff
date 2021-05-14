@@ -33,6 +33,10 @@ import {
   getTripsByDepartureIdAndDateAsync,
   getTripsByDepartureAndDestinationIdsAndDateAsync,
 } from 'redux/TripsSlice';
+import {
+  getCart,
+  addToCartActionCreator
+} from 'redux/CartSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import Location from 'types/Objects/Location';
 import GoogleMap from './GoogleMap';
@@ -47,6 +51,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const allLocations = useSelector(getAllLocations);
   const locationsForMap = useSelector(getLocationsForMap);
   const trips = useSelector(getTrips);
+  const cart = useSelector(getCart);
   const lastDepartureId = useSelector(getLastDepartureId);
   const lastDestinationId = useSelector(getLastDestinationId);
   const lastDepartureDate = useSelector(getLastDepartureDate);
@@ -72,7 +77,11 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   }
 
   const handleAddTripToCartClick = () => {
-    showSuccess(`Added trip with id ${selectedTrip?.id} to cart (not really for now)`);
+    if (selectedTrip) {
+      dispatch(addToCartActionCreator(selectedTrip));
+      showSuccess(`Trip has been added to your cart (id: ${selectedTrip.id})`);
+    }
+
     setTripDialogOpen(false);
   }
 
@@ -169,7 +178,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           departureDate={departureDate}
           setDepartureDate={setDepartureDate}
           tripsDestinations={tripsDestinations}
-          trips={trips}
+          trips={trips.filter(trip => !cart.map(cartTrip => cartTrip.id).includes(trip.id))}
           allLocations={allLocations}
           handleTripsSummariesListItemClick={handleTripsSummariesListItemClick}
           handleFullTripsListItemClick={handleFullTripsListItemClick}
