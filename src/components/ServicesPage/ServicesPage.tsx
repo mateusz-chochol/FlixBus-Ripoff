@@ -7,6 +7,7 @@ import {
   Hidden,
   withWidth,
   WithWidth,
+  Divider,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -56,6 +57,9 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 App allows to register a user via email and password and then log in as one. After logging in user grants access to changing their profile info, looking at their history and syncing carts between muttiple browsers and tabs.
               </Typography>
             </Box>
+            <Box paddingX={3}>
+              <Divider variant='middle' />
+            </Box>
             <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
               <Typography variant='h4' gutterBottom>
                 Searching
@@ -64,6 +68,9 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 User can either use main page search bar to search for trips with given date and departure and destination places or they might use route map page to display all accessible locations and select them via clicking on map markers (or by using search box that behaves similary to the main page one)
               </Typography>
             </Box>
+            <Box paddingX={3}>
+              <Divider variant='middle' />
+            </Box>
             <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
               <Typography variant='h4' gutterBottom>
                 Main flow
@@ -71,6 +78,9 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
               <Typography variant='subtitle1' gutterBottom>
                 After finding appropriate trips user can add them to their cart (which is going to be saved on their user profile granted that they are logged in) and from there by clicking the checkout button user can proceed to simulate seats reservation on the selected trips.
               </Typography>
+            </Box>
+            <Box paddingX={3}>
+              <Divider variant='middle' />
             </Box>
             <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
               <Typography variant='h4' gutterBottom>
@@ -88,12 +98,12 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
           </Grid>
           <Hidden smDown>
             <Grid item xs={7}>
-              <Box display='flex' position='fixed' top='22%' left='65%' className={classes.fixedItem}>
-                <Typography variant='h2' color='textSecondary' gutterBottom>
+              <Box display='flex' position='fixed' top='15%' left='60%' className={classes.fixedItem}>
+                <Typography variant='h1' color='textSecondary' gutterBottom>
                   Services
                 </Typography>
               </Box>
-              <Box display='flex' position='fixed' top='28%' width='55%' className={classes.fixedItem}>
+              <Box display='flex' position='fixed' top='30%' width='55%' className={classes.fixedItem}>
                 <ServicesSvg />
               </Box>
             </Grid>
