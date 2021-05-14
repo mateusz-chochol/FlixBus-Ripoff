@@ -48,9 +48,6 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
       <Box paddingTop={2} paddingBottom={2}>
         <Grid container className={classes.parentGrid} alignItems='center' justify='center'>
           <Grid item xs={isSmallScreen ? 12 : 5}>
-            {/* <Box paddingBottom={3}>
-              <Typography variant='h2' align='center' color='textSecondary'>Services</Typography>
-            </Box> */}
             <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
               <Typography variant='h4' gutterBottom>
                 User
