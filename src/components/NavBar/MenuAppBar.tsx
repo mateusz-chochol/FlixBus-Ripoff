@@ -169,7 +169,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 />
               </Grid>
             </Hidden>
-            <Grid item xs={9} md={2}>
+            <Grid item xs={7} md={2}>
               <Typography align='left'>
                 <Button
                   size="large"
@@ -205,11 +205,11 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Tabs>
               </Grid>
             </Hidden>
-            <Grid item md={1}>
+            <Grid item xs={2} md={1}>
               <Cart />
             </Grid>
             {(currentUser || !isSmallScreen) &&
-              <Grid item xs={currentUser ? 1 : 2}>
+              <Grid item xs={2} md={currentUser ? 1 : 2}>
                 <AccountOptions />
               </Grid>
             }
