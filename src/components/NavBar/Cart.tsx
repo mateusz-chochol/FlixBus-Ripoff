@@ -88,7 +88,7 @@ const Cart: React.FC = () => {
     <Box display='flex' justifyContent='flex-end'>
       <IconButton color="inherit" onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)}>
         <Badge badgeContent={cart.length} color="secondary">
-          <Box display='flex' color={cart.length === 0 ? grey[300] : 'white'}>
+          <Box display='flex' color={cart.length === 0 ? 'rgba(255, 255, 255, 0.65)' : 'white'}>
             <ShoppingCartIcon />
           </Box>
         </Badge>
