@@ -22,7 +22,7 @@ import {
   Tooltip,
   Grid,
   Typography,
-  Fade,
+  Grow,
   Paper,
   ClickAwayListener
 } from '@material-ui/core'
@@ -101,7 +101,7 @@ const Cart: React.FC = () => {
         placement='bottom'
       >
         {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={350}>
+          <Grow {...TransitionProps} timeout={350}>
             <Paper>
               <ClickAwayListener onClickAway={() => setAnchorEl(null)} mouseEvent='onMouseUp'>
                 {cart.length > 0 ?
@@ -153,7 +153,7 @@ const Cart: React.FC = () => {
                 }
               </ClickAwayListener>
             </Paper>
-          </Fade>
+          </Grow>
         )}
       </Popper>
     </Box >
