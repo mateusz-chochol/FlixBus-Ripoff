@@ -1,9 +1,10 @@
 import React from 'react';
 import {
   Box,
-  Typography,
+  // Typography,
   Paper,
 } from '@material-ui/core';
+import { ReactComponent as NewsletterSvg } from 'svgs/newsletter.svg';
 
 const NewsetterPage: React.FC = () => {
   return (
@@ -15,9 +16,10 @@ const NewsetterPage: React.FC = () => {
         height="calc(100vh - 75px)"
         width="100vw"
       >
-        <Typography variant='h1'>
+        <NewsletterSvg />
+        {/* <Typography variant='h1'>
           <Box alignSelf='center' justifySelf='center'>Newsletter page</Box>
-        </Typography>
+        </Typography> */}
       </Box>
     </Paper>
   )

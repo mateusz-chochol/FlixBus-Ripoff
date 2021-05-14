@@ -34,7 +34,6 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
-import StreetviewRoundedIcon from '@material-ui/icons/StreetviewRounded';
 import DevicesRoundedIcon from '@material-ui/icons/DevicesRounded';
 import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 import HelpRoundedIcon from '@material-ui/icons/HelpRounded';
@@ -75,41 +74,34 @@ const menuItems: AppBarMenuItem[] = [
   },
   {
     index: 1,
-    key: 'Plan Your Journey',
-    text: 'Plan Your Journey',
-    icon: <StreetviewRoundedIcon />,
-    route: routes.planYourJourneyPage,
-  },
-  {
-    index: 2,
     key: 'Services',
     text: 'Services',
     icon: <DevicesRoundedIcon />,
     route: routes.servicesPage,
   },
   {
-    index: 3,
+    index: 2,
     key: 'Company',
     text: 'Company',
     icon: <BusinessRoundedIcon />,
     route: routes.companyPage,
   },
   {
-    index: 4,
+    index: 3,
     key: 'Newsletter',
     text: 'Newsletter',
     icon: <LibraryBooksIcon />,
     route: routes.newsletterPage,
   },
   {
-    index: 5,
+    index: 4,
     key: 'Send Feedback',
     text: 'Send Feedback',
     icon: <FeedbackIcon />,
     route: routes.sendFeedbackPage,
   },
   {
-    index: 6,
+    index: 5,
     key: 'Help',
     text: 'Help',
     icon: <HelpRoundedIcon />,
@@ -117,22 +109,22 @@ const menuItems: AppBarMenuItem[] = [
   },
 ]
 
-const mobileTabsIfNotLoggedIn: AppBarMenuItem[] = [
+const mobileTabsIfNotLoggedIn: AppBarMenuItem[] = menuItems.concat([
   {
-    index: 7,
+    index: 6,
     key: 'Login',
     text: 'Login',
     icon: <AccountBoxIcon />,
     route: routes.loginPage,
   },
   {
-    index: 8,
+    index: 7,
     key: 'Singup',
     text: 'Singup',
     icon: <CreateIcon />,
     route: routes.singupPage,
   },
-]
+])
 
 const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
@@ -171,7 +163,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                   <MenuIcon />
                 </IconButton>
                 <Drawer
-                  items={currentUser ? menuItems : menuItems.concat(mobileTabsIfNotLoggedIn)}
+                  items={currentUser ? menuItems : mobileTabsIfNotLoggedIn}
                   open={openDrawerMenu}
                   setOpen={setOpenDrawerMenu}
                 />

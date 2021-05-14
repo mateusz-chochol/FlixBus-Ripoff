@@ -1,9 +1,10 @@
 import React from 'react';
 import {
   Box,
-  Typography,
+  // Typography,
   Paper,
 } from '@material-ui/core';
+import { ReactComponent as HelpSvg } from 'svgs/help.svg';
 
 const HelpPage: React.FC = () => {
   return (
@@ -15,9 +16,10 @@ const HelpPage: React.FC = () => {
         height="calc(100vh - 75px)"
         width="100vw"
       >
-        <Typography variant='h1'>
+        <HelpSvg />
+        {/* <Typography variant='h1'>
           <Box alignSelf='center' justifySelf='center'>Help page</Box>
-        </Typography>
+        </Typography> */}
       </Box>
     </Paper>
   )

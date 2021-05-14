@@ -1,9 +1,10 @@
 import React from 'react';
 import {
   Box,
-  Typography,
+  // Typography,
   Paper,
 } from '@material-ui/core';
+import { ReactComponent as SendFeedbackSvg } from 'svgs/send_feedback.svg';
 
 const SendFeedbackPage: React.FC = () => {
   return (
@@ -15,9 +16,10 @@ const SendFeedbackPage: React.FC = () => {
         height="calc(100vh - 75px)"
         width="100vw"
       >
-        <Typography variant='h1'>
+        <SendFeedbackSvg />
+        {/* <Typography variant='h1'>
           <Box alignSelf='center' justifySelf='center'>Send feedback page</Box>
-        </Typography>
+        </Typography> */}
       </Box>
     </Paper>
   )

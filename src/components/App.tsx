@@ -28,7 +28,6 @@ import DefaultRoute from './Misc/DefaultRoute';
 import PrivateRoute from './Misc/PrivateRoute';
 import ForgotPasswordPage from './Account/ForgotPasswordPage';
 import ResultsPage from './ResultsPage/ResultsPage';
-import PlanYourJourneyPage from './PlanYourJourneyPage/PlanYourJourneyPage';
 import ServicesPage from './ServicesPage/ServicesPage';
 import CompanyPage from './CompanyPage/CompanyPage';
 import NewsetterPage from './NewsletterPage/NewsetterPage';
@@ -78,14 +77,13 @@ const App = () => {
             <Switch>
               <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
               <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
-              <DefaultRoute exact path={routes.planYourJourneyPage} component={PlanYourJourneyPage} tabIndex={1} />
-              <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} tabIndex={2} />
-              <DefaultRoute exact path={routes.companyPage} component={CompanyPage} tabIndex={3} />
-              <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} tabIndex={4} />
-              <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} tabIndex={5} />
-              <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={6} />
-              <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} tabIndex={7} />
-              <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} tabIndex={8} />
+              <DefaultRoute exact path={routes.servicesPage} component={ServicesPage} tabIndex={1} />
+              <DefaultRoute exact path={routes.companyPage} component={CompanyPage} tabIndex={2} />
+              <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} tabIndex={3} />
+              <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} tabIndex={4} />
+              <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={5} />
+              <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} tabIndex={6} />
+              <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} tabIndex={7} />
               <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
               <DefaultRoute path={routes.mainPage} component={MainPage} />
             </Switch>
