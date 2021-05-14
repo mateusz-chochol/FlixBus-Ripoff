@@ -32,7 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       '&::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.2)',
       }
-    }
+    },
+    fixedItem: {
+      pointerEvents: 'none'
+    },
   }),
 );
 
@@ -45,9 +48,9 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
       <Box paddingTop={2} paddingBottom={2}>
         <Grid container className={classes.parentGrid} alignItems='center' justify='center'>
           <Grid item xs={isSmallScreen ? 12 : 5}>
-            <Box paddingBottom={3}>
+            {/* <Box paddingBottom={3}>
               <Typography variant='h2' align='center' color='textSecondary'>Services</Typography>
-            </Box>
+            </Box> */}
             <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
               <Typography variant='h4' gutterBottom>
                 User
@@ -88,7 +91,12 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
           </Grid>
           <Hidden smDown>
             <Grid item xs={7}>
-              <Box display='flex' position='fixed' top='20%' width='55%'>
+              <Box display='flex' position='fixed' top='22%' left='65%' className={classes.fixedItem}>
+                <Typography variant='h2' color='textSecondary' gutterBottom>
+                  Services
+                </Typography>
+              </Box>
+              <Box display='flex' position='fixed' top='28%' width='55%' className={classes.fixedItem}>
                 <ServicesSvg />
               </Box>
             </Grid>
