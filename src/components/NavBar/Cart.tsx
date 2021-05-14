@@ -141,7 +141,7 @@ const Cart: React.FC = () => {
                     </List>
                     <Divider />
                     <Button fullWidth color='secondary'>
-                      Checkout
+                      Checkout (total: {cart.map(trip => trip.price).reduce((accelerator, current) => accelerator + current)}$)
                     </Button>
                   </Box> :
                   <Box color='text.secondary'>
