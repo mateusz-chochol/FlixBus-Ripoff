@@ -8,6 +8,7 @@ import {
   getTab,
   setTab,
 } from 'redux/TabsSlice';
+import { useAuth } from 'contexts/AuthContext';
 import {
   useSelector,
   useDispatch
@@ -39,7 +40,8 @@ import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 import HelpRoundedIcon from '@material-ui/icons/HelpRounded';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import FeedbackIcon from '@material-ui/icons/Feedback';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import CreateIcon from '@material-ui/icons/Create';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Drawer from './Drawer';
 import AccountOptions from './AccountOptions';
 import Cart from './Cart';
@@ -115,17 +117,27 @@ const menuItems: AppBarMenuItem[] = [
   },
 ]
 
-const cartTab: AppBarMenuItem = {
-  index: 7,
-  key: 'Cart',
-  text: 'Cart',
-  icon: <ShoppingCartIcon />,
-  route: routes.cartPage,
-}
+const mobileTabsIfNotLoggedIn: AppBarMenuItem[] = [
+  {
+    index: 7,
+    key: 'Login',
+    text: 'Login',
+    icon: <AccountBoxIcon />,
+    route: routes.loginPage,
+  },
+  {
+    index: 8,
+    key: 'Singup',
+    text: 'Singup',
+    icon: <CreateIcon />,
+    route: routes.singupPage,
+  },
+]
 
 const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const classes = useStyles();
+  const { currentUser } = useAuth();
   const [openDrawerMenu, setOpenDrawerMenu] = useState<boolean>(false);
   const history = useHistory();
   const tabIndex = useSelector(getTab);
@@ -158,10 +170,14 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 >
                   <MenuIcon />
                 </IconButton>
-                <Drawer items={menuItems.concat(cartTab)} open={openDrawerMenu} setOpen={setOpenDrawerMenu} />
+                <Drawer
+                  items={currentUser ? menuItems : menuItems.concat(mobileTabsIfNotLoggedIn)}
+                  open={openDrawerMenu}
+                  setOpen={setOpenDrawerMenu}
+                />
               </Grid>
             </Hidden>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={9} md={2}>
               <Typography align='left'>
                 <Button
                   size="large"
@@ -197,14 +213,14 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Tabs>
               </Grid>
             </Hidden>
+            <Grid item md={1}>
+              <Cart />
+            </Grid>
             <Hidden smDown>
-              <Grid item md={1}>
-                <Cart />
+              <Grid item xs={4} md={2} >
+                <AccountOptions />
               </Grid>
             </Hidden>
-            <Grid item xs={4} md={2} >
-              <AccountOptions />
-            </Grid>
           </Grid>
         </Toolbar>
       </AppBar>

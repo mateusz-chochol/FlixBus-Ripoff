@@ -34,7 +34,6 @@ import CompanyPage from './CompanyPage/CompanyPage';
 import NewsetterPage from './NewsletterPage/NewsetterPage';
 import SendFeedbackPage from './SendFeedbackPage/SendFeedbackPage';
 import HelpPage from './HelpPage/HelpPage';
-import CartPage from './CartPage/CartPage';
 
 const styles = {
   paperContainer: {
@@ -85,9 +84,8 @@ const App = () => {
               <DefaultRoute exact path={routes.newsletterPage} component={NewsetterPage} tabIndex={4} />
               <DefaultRoute exact path={routes.sendFeedbackPage} component={SendFeedbackPage} tabIndex={5} />
               <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={6} />
-              <DefaultRoute exact path={routes.cartPage} component={CartPage} />
-              <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} />
-              <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} />
+              <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} tabIndex={7} />
+              <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} tabIndex={8} />
               <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
               <DefaultRoute path={routes.mainPage} component={MainPage} />
             </Switch>
