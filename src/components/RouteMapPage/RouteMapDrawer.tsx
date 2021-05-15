@@ -33,11 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
       width: drawerWidth,
-      flexShrink: 0,
+      flexShrink: 0
     },
     drawerPaper: {
       width: drawerWidth,
       zIndex: theme.zIndex.appBar - 1,
+      backgroundColor: 'whitesmoke'
     },
     grid: {
       margin: 0,

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     grid: {
       margin: 0,
       width: '100%',
-    },
+    }
   }),
 );
 
