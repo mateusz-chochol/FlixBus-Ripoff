@@ -98,7 +98,7 @@ const SendFeedbackPage: React.FC = () => {
           </Hidden>
           <Hidden mdUp>
             <Grid item xs={12}>
-              <Box paddingY={5} paddingX={6}>
+              <Box paddingTop={5} paddingBottom={2} paddingX={6}>
                 <Typography variant='h4' gutterBottom>
                   Mail
                 </Typography>
@@ -126,8 +126,8 @@ const SendFeedbackPage: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box paddingLeft={10} paddingRight={5}>
-                <SendFeedbackSvg width='95%' height='100%' />
+              <Box display='flex' justifyContent='center' paddingLeft={7} paddingRight={5}>
+                <SendFeedbackSvg width='85%' height='100%' />
               </Box>
             </Grid>
           </Hidden>
