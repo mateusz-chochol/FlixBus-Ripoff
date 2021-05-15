@@ -82,7 +82,7 @@ const NewsetterPage: React.FC = () => {
             </Box>
             <Box paddingY={5}>
               <Typography gutterBottom>
-                This info might not be up to date but I'll try to update it as frequently as possible
+                This info might not be up to date but I'll try to update it as frequently as possible.
               </Typography>
             </Box>
           </Grid>
@@ -106,7 +106,7 @@ const NewsetterPage: React.FC = () => {
             </Box>
             <Box paddingY={3} paddingX={8}>
               <Typography gutterBottom>
-                This info might not be up to date but I'll try to update it as frequently as possible
+                This info might not be up to date but I'll try to update it as frequently as possible.
               </Typography>
             </Box>
             <Box display='flex' justifyContent='center' paddingTop={5} paddingBottom={3}>
