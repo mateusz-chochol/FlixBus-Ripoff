@@ -136,7 +136,7 @@ const SendFeedbackPage: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box display='flex' justifyContent='center' paddingLeft={7} paddingRight={5}>
+              <Box display='flex' justifyContent='center' paddingLeft={7} paddingRight={5} paddingBottom={3}>
                 <SendFeedbackSvg width='85%' height='100%' />
               </Box>
             </Grid>
