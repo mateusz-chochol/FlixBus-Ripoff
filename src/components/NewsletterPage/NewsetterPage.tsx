@@ -1,8 +1,11 @@
 import React from 'react';
 import {
   Box,
-  // Typography,
+  Typography,
   Paper,
+  Hidden,
+  Grid,
+  Divider,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -10,10 +13,17 @@ import {
   Theme
 } from '@material-ui/core/styles';
 import { ReactComponent as NewsletterSvg } from 'svgs/newsletter.svg';
+import ItemsList from './ItemsList';
+import components from './components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    parentGrid: {
+      height: "calc(100vh - 75px)",
+      maxWidth: '100vw'
+    },
     paper: {
+      width: '100vw',
       overflow: 'auto',
       '&::-webkit-scrollbar': {
         width: '0.4em'
@@ -31,6 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
     fixedItem: {
       pointerEvents: 'none'
     },
+    nestedListItem: {
+      paddingLeft: theme.spacing(4),
+    },
   }),
 );
 
@@ -39,18 +52,69 @@ const NewsetterPage: React.FC = () => {
 
   return (
     <Paper square className={classes.paper}>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="calc(100vh - 75px)"
-        width="100vw"
-      >
-        <NewsletterSvg />
-        {/* <Typography variant='h1'>
-          <Box alignSelf='center' justifySelf='center'>Newsletter page</Box>
-        </Typography> */}
-      </Box>
+      <Grid container className={classes.parentGrid} alignItems='center' justify='center'>
+        <Hidden smDown>
+          <Grid item xs={6}>
+            <Box display='flex' position='fixed' top='14%' left='5%' className={classes.fixedItem}>
+              <Typography variant='h1' color='textSecondary' gutterBottom>
+                Newsletter
+              </Typography>
+            </Box>
+            <Box display='flex' position='fixed' top='30%' left='5%' width='45%' className={classes.fixedItem}>
+              <NewsletterSvg />
+            </Box>
+          </Grid>
+        </Hidden>
+        <Hidden smDown>
+          <Grid item xs={5}>
+            <Box paddingY={5}>
+              <Typography variant='h4' gutterBottom>
+                What has been done so far
+              </Typography>
+              <ItemsList components={components} toDisplay='done' />
+            </Box>
+            <Divider />
+            <Box paddingY={5}>
+              <Typography variant='h4' gutterBottom>
+                What still waits as to do
+              </Typography>
+              <ItemsList components={components} toDisplay='todo' />
+            </Box>
+            <Box paddingY={5}>
+              <Typography gutterBottom>
+                This info might not be up to date but I'll try to update it as frequently as possible
+              </Typography>
+            </Box>
+          </Grid>
+        </Hidden>
+        <Hidden mdUp>
+          <Grid item xs={12}>
+            <Box paddingY={5} paddingX={8}>
+              <Typography variant='h4' gutterBottom>
+                What has been done so far
+              </Typography>
+              <ItemsList components={components} toDisplay='done' />
+            </Box>
+            <Box paddingX={8}>
+              <Divider />
+            </Box>
+            <Box paddingY={5} paddingX={8}>
+              <Typography variant='h4' gutterBottom>
+                What still waits as todo
+              </Typography>
+              <ItemsList components={components} toDisplay='todo' />
+            </Box>
+            <Box paddingY={3} paddingX={8}>
+              <Typography gutterBottom>
+                This info might not be up to date but I'll try to update it as frequently as possible
+              </Typography>
+            </Box>
+            <Box display='flex' justifyContent='center' paddingTop={5} paddingBottom={3}>
+              <NewsletterSvg width='95%' height='100%' />
+            </Box>
+          </Grid>
+        </Hidden>
+      </Grid>
     </Paper>
   )
 }

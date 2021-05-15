@@ -127,10 +127,10 @@ Site should be visible under the address: http://localhost:5000
   - <del> think if user should be able to search trips if only one of departure / destination fields are filled </del> (Done)
   - <del> redo redux for locations (like it was done with trips) </del> (Done)
   - <del> redo some redux slices (the ones that are suppose to contact firebase) so they use createAsyncThunk </del> (Done)
-  - <del> move components functions to proper places </del>
-  - <del> change setting tab id so its done in default route component </del>
+  - <del> move components functions to proper places </del> (Done)
+  - <del> change setting tab id so its done in default route component </del> (Done)
   - add creating ids of everything with uuid.v4()
-  - <del> enable PWA capabilities </del>
+  - <del> enable PWA capabilities </del> (Done)
   - divide props folder into multiple smaller folders
   - <del> create cart for desktop version </del> (Done)
   - <del> create cart for mobile version </del> (Done [reused desktop version])
