@@ -55,12 +55,12 @@ const NewsetterPage: React.FC = () => {
       <Grid container className={classes.parentGrid} alignItems='center' justify='center'>
         <Hidden smDown>
           <Grid item xs={6}>
-            <Box display='flex' position='fixed' top='14%' left='5%' className={classes.fixedItem}>
+            <Box display='flex' position='fixed' top='18%' left='5%' className={classes.fixedItem}>
               <Typography variant='h1' color='textSecondary' gutterBottom>
                 Newsletter
               </Typography>
             </Box>
-            <Box display='flex' position='fixed' top='30%' left='5%' width='45%' className={classes.fixedItem}>
+            <Box display='flex' position='fixed' top='37%' left='5%' width='45%' className={classes.fixedItem}>
               <NewsletterSvg />
             </Box>
           </Grid>
