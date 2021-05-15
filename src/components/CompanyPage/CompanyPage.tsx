@@ -6,8 +6,6 @@ import {
   Grid,
   Link,
   Hidden,
-  withWidth,
-  WithWidth,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -51,9 +49,8 @@ const MyInfo: React.FC = () => {
   )
 }
 
-const CompanyPage: React.FC<WithWidth> = ({ width }) => {
+const CompanyPage: React.FC = () => {
   const classes = useStyles();
-  const isSmallScreen = width === 'xs' || width === 'sm';
 
   return (
     <Paper square className={classes.paper}>
@@ -84,7 +81,7 @@ const CompanyPage: React.FC<WithWidth> = ({ width }) => {
             </Grid>
             <Grid item xs={12}>
               <Box display='flex' justifyContent='center' paddingY={3} paddingX={3}>
-                <CompanySvg width='95%' height={isSmallScreen ? '100%' : undefined} />
+                <CompanySvg width='95%' height='100%' />
               </Box>
             </Grid>
           </Hidden>
@@ -94,4 +91,4 @@ const CompanyPage: React.FC<WithWidth> = ({ width }) => {
   )
 }
 
-export default withWidth()(CompanyPage);
+export default CompanyPage;
