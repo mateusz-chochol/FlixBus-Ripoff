@@ -76,7 +76,7 @@ const NewsetterPage: React.FC = () => {
             <Divider />
             <Box paddingY={5}>
               <Typography variant='h4' gutterBottom>
-                What still waits as to do
+                What still waits as todo
               </Typography>
               <ItemsList components={components} toDisplay='todo' />
             </Box>
