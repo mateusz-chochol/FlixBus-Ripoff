@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /img.jpg
+Disallow: /main_page.svg
 Disallow: /favicon.ico
 Disallow: /map_markers/
 Disallow: /icons/
