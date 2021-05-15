@@ -64,6 +64,11 @@ const SendFeedbackPage: React.FC = () => {
                 <Typography variant='h4' gutterBottom>
                   Mail
                 </Typography>
+                <Box paddingBottom={2}>
+                  <Typography variant='subtitle1' gutterBottom>
+                    Wanna share a tip or report a bug or just waste some time filling out the form that doesn't do anything? Try sending a mail below.
+                  </Typography>
+                </Box>
                 <TextField
                   multiline
                   inputProps={{
@@ -102,6 +107,11 @@ const SendFeedbackPage: React.FC = () => {
                 <Typography variant='h4' gutterBottom>
                   Mail
                 </Typography>
+                <Box paddingBottom={2}>
+                  <Typography variant='subtitle1' gutterBottom>
+                    Wanna share a tip or report a bug or just waste some time filling out the form that doesn't do anything? Try sending a mail below.
+                  </Typography>
+                </Box>
                 <TextField
                   multiline
                   inputProps={{
