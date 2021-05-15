@@ -37,8 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerPaper: {
       width: drawerWidth,
-      zIndex: theme.zIndex.appBar - 1,
-      backgroundColor: 'whitesmoke'
+      zIndex: theme.zIndex.appBar - 1
     },
     grid: {
       margin: 0,
