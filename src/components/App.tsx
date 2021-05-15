@@ -37,10 +37,10 @@ import HelpPage from './HelpPage/HelpPage';
 
 const styles = {
   paperContainer: {
-    //background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,223,166,1) 0%, rgba(0,119,232,1) 100%)',
-    backgroundImage: `url(${process.env.PUBLIC_URL}/background.webp)`,
+    backgroundImage: `url(${process.env.PUBLIC_URL}/main_page.svg)`,
     backgroundSize: 'cover',
-    backgroundPosition: '50% 50%',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
     backgroundColor: 'whitesmoke'
   }
 };

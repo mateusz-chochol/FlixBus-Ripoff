@@ -32,7 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '&::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.2)',
-      }
+      },
+      backgroundSize: 'cover',
+      backgroundPosition: '50% 50%',
+      backgroundColor: 'whitesmoke'
     },
     fixedItem: {
       pointerEvents: 'none'
@@ -43,13 +46,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const ServicesPage: React.FC<WithWidth> = ({ width }) => {
   const classes = useStyles();
   const isSmallScreen = width === 'xs' || width === 'sm';
+  const paddingX = isSmallScreen ? 5 : 10;
+  const paddingY = 3;
 
   return (
     <Paper square className={classes.paper}>
       <Box paddingTop={2} paddingBottom={2}>
         <Grid container className={classes.parentGrid} alignItems='center' justify='center'>
           <Grid item xs={isSmallScreen ? 12 : 5}>
-            <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
+            <Box paddingY={paddingY} paddingX={paddingX}>
               <Typography variant='h4' gutterBottom>
                 User
               </Typography>
@@ -57,10 +62,10 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 App allows to register a user via email and password and then log in as one. After logging in user grants access to changing their profile info, looking at their history and syncing carts between muttiple browsers and tabs.
               </Typography>
             </Box>
-            <Box paddingX={3}>
-              <Divider variant='middle' />
+            <Box paddingX={paddingX}>
+              <Divider />
             </Box>
-            <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
+            <Box paddingY={paddingY} paddingX={paddingX}>
               <Typography variant='h4' gutterBottom>
                 Searching
               </Typography>
@@ -68,10 +73,10 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 User can either use main page search bar to search for trips with given date and departure and destination places or they might use route map page to display all accessible locations and select them via clicking on map markers (or by using search box that behaves similary to the main page one)
               </Typography>
             </Box>
-            <Box paddingX={3}>
-              <Divider variant='middle' />
+            <Box paddingX={paddingX}>
+              <Divider />
             </Box>
-            <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
+            <Box paddingY={paddingY} paddingX={paddingX}>
               <Typography variant='h4' gutterBottom>
                 Main flow
               </Typography>
@@ -79,10 +84,10 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 After finding appropriate trips user can add them to their cart (which is going to be saved on their user profile granted that they are logged in) and from there by clicking the checkout button user can proceed to simulate seats reservation on the selected trips.
               </Typography>
             </Box>
-            <Box paddingX={3}>
-              <Divider variant='middle' />
+            <Box paddingX={paddingX}>
+              <Divider />
             </Box>
-            <Box paddingTop={3} paddingBottom={3} paddingLeft={5} paddingRight={5}>
+            <Box paddingY={paddingY} paddingX={paddingX}>
               <Typography variant='h4' gutterBottom>
                 Data
               </Typography>
@@ -103,7 +108,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                   Services
                 </Typography>
               </Box>
-              <Box display='flex' position='fixed' top='30%' width='55%' className={classes.fixedItem}>
+              <Box display='flex' position='fixed' top='30%' width='53%' className={classes.fixedItem}>
                 <ServicesSvg />
               </Box>
             </Grid>
