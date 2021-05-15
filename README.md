@@ -92,9 +92,10 @@ Site should be visible under the address: http://localhost:5000
   - <del> create blank page with some static info </del> (Done)
   - <del> think about what this page should contain </del> (Done)
   - <del> fill the page with some static info </del> (Done)
-- company page:
+- <del> company page: </del> (Done)
   - <del> create blank page with some static info </del> (Done)
-  - think about what this page should contain
+  - <del> think about what this page should contain </del> (Done)
+  - <del> fill the page with some static info </del> (Done)
 - newsletter page:
   - <del> create blank page with some static info </del> (Done)
   - think about what this page should contain
