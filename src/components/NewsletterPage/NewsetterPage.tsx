@@ -41,9 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
     fixedItem: {
       pointerEvents: 'none'
     },
-    nestedListItem: {
-      paddingLeft: theme.spacing(4),
-    },
   }),
 );
 
