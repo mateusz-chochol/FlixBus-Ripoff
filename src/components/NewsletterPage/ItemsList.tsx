@@ -18,7 +18,6 @@ import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import ItemsListProps from 'types/Props/NewsletterPage/ItemsListProps';
 import OpenedState from 'types/Objects/OpenedState';
 import ListItemToDisplay from 'types/Objects/ListItemToDisplay';
-import defaultOpenedState from './defaultOpenedState';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,7 +29,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ItemsList: React.FC<ItemsListProps> = ({ components, toDisplay }) => {
   const classes = useStyles();
-  const [opened, setOpened] = useState<OpenedState[]>(defaultOpenedState)
+  const [opened, setOpened] = useState<OpenedState[]>(components.map(component => {
+    return {
+      name: component.name,
+      isOpen: false,
+    }
+  }))
   const collection = toDisplay === 'done' ? components.map(component => {
     return {
       name: component.name,

@@ -8,6 +8,7 @@ import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 import HelpRoundedIcon from '@material-ui/icons/HelpRounded';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import FeedbackIcon from '@material-ui/icons/Feedback';
+import PaymentIcon from '@material-ui/icons/Payment';
 
 const components: Component[] = [
   {
@@ -114,6 +115,17 @@ const components: Component[] = [
       'Refactor everything and split it into multiple components at the end',
     ],
     todo: [],
+  },
+  {
+    icon: <PaymentIcon />,
+    name: 'Checkout page',
+    done: [],
+    todo: [
+      'Create forms for people',
+      'Create forms for contact',
+      'Create forms for payment',
+      'Create trip summary',
+    ],
   },
   {
     icon: <SettingsIcon />,

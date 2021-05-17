@@ -127,6 +127,11 @@ Site should be visible under the address: http://localhost:5000
   - <del> create blank page with some trip info </del> (Done)
   - <del> create basic layout for the page </del> (Done)
   - <del> think about what this page should contain </del> (Done)
+- checkout page:
+  - create forms for people
+  - create forms for contact
+  - create forms for payment
+  - create trip summary
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - move all data to the firebase backend and create api calls that will fetch them when needed
@@ -141,3 +146,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> create cart for desktop version </del> (Done)
   - <del> create cart for mobile version </del> (Done [reused desktop version])
   - make checkout button do something
+  - add counting number of passengers in the cart
