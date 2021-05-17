@@ -31,7 +31,7 @@ const EmptyCart: React.FC = () => {
     <Box display="flex">
       <Grid container className={classes.grid} justify='center'>
         <Grid item xs={12} container alignContent='center' justify='center'>
-          <Box paddingX={5}>
+          <Box paddingX={5} paddingTop={5}>
             <Typography color='textSecondary' variant='h2' gutterBottom align='center'>
               Your cart is empty.
             </Typography>
