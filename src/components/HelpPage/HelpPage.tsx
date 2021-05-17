@@ -51,7 +51,7 @@ const HelpPage: React.FC = () => {
             <Grid item xs={6}>
               <Box display='flex' position='fixed' top='17%' left='19%' className={classes.fixedItem}>
                 <Typography variant='h1' color='textSecondary' gutterBottom>
-                  Help
+                  FAQ
                 </Typography>
               </Box>
               <Box display='flex' position='fixed' top='30%' left='5%' width='45%' className={classes.fixedItem}>
