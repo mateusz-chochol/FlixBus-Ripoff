@@ -84,6 +84,7 @@ const Cart: React.FC = () => {
 
   const handleCheckoutButtonClick = () => {
     history.push(routes.checkoutPage);
+    setAnchorEl(null);
   }
 
   useEffect(() => {
