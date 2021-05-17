@@ -46,7 +46,7 @@ const HelpInfo: React.FC = () => {
       <TextCard cardTextTable={cardTextTables[0]} />
       <Box paddingTop={3}>
         <Typography variant='subtitle1' gutterBottom>
-          Or do it with <b>docker</b>
+          Or you can do it with <b>docker</b>
         </Typography>
       </Box>
       <Box paddingBottom={5}>

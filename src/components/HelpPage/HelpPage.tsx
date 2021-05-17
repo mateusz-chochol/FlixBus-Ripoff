@@ -63,11 +63,6 @@ const HelpPage: React.FC = () => {
                 <HelpInfo />
               </Box>
             </Grid>
-            {/* <Grid item xs={12}>
-              <Box display='flex' justifyContent='center' paddingBottom={3}>
-                <HelpSvg width='95%' />
-              </Box>
-            </Grid> */}
           </Hidden>
           <Hidden mdUp>
             <Grid item xs={12}>
