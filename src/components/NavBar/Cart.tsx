@@ -28,6 +28,8 @@ import {
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import { useHistory } from 'react-router-dom';
+import { routes } from 'routes';
 import {
   useDispatch,
   useSelector
@@ -67,6 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Cart: React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector(getCart);
   const locations = useSelector(getAllLocations);
@@ -77,6 +80,10 @@ const Cart: React.FC = () => {
   const handleRemoveFromCartButtonClick = (trip: Trip) => {
     dispatch(removeFromCartActionCreator(trip));
     showSuccess(`Trip has been removed from your cart (id: ${trip.id})`)
+  }
+
+  const handleCheckoutButtonClick = () => {
+    history.push(routes.checkoutPage);
   }
 
   useEffect(() => {
@@ -142,7 +149,7 @@ const Cart: React.FC = () => {
                       })}
                     </List>
                     <Divider />
-                    <Button fullWidth color='secondary'>
+                    <Button fullWidth color='secondary' onClick={handleCheckoutButtonClick}>
                       Checkout (total: {cart.map(({ trip, passengersCount }) => trip.price * passengersCount).reduce((accelerator, current) => accelerator + current)}$)
                     </Button>
                   </Box> :
