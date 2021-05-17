@@ -59,7 +59,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 User
               </Typography>
               <Typography variant='subtitle1' gutterBottom>
-                App allows to register a user via email and password and then log in as one. After logging in user grants access to changing their profile info, looking at their history and syncing carts between muttiple browsers and tabs.
+                App allows to register a user via email and password and then log in as one. After logging in user grants access to changing their profile info, looking at their history and syncing carts between multiple browsers and tabs.
               </Typography>
             </Box>
             <Box paddingX={paddingX}>
