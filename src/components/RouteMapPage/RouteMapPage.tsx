@@ -150,11 +150,14 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       >
         <DialogTitle>Add trip to cart</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText>
             {selectedTrip !== undefined ?
               <>
-                <Typography>Do you want to add to cart trip from {allLocations.find(location => location.id === selectedTrip.startLocationId)?.name} to {allLocations.find(location => location.id === selectedTrip.endLocationId)?.name}?</Typography>
+                <Typography>Do you want to add to cart trip from {allLocations.find(location => location.id === selectedTrip.startLocationId)?.name} to {allLocations.find(location => location.id === selectedTrip.endLocationId)?.name} for 1 passenger?</Typography>
                 <Typography>Departure: {selectedTrip.hour} | {selectedTrip.date}, price: {selectedTrip.price}$, trip duration: {selectedTrip.tripDuration}h, seats left: {selectedTrip.seatsLeft}</Typography>
+                <Box paddingTop={3}>
+                  <Typography>For an option of adding more passengers or filtering the results please press the search button.</Typography>
+                </Box>
               </> :
               <Typography>Error, please reload the page</Typography>
             }
