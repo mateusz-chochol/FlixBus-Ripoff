@@ -106,9 +106,10 @@ Site should be visible under the address: http://localhost:5000
   - <del> create blank page with some static info </del> (Done)
   - <del> think about what this page should contain </del> (Done)
   - <del> fill the page with some static info </del> (Done)
-- help page:
+- <del> help page: </del> (Done)
   - <del> create blank page with some static info </del> (Done)
-  - think about what this page should contain
+  - <del> think about what this page should contain </del> (Done)
+  - <del> fill the page with some static info </del> (Done)
 - <del> results page: </del> (Done)
   - <del> create blank page with some static info </del> (Done)
   - <del> create basic layout for the page </del> (Done)
