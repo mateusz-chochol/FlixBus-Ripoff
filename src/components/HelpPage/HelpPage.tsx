@@ -72,7 +72,7 @@ const HelpPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Box paddingX={8}>
-                <Typography align='center' gutterBottom color='textSecondary'>
+                <Typography gutterBottom color='textSecondary'>
                   Click on the code windows to display copy button.
                 </Typography>
               </Box>

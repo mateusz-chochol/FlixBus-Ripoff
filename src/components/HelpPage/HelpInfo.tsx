@@ -51,6 +51,11 @@ const HelpInfo: React.FC = () => {
       </Box>
       <Box paddingBottom={5}>
         <TextCard cardTextTable={cardTextTables[1]} />
+        <Box paddingTop={3}>
+          <Typography variant='subtitle1'>
+            Site should be visible under the address: <Link href='http://localhost:5000'>http://localhost:5000</Link>
+          </Typography>
+        </Box>
       </Box>
       <Typography variant='h4' gutterBottom>
         What are the prerequisites
