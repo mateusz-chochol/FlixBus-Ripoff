@@ -71,6 +71,13 @@ const HelpPage: React.FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
+              <Box paddingX={8}>
+                <Typography align='center' gutterBottom color='textSecondary'>
+                  Click on the code windows to display copy button.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
               <Box display='flex' justifyContent='center' paddingY={3} paddingX={3}>
                 <HelpSvg width='95%' height='100%' />
               </Box>
