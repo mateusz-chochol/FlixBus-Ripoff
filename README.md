@@ -137,7 +137,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> change setting tab id so its done in default route component </del> (Done)
   - add creating ids of everything with uuid.v4()
   - <del> enable PWA capabilities </del> (Done)
-  - divide props folder into multiple smaller folders
+  - <del> divide props folder into multiple smaller folders </del> (Done)
   - <del> create cart for desktop version </del> (Done)
   - <del> create cart for mobile version </del> (Done [reused desktop version])
   - make checkout button do something
