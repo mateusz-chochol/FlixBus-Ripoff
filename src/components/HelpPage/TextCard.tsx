@@ -59,10 +59,10 @@ const TextCard: React.FC<{ cardTextTable: string[] }> = ({ cardTextTable }) => {
     try {
       navigator.clipboard.writeText(textToCopy);
 
-      showSuccess('Text copied to clipboard!');
+      showSuccess('Code copied to clipboard!');
     }
     catch {
-      showError('Unable to copy the text to clipboard.');
+      showError('Unable to copy the code to clipboard.');
     }
   }
 
