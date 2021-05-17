@@ -11,5 +11,6 @@ export default interface ResultsTripsListProps {
   departureDateAsString?: string,
   departureId: number,
   destinationId: number,
+  handleAddToCartButtonClick: (trip: Trip) => void,
   isSmallScreen: boolean,
 }

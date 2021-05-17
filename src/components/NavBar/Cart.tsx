@@ -80,7 +80,7 @@ const Cart: React.FC = () => {
   }
 
   useEffect(() => {
-    dispatch(getLocationsByIdArrayAsync(cart.map(trip => trip.id)));
+    dispatch(getLocationsByIdArrayAsync(cart.map(cartTrip => cartTrip.trip.id)));
   }, [cart, dispatch])
 
   return (
@@ -106,7 +106,7 @@ const Cart: React.FC = () => {
                 {cart.length > 0 ?
                   <Box>
                     <List className={classes.list}>
-                      {cart.map(trip => {
+                      {cart.map(({ trip, passengersCount }) => {
                         return (
                           <ListItem key={trip.id}>
                             <Grid container direction='row'>
@@ -127,7 +127,7 @@ const Cart: React.FC = () => {
                                 </Grid>
                               </Grid>
                               <Grid item>
-                                <ListItemText secondary={`${trip.price}$, ${trip.hour}, ${trip.date}`} />
+                                <ListItemText secondary={`${trip.price * passengersCount}$, ${trip.hour}, ${trip.date}, ${passengersCount} seat(s)`} />
                               </Grid>
                             </Grid>
                             <ListItemSecondaryAction>
@@ -143,7 +143,7 @@ const Cart: React.FC = () => {
                     </List>
                     <Divider />
                     <Button fullWidth color='secondary'>
-                      Checkout (total: {cart.map(trip => trip.price).reduce((accelerator, current) => accelerator + current)}$)
+                      Checkout (total: {cart.map(({ trip, passengersCount }) => trip.price * passengersCount).reduce((accelerator, current) => accelerator + current)}$)
                     </Button>
                   </Box> :
                   <Box color='text.secondary'>

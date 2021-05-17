@@ -78,7 +78,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
 
   const handleAddTripToCartClick = () => {
     if (selectedTrip) {
-      dispatch(addToCartActionCreator(selectedTrip));
+      dispatch(addToCartActionCreator({ trip: selectedTrip, passengersCount: 1 }));
       showSuccess(`Trip has been added to your cart (id: ${selectedTrip.id})`);
     }
 
@@ -178,7 +178,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           departureDate={departureDate}
           setDepartureDate={setDepartureDate}
           tripsDestinations={tripsDestinations}
-          trips={trips.filter(trip => !cart.map(cartTrip => cartTrip.id).includes(trip.id))}
+          trips={trips.filter(trip => !cart.map(({ trip }) => trip.id).includes(trip.id))}
           allLocations={allLocations}
           handleTripsSummariesListItemClick={handleTripsSummariesListItemClick}
           handleFullTripsListItemClick={handleFullTripsListItemClick}

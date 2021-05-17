@@ -22,17 +22,9 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import moment from 'moment';
-import { useNotifications } from 'components/Misc/Notifications';
-import {
-  getCart,
-  addToCartActionCreator
-} from 'redux/CartSlice';
-import {
-  useSelector,
-  useDispatch
-} from 'react-redux';
+import { getCart } from 'redux/CartSlice';
+import { useSelector } from 'react-redux';
 import ResultsTripsListProps from 'types/Props/ResultsPage/ResultsTripsListProps';
-import Trip from 'types/Objects/Trip';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,19 +50,13 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
   departureDateAsString,
   departureId,
   destinationId,
+  handleAddToCartButtonClick,
   isSmallScreen
 }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { showSuccess } = useNotifications();
   const cart = useSelector(getCart);
   const [isReadyToRender, setIsReadyToRender] = useState<boolean>(false);
-  const tripsToDisplayWithourCartTrips = tripsToDisplay.filter(trip => !cart.map(cartTrip => cartTrip.id).includes(trip.id));
-
-  const handleAddToCartButtonClick = (trip: Trip) => {
-    dispatch(addToCartActionCreator(trip));
-    showSuccess(`Trip has been added to your cart (id: ${trip.id})`);
-  }
+  const tripsToDisplayWithourCartTrips = tripsToDisplay.filter(trip => !cart.map(({ trip }) => trip.id).includes(trip.id));
 
   const getNoResultsMessage = () => {
     if (!departure || !destination) {

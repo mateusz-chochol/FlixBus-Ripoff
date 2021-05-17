@@ -4,16 +4,16 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit';
 import { AppState } from './RootReducer';
-import Trip from 'types/Objects/Trip';
+import CartTrip from 'types/Objects/CartTrip'
 
-const cartInitialState: Trip[] = []
+const cartInitialState: CartTrip[] = []
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: cartInitialState,
   reducers: {
-    addToCart: (state, { payload }: PayloadAction<Trip>) => {
-      if (!state.find(trip => trip.id === payload.id)) {
+    addToCart: (state, { payload }: PayloadAction<CartTrip>) => {
+      if (!state.find(cartTrip => cartTrip.trip.id === payload.trip.id)) {
         return [
           ...state,
           payload
@@ -21,7 +21,7 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, { payload }: PayloadAction<{ id: number }>) => {
-      const tripToRemoveIndex = current(state).findIndex(trip => trip.id === payload.id)
+      const tripToRemoveIndex = current(state).findIndex(cartTrip => cartTrip.trip.id === payload.id)
 
       if (tripToRemoveIndex > -1) {
         state.splice(tripToRemoveIndex, 1);

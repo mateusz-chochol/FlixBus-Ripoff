@@ -16,6 +16,7 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import moment from 'moment';
+import { useNotifications } from 'components/Misc/Notifications';
 import {
   useSelector,
   useDispatch,
@@ -35,6 +36,7 @@ import {
   getReturnTripsByReturnDateAsync,
   clearReturnTripsActionCreator,
 } from 'redux/TripsSlice';
+import { addToCartActionCreator } from 'redux/CartSlice';
 import ResultsPageProps from 'types/Props/ResultsPage/ResultsPageProps';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
@@ -100,6 +102,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm' || width === 'md';
   const { departureIdAsString, destinationIdAsString, departureDateAsString, returnDateAsString } = match.params;
   const dispatch = useDispatch();
+  const { showSuccess } = useNotifications();
   const allLocations = useSelector(getAllLocations);
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
@@ -126,6 +129,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [departureHourFilter, setDepartureHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [passengersCount, setPassengersCount] = useState<number>(1);
+
+  const handleAddToCartButtonClick = (trip: Trip) => {
+    dispatch(addToCartActionCreator({ trip: trip, passengersCount: passengersCount }));
+    showSuccess(`Trip has been added to your cart (id: ${trip.id})`);
+  }
 
   useEffect(() => {
     if (!isNaN(departureId) && !isNaN(destinationId)) {
@@ -355,6 +363,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                     departureDateAsString={departureDateAsString}
                     departureId={departureId}
                     destinationId={destinationId}
+                    handleAddToCartButtonClick={handleAddToCartButtonClick}
                     isSmallScreen={isSmallScreen}
                   />
                 </Grid>
@@ -374,6 +383,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
                         departureDateAsString={returnDateAsString}
                         departureId={destinationId}
                         destinationId={departureId}
+                        handleAddToCartButtonClick={handleAddToCartButtonClick}
                         isSmallScreen={isSmallScreen}
                       />
                     </Grid>
