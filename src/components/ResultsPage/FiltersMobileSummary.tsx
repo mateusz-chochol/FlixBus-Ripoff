@@ -22,7 +22,7 @@ import {
 } from '@material-ui/core/styles';
 import moment from 'moment';
 import FiltersMenu from './FiltersMenu';
-import FiltersMobileSummaryProps from 'types/Props/FiltersMobileSummaryProps';
+import FiltersMobileSummaryProps from 'types/Props/ResultsPage/FiltersMobileSummaryProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

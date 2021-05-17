@@ -3,7 +3,7 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
-import FullMainPageProps from 'types/Props/FullMainPageProps';
+import FullMainPageProps from 'types/Props/MainPage/FullMainPageProps';
 import DepartureDestinationFormFull from 'components/DepartureDestinationForm/DepartureDestinationFormFull';
 
 const FullMainPage: React.FC<FullMainPageProps> = ({

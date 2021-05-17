@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core/styles';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useNotifications } from 'components/Misc/Notifications';
+import TextCardProps from 'types/Props/HelpPage/TextCardProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const TextCard: React.FC<{ cardTextTable: string[] }> = ({ cardTextTable }) => {
+const TextCard: React.FC<TextCardProps> = ({ cardTextTable }) => {
   const classes = useStyles();
   const { showSuccess, showError } = useNotifications();
   const [shouldDisplayButton, setShouldDisplayButton] = useState<boolean>(false);

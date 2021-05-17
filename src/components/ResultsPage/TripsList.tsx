@@ -31,7 +31,7 @@ import {
   useSelector,
   useDispatch
 } from 'react-redux';
-import ResultsTripsListProps from 'types/Props/ResultsTripsListProps';
+import ResultsTripsListProps from 'types/Props/ResultsPage/ResultsTripsListProps';
 import Trip from 'types/Objects/Trip';
 
 const useStyles = makeStyles((theme: Theme) =>

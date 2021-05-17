@@ -20,7 +20,7 @@ import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import TripType from 'types/Objects/TripType';
 import SearchButton from 'components/Misc/SearchButton';
 import SwitchLocationsButton from 'components/Misc/SwitchLocationsButton';
-import DepartureDestinationFormSmallProps from 'types/Props/DepartureDestinationFormSmallProps';
+import DepartureDestinationFormSmallProps from 'types/Props/DepartureDestinationForm/DepartureDestinationFormSmallProps';
 import DateFields from './DateFields';
 import moment from 'moment';
 

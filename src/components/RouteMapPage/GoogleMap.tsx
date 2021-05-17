@@ -21,7 +21,7 @@ import {
 import mapStyles from "./mapStyles";
 import Location from 'types/Objects/Location';
 import Coordinates from 'types/Objects/Coordinates';
-import GoogleMapProps from 'types/Props/GoogleMapProps';
+import GoogleMapProps from 'types/Props/RouteMapPage/GoogleMapProps';
 
 const options = {
   styles: mapStyles,

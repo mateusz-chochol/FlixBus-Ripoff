@@ -24,7 +24,7 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import TripsList from './TripsList';
-import RouteMapDrawerProps from 'types/Props/RouteMapDrawerProps';
+import RouteMapDrawerProps from 'types/Props/RouteMapPage/RouteMapDrawerProps';
 import moment from 'moment';
 
 const drawerWidth = 260;

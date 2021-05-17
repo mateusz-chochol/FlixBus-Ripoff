@@ -15,7 +15,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
-import ItemsListProps from 'types/Props/ItemsListProps';
+import ItemsListProps from 'types/Props/NewsletterPage/ItemsListProps';
 import OpenedState from 'types/Objects/OpenedState';
 import ListItemToDisplay from 'types/Objects/ListItemToDisplay';
 import defaultOpenedState from './defaultOpenedState';

@@ -20,7 +20,7 @@ import {
   Box,
   Grid,
 } from '@material-ui/core';
-import DrawerProps from 'types/Props/DrawerProps';
+import DrawerProps from 'types/Props/NavBar/DrawerProps';
 import AppBarMenuItem from 'types/Objects/AppBarMenuItem';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
 import TripType from 'types/Objects/TripType';
-import MainPageDateFieldsProps from 'types/Props/MainPageDateFieldsProps';
+import MainPageDateFieldsProps from 'types/Props/DepartureDestinationForm/MainPageDateFieldsProps';
 
 const DateFields: React.FC<MainPageDateFieldsProps> = ({
   departureDate,

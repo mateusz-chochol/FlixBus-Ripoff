@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { useNotifications } from 'components/Misc/Notifications';
 import { getReturnTripsByReturnDateAsync } from 'redux/TripsSlice';
-import SearchButtonProps from 'types/Props/SearchButtonProps';
+import SearchButtonProps from 'types/Props/Misc/SearchButtonProps';
 import { IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 

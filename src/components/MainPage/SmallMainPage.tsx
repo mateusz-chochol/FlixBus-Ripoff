@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
-import SmallMainPageProps from 'types/Props/SmallMainPageProps';
+import SmallMainPageProps from 'types/Props/MainPage/SmallMainPageProps';
 import DepartureDestinationFormSmall from 'components/DepartureDestinationForm/DepartureDestinationFormSmall';
 
 const SmallMainPage: React.FC<SmallMainPageProps> = ({

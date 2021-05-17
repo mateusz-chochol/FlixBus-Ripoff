@@ -5,7 +5,7 @@ import {
   Typography,
   ListSubheader,
 } from '@material-ui/core';
-import MapTripsListProps from 'types/Props/MapTripsListProps';
+import MapTripsListProps from 'types/Props/RouteMapPage/MapTripsListProps';
 import TripsSummariesList from './TripsSummariesList';
 import FullTripsList from './FullTripsList';
 

@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TripPlaceFormProps from 'types/Props/TripPlaceFormProps';
+import TripPlaceFormProps from 'types/Props/Misc/TripPlaceFormProps';
 import TextField from '@material-ui/core/TextField';
 
 const TripPlaceForm: React.FC<TripPlaceFormProps> = ({

@@ -21,7 +21,7 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import FooterMenuProps from 'types/Props/FooterMenuProps';
+import FooterMenuProps from 'types/Props/RouteMapPage/FooterMenuProps';
 import moment from 'moment';
 
 const useStyles = makeStyles((theme: Theme) =>

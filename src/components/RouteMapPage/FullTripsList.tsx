@@ -13,7 +13,7 @@ import {
   createStyles
 } from '@material-ui/core/styles';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import FullTripsProps from 'types/Props/FullTripsProps'
+import FullTripsProps from 'types/Props/RouteMapPage/FullTripsProps'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

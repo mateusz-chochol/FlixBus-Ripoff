@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom';
 import { setTab } from 'redux/TabsSlice';
 import { useDispatch } from 'react-redux';
-import DefaultRouteProps from 'types/Props/DefaultRouteProps';
+import DefaultRouteProps from 'types/Props/Misc/DefaultRouteProps';
 
 const DefaultRoute: React.FC<DefaultRouteProps> = ({ tabIndex, ...props }) => {
   const dispatch = useDispatch();

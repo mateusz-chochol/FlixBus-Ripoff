@@ -26,7 +26,7 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core/styles';
-import FiltersMenuProps from 'types/Props/FiltersMenuProps';
+import FiltersMenuProps from 'types/Props/ResultsPage/FiltersMenuProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

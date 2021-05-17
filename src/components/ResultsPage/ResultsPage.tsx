@@ -35,7 +35,7 @@ import {
   getReturnTripsByReturnDateAsync,
   clearReturnTripsActionCreator,
 } from 'redux/TripsSlice';
-import ResultsPageProps from 'types/Props/ResultsPageProps';
+import ResultsPageProps from 'types/Props/ResultsPage/ResultsPageProps';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
 import Trip from 'types/Objects/Trip';
