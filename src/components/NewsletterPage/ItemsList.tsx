@@ -61,11 +61,11 @@ const ItemsList: React.FC<ItemsListProps> = ({ components, toDisplay }) => {
 
   return (
     <List>
-      {collection.map(component => {
+      {collection.map((component, index) => {
         if (component.toDisplay.length > 0) {
           return (
             <>
-              <ListItem button onClick={() => handleClick(component)}>
+              <ListItem key={index} button onClick={() => handleClick(component)}>
                 <ListItemIcon>
                   {component.icon}
                 </ListItemIcon>
@@ -74,9 +74,9 @@ const ItemsList: React.FC<ItemsListProps> = ({ components, toDisplay }) => {
               </ListItem>
               <Collapse in={opened.find(openedComponent => openedComponent.name === component.name)?.isOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  {component.toDisplay.map(thing => {
+                  {component.toDisplay.map((thing, index) => {
                     return (
-                      <ListItem className={classes.nestedListItem}>
+                      <ListItem key={index} className={classes.nestedListItem}>
                         <ListItemIcon>
                           {smallItemIcon}
                         </ListItemIcon>
