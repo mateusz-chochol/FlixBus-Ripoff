@@ -128,11 +128,11 @@ const components: Component[] = [
       'Enable PWA capabilities',
       'Create cart for desktop version',
       'Create cart for mobile version',
+      'Divide props folder into multiple smaller folders',
     ],
     todo: [
       'Move all data to the firebase backend and create api calls that will fetch them when needed',
       'Add creating ids of everything with uuid.v4()',
-      'Divide props folder into multiple smaller folders',
       'Make checkout button do something',
     ],
   },
