@@ -145,5 +145,5 @@ Site should be visible under the address: http://localhost:5000
   - <del> divide props folder into multiple smaller folders </del> (Done)
   - <del> create cart for desktop version </del> (Done)
   - <del> create cart for mobile version </del> (Done [reused desktop version])
-  - make checkout button do something
-  - add counting number of passengers in the cart
+  - <del> make checkout button do something </del> (Done)
+  - <del> add counting number of passengers in the cart </del> (Done)
