@@ -48,15 +48,16 @@ Site should be visible under the address: http://localhost:5000
 - singup (as of now api keys have expired so it throws an error)
 - password reseting (it sends a message to the registered email) (as of now api keys have expired so it throws an error)
 - notifications
-- main page
 - routing
 - private routing (i.e. you cannot go to the login page if you are already logged in)
 - transitioning to mobile view on smaller screens (i.e. drawer with tabs instead of tabs in the app bar)
+- main page
 - route map page
 - results page
 - services page
 - company page
 - newsletter page
+- help page
 - running as mobile app (PWA)
 
 ## Current TODOs:
