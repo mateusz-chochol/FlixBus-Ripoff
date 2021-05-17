@@ -3,7 +3,7 @@ Like the name suggests it's a bus travel website that tries to imitate FlixBus
 
 It uses firebase as a hosting service: https://flixbus-development.web.app/ (demo so far)
 
-App is installable as a PWA (Progressive Web App) on mobile devices. To install the app open the site from the URL above and press "Add to home screen" bar that shows up at the bottom of the screen
+App is installable as a PWA (Progressive Web App) on both mobile and desktop devices. To install the app open the site from the URL above and press "Add to home screen" bar that shows up at the bottom of the screen
 
 ## Prerequisites for local deployment
 
