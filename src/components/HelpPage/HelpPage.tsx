@@ -66,7 +66,7 @@ const HelpPage: React.FC = () => {
           </Hidden>
           <Hidden mdUp>
             <Grid item xs={12}>
-              <Box paddingX={10} paddingY={4}>
+              <Box paddingX={8} paddingY={4}>
                 <HelpInfo />
               </Box>
             </Grid>
