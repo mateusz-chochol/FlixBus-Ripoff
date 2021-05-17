@@ -89,6 +89,17 @@ const FiltersMobileSummary: React.FC<FiltersMobileSummaryProps> = ({
             </Grid>
             <Grid container>
               <Grid item xs={5}>
+                <Typography align='left'>Passengers</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <KeyboardArrowRightIcon />
+              </Grid>
+              <Grid item xs={5}>
+                <Typography align='right'>{passengersCount}</Typography>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={5}>
                 <Typography align='left'>Price</Typography>
               </Grid>
               <Grid item xs={2}>
@@ -96,17 +107,6 @@ const FiltersMobileSummary: React.FC<FiltersMobileSummaryProps> = ({
               </Grid>
               <Grid item xs={5}>
                 <Typography align='right'>{priceFilter[0]}$ - {priceFilter[1]}$</Typography>
-              </Grid>
-            </Grid>
-            <Grid container>
-              <Grid item xs={5}>
-                <Typography align='left'>Duration</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <KeyboardArrowRightIcon />
-              </Grid>
-              <Grid item xs={5}>
-                <Typography align='right'>{durationFilter[0]}h - {durationFilter[1]}h</Typography>
               </Grid>
             </Grid>
             <Grid container>
@@ -135,13 +135,13 @@ const FiltersMobileSummary: React.FC<FiltersMobileSummaryProps> = ({
             }
             <Grid container>
               <Grid item xs={5}>
-                <Typography align='left'>Passengers</Typography>
+                <Typography align='left'>Duration</Typography>
               </Grid>
               <Grid item xs={2}>
                 <KeyboardArrowRightIcon />
               </Grid>
               <Grid item xs={5}>
-                <Typography align='right'>{passengersCount}</Typography>
+                <Typography align='right'>{durationFilter[0]}h - {durationFilter[1]}h</Typography>
               </Grid>
             </Grid>
           </Box>

@@ -185,6 +185,25 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
         <Divider variant="middle" />
       </Grid>
       <Grid item>
+        <Box paddingTop={3} paddingBottom={3}>
+          <Box paddingLeft={3} paddingRight={3}>
+            <Typography variant='h6'>
+              Passengers:
+            </Typography>
+          </Box>
+          <Box paddingTop={2} display='flex' flexWrap='noWrap' justifyContent='space-evenly' alignItems='center'>
+            <IconButton color='secondary' aria-label="remove passenger" onClick={handleRemovePassenger}>
+              <RemoveCircleIcon fontSize='large' />
+            </IconButton>
+            <Typography variant='h2'>{passengersCount}</Typography>
+            <IconButton color='secondary' aria-label="add passenger" onClick={handleAddPassenger}>
+              <AddCircleIcon fontSize='large' />
+            </IconButton>
+          </Box>
+        </Box>
+        <Divider variant="middle" />
+      </Grid>
+      <Grid item>
         <Box padding={3}>
           <Typography variant='h6'>
             Price range:
@@ -207,35 +226,6 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
               ]}
               valueLabelDisplay="on"
               aria-labelledby="price slider"
-              color='secondary'
-            />
-          </Box>
-        </Box>
-        <Divider variant="middle" />
-      </Grid>
-      <Grid item>
-        <Box padding={3}>
-          <Typography variant='h6'>
-            Duration range:
-          </Typography>
-          <Box paddingTop={6}>
-            <Slider
-              value={durationFilter}
-              onChange={(event, newValue) => setDurationFilter(newValue as number[])}
-              max={10}
-              min={0}
-              marks={[
-                {
-                  value: 0,
-                  label: '0h'
-                },
-                {
-                  value: 10,
-                  label: '10h'
-                }
-              ]}
-              valueLabelDisplay="on"
-              aria-labelledby="duration slider"
               color='secondary'
             />
           </Box>
@@ -285,20 +275,30 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
         </Grid>
       }
       <Grid item>
-        <Box paddingTop={3} paddingBottom={3}>
-          <Box paddingLeft={3} paddingRight={3}>
-            <Typography variant='h6'>
-              Passengers:
-            </Typography>
-          </Box>
-          <Box paddingTop={2} display='flex' flexWrap='noWrap' justifyContent='space-evenly' alignItems='center'>
-            <IconButton color='secondary' aria-label="remove passenger" onClick={handleRemovePassenger}>
-              <RemoveCircleIcon fontSize='large' />
-            </IconButton>
-            <Typography variant='h2'>{passengersCount}</Typography>
-            <IconButton color='secondary' aria-label="add passenger" onClick={handleAddPassenger}>
-              <AddCircleIcon fontSize='large' />
-            </IconButton>
+        <Box padding={3}>
+          <Typography variant='h6'>
+            Duration range:
+          </Typography>
+          <Box paddingTop={6}>
+            <Slider
+              value={durationFilter}
+              onChange={(event, newValue) => setDurationFilter(newValue as number[])}
+              max={10}
+              min={0}
+              marks={[
+                {
+                  value: 0,
+                  label: '0h'
+                },
+                {
+                  value: 10,
+                  label: '10h'
+                }
+              ]}
+              valueLabelDisplay="on"
+              aria-labelledby="duration slider"
+              color='secondary'
+            />
           </Box>
         </Box>
       </Grid>
