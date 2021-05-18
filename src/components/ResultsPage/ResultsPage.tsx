@@ -132,7 +132,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
 
   const handleAddToCartButtonClick = (trip: Trip) => {
     dispatch(addToCartActionCreator({ trip: trip, passengersCount: passengersCount }));
-    showSuccess(`Trip has been added to your cart (id: ${trip.id})`);
+    showSuccess(`Trip has been added to your cart (id: ${trip.id}).`);
   }
 
   useEffect(() => {

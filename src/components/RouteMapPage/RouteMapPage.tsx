@@ -79,7 +79,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const handleAddTripToCartClick = () => {
     if (selectedTrip) {
       dispatch(addToCartActionCreator({ trip: selectedTrip, passengersCount: 1 }));
-      showSuccess(`Trip has been added to your cart (id: ${selectedTrip.id})`);
+      showSuccess(`Trip has been added to your cart (id: ${selectedTrip.id}).`);
     }
 
     setTripDialogOpen(false);

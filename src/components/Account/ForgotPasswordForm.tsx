@@ -42,21 +42,21 @@ const ForgotPasswordForm: React.FC = () => {
     e?.preventDefault();
 
     if (!emailRef.current?.value) {
-      return showInfo('All text fields must be filled out');
+      return showInfo('All text fields must be filled out.');
     }
 
     if (!emailRef.current.value.includes('@')) {
-      return showInfo('Email must contain \'@\' sign');
+      return showInfo('Email must contain \'@\' sign.');
     }
 
     try {
       setLoading(true);
       await resetPassword(emailRef.current.value);
-      showSuccess('Check your email for further instructions')
+      showSuccess('Check your email for further instructions.')
       history.push(routes.loginPage);
     }
     catch {
-      showError('Failed to reset password');
+      showError('Failed to reset password.');
       setLoading(false);
     }
   }

@@ -46,11 +46,11 @@ const SearchButton: React.FC<SearchButtonProps> = ({
         history.push(newRoute);
       }
       else {
-        showInfo('Departure and destination cannot be the same')
+        showInfo('Departure and destination cannot be the same.')
       }
     }
     else {
-      showInfo('You need to fill departure and destination fields first')
+      showInfo('You need to fill departure and destination fields first.')
     }
   }
 

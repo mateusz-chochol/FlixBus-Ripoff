@@ -50,7 +50,7 @@ const SendFeedbackPage: React.FC = () => {
   const handleSendButtonClick = () => {
     if (mail.length > 0) {
       setMail('');
-      showSuccess('Mail successfully sent to nowhere')
+      showSuccess('Mail successfully sent to nowhere.')
     }
   }
 

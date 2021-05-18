@@ -13,7 +13,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, shoul
 
   useEffect(() => {
     if (!display && Component) {
-      const infoMessage = shouldBeLogged ? "You need to log in to see this page" : "You are already logged in";
+      const infoMessage = shouldBeLogged ? "You need to log in to see this page." : "You are already logged in.";
       showInfo(infoMessage);
     }
     // eslint-disable-next-line

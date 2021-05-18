@@ -28,15 +28,15 @@ const SignupForm: React.FC = () => {
     e?.preventDefault();
 
     if (!(emailRef.current?.value && passwordRef.current?.value && passwordConfirmRef.current?.value)) {
-      return showInfo('All text fields must be filled out');
+      return showInfo('All text fields must be filled out.');
     }
 
     if (!emailRef.current.value.includes('@')) {
-      return showInfo('Email must contain \'@\' sign');
+      return showInfo('Email must contain \'@\' sign.');
     }
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return showError('Passwords do not match');
+      return showError('Passwords do not match.');
     }
 
     try {
@@ -45,7 +45,7 @@ const SignupForm: React.FC = () => {
       history.push(routes.mainPage);
     }
     catch {
-      showError('Failed to create an account');
+      showError('Failed to create an account.');
       setLoading(false);
     }
   }

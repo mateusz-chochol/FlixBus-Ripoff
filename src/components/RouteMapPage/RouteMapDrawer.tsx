@@ -83,7 +83,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
   const handleDepartureDateChange = (date: Date | null) => {
     if (moment(date).isBefore(moment(), 'day')) {
       setIsDepartureDateWindowOpen(false);
-      showInfo('Departure date cannot be from the past');
+      showInfo('Departure date cannot be from the past.');
     }
     else {
       setDepartureDate(date);

@@ -79,7 +79,7 @@ const Cart: React.FC = () => {
 
   const handleRemoveFromCartButtonClick = (trip: Trip) => {
     dispatch(removeFromCartActionCreator(trip));
-    showSuccess(`Trip has been removed from your cart (id: ${trip.id})`)
+    showSuccess(`Trip has been removed from your cart (id: ${trip.id}).`)
   }
 
   const handleCheckoutButtonClick = () => {

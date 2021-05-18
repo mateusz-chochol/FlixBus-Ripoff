@@ -43,11 +43,11 @@ const LoginForm: React.FC = () => {
     e?.preventDefault();
 
     if (!(emailRef.current?.value && passwordRef.current?.value)) {
-      return showInfo('All text fields must be filled out');
+      return showInfo('All text fields must be filled out.');
     }
 
     if (!emailRef.current.value.includes('@')) {
-      return showInfo('Email must contain \'@\' sign');
+      return showInfo('Email must contain \'@\' sign.');
     }
 
     try {

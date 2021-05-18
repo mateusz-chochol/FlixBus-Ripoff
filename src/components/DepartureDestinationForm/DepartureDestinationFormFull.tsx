@@ -65,7 +65,7 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
   const handleDepartureDateChange = (date: Date | null, setIsDepartureDateWindowOpen: (value: React.SetStateAction<boolean>) => void) => {
     if (moment(date).isBefore(moment(), 'day')) {
       setIsDepartureDateWindowOpen(false);
-      showInfo('Departure date cannot be from the past');
+      showInfo('Departure date cannot be from the past.');
     }
     else if (tripType === TripType.OneWay || moment(date).isSameOrBefore(returnDate, 'day')) {
       setDepartureDate(date);
@@ -82,7 +82,7 @@ const DepartureDestinationForm: React.FC<DepartureDestinationFormFullProps> = ({
     }
     else {
       setIsReturnDateWindowOpen(false);
-      showInfo('Return date cannot be before departure date');
+      showInfo('Return date cannot be before departure date.');
     }
   }
 

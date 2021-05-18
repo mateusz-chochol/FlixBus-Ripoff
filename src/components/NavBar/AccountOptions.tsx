@@ -46,11 +46,11 @@ const AccountOptions: React.FC = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      showSuccess('Successfully logged out')
+      showSuccess('Successfully logged out.')
       history.push(routes.mainPage);
     }
     catch {
-      showError('Failed to log out');
+      showError('Failed to log out.');
     }
   }
 
