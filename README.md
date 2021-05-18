@@ -129,9 +129,10 @@ Site should be visible under the address: http://localhost:5000
   - <del> think about what this page should contain </del> (Done)
 - checkout page:
   - <del> create forms for people </del> (Done)
-  - create forms for contact
-  - create forms for payment
+  - <del> create forms for contact </del> (Done)
+  - <del> create forms for payment </del> (Done)
   - <del> create trip summary </del> (Done)
+  - add forms validation
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - move all data to the firebase backend and create api calls that will fetch them when needed
