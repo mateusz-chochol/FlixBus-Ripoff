@@ -54,7 +54,7 @@ const Summary: React.FC<SummaryProps> = ({ cart, locations, selectedCartTrip, se
     history.push(routes.mainPage);
 
     dispatch(emptyCartActionCreator());
-    showSuccess('Payment done and cart has been emptied');
+    showSuccess('Payment done');
   }
 
   return (
