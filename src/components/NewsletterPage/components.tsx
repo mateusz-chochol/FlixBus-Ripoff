@@ -121,11 +121,12 @@ const components: Component[] = [
     name: 'Checkout page',
     done: [
       'Create forms for people',
+      'Create forms for contact',
+      'Create forms for payment',
       'Create trip summary',
     ],
     todo: [
-      'Create forms for contact',
-      'Create forms for payment',
+      'Add forms validation',
     ],
   },
   {
