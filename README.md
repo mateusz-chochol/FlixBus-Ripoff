@@ -149,4 +149,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> create cart for mobile version </del> (Done [reused desktop version])
   - <del> make checkout button do something </del> (Done)
   - <del> add counting number of passengers in the cart </del> (Done)
-  - add persistence to cart items (so they don't vanish after refreshing the page)
+  - <del> add persistence to cart items (so they don't vanish after refreshing the page) </del> (Done)
