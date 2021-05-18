@@ -119,12 +119,13 @@ const components: Component[] = [
   {
     icon: <PaymentIcon />,
     name: 'Checkout page',
-    done: [],
-    todo: [
+    done: [
       'Create forms for people',
+      'Create trip summary',
+    ],
+    todo: [
       'Create forms for contact',
       'Create forms for payment',
-      'Create trip summary',
     ],
   },
   {
