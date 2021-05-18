@@ -149,6 +149,7 @@ const components: Component[] = [
     todo: [
       'Move all data to the firebase backend and create api calls that will fetch them when needed',
       'Add creating ids of everything with uuid.v4()',
+      'Add persistence to cart items (so they don\'t vanish after refreshing the page)',
     ],
   },
 ]
