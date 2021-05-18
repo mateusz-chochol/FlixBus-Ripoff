@@ -88,8 +88,12 @@ const Cart: React.FC = () => {
   }
 
   useEffect(() => {
-    dispatch(getLocationsByIdArrayAsync(cart.map(cartTrip => cartTrip.trip.id)));
+    dispatch(getLocationsByIdArrayAsync(cart.map(cartTrip => [cartTrip.trip.startLocationId, cartTrip.trip.endLocationId]).flat()));
   }, [cart, dispatch])
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart])
 
   return (
     <Box display='flex' justifyContent='flex-end'>

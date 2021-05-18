@@ -6,7 +6,7 @@ import {
 import { AppState } from './RootReducer';
 import CartTrip from 'types/Objects/CartTrip'
 
-const cartInitialState: CartTrip[] = JSON.parse(localStorage.getItem('cart') || "[]") as CartTrip[]
+const cartInitialState: CartTrip[] = JSON.parse(localStorage.getItem('cart') || "[]") as CartTrip[];
 
 const cartSlice = createSlice({
   name: 'cart',
