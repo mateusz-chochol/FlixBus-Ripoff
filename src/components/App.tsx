@@ -44,9 +44,7 @@ import CheckoutPage from './CheckoutPage/CheckoutPage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    paper: {
-      height: "calc(100vh - 75px)",
-      width: "100vw",
+    paperContainer: {
       backgroundImage: `url(${process.env.PUBLIC_URL}/main_page.svg)`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
@@ -86,17 +84,17 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Box
-          display="flex"
-          flexDirection='column'
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          height="100vh"
-          width="100vw"
-        >
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <MenuAppBar />
-            <Paper className={classes.paper} square>
+        <Paper className={classes.paperContainer} square>
+          <Box
+            display="flex"
+            flexDirection='column'
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            height="100vh"
+            width="100vw"
+          >
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <MenuAppBar />
               <Switch>
                 <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
                 <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
@@ -111,9 +109,9 @@ const App = () => {
                 <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
                 <DefaultRoute path={routes.mainPage} component={MainPage} />
               </Switch>
-            </Paper>
-          </MuiPickersUtilsProvider>
-        </Box>
+            </MuiPickersUtilsProvider>
+          </Box>
+        </Paper>
       </Router>
     </ThemeProvider>
   );
