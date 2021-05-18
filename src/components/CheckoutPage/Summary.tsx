@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     list: {
-      maxHeight: '65%',
+      maxHeight: 'calc(65% - 75px)',
       overflow: 'auto',
       '&::-webkit-scrollbar': {
         width: '0.4em'

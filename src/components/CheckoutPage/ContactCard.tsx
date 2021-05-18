@@ -28,6 +28,7 @@ const ContactCard: React.FC = () => {
                   fullWidth
                   variant='outlined'
                   label='Mail'
+                  type='email'
                   onChange={(event) => setMail(event.target.value)}
                 />
               </Grid>
@@ -38,6 +39,7 @@ const ContactCard: React.FC = () => {
                   fullWidth
                   variant='outlined'
                   label='Phone number'
+                  type='tel'
                   onChange={(event) => setPhoneNumber(event.target.value)}
                 />
               </Grid>
