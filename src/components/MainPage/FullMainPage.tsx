@@ -25,7 +25,7 @@ const FullMainPage: React.FC<FullMainPageProps> = ({
       display="flex"
       justifyContent="center"
       alignItems="center"
-      height="80%"
+      height="100%"
       width="100%"
       flexDirection='column'
     >

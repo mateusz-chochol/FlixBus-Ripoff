@@ -19,7 +19,13 @@ import {
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {
+  createMuiTheme,
+  ThemeProvider,
+  createStyles,
+  makeStyles,
+  Theme
+} from '@material-ui/core/styles';
 import MainPage from './MainPage/MainPage';
 import SignupPage from './Account/SignupPage';
 import LoginPage from './Account/LoginPage';
@@ -36,15 +42,19 @@ import SendFeedbackPage from './SendFeedbackPage/SendFeedbackPage';
 import HelpPage from './HelpPage/HelpPage';
 import CheckoutPage from './CheckoutPage/CheckoutPage';
 
-const styles = {
-  paperContainer: {
-    backgroundImage: `url(${process.env.PUBLIC_URL}/main_page.svg)`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundColor: 'whitesmoke'
-  }
-};
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      height: "calc(100vh - 75px)",
+      width: "100vw",
+      backgroundImage: `url(${process.env.PUBLIC_URL}/main_page.svg)`,
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundColor: 'whitesmoke'
+    }
+  }),
+);
 
 const theme = createMuiTheme({
   palette: {
@@ -56,6 +66,7 @@ const theme = createMuiTheme({
 })
 
 const App = () => {
+  const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const notifications = useSelector(getNotifications);
   const dispatch = useDispatch();
@@ -75,17 +86,17 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Paper style={styles.paperContainer} square>
-          <Box
-            display="flex"
-            flexDirection='column'
-            justifyContent="flex-start"
-            alignItems="flex-start"
-            height="100vh"
-            width="100vw"
-          >
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <MenuAppBar />
+        <Box
+          display="flex"
+          flexDirection='column'
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          height="100vh"
+          width="100vw"
+        >
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MenuAppBar />
+            <Paper className={classes.paper} square>
               <Switch>
                 <DefaultRoute exact path={routes.resultsPage} component={ResultsPage} />
                 <DefaultRoute exact path={routes.routeMapPage} component={RouteMapPage} tabIndex={0} />
@@ -100,9 +111,9 @@ const App = () => {
                 <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
                 <DefaultRoute path={routes.mainPage} component={MainPage} />
               </Switch>
-            </MuiPickersUtilsProvider>
-          </Box>
-        </Paper>
+            </Paper>
+          </MuiPickersUtilsProvider>
+        </Box>
       </Router>
     </ThemeProvider>
   );
