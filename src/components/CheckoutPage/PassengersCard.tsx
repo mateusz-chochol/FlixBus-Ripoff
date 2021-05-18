@@ -115,6 +115,7 @@ const PassengersCard: React.FC<PassengersCardProps> = ({ selectedCartTrip, passe
                     <Grid item xs={5}>
                       <TextField
                         value={firstName}
+                        color='secondary'
                         fullWidth
                         variant='outlined'
                         label='First name'
@@ -124,6 +125,7 @@ const PassengersCard: React.FC<PassengersCardProps> = ({ selectedCartTrip, passe
                     <Grid item xs={5}>
                       <TextField
                         value={lastName}
+                        color='secondary'
                         fullWidth
                         variant='outlined'
                         label='Last name'

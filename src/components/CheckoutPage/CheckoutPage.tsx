@@ -113,17 +113,23 @@ const CheckoutPage: React.FC = () => {
             <Grid item xs={2} />
             <Grid item container xs={6}>
               <Grid item xs={11}>
-                <PassengersCard
-                  selectedCartTrip={selectedCartTrip}
-                  passengersForTrips={passengersForTrips}
-                  setPassengersForTrips={setPassengersForTrips}
-                />
+                <Box paddingY={2}>
+                  <PassengersCard
+                    selectedCartTrip={selectedCartTrip}
+                    passengersForTrips={passengersForTrips}
+                    setPassengersForTrips={setPassengersForTrips}
+                  />
+                </Box>
               </Grid>
               <Grid item xs={11}>
-                <ContactCard />
+                <Box paddingY={2}>
+                  <ContactCard />
+                </Box>
               </Grid>
               <Grid item xs={11}>
-                <PaymentCard />
+                <Box paddingY={2}>
+                  <PaymentCard />
+                </Box>
               </Grid>
             </Grid>
             <Grid item container xs={3}>
