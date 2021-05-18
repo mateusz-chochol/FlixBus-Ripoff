@@ -27,7 +27,7 @@ const ContactCard: React.FC = () => {
                   color='secondary'
                   fullWidth
                   variant='outlined'
-                  label='Mail'
+                  label='Email'
                   type='email'
                   onChange={(event) => setMail(event.target.value)}
                 />

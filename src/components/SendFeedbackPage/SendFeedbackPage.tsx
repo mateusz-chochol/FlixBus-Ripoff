@@ -62,11 +62,11 @@ const SendFeedbackPage: React.FC = () => {
             <Grid item xs={6}>
               <Box paddingY={5} paddingX={10}>
                 <Typography variant='h4' gutterBottom>
-                  Mail
+                  Email
                 </Typography>
                 <Box paddingBottom={2}>
                   <Typography variant='subtitle1' gutterBottom>
-                    Wanna share a tip or report a bug or just waste some time filling out the form that doesn't do anything? Try sending a mail below.
+                    Wanna share a tip or report a bug or just waste some time filling out the form that doesn't do anything? Try sending an email below.
                   </Typography>
                 </Box>
                 <TextField
@@ -105,7 +105,7 @@ const SendFeedbackPage: React.FC = () => {
             <Grid item xs={12}>
               <Box paddingTop={2} paddingBottom={2} paddingX={6}>
                 <Typography variant='h4' gutterBottom>
-                  Mail
+                  Email
                 </Typography>
                 <Box paddingBottom={2}>
                   <Typography variant='subtitle1' gutterBottom>
