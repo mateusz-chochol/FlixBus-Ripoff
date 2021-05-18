@@ -20,6 +20,7 @@ import {
 import { useSnackbar } from 'notistack';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { getCart } from 'redux/CartSlice';
 import MainPage from './MainPage/MainPage';
 import SignupPage from './Account/SignupPage';
 import LoginPage from './Account/LoginPage';
@@ -58,6 +59,7 @@ const theme = createMuiTheme({
 const App = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const notifications = useSelector(getNotifications);
+  const cart = useSelector(getCart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -71,6 +73,10 @@ const App = () => {
       });
     })
   }, [notifications, closeSnackbar, dispatch, enqueueSnackbar]);
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart])
 
   return (
     <ThemeProvider theme={theme}>
