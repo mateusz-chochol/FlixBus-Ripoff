@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import {
   Box,
-  Typography,
   Paper,
   Grid,
   Hidden,
@@ -105,8 +104,6 @@ const CheckoutPage: React.FC = () => {
       </Paper>
     )
   }
-
-  console.log(selectedCartTrip)
 
   return (
     <Paper square className={classes.paper}>

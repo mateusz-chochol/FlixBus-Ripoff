@@ -95,7 +95,7 @@ const PassengersCard: React.FC<PassengersCardProps> = ({ selectedCartTrip, passe
 
   useEffect(() => {
     setPassengers(passengersForTrips.find(passengersForTrip => passengersForTrip.cartTrip.trip.id === selectedCartTrip?.trip.id)?.passengers)
-  }, [selectedCartTrip])
+  }, [selectedCartTrip, passengersForTrips])
 
   return (
     <Card>
