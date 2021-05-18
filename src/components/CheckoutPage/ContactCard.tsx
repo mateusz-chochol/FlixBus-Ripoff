@@ -9,6 +9,9 @@ import {
 } from '@material-ui/core';
 
 const ContactCard: React.FC = () => {
+  const [mail, setMail] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+
   return (
     <Card>
       <CardContent>
@@ -20,18 +23,22 @@ const ContactCard: React.FC = () => {
             <Grid item container justify='space-evenly'>
               <Grid item xs={5}>
                 <TextField
+                  value={mail}
                   color='secondary'
                   fullWidth
                   variant='outlined'
                   label='Mail'
+                  onChange={(event) => setMail(event.target.value)}
                 />
               </Grid>
               <Grid item xs={5}>
                 <TextField
+                  value={phoneNumber}
                   color='secondary'
                   fullWidth
                   variant='outlined'
                   label='Phone number'
+                  onChange={(event) => setPhoneNumber(event.target.value)}
                 />
               </Grid>
             </Grid>

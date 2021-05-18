@@ -107,8 +107,8 @@ const PassengersCard: React.FC<PassengersCardProps> = ({ selectedCartTrip, passe
           <Grid container direction='column'>
             {passengers?.map(({ index, firstName, lastName }) => {
               return (
-                <Box paddingY={2}>
-                  <Grid key={`${index}-${selectedCartTrip?.trip.id}`} item container justify='space-evenly'>
+                <Box paddingY={2} key={`${index}-${selectedCartTrip?.trip.id}`} >
+                  <Grid item container justify='space-evenly'>
                     <Grid item xs={12}>
                       <Typography variant='h6' color='textSecondary'>{index + 1}.</Typography>
                     </Grid>

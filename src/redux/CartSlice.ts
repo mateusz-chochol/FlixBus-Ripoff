@@ -26,7 +26,8 @@ const cartSlice = createSlice({
       if (tripToRemoveIndex > -1) {
         state.splice(tripToRemoveIndex, 1);
       }
-    }
+    },
+    emptyCart: (state) => cartInitialState,
   }
 })
 
@@ -35,7 +36,8 @@ export const getCartCount = (state: AppState) => state.cart.length;
 
 export const {
   addToCart: addToCartActionCreator,
-  removeFromCart: removeFromCartActionCreator
+  removeFromCart: removeFromCartActionCreator,
+  emptyCart: emptyCartActionCreator,
 } = cartSlice.actions;
 
 export default cartSlice.reducer

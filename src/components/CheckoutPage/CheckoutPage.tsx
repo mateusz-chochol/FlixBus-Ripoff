@@ -141,6 +141,36 @@ const CheckoutPage: React.FC = () => {
           </Grid>
         </Box>
       </Hidden>
+      <Hidden mdUp>
+        <Box paddingX={4}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Box paddingBottom={2} paddingTop={4}>
+                <PassengersCard
+                  selectedCartTrip={selectedCartTrip}
+                  passengersForTrips={passengersForTrips}
+                  setPassengersForTrips={setPassengersForTrips}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box paddingY={2}>
+                <ContactCard />
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box paddingY={2}>
+                <PaymentCard />
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box paddingTop={2} paddingBottom={5}>
+                <Summary cart={cart} locations={locations} selectedCartTrip={selectedCartTrip} setSelectedCartTrip={setSelectedCartTrip} />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Hidden>
     </Paper>
   )
 }

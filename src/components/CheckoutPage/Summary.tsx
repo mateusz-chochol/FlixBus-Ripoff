@@ -15,6 +15,11 @@ import {
   makeStyles,
   Theme
 } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { routes } from 'routes';
+import { useDispatch } from 'react-redux';
+import { emptyCartActionCreator } from 'redux/CartSlice';
+import { useNotifications } from 'components/Misc/Notifications';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import SummaryProps from 'types/Props/CheckoutPage/SummaryProps';
 
@@ -41,6 +46,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Summary: React.FC<SummaryProps> = ({ cart, locations, selectedCartTrip, setSelectedCartTrip }) => {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { showSuccess } = useNotifications();
+
+  const handleProcceedToPaymentButtonClick = () => {
+    history.push(routes.mainPage);
+
+    dispatch(emptyCartActionCreator());
+    showSuccess('Payment done and cart has been emptied');
+  }
 
   return (
     <>
@@ -101,7 +116,12 @@ const Summary: React.FC<SummaryProps> = ({ cart, locations, selectedCartTrip, se
         </Typography>
       </Box>
       <Box>
-        <Button variant='contained' fullWidth color='primary'>
+        <Button
+          variant='contained'
+          fullWidth
+          color='primary'
+          onClick={handleProcceedToPaymentButtonClick}
+        >
           Proceed to payment
         </Button>
       </Box>
