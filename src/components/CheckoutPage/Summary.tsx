@@ -25,21 +25,6 @@ import SummaryProps from 'types/Props/CheckoutPage/SummaryProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    mainBox: {
-      height: "calc(100% - 75px)",
-      width: "100%",
-      position: "fixed",
-      maxWidth: 'inherit',
-      '&::-webkit-scrollbar': {
-        width: '0.4em'
-      },
-      '&::-webkit-scrollbar-track': {
-        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-      },
-      '&::-webkit-scrollbar-thumb': {
-        backgroundColor: 'rgba(0,0,0,.2)',
-      }
-    },
     list: {
       maxHeight: 'calc(65% - 75px)',
       overflow: 'auto',
@@ -73,7 +58,7 @@ const Summary: React.FC<SummaryProps> = ({ cart, locations, selectedCartTrip, se
   }
 
   return (
-    <Box className={classes.mainBox}>
+    <>
       <Box paddingBottom={3}>
         <Typography variant='h4'>Your order</Typography>
       </Box>
@@ -140,7 +125,7 @@ const Summary: React.FC<SummaryProps> = ({ cart, locations, selectedCartTrip, se
           Proceed to payment
         </Button>
       </Box>
-    </Box>
+    </>
   )
 }
 

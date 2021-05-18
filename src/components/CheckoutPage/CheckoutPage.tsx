@@ -47,6 +47,21 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       backgroundColor: 'whitesmoke'
     },
+    summaryBox: {
+      height: "calc(100vh - 75px)",
+      width: "100%",
+      position: "fixed",
+      maxWidth: 'inherit',
+      '&::-webkit-scrollbar': {
+        width: '0.4em'
+      },
+      '&::-webkit-scrollbar-track': {
+        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgba(0,0,0,.2)',
+      }
+    },
   }),
 );
 
@@ -118,7 +133,9 @@ const CheckoutPage: React.FC = () => {
               </Grid>
             </Grid>
             <Grid item container xs={3}>
-              <Summary cart={cart} locations={locations} selectedCartTrip={selectedCartTrip} setSelectedCartTrip={setSelectedCartTrip} />
+              <Box className={classes.summaryBox}>
+                <Summary cart={cart} locations={locations} selectedCartTrip={selectedCartTrip} setSelectedCartTrip={setSelectedCartTrip} />
+              </Box>
             </Grid>
             <Grid item xs={1} />
           </Grid>
