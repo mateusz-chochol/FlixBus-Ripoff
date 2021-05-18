@@ -145,11 +145,11 @@ const components: Component[] = [
       'Divide props folder into multiple smaller folders',
       'Make checkout button do something',
       'Add counting number of passengers in the cart',
+      'Add persistence to cart items (so they don\'t vanish after refreshing the page)',
     ],
     todo: [
       'Move all data to the firebase backend and create api calls that will fetch them when needed',
       'Add creating ids of everything with uuid.v4()',
-      'Add persistence to cart items (so they don\'t vanish after refreshing the page)',
     ],
   },
 ]
