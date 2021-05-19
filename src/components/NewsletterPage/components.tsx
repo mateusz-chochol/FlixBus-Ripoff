@@ -124,10 +124,9 @@ const components: Component[] = [
       'Create forms for contact',
       'Create forms for payment',
       'Create trip summary',
-    ],
-    todo: [
       'Add forms validation',
     ],
+    todo: [],
   },
   {
     icon: <SettingsIcon />,
