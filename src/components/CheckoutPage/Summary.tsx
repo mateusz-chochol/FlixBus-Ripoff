@@ -150,7 +150,11 @@ const Summary: React.FC<SummaryProps> = ({
                   </Grid>
                 </Grid>
                 <Grid item>
-                  <ListItemText secondary={`${trip.price * passengersCount}$, ${trip.hour}, ${trip.tripDuration}h, ${trip.date}, ${passengersCount} seat(s)`} />
+                  <ListItemText secondary={
+                    <Typography variant='body1' color='textSecondary'>
+                      {trip.price * passengersCount}$, <b>{trip.hour}</b>, {trip.tripDuration}h, {trip.date}, <b>{passengersCount} seat(s)</b>`
+                    </Typography>}
+                  />
                 </Grid>
               </Grid>
             </ListItem>
