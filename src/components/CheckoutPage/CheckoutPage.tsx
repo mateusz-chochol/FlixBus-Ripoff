@@ -97,6 +97,9 @@ const CheckoutPage: React.FC = () => {
   useEffect(() => {
     if (cart.length > 0) {
       setSelectedCartTrip(cart[0]);
+
+      setPassengersForTrips(passengersForTrips => passengersForTrips.filter(passengersForTrip =>
+        cart.map(cartTrip => cartTrip.trip.id).includes(passengersForTrip.cartTrip.trip.id)));
     }
   }, [cart])
 
