@@ -86,6 +86,9 @@ const CheckoutPage: React.FC = () => {
       })
     }
   }));
+  const [mail, setMail] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [paymentMethod, setPaymentMethod] = useState<string>('Paypal');
 
   useEffect(() => {
     dispatch(getLocationsByIdArrayAsync(cart.map(({ trip }) => trip.id)));
@@ -123,18 +126,31 @@ const CheckoutPage: React.FC = () => {
               </Grid>
               <Grid item xs={11}>
                 <Box paddingY={2}>
-                  <ContactCard />
+                  <ContactCard
+                    mail={mail}
+                    setMail={setMail}
+                    phoneNumber={phoneNumber}
+                    setPhoneNumber={setPhoneNumber}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={11}>
                 <Box paddingY={2}>
-                  <PaymentCard />
+                  <PaymentCard paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
                 </Box>
               </Grid>
             </Grid>
             <Grid item container xs={3}>
               <Box className={classes.summaryBox}>
-                <Summary cart={cart} locations={locations} selectedCartTrip={selectedCartTrip} setSelectedCartTrip={setSelectedCartTrip} />
+                <Summary
+                  cart={cart}
+                  locations={locations}
+                  selectedCartTrip={selectedCartTrip}
+                  setSelectedCartTrip={setSelectedCartTrip}
+                  passengersForTrips={passengersForTrips}
+                  mail={mail}
+                  phoneNumber={phoneNumber}
+                />
               </Box>
             </Grid>
             <Grid item xs={1} />
@@ -155,17 +171,30 @@ const CheckoutPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Box paddingY={2}>
-                <ContactCard />
+                <ContactCard
+                  mail={mail}
+                  setMail={setMail}
+                  phoneNumber={phoneNumber}
+                  setPhoneNumber={setPhoneNumber}
+                />
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Box paddingY={2}>
-                <PaymentCard />
+                <PaymentCard paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Box paddingTop={2} paddingBottom={5}>
-                <Summary cart={cart} locations={locations} selectedCartTrip={selectedCartTrip} setSelectedCartTrip={setSelectedCartTrip} />
+                <Summary
+                  cart={cart}
+                  locations={locations}
+                  selectedCartTrip={selectedCartTrip}
+                  setSelectedCartTrip={setSelectedCartTrip}
+                  passengersForTrips={passengersForTrips}
+                  mail={mail}
+                  phoneNumber={phoneNumber}
+                />
               </Box>
             </Grid>
           </Grid>

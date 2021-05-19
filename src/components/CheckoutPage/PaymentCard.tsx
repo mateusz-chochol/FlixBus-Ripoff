@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Card,
   CardContent,
@@ -9,12 +9,11 @@ import {
   RadioGroup,
   Box,
 } from '@material-ui/core';
+import PaymentCardProps from 'types/Props/CheckoutPage/PaymentCardProps';
 
-const PaymentCard: React.FC = () => {
-  const [value, setValue] = useState<string>('Paypal');
-
+const PaymentCard: React.FC<PaymentCardProps> = ({ paymentMethod, setPaymentMethod }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+    setPaymentMethod((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -26,15 +25,15 @@ const PaymentCard: React.FC = () => {
           </Typography>
           <Box paddingY={2} paddingX={2}>
             <FormControl>
-              <RadioGroup value={value} onChange={handleChange}>
+              <RadioGroup value={paymentMethod} onChange={handleChange}>
                 <FormControlLabel value="Paypal" control={<Radio />} label={
                   <Box paddingX={2}>
-                    <Typography variant='button' color={value === 'Paypal' ? 'secondary' : undefined}>Paypal</Typography>
+                    <Typography variant='button' color={paymentMethod === 'Paypal' ? 'secondary' : undefined}>Paypal</Typography>
                   </Box>
                 } />
                 <FormControlLabel value="Credit card" control={<Radio />} label={
                   <Box paddingX={2}>
-                    <Typography variant='button' color={value === 'Credit card' ? 'secondary' : undefined}>Credit card</Typography>
+                    <Typography variant='button' color={paymentMethod === 'Credit card' ? 'secondary' : undefined}>Credit card</Typography>
                   </Box>
                 } />
               </RadioGroup>

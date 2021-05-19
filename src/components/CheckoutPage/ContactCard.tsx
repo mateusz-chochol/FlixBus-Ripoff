@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Card,
   CardContent,
@@ -7,11 +7,9 @@ import {
   Grid,
   Box,
 } from '@material-ui/core';
+import ContactCardProps from 'types/Props/CheckoutPage/ContactCardProps';
 
-const ContactCard: React.FC = () => {
-  const [mail, setMail] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-
+const ContactCard: React.FC<ContactCardProps> = ({ mail, setMail, phoneNumber, setPhoneNumber }) => {
   return (
     <Card>
       <CardContent>

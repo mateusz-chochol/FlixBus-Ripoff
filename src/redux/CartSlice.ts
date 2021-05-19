@@ -27,7 +27,7 @@ const cartSlice = createSlice({
         state.splice(tripToRemoveIndex, 1);
       }
     },
-    emptyCart: () => cartInitialState,
+    emptyCart: (state) => cartInitialState,
   }
 })
 

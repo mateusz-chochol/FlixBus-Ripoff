@@ -44,17 +44,52 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Summary: React.FC<SummaryProps> = ({ cart, locations, selectedCartTrip, setSelectedCartTrip }) => {
+const Summary: React.FC<SummaryProps> = ({
+  cart,
+  locations,
+  selectedCartTrip,
+  setSelectedCartTrip,
+  passengersForTrips,
+  mail,
+  phoneNumber
+}) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { showSuccess } = useNotifications();
+  const { showSuccess, showInfo, showError } = useNotifications();
 
   const handleProcceedToPaymentButtonClick = () => {
-    history.push(routes.mainPage);
+    const passengersNames = passengersForTrips
+      .map(passengersForTrip => passengersForTrip.passengers
+        .map(passenger => [passenger.firstName, passenger.lastName]))
+      .flat(2);
 
-    dispatch(emptyCartActionCreator());
-    showSuccess('Payment done.');
+    if (mail === '' || phoneNumber === '' || passengersNames.some(name => name === '')) {
+      return showInfo('All fields must be filled out before procceeding further.');
+    }
+
+    const arePassengersFormsCorrect = !passengersNames.some(name => name.match(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/) === null);
+    const isMailCorrect = mail.match(/^(.*)+@(.*)+\.[a-zA-Z]+$/) !== null;
+    const isPhoneNumberCorrect = phoneNumber.match(/^\+?[0-9]{9,11}$/) !== null;
+
+    if (arePassengersFormsCorrect && isMailCorrect && isPhoneNumberCorrect) {
+      dispatch(emptyCartActionCreator());
+      showSuccess('Payment done.');
+
+      history.push(routes.mainPage);
+    }
+
+    if (!arePassengersFormsCorrect) {
+      showError("First and last names can contain only letters.");
+    }
+
+    if (!isMailCorrect) {
+      showError("Incorrect email.");
+    }
+
+    if (!isPhoneNumberCorrect) {
+      showError("Incorrect phone number");
+    }
   }
 
   return (
