@@ -65,6 +65,15 @@ const Summary: React.FC<SummaryProps> = ({
       .flat(2);
 
     if (mail === '' || phoneNumber === '' || passengersNames.some(name => name === '')) {
+      if (passengersNames.some(name => name === '')) {
+        const badTrip = passengersForTrips.find(passengersForTrip => passengersForTrip.passengers
+          .map(passenger => [passenger.firstName, passenger.lastName]).flat().includes(''));
+
+        if (badTrip) {
+          setSelectedCartTrip(badTrip.cartTrip);
+        }
+      }
+
       return showInfo('All fields must be filled out before procceeding further.');
     }
 
@@ -80,6 +89,17 @@ const Summary: React.FC<SummaryProps> = ({
     }
 
     if (!arePassengersFormsCorrect) {
+      const badName = passengersNames.find(name => name.match(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/) === null);
+
+      if (badName) {
+        const badTrip = passengersForTrips.find(passengersForTrip => passengersForTrip.passengers
+          .map(passenger => [passenger.firstName, passenger.lastName]).flat().includes(badName));
+
+        if (badTrip) {
+          setSelectedCartTrip(badTrip.cartTrip);
+        }
+      }
+
       showError("First and last names can contain only letters.");
     }
 
