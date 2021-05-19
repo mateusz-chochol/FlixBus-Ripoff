@@ -4,6 +4,9 @@ import locations from './tempDataSources/locations.json';
 
 const allLocations: Location[] = locations.locations;
 
+const delayTime = 0;
+const delay = () => new Promise(resolve => setTimeout(resolve, delayTime));
+
 // fake API calls
 export const getLocationsByCoordinates = async (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
   const maxZoom = 14;
@@ -25,17 +28,25 @@ export const getLocationsByCoordinates = async (upperLeft: Coordinates, bottomRi
     return location.importance <= zoomLevel;
   }
 
+  await delay();
+
   return allLocations.filter(location => fitsOnScreen(location) && isImportantEnough(location));
 }
 
 export const getLocationsBySubstring = async (substring: string) => {
+  await delay();
+
   return allLocations.filter(location => location.name.startsWith(substring));
 }
 
 export const getLocationsByIdArray = async (ids: number[]) => {
+  await delay();
+
   return allLocations.filter(location => ids.includes(location.id));
 }
 
 export const getLocationById = async (id: number) => {
+  await delay();
+
   return allLocations.find(location => location.id === id);
 }
