@@ -139,7 +139,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
             <Hidden smDown>
               <Grid item md={7}>
                 <Tabs
-                  value={tabIndex}
+                  value={tabIndex <= menuItems.map(item => item.index).sort((a, b) => b - a)[0] ? tabIndex : false}
                   indicatorColor="secondary"
                   variant="scrollable"
                   scrollButtons="on"

@@ -68,8 +68,8 @@ const ItemsList: React.FC<ItemsListProps> = ({ components, toDisplay }) => {
       {collection.map((component, index) => {
         if (component.toDisplay.length > 0) {
           return (
-            <>
-              <ListItem key={index} button onClick={() => handleClick(component)}>
+            <React.Fragment key={index}>
+              <ListItem button onClick={() => handleClick(component)}>
                 <ListItemIcon>
                   {component.icon}
                 </ListItemIcon>
@@ -90,11 +90,11 @@ const ItemsList: React.FC<ItemsListProps> = ({ components, toDisplay }) => {
                   })}
                 </List>
               </Collapse>
-            </>
+            </React.Fragment>
           )
         }
 
-        return <></>;
+        return <React.Fragment key={index} />;
       })}
     </List>
   )
