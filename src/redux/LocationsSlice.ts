@@ -14,6 +14,7 @@ interface LocationsSliceState {
   locationsForMap: Location[],
   lastUpperLeft?: Coordinates,
   lastBottomRight?: Coordinates,
+  isFetching: boolean,
 }
 
 const locationsInitialState: LocationsSliceState = {
@@ -21,6 +22,7 @@ const locationsInitialState: LocationsSliceState = {
   locationsForDepartureTextField: [],
   locationsForDestinationTextField: [],
   locationsForMap: [],
+  isFetching: false,
 }
 
 const filterExistingLocations = (allLocations: Location[], locationsToAdd?: Location[], locationToAdd?: Location) => {
@@ -72,6 +74,11 @@ export const getDepartureLocationsBySubstringAsync = createAsyncThunk<Location[]
   'locations/getDepartureLocationsBySubstringAsync',
   async (substring) => {
     return await api.getLocationsBySubstring(substring);
+  },
+  {
+    condition: (substring) => {
+      return substring.length > 0;
+    }
   }
 );
 
@@ -79,6 +86,11 @@ export const getDestinationLocationsBySubstringAsync = createAsyncThunk<Location
   'locations/getDestinationLocationsBySubstringAsync',
   async (substring) => {
     return await api.getLocationsBySubstring(substring);
+  },
+  {
+    condition: (substring) => {
+      return substring.length > 0;
+    }
   }
 );
 

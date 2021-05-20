@@ -2,7 +2,11 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { useDispatch } from 'react-redux';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import { getRequestsState } from 'redux/RequestsStateSlice';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TripPlaceFormProps from 'types/Props/Misc/TripPlaceFormProps';
 import TextField from '@material-ui/core/TextField';
@@ -13,12 +17,14 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   place,
   setPlace,
   toDispatch,
+  requestToCheck,
   label,
   placeholder,
   shouldHideOptions,
   disableClearable,
 }) => {
   const dispatch = useDispatch();
+  const requestsState = useSelector(getRequestsState);
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
   const [placeText, setPlaceText] = useState<string | null>(place?.name ?? null);
   const [options, setOptions] = useState<string[]>([]);
@@ -47,6 +53,15 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   const capitalizeFirstLetter = (value: string) => {
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   };
+
+  useEffect(() => {
+    if (requestsState[requestToCheck] === 'pending') {
+      setIsLoading(true);
+    }
+    else {
+      setIsLoading(false);
+    }
+  }, [requestsState, requestToCheck])
 
   useEffect(() => {
     setPlaceText(place?.name ?? null);
@@ -78,7 +93,6 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
 
         const delayCallForOptions = setTimeout(() => {
           dispatch(toDispatch(placeTextValue));
-          setIsLoading(false);
           setNoOptionsText('No results found');
         }, delay);
 

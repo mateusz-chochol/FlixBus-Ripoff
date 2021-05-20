@@ -156,6 +156,7 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
                     place={departure}
                     setPlace={setDeparture}
                     toDispatch={getDepartureLocationsBySubstringAsync}
+                    requestToCheck={'locations/getDepartureLocationsBySubstringAsync'}
                     label="From"
                     placeholder="Start from..."
                     disableClearable={true}
@@ -169,6 +170,7 @@ const DepartureDestinationFormSmall: React.FC<DepartureDestinationFormSmallProps
                     place={destination}
                     setPlace={setDestination}
                     toDispatch={getDestinationLocationsBySubstringAsync}
+                    requestToCheck={'locations/getDestinationLocationsBySubstringAsync'}
                     label="To"
                     placeholder="Finish in..."
                     disableClearable={true}

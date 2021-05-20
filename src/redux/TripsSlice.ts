@@ -144,7 +144,7 @@ const tripsSlice = createSlice({
           ...state,
           lastDepartureId: action.payload.lastDepartureId,
           lastDestinationId: 0,
-          list: action.payload.list
+          list: action.payload.list,
         }
       })
       .addCase(getTripsByDepartureIdAndDateAsync.fulfilled, (state, action) => {
@@ -153,7 +153,7 @@ const tripsSlice = createSlice({
           lastDepartureId: action.payload.lastDepartureId,
           lastDestinationId: 0,
           lastDepartureDate: action.payload.lastDepartureDate,
-          list: action.payload.list
+          list: action.payload.list,
         }
       })
       .addCase(getTripsByDepartureAndDestinationIdsAsync.fulfilled, (state, action) => {
@@ -161,7 +161,7 @@ const tripsSlice = createSlice({
           ...state,
           lastDepartureId: action.payload.lastDepartureId,
           lastDestinationId: action.payload.lastDestinationId,
-          list: action.payload.list
+          list: action.payload.list,
         }
       })
       .addCase(getTripsByDepartureAndDestinationIdsAndDateAsync.fulfilled, (state, action) => {

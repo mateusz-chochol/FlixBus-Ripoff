@@ -9,6 +9,7 @@ import {
   Grid,
   Hidden,
   withWidth,
+  LinearProgress,
 } from '@material-ui/core';
 import {
   makeStyles,
@@ -37,6 +38,7 @@ import {
   clearReturnTripsActionCreator,
 } from 'redux/TripsSlice';
 import { addToCartActionCreator } from 'redux/CartSlice';
+import { getRequestsState } from 'redux/RequestsStateSlice';
 import ResultsPageProps from 'types/Props/ResultsPage/ResultsPageProps';
 import Location from 'types/Objects/Location';
 import TripType from 'types/Objects/TripType';
@@ -46,6 +48,7 @@ import DepartureDestinationFormSmall from 'components/DepartureDestinationForm/D
 import FiltersMenu from './FiltersMenu';
 import FiltersMobileSummary from './FiltersMobileSummary';
 import TripsList from './TripsList';
+import { ReactComponent as LoadingSvg } from 'svgs/loading.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -103,6 +106,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const { departureIdAsString, destinationIdAsString, departureDateAsString, returnDateAsString } = match.params;
   const dispatch = useDispatch();
   const { showSuccess } = useNotifications();
+  const requestsState = useSelector(getRequestsState);
   const allLocations = useSelector(getAllLocations);
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
@@ -129,11 +133,27 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [departureHourFilter, setDepartureHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [passengersCount, setPassengersCount] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleAddToCartButtonClick = (trip: Trip) => {
     dispatch(addToCartActionCreator({ trip: trip, passengersCount: passengersCount }));
     showSuccess(`Trip has been added to your cart (id: ${trip.id}).`);
   }
+
+  useEffect(() => {
+    const requestsToCheck = [
+      requestsState['trips/getTripsByDepartureAndDestinationIdsAndDateAsync'],
+      requestsState['trips/getReturnTripsByReturnDateAsync'],
+      requestsState['locations/getLocationsByIdArrayAsync'],
+    ];
+
+    if (requestsToCheck.some(request => request === 'pending')) {
+      setIsLoading(true);
+    }
+    else {
+      setIsLoading(false);
+    }
+  }, [requestsState])
 
   useEffect(() => {
     if (!isNaN(departureId) && !isNaN(destinationId)) {
@@ -286,7 +306,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
             item
             container
             direction='column'
-            justify='flex-end'
             xs={isSmallScreen ? 12 : 10}
           >
             <Grid item className={classes.formGrid}>
@@ -350,47 +369,55 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
               </Paper>
             </Grid>
             <Divider />
-            <Box paddingBottom={2}>
-              <Grid item container className={classes.listsGrid}>
-                <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
-                  <TripsList
-                    title='Departure trips'
-                    tripsToDisplay={tripsToDisplay}
-                    allLocations={allLocations}
-                    departure={departure}
-                    destination={destination}
-                    departureDate={departureDate}
-                    departureDateAsString={departureDateAsString}
-                    departureId={departureId}
-                    destinationId={destinationId}
-                    handleAddToCartButtonClick={handleAddToCartButtonClick}
-                    isSmallScreen={isSmallScreen}
-                  />
+            {isLoading ?
+              <Box>
+                <LinearProgress color='secondary' />
+                <Box display='flex' justifyContent='center' paddingY={5}>
+                  <LoadingSvg width='80%' />
+                </Box>
+              </Box> :
+              <Box paddingBottom={2}>
+                <Grid item container className={classes.listsGrid}>
+                  <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>
+                    <TripsList
+                      title='Departure trips'
+                      tripsToDisplay={tripsToDisplay}
+                      allLocations={allLocations}
+                      departure={departure}
+                      destination={destination}
+                      departureDate={departureDate}
+                      departureDateAsString={departureDateAsString}
+                      departureId={departureId}
+                      destinationId={destinationId}
+                      handleAddToCartButtonClick={handleAddToCartButtonClick}
+                      isSmallScreen={isSmallScreen}
+                    />
+                  </Grid>
+                  {tripType === TripType.RoundTrip &&
+                    <>
+                      <Grid item>
+                        <Divider orientation='vertical' absolute className={classes.listsDivider} />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TripsList
+                          title='Return trips'
+                          tripsToDisplay={returnTripsToDisplay}
+                          allLocations={allLocations}
+                          departure={destination}
+                          destination={departure}
+                          departureDate={returnDate}
+                          departureDateAsString={returnDateAsString}
+                          departureId={destinationId}
+                          destinationId={departureId}
+                          handleAddToCartButtonClick={handleAddToCartButtonClick}
+                          isSmallScreen={isSmallScreen}
+                        />
+                      </Grid>
+                    </>
+                  }
                 </Grid>
-                {tripType === TripType.RoundTrip &&
-                  <>
-                    <Grid item>
-                      <Divider orientation='vertical' absolute className={classes.listsDivider} />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TripsList
-                        title='Return trips'
-                        tripsToDisplay={returnTripsToDisplay}
-                        allLocations={allLocations}
-                        departure={destination}
-                        destination={departure}
-                        departureDate={returnDate}
-                        departureDateAsString={returnDateAsString}
-                        departureId={destinationId}
-                        destinationId={departureId}
-                        handleAddToCartButtonClick={handleAddToCartButtonClick}
-                        isSmallScreen={isSmallScreen}
-                      />
-                    </Grid>
-                  </>
-                }
-              </Grid>
-            </Box>
+              </Box>
+            }
           </Grid>
         </Grid>
       </Box>

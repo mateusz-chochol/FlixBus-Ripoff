@@ -90,6 +90,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                   place={departure}
                   setPlace={setDeparture}
                   toDispatch={getDepartureLocationsBySubstringAsync}
+                  requestToCheck={'locations/getDepartureLocationsBySubstringAsync'}
                   label="From"
                   placeholder="Start from..."
                   disableClearable={true}
@@ -103,6 +104,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
                   place={destination}
                   setPlace={setDestination}
                   toDispatch={getDestinationLocationsBySubstringAsync}
+                  requestToCheck={'locations/getDestinationLocationsBySubstringAsync'}
                   shouldHideOptions={departure === undefined}
                   label="To"
                   placeholder="Finish in..."

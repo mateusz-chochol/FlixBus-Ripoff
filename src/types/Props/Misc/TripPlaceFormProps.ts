@@ -7,6 +7,7 @@ export default interface TripPlaceFormProps {
   place: Location | undefined,
   setPlace: React.Dispatch<React.SetStateAction<Location | undefined>>,
   toDispatch: (value: string) => void,
+  requestToCheck: string,
   shouldHideOptions?: boolean,
   label: string,
   placeholder: string,
