@@ -10,4 +10,5 @@ export default interface SummaryProps {
   passengersForTrips: PassengersForTrip[],
   mail: string,
   phoneNumber: string,
+  setErrors: (value: React.SetStateAction<string[]>) => void
 }

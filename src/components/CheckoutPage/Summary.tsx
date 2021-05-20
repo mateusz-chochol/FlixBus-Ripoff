@@ -22,6 +22,7 @@ import { emptyCartActionCreator } from 'redux/CartSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import SummaryProps from 'types/Props/CheckoutPage/SummaryProps';
+import CartTrip from 'types/Objects/CartTrip';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,7 +52,8 @@ const Summary: React.FC<SummaryProps> = ({
   setSelectedCartTrip,
   passengersForTrips,
   mail,
-  phoneNumber
+  phoneNumber,
+  setErrors
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -79,7 +81,7 @@ const Summary: React.FC<SummaryProps> = ({
 
     const arePassengersFormsCorrect = !passengersNames.some(name => name.match(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/) === null);
     const isMailCorrect = mail.match(/^(.*)+@(.*)+\.[a-zA-Z]+$/) !== null;
-    const isPhoneNumberCorrect = phoneNumber.match(/^\+?[0-9]{9,11}$/) !== null;
+    const isPhoneNumberCorrect = phoneNumber.match(/^[0-9]{9}$|^\+?[0-9]{11}$/) !== null;
 
     if (arePassengersFormsCorrect && isMailCorrect && isPhoneNumberCorrect) {
       dispatch(emptyCartActionCreator());
@@ -100,15 +102,27 @@ const Summary: React.FC<SummaryProps> = ({
         }
       }
 
+      setErrors(errors => errors.concat('passengers'));
+      console.log('hi')
       showError("First and last names can contain only letters.");
     }
 
     if (!isMailCorrect) {
+      setErrors(errors => errors.concat('contact'));
       showError("Incorrect email.");
     }
 
     if (!isPhoneNumberCorrect) {
+      setErrors(errors => errors.concat('contact'));
       showError("Incorrect phone number");
+    }
+  }
+
+  const handleListItemClick = (cartTrip: CartTrip) => {
+    setSelectedCartTrip(cartTrip);
+
+    if (cartTrip.trip.id !== selectedCartTrip?.trip.id) {
+      setErrors(errors => errors.filter(error => error !== 'passengers'));
     }
   }
 
@@ -122,13 +136,14 @@ const Summary: React.FC<SummaryProps> = ({
         subheader={
           <ListSubheader className={classes.listSubheader}>
             Trips ({cart.length}):
-          </ListSubheader>}
+          </ListSubheader>
+        }
       >
         {cart.map(({ trip, passengersCount }) => {
           return (
             <ListItem
               button
-              onClick={() => setSelectedCartTrip({ trip, passengersCount })}
+              onClick={() => handleListItemClick({ trip, passengersCount })}
               selected={selectedCartTrip?.trip.id === trip.id}
               key={trip.id}
             >

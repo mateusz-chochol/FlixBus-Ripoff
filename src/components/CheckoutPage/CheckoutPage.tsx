@@ -89,6 +89,11 @@ const CheckoutPage: React.FC = () => {
   const [mail, setMail] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [paymentMethod, setPaymentMethod] = useState<string>('Paypal');
+  const [errors, setErrors] = useState<string[]>([]);
+
+  const removeError = (errorType: string) => {
+    setErrors(errors => errors.filter(error => error !== errorType));
+  }
 
   useEffect(() => {
     dispatch(getLocationsByIdArrayAsync(cart.map(({ trip }) => trip.id)));
@@ -124,6 +129,8 @@ const CheckoutPage: React.FC = () => {
                     selectedCartTrip={selectedCartTrip}
                     passengersForTrips={passengersForTrips}
                     setPassengersForTrips={setPassengersForTrips}
+                    error={errors.find(error => error === 'passengers') !== undefined}
+                    removeError={removeError}
                   />
                 </Box>
               </Grid>
@@ -134,6 +141,8 @@ const CheckoutPage: React.FC = () => {
                     setMail={setMail}
                     phoneNumber={phoneNumber}
                     setPhoneNumber={setPhoneNumber}
+                    error={errors.find(error => error === 'contact') !== undefined}
+                    removeError={removeError}
                   />
                 </Box>
               </Grid>
@@ -153,6 +162,7 @@ const CheckoutPage: React.FC = () => {
                   passengersForTrips={passengersForTrips}
                   mail={mail}
                   phoneNumber={phoneNumber}
+                  setErrors={setErrors}
                 />
               </Box>
             </Grid>
@@ -169,6 +179,8 @@ const CheckoutPage: React.FC = () => {
                   selectedCartTrip={selectedCartTrip}
                   passengersForTrips={passengersForTrips}
                   setPassengersForTrips={setPassengersForTrips}
+                  error={errors.find(error => error === 'passengers') !== undefined}
+                  removeError={removeError}
                 />
               </Box>
             </Grid>
@@ -179,6 +191,8 @@ const CheckoutPage: React.FC = () => {
                   setMail={setMail}
                   phoneNumber={phoneNumber}
                   setPhoneNumber={setPhoneNumber}
+                  error={errors.find(error => error === 'contact') !== undefined}
+                  removeError={removeError}
                 />
               </Box>
             </Grid>
@@ -197,6 +211,7 @@ const CheckoutPage: React.FC = () => {
                   passengersForTrips={passengersForTrips}
                   mail={mail}
                   phoneNumber={phoneNumber}
+                  setErrors={setErrors}
                 />
               </Box>
             </Grid>

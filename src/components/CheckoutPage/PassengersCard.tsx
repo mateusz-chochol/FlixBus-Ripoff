@@ -9,7 +9,9 @@ import {
   Typography,
   Grid,
   Box,
+  Grow,
 } from '@material-ui/core';
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import PassengersForTrip from 'types/Objects/PassengersForTrip';
 import CartTrip from 'types/Objects/CartTrip';
 import Passenger from 'types/Objects/Passenger';
@@ -18,9 +20,17 @@ interface PassengersCardProps {
   selectedCartTrip?: CartTrip,
   passengersForTrips: PassengersForTrip[],
   setPassengersForTrips: (value: React.SetStateAction<PassengersForTrip[]>) => void,
+  error: boolean,
+  removeError: (value: string) => void
 }
 
-const PassengersCard: React.FC<PassengersCardProps> = ({ selectedCartTrip, passengersForTrips, setPassengersForTrips }) => {
+const PassengersCard: React.FC<PassengersCardProps> = ({
+  selectedCartTrip,
+  passengersForTrips,
+  setPassengersForTrips,
+  error,
+  removeError,
+}) => {
   const [passengers, setPassengers] = useState<Passenger[] | undefined>(passengersForTrips.find(passengersForTrip => passengersForTrip.cartTrip.trip.id === selectedCartTrip?.trip.id)?.passengers);
 
   const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, passengerIndex: number) => {
@@ -98,11 +108,16 @@ const PassengersCard: React.FC<PassengersCardProps> = ({ selectedCartTrip, passe
   }, [selectedCartTrip, passengersForTrips])
 
   return (
-    <Card>
+    <Card onMouseDown={() => removeError('passengers')}>
       <CardContent>
         <Box>
           <Typography variant='h4' color="textSecondary" gutterBottom>
-            Passengers
+            <Box display='flex' justifyContent='space-between' alignItems='center'>
+              Passengers
+              <Grow in={error} timeout={350}>
+                <ErrorIcon color='error' />
+              </Grow>
+            </Box>
           </Typography>
           <Grid container direction='column'>
             {passengers?.map(({ index, firstName, lastName }) => {
