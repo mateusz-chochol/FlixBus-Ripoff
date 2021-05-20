@@ -10,6 +10,7 @@ import {
   Hidden,
   withWidth,
   LinearProgress,
+  Fade,
 } from '@material-ui/core';
 import {
   makeStyles,
@@ -134,6 +135,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [passengersCount, setPassengersCount] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [shouldDisplayLoadingScreen, setShouldDisplayLoadingScreen] = useState<boolean>();
 
   const handleAddToCartButtonClick = (trip: Trip) => {
     dispatch(addToCartActionCreator({ trip: trip, passengersCount: passengersCount }));
@@ -149,9 +151,11 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
 
     if (requestsToCheck.some(request => request === 'pending')) {
       setIsLoading(true);
+      setTimeout(() => setShouldDisplayLoadingScreen(true), 500);
     }
     else {
       setIsLoading(false);
+      setShouldDisplayLoadingScreen(false);
     }
   }, [requestsState])
 
@@ -370,12 +374,14 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
             </Grid>
             <Divider />
             {isLoading ?
-              <Box>
-                <LinearProgress color='secondary' />
-                <Box display='flex' justifyContent='center' paddingY={5}>
-                  <LoadingSvg width='80%' />
+              <Fade in={shouldDisplayLoadingScreen} timeout={350}>
+                <Box>
+                  <LinearProgress color='secondary' />
+                  <Box display='flex' justifyContent='center' paddingY={5}>
+                    <LoadingSvg width='80%' />
+                  </Box>
                 </Box>
-              </Box> :
+              </Fade> :
               <Box paddingBottom={2}>
                 <Grid item container className={classes.listsGrid}>
                   <Grid item xs={tripType === TripType.OneWay ? 12 : 6}>

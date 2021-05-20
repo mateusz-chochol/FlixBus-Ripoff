@@ -82,11 +82,11 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   useEffect(() => {
     if (!shouldHideOptions) {
       setIsLoading(true);
-      setOptions([]);
 
       if (placeTextValue.length < 1) {
+        setOptions([]);
         setIsLoading(false);
-        setNoOptionsText('Type at least 1 character...') // maybe change it to 2 in the future
+        setNoOptionsText('Type at least 1 character...');
       }
       else {
         const delay = (place && place.name === placeTextValue) ? 0 : 1000;
@@ -100,7 +100,6 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       }
     }
     else {
-      setOptions([]);
       setNoOptionsText('No results found');
     }
   }, [placeTextValue, place, dispatch, toDispatch, shouldHideOptions])
