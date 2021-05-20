@@ -89,7 +89,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> remove basicTrips.json collection and work only on trips.json </del> (Done)
   - <del> remove horizontal list of trips on mobile devices </del> (Done)
   - <del> add ability to add trips to cart directly from list </del> (Done)
-  - add loading screen
+  - <del> add loading screen </del> (Done)
 - <del> plan your journey page: </del> (Won't do)
   - <del> create blank page with some static info </del> (Done)
   - <del> think about what this page should contain </del> (Won't do)
@@ -154,4 +154,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> add persistence to cart items (so they don't vanish after refreshing the page) </del> (Done)
   - <del> add loading screen to cart </del> (Done)
   - <del> add loading screen to text forms </del> (Done)
-  - add some timeouts before displaying loading screens
+  - <del> add some timeouts before displaying loading screens </del> (Done)
