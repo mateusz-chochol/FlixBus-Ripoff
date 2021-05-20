@@ -1,7 +1,7 @@
 {
   "locations": [
     {
-      "id": "1",
+      "id": "TAGDpClxeEQOQYOqfU6V",
       "name": "Kraków",
       "coordinates": {
         "lat": 50.0682709,
@@ -10,7 +10,7 @@
       "importance": 1
     },
     {
-      "id": "2",
+      "id": "hoqJiGMkHJkY8pV7U8jM",
       "name": "Berlin",
       "coordinates": {
         "lat": 52.5065133,
@@ -19,7 +19,7 @@
       "importance": 1
     },
     {
-      "id": "3",
+      "id": "gYqwBPgiz2AsoMsorF5P",
       "name": "Białystok",
       "coordinates": {
         "lat": 53.1275431,
@@ -28,7 +28,7 @@
       "importance": 1
     },
     {
-      "id": "4",
+      "id": "6TCJM3A8IeIgXJMpmNqG",
       "name": "Warszawa",
       "coordinates": {
         "lat": 52.2326063,
@@ -37,7 +37,7 @@
       "importance": 1
     },
     {
-      "id": "5",
+      "id": "h2CgwbxaoyQf3NyUoJY0",
       "name": "Paryż",
       "coordinates": {
         "lat": 48.8588377,
@@ -46,7 +46,7 @@
       "importance": 1
     },
     {
-      "id": "6",
+      "id": "M1Bk3odOTLQWBqpnl0uU",
       "name": "Barcelona",
       "coordinates": {
         "lat": 41.3947688,
@@ -55,7 +55,7 @@
       "importance": 1
     },
     {
-      "id": "7",
+      "id": "4wDtmZCq30RRcgb88DYY",
       "name": "Amsterdam",
       "coordinates": {
         "lat": 52.3546449,
@@ -64,7 +64,7 @@
       "importance": 1
     },
     {
-      "id": "8",
+      "id": "rBhGcJvs2FcSIypRVk6d",
       "name": "Praga",
       "coordinates": {
         "lat": 50.073658,
