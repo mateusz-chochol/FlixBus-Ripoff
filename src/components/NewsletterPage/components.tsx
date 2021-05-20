@@ -153,6 +153,7 @@ const components: Component[] = [
     todo: [
       'Move all data to the firebase backend and create api calls that will fetch them when needed',
       'Add creating ids of everything with uuid.v4()',
+      'Add some timeouts before displaying loading screens'
     ],
   },
 ]
