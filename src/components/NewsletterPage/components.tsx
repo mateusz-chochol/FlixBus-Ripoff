@@ -45,7 +45,8 @@ const components: Component[] = [
       'If marker is picked it should always be visible',
     ],
     todo: [
-      'Optimize calls for locations even more with adding previous search history, previous map bounds history and calculating only necessarry area of locations to ask for (based on previous map bounds history)'
+      'Optimize calls for locations even more with adding previous search history, previous map bounds history and calculating only necessarry area of locations to ask for (based on previous map bounds history)',
+      'Add loading screen',
     ],
   },
   {
@@ -113,6 +114,7 @@ const components: Component[] = [
       'Add additional check if user has changed any of the date fields',
       'Add sorting',
       'Refactor everything and split it into multiple components at the end',
+      'Add loading screen',
     ],
     todo: [],
   },
@@ -145,6 +147,8 @@ const components: Component[] = [
       'Make checkout button do something',
       'Add counting number of passengers in the cart',
       'Add persistence to cart items (so they don\'t vanish after refreshing the page)',
+      'Add loading screen to cart',
+      'Add loading screen to text forms',
     ],
     todo: [
       'Move all data to the firebase backend and create api calls that will fetch them when needed',
