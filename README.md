@@ -89,6 +89,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> remove basicTrips.json collection and work only on trips.json </del> (Done)
   - <del> remove horizontal list of trips on mobile devices </del> (Done)
   - <del> add ability to add trips to cart directly from list </del> (Done)
+  - add loading screen
 - <del> plan your journey page: </del> (Won't do)
   - <del> create blank page with some static info </del> (Done)
   - <del> think about what this page should contain </del> (Won't do)
@@ -123,6 +124,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> add seats left filter </del> (Done)
   - <del> add additional check if user has changed any of the date fields </del> (Done)
   - <del> add sorting </del> (Done)
+  - <del> add loading screen </del> (Done)
   - <del> refactor everything and split it into multiple components at the end </del> (Done)
 - <del> trip page: </del> (Won't do [decided that creating a page for one trip makes little sense])
   - <del> create blank page with some trip info </del> (Done)
@@ -150,3 +152,5 @@ Site should be visible under the address: http://localhost:5000
   - <del> make checkout button do something </del> (Done)
   - <del> add counting number of passengers in the cart </del> (Done)
   - <del> add persistence to cart items (so they don't vanish after refreshing the page) </del> (Done)
+  - <del> add loading screen to cart </del> (Done)
+  - <del> add loading screen to text forms </del> (Done)
