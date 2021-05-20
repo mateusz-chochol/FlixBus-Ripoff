@@ -154,3 +154,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> add persistence to cart items (so they don't vanish after refreshing the page) </del> (Done)
   - <del> add loading screen to cart </del> (Done)
   - <del> add loading screen to text forms </del> (Done)
+  - add some timeouts before displaying loading screens
