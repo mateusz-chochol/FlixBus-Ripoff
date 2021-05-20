@@ -1,4 +1,4 @@
 export default interface TripSummary {
-  endLocationId: number,
+  endLocationId: string,
   count: number,
 }

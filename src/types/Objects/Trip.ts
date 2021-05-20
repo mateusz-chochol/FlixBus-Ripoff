@@ -1,7 +1,7 @@
 export default interface Trip {
-  id: number,
-  startLocationId: number,
-  endLocationId: number,
+  id: string,
+  startLocationId: string,
+  endLocationId: string,
   tripDuration: number,
   date: string,
   hour: string,

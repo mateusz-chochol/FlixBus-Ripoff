@@ -3,7 +3,7 @@ export const routes = {
   singupPage: "/signup",
   forgotPasswordPage: "/forgotpassword",
   routeMapPage: "/routemap",
-  resultsPage: "/results/:departureIdAsString/:destinationIdAsString/:departureDateAsString/:returnDateAsString?",
+  resultsPage: "/results/:departureIdFromUrl/:destinationIdFromUrl/:departureDateAsString/:returnDateAsString?",
   servicesPage: "/services",
   companyPage: "/company",
   newsletterPage: "/newsletter",

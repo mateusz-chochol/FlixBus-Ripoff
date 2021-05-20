@@ -9,8 +9,8 @@ export default interface ResultsTripsListProps {
   destination?: Location,
   departureDate: Date | null,
   departureDateAsString?: string,
-  departureId: number,
-  destinationId: number,
+  departureId: string,
+  destinationId: string,
   handleAddToCartButtonClick: (trip: Trip) => void,
   isSmallScreen: boolean,
 }

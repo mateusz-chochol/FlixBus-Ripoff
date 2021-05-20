@@ -13,5 +13,5 @@ export default interface TripsSummariesListProps {
   listItemClassName?: string,
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps,
-  handleTripsSummariesListItemClick: (endLocationId: number) => void,
+  handleTripsSummariesListItemClick: (endLocationId: string) => void,
 }

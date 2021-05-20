@@ -39,13 +39,13 @@ export const getLocationsBySubstring = async (substring: string) => {
   return allLocations.filter(location => location.name.startsWith(substring));
 }
 
-export const getLocationsByIdArray = async (ids: number[]) => {
+export const getLocationsByIdArray = async (ids: string[]) => {
   await delay();
 
   return allLocations.filter(location => ids.includes(location.id));
 }
 
-export const getLocationById = async (id: number) => {
+export const getLocationById = async (id: string) => {
   await delay();
 
   return allLocations.find(location => location.id === id);

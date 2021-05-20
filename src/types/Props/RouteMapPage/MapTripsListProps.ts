@@ -17,7 +17,7 @@ export default interface MapTripsListProps {
   listSubheader?: string,
   typographyProps?: TypographyProps,
   messageBoxProps?: BoxProps,
-  handleTripsSummariesListItemClick: (endLocationId: number) => void,
+  handleTripsSummariesListItemClick: (endLocationId: string) => void,
   handleFullTripsListItemClick: (trip: Trip) => void,
   isLoading: boolean,
   shouldDisplayLoadingScreen: boolean,

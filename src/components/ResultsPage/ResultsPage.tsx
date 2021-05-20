@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const classes = useStyles();
   const isSmallScreen = width === 'xs' || width === 'sm' || width === 'md';
-  const { departureIdAsString, destinationIdAsString, departureDateAsString, returnDateAsString } = match.params;
+  const { departureIdFromUrl, destinationIdFromUrl, departureDateAsString, returnDateAsString } = match.params;
   const dispatch = useDispatch();
   const { showSuccess } = useNotifications();
   const requestsState = useSelector(getRequestsState);
@@ -113,7 +113,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
   const trips = useSelector(getTrips);
   const returnTrips = useSelector(getReturnTrips);
-  const [departureId, destinationId] = [parseInt(departureIdAsString), parseInt(destinationIdAsString)]
+  const [departureId, destinationId] = [(departureIdFromUrl), (destinationIdFromUrl)]
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<TripType>(returnDateAsString ? TripType.RoundTrip : TripType.OneWay);
@@ -151,16 +151,20 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
 
     if (requestsToCheck.some(request => request === 'pending')) {
       setIsLoading(true);
-      setTimeout(() => setShouldDisplayLoadingScreen(true), 200);
+      setShouldDisplayLoadingScreen(true);
     }
     else {
-      setIsLoading(false);
-      setShouldDisplayLoadingScreen(false);
+      const turnOfLoadingTimeout = setTimeout(() => {
+        setIsLoading(false);
+        setShouldDisplayLoadingScreen(false);
+      }, 800);
+
+      return () => clearTimeout(turnOfLoadingTimeout);
     }
   }, [requestsState])
 
   useEffect(() => {
-    if (!isNaN(departureId) && !isNaN(destinationId)) {
+    if (departureId && destinationId) {
       dispatch(getLocationsByIdArrayAsync([departureId, destinationId]))
       dispatch(getTripsByDepartureAndDestinationIdsAndDateAsync({
         departureId: departureId,

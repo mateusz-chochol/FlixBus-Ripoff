@@ -23,7 +23,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({
   const handleSearchButtonClick = () => {
     if (departure && destination) {
       if (departure !== destination) {
-        let newRoute = routes.resultsPage.replace(':departureIdAsString', departure.id.toString()).replace(':destinationIdAsString', destination.id.toString());
+        let newRoute = routes.resultsPage.replace(':departureIdFromUrl', departure.id.toString()).replace(':destinationIdFromUrl', destination.id.toString());
 
         if (departureDate) {
           newRoute = newRoute.replace(':departureDateAsString', moment(departureDate.toISOString()).format('YYYY-MM-DD'));

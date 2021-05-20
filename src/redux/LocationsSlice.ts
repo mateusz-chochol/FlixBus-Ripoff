@@ -37,7 +37,7 @@ const filterExistingLocations = (allLocations: Location[], locationsToAdd?: Loca
   return locationsToReturn;
 }
 
-export const getLocationsByIdAsync = createAsyncThunk<Location | undefined, number>(
+export const getLocationsByIdAsync = createAsyncThunk<Location | undefined, string>(
   'locations/getLocationsByIdAsync',
   async (id) => {
     return await api.getLocationById(id);
@@ -51,7 +51,7 @@ export const getLocationsByIdAsync = createAsyncThunk<Location | undefined, numb
   }
 );
 
-export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>(
+export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], string[]>(
   'locations/getLocationsByIdArrayAsync',
   async (ids, thunkAPI) => {
     const { locations } = thunkAPI.getState() as AppState;

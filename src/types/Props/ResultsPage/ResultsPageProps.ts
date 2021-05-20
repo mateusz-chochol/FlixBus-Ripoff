@@ -2,8 +2,8 @@ import { WithWidth } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface ResultsPageParams {
-  departureIdAsString: string,
-  destinationIdAsString: string,
+  departureIdFromUrl: string,
+  destinationIdFromUrl: string,
   departureDateAsString: string,
   returnDateAsString?: string,
 }

@@ -103,7 +103,6 @@ const Summary: React.FC<SummaryProps> = ({
       }
 
       setErrors(errors => errors.concat('passengers'));
-      console.log('hi')
       showError("First and last names can contain only letters.");
     }
 

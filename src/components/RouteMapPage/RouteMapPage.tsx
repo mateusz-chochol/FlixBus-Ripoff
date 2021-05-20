@@ -71,7 +71,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const navBarHeight = '75px';
   const footerMenuHeight = '200px';
 
-  const handleTripsSummariesListItemClick = (endLocationId: number) => {
+  const handleTripsSummariesListItemClick = (endLocationId: string) => {
     setDestination(allLocations.find(location => location.id === endLocationId));
   }
 
@@ -105,11 +105,15 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
 
     if (requestsToCheck.some(request => request === 'pending')) {
       setIsLoading(true);
-      setTimeout(() => setShouldDisplayLoadingScreen(true), 200);
+      setShouldDisplayLoadingScreen(true);
     }
     else {
-      setIsLoading(false);
-      setShouldDisplayLoadingScreen(false);
+      const turnOfLoadingTimeout = setTimeout(() => {
+        setIsLoading(false);
+        setShouldDisplayLoadingScreen(false);
+      }, 800);
+
+      return () => clearTimeout(turnOfLoadingTimeout);
     }
   }, [requestsState])
 

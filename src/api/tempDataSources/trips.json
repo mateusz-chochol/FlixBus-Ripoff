@@ -1,9 +1,9 @@
 {
   "trips": [
     {
-      "id": 1,
-      "startLocationId": 1,
-      "endLocationId": 2,
+      "id": "1",
+      "startLocationId": "1",
+      "endLocationId": "2",
       "tripDuration": 4,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -12,9 +12,9 @@
       "seatsLeft": 16
     },
     {
-      "id": 2,
-      "startLocationId": 2,
-      "endLocationId": 3,
+      "id": "2",
+      "startLocationId": "2",
+      "endLocationId": "3",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -23,9 +23,9 @@
       "seatsLeft": 18
     },
     {
-      "id": 3,
-      "startLocationId": 5,
-      "endLocationId": 1,
+      "id": "3",
+      "startLocationId": "5",
+      "endLocationId": "1",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -34,9 +34,9 @@
       "seatsLeft": 2
     },
     {
-      "id": 4,
-      "startLocationId": 7,
-      "endLocationId": 3,
+      "id": "4",
+      "startLocationId": "7",
+      "endLocationId": "3",
       "tripDuration": 1,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -45,9 +45,9 @@
       "seatsLeft": 10
     },
     {
-      "id": 5,
-      "startLocationId": 2,
-      "endLocationId": 6,
+      "id": "5",
+      "startLocationId": "2",
+      "endLocationId": "6",
       "tripDuration": 5,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -56,9 +56,9 @@
       "seatsLeft": 0
     },
     {
-      "id": 6,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "6",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 4,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -67,9 +67,9 @@
       "seatsLeft": 20
     },
     {
-      "id": 7,
-      "startLocationId": 3,
-      "endLocationId": 2,
+      "id": "7",
+      "startLocationId": "3",
+      "endLocationId": "2",
       "tripDuration": 4,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -78,9 +78,9 @@
       "seatsLeft": 16
     },
     {
-      "id": 8,
-      "startLocationId": 6,
-      "endLocationId": 3,
+      "id": "8",
+      "startLocationId": "6",
+      "endLocationId": "3",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -89,9 +89,9 @@
       "seatsLeft": 18
     },
     {
-      "id": 9,
-      "startLocationId": 5,
-      "endLocationId": 2,
+      "id": "9",
+      "startLocationId": "5",
+      "endLocationId": "2",
       "tripDuration": 2,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -100,9 +100,9 @@
       "seatsLeft": 2
     },
     {
-      "id": 10,
-      "startLocationId": 4,
-      "endLocationId": 3,
+      "id": "10",
+      "startLocationId": "4",
+      "endLocationId": "3",
       "tripDuration": 1,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -111,9 +111,9 @@
       "seatsLeft": 10
     },
     {
-      "id": 11,
-      "startLocationId": 6,
-      "endLocationId": 2,
+      "id": "11",
+      "startLocationId": "6",
+      "endLocationId": "2",
       "tripDuration": 5,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -122,9 +122,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 12,
-      "startLocationId": 2,
-      "endLocationId": 4,
+      "id": "12",
+      "startLocationId": "2",
+      "endLocationId": "4",
       "tripDuration": 4,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -133,9 +133,9 @@
       "seatsLeft": 20
     },
     {
-      "id": 13,
-      "startLocationId": 4,
-      "endLocationId": 6,
+      "id": "13",
+      "startLocationId": "4",
+      "endLocationId": "6",
       "tripDuration": 7,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -144,9 +144,9 @@
       "seatsLeft": 14
     },
     {
-      "id": 14,
-      "startLocationId": 3,
-      "endLocationId": 2,
+      "id": "14",
+      "startLocationId": "3",
+      "endLocationId": "2",
       "tripDuration": 8,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -155,9 +155,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 15,
-      "startLocationId": 1,
-      "endLocationId": 5,
+      "id": "15",
+      "startLocationId": "1",
+      "endLocationId": "5",
       "tripDuration": 3,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -166,9 +166,9 @@
       "seatsLeft": 14
     },
     {
-      "id": 16,
-      "startLocationId": 5,
-      "endLocationId": 7,
+      "id": "16",
+      "startLocationId": "5",
+      "endLocationId": "7",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -177,9 +177,9 @@
       "seatsLeft": 0
     },
     {
-      "id": 17,
-      "startLocationId": 6,
-      "endLocationId": 2,
+      "id": "17",
+      "startLocationId": "6",
+      "endLocationId": "2",
       "tripDuration": 4,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -188,9 +188,9 @@
       "seatsLeft": 13
     },
     {
-      "id": 18,
-      "startLocationId": 5,
-      "endLocationId": 1,
+      "id": "18",
+      "startLocationId": "5",
+      "endLocationId": "1",
       "tripDuration": 4,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -199,9 +199,9 @@
       "seatsLeft": 8
     },
     {
-      "id": 19,
-      "startLocationId": 2,
-      "endLocationId": 3,
+      "id": "19",
+      "startLocationId": "2",
+      "endLocationId": "3",
       "tripDuration": 4,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -210,9 +210,9 @@
       "seatsLeft": 1
     },
     {
-      "id": 20,
-      "startLocationId": 3,
-      "endLocationId": 6,
+      "id": "20",
+      "startLocationId": "3",
+      "endLocationId": "6",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -221,9 +221,9 @@
       "seatsLeft": 22
     },
     {
-      "id": 21,
-      "startLocationId": 5,
-      "endLocationId": 2,
+      "id": "21",
+      "startLocationId": "5",
+      "endLocationId": "2",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -232,9 +232,9 @@
       "seatsLeft": 16
     },
     {
-      "id": 22,
-      "startLocationId": 7,
-      "endLocationId": 5,
+      "id": "22",
+      "startLocationId": "7",
+      "endLocationId": "5",
       "tripDuration": 8,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -243,9 +243,9 @@
       "seatsLeft": 7
     },
     {
-      "id": 23,
-      "startLocationId": 4,
-      "endLocationId": 2,
+      "id": "23",
+      "startLocationId": "4",
+      "endLocationId": "2",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -254,9 +254,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 24,
-      "startLocationId": 5,
-      "endLocationId": 4,
+      "id": "24",
+      "startLocationId": "5",
+      "endLocationId": "4",
       "tripDuration": 4,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -265,9 +265,9 @@
       "seatsLeft": 20
     },
     {
-      "id": 25,
-      "startLocationId": 1,
-      "endLocationId": 4,
+      "id": "25",
+      "startLocationId": "1",
+      "endLocationId": "4",
       "tripDuration": 1,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -276,9 +276,9 @@
       "seatsLeft": 16
     },
     {
-      "id": 26,
-      "startLocationId": 2,
-      "endLocationId": 7,
+      "id": "26",
+      "startLocationId": "2",
+      "endLocationId": "7",
       "tripDuration": 2,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -287,9 +287,9 @@
       "seatsLeft": 19
     },
     {
-      "id": 27,
-      "startLocationId": 7,
-      "endLocationId": 6,
+      "id": "27",
+      "startLocationId": "7",
+      "endLocationId": "6",
       "tripDuration": 3,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -298,9 +298,9 @@
       "seatsLeft": 4
     },
     {
-      "id": 28,
-      "startLocationId": 7,
-      "endLocationId": 1,
+      "id": "28",
+      "startLocationId": "7",
+      "endLocationId": "1",
       "tripDuration": 3,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -309,9 +309,9 @@
       "seatsLeft": 10
     },
     {
-      "id": 29,
-      "startLocationId": 2,
-      "endLocationId": 5,
+      "id": "29",
+      "startLocationId": "2",
+      "endLocationId": "5",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -320,9 +320,9 @@
       "seatsLeft": 0
     },
     {
-      "id": 30,
-      "startLocationId": 1,
-      "endLocationId": 4,
+      "id": "30",
+      "startLocationId": "1",
+      "endLocationId": "4",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -331,9 +331,9 @@
       "seatsLeft": 3
     },
     {
-      "id": 31,
-      "startLocationId": 4,
-      "endLocationId": 2,
+      "id": "31",
+      "startLocationId": "4",
+      "endLocationId": "2",
       "tripDuration": 4,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -342,9 +342,9 @@
       "seatsLeft": 15
     },
     {
-      "id": 32,
-      "startLocationId": 6,
-      "endLocationId": 1,
+      "id": "32",
+      "startLocationId": "6",
+      "endLocationId": "1",
       "tripDuration": 2,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -353,9 +353,9 @@
       "seatsLeft": 15
     },
     {
-      "id": 33,
-      "startLocationId": 3,
-      "endLocationId": 2,
+      "id": "33",
+      "startLocationId": "3",
+      "endLocationId": "2",
       "tripDuration": 1,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -364,9 +364,9 @@
       "seatsLeft": 2
     },
     {
-      "id": 34,
-      "startLocationId": 4,
-      "endLocationId": 5,
+      "id": "34",
+      "startLocationId": "4",
+      "endLocationId": "5",
       "tripDuration": 2,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -375,9 +375,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 35,
-      "startLocationId": 6,
-      "endLocationId": 3,
+      "id": "35",
+      "startLocationId": "6",
+      "endLocationId": "3",
       "tripDuration": 5,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -386,9 +386,9 @@
       "seatsLeft": 14
     },
     {
-      "id": 36,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "36",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -397,9 +397,9 @@
       "seatsLeft": 7
     },
     {
-      "id": 37,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "37",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -408,9 +408,9 @@
       "seatsLeft": 8
     },
     {
-      "id": 38,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "38",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -419,9 +419,9 @@
       "seatsLeft": 9
     },
     {
-      "id": 39,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "39",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -430,9 +430,9 @@
       "seatsLeft": 10
     },
     {
-      "id": 40,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "40",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -441,9 +441,9 @@
       "seatsLeft": 11
     },
     {
-      "id": 41,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "41",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:00",
@@ -452,9 +452,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 42,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "42",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-20",
       "hour": "12:00",
@@ -463,9 +463,9 @@
       "seatsLeft": 13
     },
     {
-      "id": 43,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "43",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:00",
@@ -474,9 +474,9 @@
       "seatsLeft": 14
     },
     {
-      "id": 44,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "44",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "20:50",
@@ -485,9 +485,9 @@
       "seatsLeft": 11
     },
     {
-      "id": 45,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "45",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "17:30",
@@ -496,9 +496,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 46,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "46",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "18:00",
@@ -507,9 +507,9 @@
       "seatsLeft": 13
     },
     {
-      "id": 47,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "47",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-20",
       "hour": "13:00",
@@ -518,9 +518,9 @@
       "seatsLeft": 14
     },
     {
-      "id": 48,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "48",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "11:00",
@@ -529,9 +529,9 @@
       "seatsLeft": 11
     },
     {
-      "id": 49,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "49",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:00",
@@ -540,9 +540,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 50,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "50",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "10:30",
@@ -551,9 +551,9 @@
       "seatsLeft": 13
     },
     {
-      "id": 51,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "51",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "13:30",
@@ -562,9 +562,9 @@
       "seatsLeft": 14
     },
     {
-      "id": 52,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "52",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-20",
       "hour": "11:30",
@@ -573,9 +573,9 @@
       "seatsLeft": 11
     },
     {
-      "id": 53,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "53",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -584,9 +584,9 @@
       "seatsLeft": 12
     },
     {
-      "id": 54,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "54",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:30",
@@ -595,9 +595,9 @@
       "seatsLeft": 13
     },
     {
-      "id": 55,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "55",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-20",
       "hour": "12:30",
@@ -606,9 +606,9 @@
       "seatsLeft": 14
     },
     {
-      "id": 56,
-      "startLocationId": 2,
-      "endLocationId": 1,
+      "id": "56",
+      "startLocationId": "2",
+      "endLocationId": "1",
       "tripDuration": 6,
       "date": "2021-05-21",
       "hour": "12:00",
@@ -617,9 +617,9 @@
       "seatsLeft": 15
     },
     {
-      "id": 57,
-      "startLocationId": 1,
-      "endLocationId": 2,
+      "id": "57",
+      "startLocationId": "1",
+      "endLocationId": "2",
       "tripDuration": 5,
       "date": "2021-05-20",
       "hour": "12:00",

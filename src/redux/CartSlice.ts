@@ -20,7 +20,7 @@ const cartSlice = createSlice({
         ]
       }
     },
-    removeFromCart: (state, { payload }: PayloadAction<{ id: number }>) => {
+    removeFromCart: (state, { payload }: PayloadAction<{ id: string }>) => {
       const tripToRemoveIndex = current(state).findIndex(cartTrip => cartTrip.trip.id === payload.id)
 
       if (tripToRemoveIndex > -1) {
