@@ -4,72 +4,80 @@
       "id": "TAGDpClxeEQOQYOqfU6V",
       "name": "Kraków",
       "coordinates": {
-        "lat": 50.0682709,
-        "lng": 19.9601472
+        "latitude": 50.0682709,
+        "longitude": 19.9601472
       },
+      "geohash": "u2yhy4",
       "importance": 1
     },
     {
       "id": "hoqJiGMkHJkY8pV7U8jM",
       "name": "Berlin",
       "coordinates": {
-        "lat": 52.5065133,
-        "lng": 13.1445545
+        "latitude": 52.5065133,
+        "longitude": 13.1445545
       },
+      "geohash": "u336en",
       "importance": 1
     },
     {
       "id": "gYqwBPgiz2AsoMsorF5P",
       "name": "Białystok",
       "coordinates": {
-        "lat": 53.1275431,
-        "lng": 23.0159837
+        "latitude": 53.1275431,
+        "longitude": 23.0159837
       },
+      "geohash": "u92q5x",
       "importance": 1
     },
     {
       "id": "6TCJM3A8IeIgXJMpmNqG",
       "name": "Warszawa",
       "coordinates": {
-        "lat": 52.2326063,
-        "lng": 20.7810167
+        "latitude": 52.2326063,
+        "longitude": 20.7810167
       },
+      "geohash": "u3qc0u",
       "importance": 1
     },
     {
       "id": "h2CgwbxaoyQf3NyUoJY0",
       "name": "Paryż",
       "coordinates": {
-        "lat": 48.8588377,
-        "lng": 2.2770205
+        "latitude": 48.8588377,
+        "longitude": 2.2770205
       },
+      "geohash": "u09tgy",
       "importance": 1
     },
     {
       "id": "M1Bk3odOTLQWBqpnl0uU",
       "name": "Barcelona",
       "coordinates": {
-        "lat": 41.3947688,
-        "lng": 2.0787282
+        "latitude": 41.3947688,
+        "longitude": 2.0787282
       },
+      "geohash": "sp37rr",
       "importance": 1
     },
     {
       "id": "4wDtmZCq30RRcgb88DYY",
       "name": "Amsterdam",
       "coordinates": {
-        "lat": 52.3546449,
-        "lng": 4.8339211
+        "latitude": 52.3546449,
+        "longitude": 4.8339211
       },
+      "geohash": "u173vf",
       "importance": 1
     },
     {
       "id": "rBhGcJvs2FcSIypRVk6d",
       "name": "Praga",
       "coordinates": {
-        "lat": 50.073658,
-        "lng": 14.418540
+        "latitude": 50.073658,
+        "longitude": 14.418540
       },
+      "geohash": "u2fkb5",
       "importance": 7
     }
   ]

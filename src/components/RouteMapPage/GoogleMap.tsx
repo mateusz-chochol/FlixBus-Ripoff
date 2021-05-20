@@ -76,7 +76,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   }
 
   const getMarkerColor = (location: Location) => {
-    if (location === departure || location === destination) {
+    if (location.id === departure?.id || location.id === destination?.id) {
       return `${process.env.PUBLIC_URL}/map_markers/default_marker.png`;
     }
 
@@ -86,10 +86,10 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   const handleSelectMarker = (location: Location) => {
     mapRef.current.panTo(location.coordinates);
 
-    if (location === departure) {
+    if (location.id === departure?.id) {
       setDeparture(undefined);
     }
-    else if (location === destination) {
+    else if (location.id === destination?.id) {
       setDestination(undefined);
     }
     else if (departure) {
@@ -101,12 +101,17 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   }
 
   const getLocationsToShow = () => {
+    const center = mapRef.current.getCenter();
     const bounds = mapRef.current.getBounds();
     const northEast = bounds.getNorthEast();
     const southWest = bounds.getSouthWest();
     const zoomLevel = mapRef.current.getZoom();
 
     dispatch(getLocationsByCoordinatesAsync({
+      center: {
+        lng: center.lng(),
+        lat: center.lat()
+      },
       upperLeft: {
         lng: northEast.lng(),
         lat: northEast.lat()
@@ -120,7 +125,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   }
 
   const isMarkerVisible = (location: Location) => {
-    if ((!departure && !destination) || (location === departure || location === destination)) {
+    if ((!departure && !destination) || (location.id === departure?.id || location.id === destination?.id)) {
       return true;
     }
     if (departure) {

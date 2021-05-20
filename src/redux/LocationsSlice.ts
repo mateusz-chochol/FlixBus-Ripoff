@@ -103,25 +103,26 @@ export const getDestinationLocationsBySubstringAsync = createAsyncThunk<Location
 
 export const getLocationsByCoordinatesAsync = createAsyncThunk<
   { locationsForMap: Location[], upperLeft: Coordinates, bottomRight: Coordinates },
-  { upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number }
+  { center: Coordinates, upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number }
 >(
   'locations/getLocationsByCoordinatesAsync',
-  async ({ upperLeft, bottomRight, zoomLevel }) => {
+  async ({ center, upperLeft, bottomRight, zoomLevel }) => {
     return {
-      locationsForMap: await api.getLocationsByCoordinates(upperLeft, bottomRight, zoomLevel),
+      locationsForMap: await api.getLocationsByCoordinates(center, upperLeft, bottomRight, zoomLevel),
       upperLeft: upperLeft,
       bottomRight: bottomRight
     };
   },
   {
     condition: ({ upperLeft, bottomRight }, { getState }) => {
-      const { locations } = getState() as AppState;
+      const { locations, requestsState } = getState() as AppState;
+      const isRequestAlreadyPending = requestsState['locations/getLocationsByCoordinatesAsync'] === 'pending'
 
-      return !locations.lastUpperLeft || !locations.lastBottomRight ||
+      return !isRequestAlreadyPending && (!locations.lastUpperLeft || !locations.lastBottomRight ||
         (upperLeft.lat !== locations.lastUpperLeft.lat ||
           upperLeft.lng !== locations.lastUpperLeft.lng ||
           bottomRight.lat !== locations.lastBottomRight.lat ||
-          bottomRight.lng !== locations.lastBottomRight.lng);
+          bottomRight.lng !== locations.lastBottomRight.lng));
     }
   }
 );

@@ -1,52 +1,104 @@
 import Coordinates from 'types/Objects/Coordinates';
-import Location from 'types/Objects/Location';
-import locations from './tempDataSources/locations.json';
+import * as geofire from 'geofire-common';
+import { firestore } from '../firebase';
 import config from 'reduxConfig.json';
 
-const allLocations: Location[] = locations.locations;
+const locationsRef = firestore.collection('locations');
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
+const convertFirebaseDataToLocation = (doc: any) => {
+  const data = doc.data();
+
+  return {
+    id: doc.id,
+    name: data.name,
+    coordinates: {
+      lat: data.coordinates.latitude,
+      lng: data.coordinates.longitude
+    },
+    importance: data.importance
+  }
+}
+
 // fake API calls
-export const getLocationsByCoordinates = async (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
-  const maxZoom = 14;
-  const offset = (maxZoom * 80) / (zoomLevel * zoomLevel * zoomLevel);
-  // offset to expand the rectangle a bit so its a bit bigger than the map bounds
-
-  const fitsOnScreen = (location: Location) => {
-    return (location.coordinates.lat + offset >= bottomRight.lat &&
-      location.coordinates.lat <= upperLeft.lat + offset &&
-      location.coordinates.lng + offset >= bottomRight.lng &&
-      location.coordinates.lng <= upperLeft.lng + offset) ||
-      (location.coordinates.lat >= bottomRight.lat + offset &&
-        location.coordinates.lat + offset <= upperLeft.lat &&
-        location.coordinates.lng >= bottomRight.lng + offset &&
-        location.coordinates.lng + offset <= upperLeft.lng)
-  }
-
-  const isImportantEnough = (location: Location) => {
-    return location.importance <= zoomLevel;
-  }
-
+export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
   await delay();
 
-  return allLocations.filter(location => fitsOnScreen(location) && isImportantEnough(location));
+  const calculateRadiusInM = (upperLeft: Coordinates, bottomRight: Coordinates) => {
+    const radian = 0.017453292519943295;
+    const angle = 0.5 - Math.cos((bottomRight.lat - upperLeft.lat) * radian) / 2 +
+      Math.cos(upperLeft.lat * radian) * Math.cos(bottomRight.lat * radian) *
+      (1 - Math.cos((bottomRight.lng - upperLeft.lng) * radian)) / 2;
+
+    return 6371 * Math.asin(Math.sqrt(angle)) * 1000;
+  }
+
+  const radiusInM = calculateRadiusInM(upperLeft, bottomRight);
+  const bounds = geofire.geohashQueryBounds([center.lat, center.lng], radiusInM);
+
+  const snapshotPromises = bounds.map(bound => {
+    const query = locationsRef.orderBy('geohash').startAt(bound[0]).endAt(bound[1]);
+
+    return query.get();
+  })
+
+  try {
+    const snapshots = await Promise.all(snapshotPromises);
+
+    const matchingDocs = snapshots.map(snapshot => snapshot.docs).flat().filter(doc => {
+      const { latitude, longitude } = doc.get('coordinates');
+      const distanceInM = geofire.distanceBetween([latitude, longitude], [center.lat, center.lng]) * 1000;
+
+      return distanceInM <= radiusInM;
+    })
+
+    return matchingDocs.map(doc => convertFirebaseDataToLocation(doc)).filter(location => location.importance <= zoomLevel)
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 }
 
 export const getLocationsBySubstring = async (substring: string) => {
   await delay();
 
-  return allLocations.filter(location => location.name.startsWith(substring));
+  try {
+    return (await locationsRef.where('name', '>=', substring).where('name', '<=', substring + '\uf8ff').get())
+      .docs.map(doc => convertFirebaseDataToLocation(doc))
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 }
 
 export const getLocationsByIdArray = async (ids: string[]) => {
   await delay();
 
-  return allLocations.filter(location => ids.includes(location.id));
+  try {
+    return (await locationsRef.where('id', 'in', ids).get())
+      .docs.map(doc => convertFirebaseDataToLocation(doc))
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 }
 
 export const getLocationById = async (id: string) => {
   await delay();
 
-  return allLocations.find(location => location.id === id);
+  try {
+    return convertFirebaseDataToLocation(await locationsRef.doc(id).get())
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 }

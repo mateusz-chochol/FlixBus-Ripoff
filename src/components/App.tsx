@@ -18,6 +18,10 @@ import {
   Box
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+import {
+  getRequestsState,
+  removeRejectedActionCreator,
+} from 'redux/RequestsStateSlice';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import {
   createMuiTheme,
@@ -67,6 +71,7 @@ const App = () => {
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const notifications = useSelector(getNotifications);
+  const hasRequestBeenRejected = useSelector(getRequestsState)['rejected'] === 'rejected';
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -74,12 +79,23 @@ const App = () => {
       const snackbarKey = enqueueSnackbar(notification.message, {
         id: notification.id,
         variant: notification.variant,
-        onClick: () => { closeSnackbar(snackbarKey) },
+        onClick: () => closeSnackbar(snackbarKey),
         persist: notification.persist,
-        onExited: () => { dispatch(removeNotificationActionCreator({ id: notification.id })) },
+        onExited: () => dispatch(removeNotificationActionCreator({ id: notification.id })),
       });
     })
   }, [notifications, closeSnackbar, dispatch, enqueueSnackbar]);
+
+  useEffect(() => {
+    if (hasRequestBeenRejected) {
+      const snackbarKey = enqueueSnackbar('Network error. Please comeback later.', {
+        variant: 'error',
+        onClick: () => closeSnackbar(snackbarKey)
+      });
+
+      dispatch(removeRejectedActionCreator());
+    }
+  }, [hasRequestBeenRejected, dispatch, enqueueSnackbar, closeSnackbar])
 
   return (
     <ThemeProvider theme={theme}>
