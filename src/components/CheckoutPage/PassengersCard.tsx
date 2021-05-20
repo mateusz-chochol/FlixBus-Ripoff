@@ -12,17 +12,8 @@ import {
   Grow,
 } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/ErrorOutline';
-import PassengersForTrip from 'types/Objects/PassengersForTrip';
-import CartTrip from 'types/Objects/CartTrip';
 import Passenger from 'types/Objects/Passenger';
-
-interface PassengersCardProps {
-  selectedCartTrip?: CartTrip,
-  passengersForTrips: PassengersForTrip[],
-  setPassengersForTrips: (value: React.SetStateAction<PassengersForTrip[]>) => void,
-  error: boolean,
-  removeError: (value: string) => void
-}
+import PassengersCardProps from 'types/Props/CheckoutPage/PassengersCardProps'
 
 const PassengersCard: React.FC<PassengersCardProps> = ({
   selectedCartTrip,
