@@ -21,7 +21,6 @@ const convertFirebaseDataToLocation = (doc: any) => {
   }
 }
 
-// fake API calls
 export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
   await delay();
 
