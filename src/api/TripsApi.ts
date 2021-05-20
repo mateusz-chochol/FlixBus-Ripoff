@@ -1,9 +1,9 @@
 import trips from './tempDataSources/trips.json';
+import config from 'reduxConfig.json';
 
 const allTrips = trips.trips;
 
-const delayTime = 0;
-const delay = () => new Promise(resolve => setTimeout(resolve, delayTime));
+const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
 // fake API calls
 export const getTripsByDepartureId = async (id: number) => {

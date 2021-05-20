@@ -1,4 +1,5 @@
 {
   "logRedux": false,
-  "logPending": false
+  "logPending": false,
+  "apiDelay": 0
 }

@@ -1,11 +1,11 @@
 import Coordinates from 'types/Objects/Coordinates';
 import Location from 'types/Objects/Location';
 import locations from './tempDataSources/locations.json';
+import config from 'reduxConfig.json';
 
 const allLocations: Location[] = locations.locations;
 
-const delayTime = 0;
-const delay = () => new Promise(resolve => setTimeout(resolve, delayTime));
+const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
 // fake API calls
 export const getLocationsByCoordinates = async (upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
