@@ -23,7 +23,8 @@ import {
   Typography,
   Grow,
   Paper,
-  ClickAwayListener
+  ClickAwayListener,
+  CircularProgress
 } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
@@ -74,6 +75,7 @@ const Cart: React.FC = () => {
   const cart = useSelector(getCart);
   const locations = useSelector(getAllLocations);
   const { showSuccess } = useNotifications();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
 
@@ -94,6 +96,13 @@ const Cart: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart])
+
+  useEffect(() => {
+    const locationsIdsFromCart = cart.map(cartTrip => [cartTrip.trip.startLocationId, cartTrip.trip.endLocationId]).flat();
+    const locationsIdsFromRedux = locations.map(location => location.id);
+
+    setIsLoading(locationsIdsFromCart.filter(id => !locationsIdsFromRedux.includes(id)).length > 0);
+  }, [locations, cart])
 
   return (
     <Box display='flex' justifyContent='flex-end'>
@@ -116,48 +125,53 @@ const Cart: React.FC = () => {
             <Paper>
               <ClickAwayListener onClickAway={() => setAnchorEl(null)} mouseEvent='onMouseUp'>
                 {cart.length > 0 ?
-                  <Box>
-                    <List className={classes.list}>
-                      {cart.map(({ trip, passengersCount }) => {
-                        return (
-                          <ListItem key={trip.id}>
-                            <Grid container direction='row'>
-                              <Grid
-                                item
-                                container
-                                alignItems='flex-end'
-                                justify='space-evenly'
-                              >
-                                <Grid item>
-                                  <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                  (isLoading ?
+                    <Box display='flex' justifyContent='center' alignItems='center' width='300px' height='80px'>
+                      <CircularProgress color="secondary" />
+                    </Box> :
+                    <Box>
+                      <List className={classes.list}>
+                        {cart.map(({ trip, passengersCount }) => {
+                          return (
+                            <ListItem key={trip.id}>
+                              <Grid container direction='row'>
+                                <Grid
+                                  item
+                                  container
+                                  alignItems='flex-end'
+                                  justify='space-evenly'
+                                >
+                                  <Grid item>
+                                    <ListItemText primary={locations.find(location => location.id === trip.startLocationId)?.name} />
+                                  </Grid>
+                                  <Grid item>
+                                    <ArrowRightAltIcon />
+                                  </Grid>
+                                  <Grid item>
+                                    <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                                  </Grid>
                                 </Grid>
                                 <Grid item>
-                                  <ArrowRightAltIcon />
-                                </Grid>
-                                <Grid item>
-                                  <ListItemText primary={locations.find(location => location.id === trip.endLocationId)?.name} />
+                                  <ListItemText secondary={`${trip.price * passengersCount}$, ${trip.hour}, ${trip.date}, ${passengersCount} seat(s)`} />
                                 </Grid>
                               </Grid>
-                              <Grid item>
-                                <ListItemText secondary={`${trip.price * passengersCount}$, ${trip.hour}, ${trip.date}, ${passengersCount} seat(s)`} />
-                              </Grid>
-                            </Grid>
-                            <ListItemSecondaryAction>
-                              <Tooltip title='Remove from cart'>
-                                <IconButton edge="end" aria-label="remove from cart" onClick={() => handleRemoveFromCartButtonClick(trip)}>
-                                  <RemoveCircleIcon color='secondary' />
-                                </IconButton>
-                              </Tooltip>
-                            </ListItemSecondaryAction>
-                          </ListItem>
-                        )
-                      })}
-                    </List>
-                    <Divider />
-                    <Button fullWidth color='secondary' onClick={handleCheckoutButtonClick}>
-                      Checkout (total: {cart.map(({ trip, passengersCount }) => trip.price * passengersCount).reduce((accelerator, current) => accelerator + current)}$)
-                    </Button>
-                  </Box> :
+                              <ListItemSecondaryAction>
+                                <Tooltip title='Remove from cart'>
+                                  <IconButton edge="end" aria-label="remove from cart" onClick={() => handleRemoveFromCartButtonClick(trip)}>
+                                    <RemoveCircleIcon color='secondary' />
+                                  </IconButton>
+                                </Tooltip>
+                              </ListItemSecondaryAction>
+                            </ListItem>
+                          )
+                        })}
+                      </List>
+                      <Divider />
+                      <Button fullWidth color='secondary' onClick={handleCheckoutButtonClick}>
+                        Checkout (total: {cart.map(({ trip, passengersCount }) => trip.price * passengersCount).reduce((accelerator, current) => accelerator + current)}$)
+                      </Button>
+                    </Box>
+                  ) :
                   <Box color='text.secondary'>
                     <Typography className={classes.emptyCartInfo}>Your cart is empty.</Typography>
                   </Box>
