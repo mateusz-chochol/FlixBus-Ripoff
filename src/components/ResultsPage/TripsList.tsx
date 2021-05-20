@@ -114,7 +114,7 @@ const TripsList: React.FC<ResultsTripsListProps> = ({
               <Grid item>
                 <ListItemText secondary={
                   <Typography variant='body1' color='textSecondary'>
-                    Date: <b>{trip.hour}</b> - {trip.date}, price: {trip.price}$, seats left: {trip.seatsLeft}, duration: {trip.tripDuration}h
+                    Departure hour: <b>{trip.hour}</b>, price: <b>{trip.price}$</b>, seats left: {trip.seatsLeft}, duration: {trip.tripDuration}h
                   </Typography>}
                 />
               </Grid>
