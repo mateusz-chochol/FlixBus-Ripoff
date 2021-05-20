@@ -14,7 +14,6 @@ interface LocationsSliceState {
   locationsForMap: Location[],
   lastUpperLeft?: Coordinates,
   lastBottomRight?: Coordinates,
-  isFetching: boolean,
 }
 
 const locationsInitialState: LocationsSliceState = {
@@ -22,7 +21,6 @@ const locationsInitialState: LocationsSliceState = {
   locationsForDepartureTextField: [],
   locationsForDestinationTextField: [],
   locationsForMap: [],
-  isFetching: false,
 }
 
 const filterExistingLocations = (allLocations: Location[], locationsToAdd?: Location[], locationToAdd?: Location) => {
@@ -67,6 +65,15 @@ export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], number[]>
     }
 
     return locationsToReturn;
+  },
+  {
+    condition: (ids, { getState }) => {
+      const uniqueIds = Array.from(new Set(ids));
+      const { locations } = getState() as AppState;
+      const idsToAskFor = uniqueIds.filter(id => !locations.allLocations.map(location => location.id).includes(id));
+
+      return idsToAskFor.length > 0;
+    }
   }
 );
 
@@ -129,9 +136,14 @@ const locationsSlice = createSlice({
         return {
           ...state,
           locationsForMap: action.payload.locationsForMap,
-          lastUpperLeft: action.payload.upperLeft,
-          lastBottomRight: action.payload.bottomRight,
           allLocations: filterExistingLocations(state.allLocations, action.payload.locationsForMap)
+        }
+      })
+      .addCase(getLocationsByCoordinatesAsync.pending, (state, action) => {
+        return {
+          ...state,
+          lastUpperLeft: action.meta.arg.upperLeft,
+          lastBottomRight: action.meta.arg.bottomRight,
         }
       })
       .addCase(getDepartureLocationsBySubstringAsync.fulfilled, (state, action) => {

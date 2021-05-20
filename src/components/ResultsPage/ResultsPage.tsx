@@ -135,7 +135,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [passengersCount, setPassengersCount] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [shouldDisplayLoadingScreen, setShouldDisplayLoadingScreen] = useState<boolean>();
+  const [shouldDisplayLoadingScreen, setShouldDisplayLoadingScreen] = useState<boolean>(false);
 
   const handleAddToCartButtonClick = (trip: Trip) => {
     dispatch(addToCartActionCreator({ trip: trip, passengersCount: passengersCount }));
@@ -151,7 +151,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
 
     if (requestsToCheck.some(request => request === 'pending')) {
       setIsLoading(true);
-      setTimeout(() => setShouldDisplayLoadingScreen(true), 500);
+      setTimeout(() => setShouldDisplayLoadingScreen(true), 200);
     }
     else {
       setIsLoading(false);

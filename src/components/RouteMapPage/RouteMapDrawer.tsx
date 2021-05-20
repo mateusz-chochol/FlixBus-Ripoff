@@ -74,6 +74,8 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
   allLocations,
   handleTripsSummariesListItemClick,
   handleFullTripsListItemClick,
+  isLoading,
+  shouldDisplayLoadingScreen,
 }) => {
   const classes = useStyles();
   const notificationsFunctionsRef = useRef(useNotifications());
@@ -183,9 +185,7 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
             </Box>
           </Grid>
         </Grid>
-        <Grid item>
-          <Divider />
-        </Grid>
+        <Divider />
       </Grid>
       <TripsList
         departure={departure}
@@ -203,6 +203,8 @@ const RouteMapDrawer: React.FC<RouteMapDrawerProps> = ({
         }}
         handleTripsSummariesListItemClick={handleTripsSummariesListItemClick}
         handleFullTripsListItemClick={handleFullTripsListItemClick}
+        isLoading={isLoading}
+        shouldDisplayLoadingScreen={shouldDisplayLoadingScreen}
       />
     </Drawer>
   )

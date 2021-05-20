@@ -37,6 +37,7 @@ import {
   getCart,
   addToCartActionCreator
 } from 'redux/CartSlice';
+import { getRequestsState } from 'redux/RequestsStateSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import Location from 'types/Objects/Location';
 import GoogleMap from './GoogleMap';
@@ -48,6 +49,7 @@ import moment from 'moment';
 const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const isSmallScreen = width === 'xs' || width === 'sm';
   const dispatch = useDispatch();
+  const requestsState = useSelector(getRequestsState);
   const allLocations = useSelector(getAllLocations);
   const locationsForMap = useSelector(getLocationsForMap);
   const trips = useSelector(getTrips);
@@ -64,6 +66,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
   const [tripsDestinations, setTripsDestinations] = useState<Trip[]>([]);
   const [tripDialogOpen, setTripDialogOpen] = useState<boolean>(false);
   const [selectedTrip, setSelectedTrip] = useState<Trip>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [shouldDisplayLoadingScreen, setShouldDisplayLoadingScreen] = useState<boolean>(false);
   const navBarHeight = '75px';
   const footerMenuHeight = '200px';
 
@@ -92,6 +96,22 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
 
     return false;
   }
+
+  useEffect(() => {
+    const requestsToCheck = [
+      requestsState['trips/getTripsByDepartureAndDestinationIdsAndDateAsync'],
+      requestsState['trips/getTripsByDepartureIdAndDateAsync'],
+    ];
+
+    if (requestsToCheck.some(request => request === 'pending')) {
+      setIsLoading(true);
+      setTimeout(() => setShouldDisplayLoadingScreen(true), 200);
+    }
+    else {
+      setIsLoading(false);
+      setShouldDisplayLoadingScreen(false);
+    }
+  }, [requestsState])
 
   useEffect(() => {
     setIsValidTripSelected(false);
@@ -185,6 +205,8 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
           allLocations={allLocations}
           handleTripsSummariesListItemClick={handleTripsSummariesListItemClick}
           handleFullTripsListItemClick={handleFullTripsListItemClick}
+          isLoading={isLoading}
+          shouldDisplayLoadingScreen={shouldDisplayLoadingScreen}
         />
       </Hidden>
       <GoogleMap

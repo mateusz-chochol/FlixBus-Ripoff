@@ -19,4 +19,6 @@ export default interface MapTripsListProps {
   messageBoxProps?: BoxProps,
   handleTripsSummariesListItemClick: (endLocationId: number) => void,
   handleFullTripsListItemClick: (trip: Trip) => void,
+  isLoading: boolean,
+  shouldDisplayLoadingScreen: boolean,
 }

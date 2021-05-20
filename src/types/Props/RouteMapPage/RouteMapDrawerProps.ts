@@ -13,4 +13,6 @@ export default interface RouteMapDrawerProps {
   allLocations: Location[],
   handleTripsSummariesListItemClick: (endLocationId: number) => void,
   handleFullTripsListItemClick: (trip: Trip) => void,
+  isLoading: boolean,
+  shouldDisplayLoadingScreen: boolean,
 }
