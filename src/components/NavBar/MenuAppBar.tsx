@@ -19,7 +19,6 @@ import {
   Theme
 } from '@material-ui/core/styles';
 import {
-  Box,
   AppBar,
   Toolbar,
   Typography,
@@ -156,10 +155,6 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Tabs>
               </Grid>
             </Hidden>
-            {/* <Grid item xs={2} md={1}>
-              <Cart />
-            </Grid> */}
-
             <Grid item container xs={3} justify='flex-end' alignItems='center'>
               <Grid item>
                 <Cart />
