@@ -47,10 +47,6 @@ export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: 
 
     const snapshots = await Promise.all(snapshotPromises);
 
-    console.log(snapshots.map(snapshot => snapshot.docs)
-      .flat()
-      .map(doc => convertFirebaseDataToLocation(doc)))
-
     return snapshots.map(snapshot => snapshot.docs).flat().map(doc => convertFirebaseDataToLocation(doc));
   }
   catch (error) {
