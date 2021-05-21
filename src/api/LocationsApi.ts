@@ -36,19 +36,22 @@ export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: 
   const radius = calculateRadiusInM(upperLeft, bottomRight);
   const bounds = geofire.geohashQueryBounds([center.lat, center.lng], radius);
 
-  const snapshotPromises = bounds.map(bound => {
-    const query = locationsRef.orderBy('geohash').startAt(bound[0]).endAt(bound[1]);
-
-    return query.get();
-  })
+  const allowedZoomLevels = Array.from(Array(zoomLevel + 1).keys())
 
   try {
+    const snapshotPromises = bounds.map(bound => {
+      const query = locationsRef.orderBy('geohash').where('importance', 'in', allowedZoomLevels).startAt(bound[0]).endAt(bound[1]);
+
+      return query.get();
+    })
+
     const snapshots = await Promise.all(snapshotPromises);
 
-    return snapshots.map(snapshot => snapshot.docs)
+    console.log(snapshots.map(snapshot => snapshot.docs)
       .flat()
-      .map(doc => convertFirebaseDataToLocation(doc))
-      .filter(location => location.importance <= zoomLevel);
+      .map(doc => convertFirebaseDataToLocation(doc)))
+
+    return snapshots.map(snapshot => snapshot.docs).flat().map(doc => convertFirebaseDataToLocation(doc));
   }
   catch (error) {
     console.error(error);

@@ -1,0 +1,1 @@
+firebase emulators:start --import="$PSScriptRoot/../firebase-local-data" --export-on-exit
