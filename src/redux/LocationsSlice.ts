@@ -69,10 +69,10 @@ export const getLocationsByIdArrayAsync = createAsyncThunk<Location[], string[]>
   {
     condition: (ids, { getState }) => {
       const uniqueIds = Array.from(new Set(ids));
-      const { locations } = getState() as AppState;
+      const { locations, requestsState } = getState() as AppState;
       const idsToAskFor = uniqueIds.filter(id => !locations.allLocations.map(location => location.id).includes(id));
 
-      return idsToAskFor.length > 0;
+      return idsToAskFor.length > 0 && requestsState['getLocationsByIdArrayAsync'] !== 'pending';
     }
   }
 );

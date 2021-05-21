@@ -30,11 +30,11 @@ export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: 
       Math.cos(upperLeft.lat * radian) * Math.cos(bottomRight.lat * radian) *
       (1 - Math.cos((bottomRight.lng - upperLeft.lng) * radian)) / 2;
 
-    return 6371 * Math.asin(Math.sqrt(angle)) * 1000;
+    return 6371 * Math.asin(Math.sqrt(angle)) * 500;
   }
 
-  const radiusInM = calculateRadiusInM(upperLeft, bottomRight);
-  const bounds = geofire.geohashQueryBounds([center.lat, center.lng], radiusInM);
+  const radius = calculateRadiusInM(upperLeft, bottomRight);
+  const bounds = geofire.geohashQueryBounds([center.lat, center.lng], radius);
 
   const snapshotPromises = bounds.map(bound => {
     const query = locationsRef.orderBy('geohash').startAt(bound[0]).endAt(bound[1]);
@@ -45,14 +45,10 @@ export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: 
   try {
     const snapshots = await Promise.all(snapshotPromises);
 
-    const matchingDocs = snapshots.map(snapshot => snapshot.docs).flat().filter(doc => {
-      const { latitude, longitude } = doc.get('coordinates');
-      const distanceInM = geofire.distanceBetween([latitude, longitude], [center.lat, center.lng]) * 1000;
-
-      return distanceInM <= radiusInM;
-    })
-
-    return matchingDocs.map(doc => convertFirebaseDataToLocation(doc)).filter(location => location.importance <= zoomLevel)
+    return snapshots.map(snapshot => snapshot.docs)
+      .flat()
+      .map(doc => convertFirebaseDataToLocation(doc))
+      .filter(location => location.importance <= zoomLevel);
   }
   catch (error) {
     console.error(error);
@@ -79,8 +75,9 @@ export const getLocationsByIdArray = async (ids: string[]) => {
   await delay();
 
   try {
-    return (await locationsRef.where('id', 'in', ids).get())
-      .docs.map(doc => convertFirebaseDataToLocation(doc))
+    const documentsPromises = ids.map(id => locationsRef.doc(id).get());
+
+    return (await Promise.all(documentsPromises)).map(doc => convertFirebaseDataToLocation(doc));
   }
   catch (error) {
     console.error(error);

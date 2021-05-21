@@ -113,7 +113,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
   const trips = useSelector(getTrips);
   const returnTrips = useSelector(getReturnTrips);
-  const [departureId, destinationId] = [(departureIdFromUrl), (destinationIdFromUrl)]
+  const [departureId, destinationId] = [departureIdFromUrl, destinationIdFromUrl]
   const [departure, setDeparture] = useState<Location>();
   const [destination, setDestination] = useState<Location>();
   const [tripType, setTripType] = useState<TripType>(returnDateAsString ? TripType.RoundTrip : TripType.OneWay);
