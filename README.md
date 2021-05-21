@@ -144,7 +144,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> redo some redux slices (the ones that are suppose to contact firebase) so they use createAsyncThunk </del> (Done)
   - <del> move components functions to proper places </del> (Done)
   - <del> change setting tab id so its done in default route component </del> (Done)
-  - add creating ids of everything with uuid.v4()
+  - <del> add creating ids of everything with uuid.v4() </del> (Won't do)
   - <del> enable PWA capabilities </del> (Done)
   - <del> divide props folder into multiple smaller folders </del> (Done)
   - <del> create cart for desktop version </del> (Done)
