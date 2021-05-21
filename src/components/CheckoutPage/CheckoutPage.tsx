@@ -96,7 +96,7 @@ const CheckoutPage: React.FC = () => {
   }
 
   useEffect(() => {
-    dispatch(getLocationsByIdArrayAsync(cart.map(({ trip }) => trip.id)));
+    dispatch(getLocationsByIdArrayAsync(cart.map(({ trip }) => [trip.startLocationId, trip.endLocationId]).flat()));
   }, [cart, dispatch])
 
   useEffect(() => {
