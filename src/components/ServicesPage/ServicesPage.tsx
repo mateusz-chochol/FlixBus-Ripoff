@@ -59,7 +59,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 User
               </Typography>
               <Typography variant='subtitle1' gutterBottom>
-                App allows to register a user via email and password and then log in as one. After logging in user grants access to changing their profile info, looking at their history and syncing carts between multiple browsers and tabs.
+                App allows to register a user via email and password and then log in as one. After logging in user grants access to changing their profile info and looking at their history.
               </Typography>
             </Box>
             <Box paddingX={paddingX}>
@@ -81,7 +81,7 @@ const ServicesPage: React.FC<WithWidth> = ({ width }) => {
                 Main flow
               </Typography>
               <Typography variant='subtitle1' gutterBottom>
-                After finding appropriate trips user can add them to their cart (which is going to be saved on their user profile granted that they are logged in) and from there by clicking the checkout button user can proceed to simulate seats reservation on the selected trips.
+                After finding appropriate trips user can add them to their cart and from there by clicking the checkout button user can proceed to simulate seats reservation on the selected trips.
               </Typography>
             </Box>
             <Box paddingX={paddingX}>
