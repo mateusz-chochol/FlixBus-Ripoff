@@ -44,8 +44,16 @@ const SignupForm: React.FC = () => {
       await signup(emailRef.current.value, passwordRef.current.value);
       history.push(routes.mainPage);
     }
-    catch {
-      showError('Failed to create an account.');
+    catch (error) {
+      console.error(error);
+
+      if (error.code === 'auth/weak-password') {
+        showInfo(`${error.message}.`)
+      }
+      else {
+        showError('Failed to create an account.');
+      }
+
       setLoading(false);
     }
   }

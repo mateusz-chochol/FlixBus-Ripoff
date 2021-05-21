@@ -55,7 +55,9 @@ const ForgotPasswordForm: React.FC = () => {
       showSuccess('Check your email for further instructions.')
       history.push(routes.loginPage);
     }
-    catch {
+    catch (error) {
+      console.error(error);
+
       showError('Failed to reset password.');
       setLoading(false);
     }

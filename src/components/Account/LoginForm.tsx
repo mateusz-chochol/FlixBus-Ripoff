@@ -55,7 +55,9 @@ const LoginForm: React.FC = () => {
       await login(emailRef.current.value, passwordRef.current.value);
       history.push(routes.mainPage);
     }
-    catch {
+    catch (error) {
+      console.error(error);
+
       showError('Failed to log in. Do you need an account?');
       setLoading(false);
     }
