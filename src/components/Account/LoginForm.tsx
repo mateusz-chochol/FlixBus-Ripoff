@@ -37,7 +37,7 @@ const LoginForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { login } = useAuth();
   const history = useHistory();
-  const { showError, showInfo } = useNotifications();
+  const { showError, showInfo, showSuccess } = useNotifications();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
     e?.preventDefault();
@@ -52,7 +52,10 @@ const LoginForm: React.FC = () => {
 
     try {
       setLoading(true);
+
       await login(emailRef.current.value, passwordRef.current.value);
+
+      showSuccess('Successfully logged in.')
       history.push(routes.mainPage);
     }
     catch (error) {

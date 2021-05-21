@@ -19,6 +19,7 @@ import {
   Theme
 } from '@material-ui/core/styles';
 import {
+  Box,
   AppBar,
   Toolbar,
   Typography,
@@ -155,14 +156,20 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Tabs>
               </Grid>
             </Hidden>
-            <Grid item xs={2} md={1}>
+            {/* <Grid item xs={2} md={1}>
               <Cart />
-            </Grid>
-            {(currentUser || !isSmallScreen) &&
-              <Grid item xs={2} md={currentUser ? 1 : 2}>
-                <AccountOptions />
+            </Grid> */}
+
+            <Grid item container xs={3} justify='flex-end' alignItems='center'>
+              <Grid item>
+                <Cart />
               </Grid>
-            }
+              {(currentUser || !isSmallScreen) &&
+                <Grid item>
+                  <AccountOptions />
+                </Grid>
+              }
+            </Grid>
           </Grid>
         </Toolbar>
       </AppBar>

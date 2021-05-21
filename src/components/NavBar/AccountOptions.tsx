@@ -64,7 +64,7 @@ const AccountOptions: React.FC = () => {
           onClick={(event: React.MouseEvent<HTMLElement>) => { setMenuAnchorEl(event.currentTarget) }}
           color="inherit"
         >
-          <AccountCircle fontSize="large" />
+          <AccountCircle />
         </IconButton>
         <Menu
           id="menu-appbar"
@@ -90,7 +90,6 @@ const AccountOptions: React.FC = () => {
       <ButtonGroup
         variant="contained"
         color="primary"
-        size="large"
         disableElevation
         fullWidth
         disableRipple
