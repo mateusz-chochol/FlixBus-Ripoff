@@ -130,7 +130,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> create blank page with some trip info </del> (Done)
   - <del> create basic layout for the page </del> (Done)
   - <del> think about what this page should contain </del> (Done)
-- checkout page:
+- <del> checkout page: </del> (Done)
   - <del> create forms for people </del> (Done)
   - <del> create forms for contact </del> (Done)
   - <del> create forms for payment </del> (Done)
@@ -138,7 +138,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> add forms validation </del> (Done)
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
-  - move all data to the firebase backend and create api calls that will fetch them when needed
+  - <del> move all data to the firebase backend and create api calls that will fetch them when needed </del> (Done)
   - <del> think if user should be able to search trips if only one of departure / destination fields are filled </del> (Done)
   - <del> redo redux for locations (like it was done with trips) </del> (Done)
   - <del> redo some redux slices (the ones that are suppose to contact firebase) so they use createAsyncThunk </del> (Done)
