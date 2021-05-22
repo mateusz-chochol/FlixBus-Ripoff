@@ -1,37 +1,56 @@
-import trips from './tempDataSources/trips.json';
+import { firestore } from '../firebase';
 import config from 'reduxConfig.json';
 
-const allTrips = trips.trips;
+const tripsRef = firestore.collection('trips');
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
-// fake API calls
-export const getTripsByDepartureId = async (id: string) => {
-  await delay();
+const convertFirebaseDataToTrip = (doc: any) => {
+  const data = doc.data();
 
-  return allTrips.filter(trip => trip.startLocationId === id);
+  return {
+    id: doc.id,
+    ...data,
+  }
 }
 
 export const getTripsByDepartureIdAndDate = async (id: string, date: string) => {
   await delay();
 
-  return allTrips.filter(trip => trip.startLocationId === id && trip.date === date);
-}
+  try {
+    return (await tripsRef.where('startLocationId', '==', id).where('date', '==', date).get())
+      .docs.map(doc => convertFirebaseDataToTrip(doc));
+  }
+  catch (error) {
+    console.error(error);
 
-export const getTripsByDepartureAndDestinationIds = async (departureId: string, destinationId: string) => {
-  await delay();
-
-  return allTrips.filter(trip => trip.startLocationId === departureId && trip.endLocationId === destinationId);
+    throw error;
+  }
 }
 
 export const getTripsByDepartureAndDestinationIdsAndDate = async (departureId: string, destinationId: string, date: string) => {
   await delay();
 
-  return allTrips.filter(trip => trip.startLocationId === departureId && trip.endLocationId === destinationId && trip.date === date);
+  try {
+    return (await tripsRef.where('startLocationId', '==', departureId).where('endLocationId', '==', destinationId).where('date', '==', date).get())
+      .docs.map(doc => convertFirebaseDataToTrip(doc));
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 }
 
 export const getTripById = async (id: string) => {
   await delay();
 
-  return allTrips.find(trip => trip.id === id);
+  try {
+    return convertFirebaseDataToTrip(await tripsRef.doc(id).get())
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 }

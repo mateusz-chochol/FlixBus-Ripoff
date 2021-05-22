@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Button,
   withWidth,
@@ -111,7 +110,7 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       const turnOfLoadingTimeout = setTimeout(() => {
         setIsLoading(false);
         setShouldDisplayLoadingScreen(false);
-      }, 800);
+      }, 500);
 
       return () => clearTimeout(turnOfLoadingTimeout);
     }
@@ -174,18 +173,16 @@ const RouteMapPage: React.FC<WithWidth> = ({ width }) => {
       >
         <DialogTitle>Add trip to cart</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {selectedTrip !== undefined ?
-              <>
-                <Typography>Do you want to add to cart trip from {allLocations.find(location => location.id === selectedTrip.startLocationId)?.name} to {allLocations.find(location => location.id === selectedTrip.endLocationId)?.name} for 1 passenger?</Typography>
-                <Typography>Departure: {selectedTrip.hour} | {selectedTrip.date}, price: {selectedTrip.price}$, trip duration: {selectedTrip.tripDuration}h, seats left: {selectedTrip.seatsLeft}</Typography>
-                <Box paddingTop={3}>
-                  <Typography>For an option of adding more passengers or filtering the results please press the search button.</Typography>
-                </Box>
-              </> :
-              <Typography>Error, please reload the page</Typography>
-            }
-          </DialogContentText>
+          {selectedTrip !== undefined ?
+            <>
+              <Typography color='textSecondary'>Do you want to add to cart trip from {allLocations.find(location => location.id === selectedTrip.startLocationId)?.name} to {allLocations.find(location => location.id === selectedTrip.endLocationId)?.name} for 1 passenger?</Typography>
+              <Typography color='textSecondary'>Departure: <b>{selectedTrip.hour} | {selectedTrip.date}</b>, price: <b>{selectedTrip.price}$</b>, trip duration: {selectedTrip.tripDuration}h, seats left: {selectedTrip.seatsLeft}</Typography>
+              <Box paddingTop={3}>
+                <Typography color='textSecondary'>For an option of adding more passengers or filtering the results please press the search button.</Typography>
+              </Box>
+            </> :
+            <Typography>Error, please reload the page</Typography>
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setTripDialogOpen(false)} color="primary" autoFocus>

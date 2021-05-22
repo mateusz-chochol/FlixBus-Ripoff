@@ -4,7 +4,12 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+
     match /locations/{location=**} {
+    	allow read: if true;
+    }
+
+    match /trips/{trip=**} {
     	allow read: if true;
     }
   }

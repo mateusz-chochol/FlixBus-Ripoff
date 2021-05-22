@@ -84,8 +84,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   }
 
   const handleSelectMarker = (location: Location) => {
-    mapRef.current.panTo(location.coordinates);
-
     if (location.id === departure?.id) {
       setDeparture(undefined);
     }
