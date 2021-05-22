@@ -9,6 +9,7 @@ import HelpRoundedIcon from '@material-ui/icons/HelpRounded';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import PaymentIcon from '@material-ui/icons/Payment';
+import PersonIcon from '@material-ui/icons/Person';
 
 const components: Component[] = [
   {
@@ -129,6 +130,18 @@ const components: Component[] = [
       'Add forms validation',
     ],
     todo: [],
+  },
+  {
+    icon: <PersonIcon />,
+    name: "Profile page",
+    done: [
+      'Create layout',
+      'Create forms',
+      'Create transactions history',
+    ],
+    todo: [
+      'Make Update button actually updating the profile in firebase',
+    ],
   },
   {
     icon: <SettingsIcon />,
