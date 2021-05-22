@@ -90,7 +90,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (hasRequestBeenRejected) {
-      const snackbarKey = enqueueSnackbar('Network error. Please comeback later.', {
+      const snackbarKey = enqueueSnackbar('Server error. Please comeback later.', {
         variant: 'error',
         onClick: () => closeSnackbar(snackbarKey)
       });
