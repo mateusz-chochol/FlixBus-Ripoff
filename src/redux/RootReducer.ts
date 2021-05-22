@@ -5,6 +5,7 @@ import TripsReducer from './TripsSlice';
 import LocationsReducer from './LocationsSlice';
 import CartReducer from './CartSlice';
 import RequestsStateReducer from './RequestsStateSlice';
+import TransactionsReducer from './TransactionsSlice';
 
 const rootReducer = combineReducers({
   notifications: NotificationsReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   locations: LocationsReducer,
   cart: CartReducer,
   requestsState: RequestsStateReducer,
+  transactions: TransactionsReducer,
 })
 
 export type AppState = ReturnType<typeof rootReducer>

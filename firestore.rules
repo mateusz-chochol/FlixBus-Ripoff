@@ -5,12 +5,16 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
-    match /locations/{location=**} {
+    match /locations/{location} {
     	allow read: if true;
     }
 
-    match /trips/{trip=**} {
+    match /trips/{trip} {
     	allow read: if true;
+    }
+
+    match /transactions/{transaction} {
+      allow read, create: if request.auth != null && request.auth.uid == resource.data.userId;
     }
   }
 }
