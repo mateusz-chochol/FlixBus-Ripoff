@@ -11,13 +11,17 @@ import {
   Button,
   ButtonGroup,
   Box,
+  Typography,
 } from '@material-ui/core';
 import {
   createStyles,
   makeStyles,
   Theme
 } from '@material-ui/core/styles';
-import { AccountCircle } from '@material-ui/icons';
+import PersonIcon from '@material-ui/icons/Person';
+import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useNotifications } from 'components/Misc/Notifications';
 import { routes } from 'routes';
 
@@ -64,26 +68,44 @@ const AccountOptions: React.FC = () => {
           onClick={(event: React.MouseEvent<HTMLElement>) => { setMenuAnchorEl(event.currentTarget) }}
           color="inherit"
         >
-          <AccountCircle />
+          <AccountCircleIcon />
         </IconButton>
         <Menu
           id="menu-appbar"
           anchorEl={menuAnchorEl}
+          getContentAnchorEl={null}
           anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
+            vertical: 'bottom',
+            horizontal: 'center',
           }}
           keepMounted
           transformOrigin={{
             vertical: 'top',
-            horizontal: 'right',
+            horizontal: 'center',
           }}
           open={open}
-          onClose={() => { setMenuAnchorEl(null) }}
+          onClose={() => setMenuAnchorEl(null)}
         >
-          <MenuItem onClick={() => { setMenuAnchorEl(null) }}>Profile</MenuItem>
-          <MenuItem onClick={() => { setMenuAnchorEl(null) }}>Trips</MenuItem>
-          <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+          <Box display='flex' flexDirection='column' width='200px'>
+            <MenuItem onClick={() => setMenuAnchorEl(null)}>
+              <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
+                <Typography>Profile</Typography>
+                <PersonIcon />
+              </Box>
+            </MenuItem>
+            <MenuItem onClick={() => setMenuAnchorEl(null)}>
+              <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
+                <Typography>Trips</Typography>
+                <DirectionsBusIcon />
+              </Box>
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
+                <Typography>Logout</Typography>
+                <ExitToAppIcon />
+              </Box>
+            </MenuItem>
+          </Box>
         </Menu>
       </Box>
     </> : <>
