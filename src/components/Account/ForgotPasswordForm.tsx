@@ -124,7 +124,7 @@ const ForgotPasswordForm: React.FC = () => {
             <Typography variant="h6" align="center" color='textSecondary'>
               Need an account?
             </Typography>
-            <Button color="primary" onClick={() => { history.push(routes.singupPage) }}>
+            <Button color="primary" onClick={() => { history.push(routes.signupPage) }}>
               <Typography variant="h4">Sign Up</Typography>
             </Button>
           </Grid>

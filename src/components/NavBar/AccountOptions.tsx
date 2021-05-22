@@ -43,20 +43,34 @@ const AccountOptions: React.FC = () => {
   const history = useHistory();
   const open = Boolean(menuAnchorEl);
 
-  useEffect(() => {
-    return () => setMenuAnchorEl(null);
-  }, [currentUser])
-
-  const handleLogout = async () => {
+  const handleLogoutButtonClick = async () => {
     try {
       await logout();
+
       showSuccess('Successfully logged out.')
-      history.push(routes.mainPage);
+
+      if (history.location.pathname === routes.profilePage || history.location.pathname === routes.tripsPage) {
+        history.push(routes.mainPage);
+      }
     }
     catch {
       showError('Failed to log out.');
     }
   }
+
+  const handleProfileButtonClick = () => {
+    history.push(routes.profilePage);
+    setMenuAnchorEl(null);
+  }
+
+  const handleTripsButtonClick = () => {
+    history.push(routes.tripsPage);
+    setMenuAnchorEl(null);
+  }
+
+  useEffect(() => {
+    return () => setMenuAnchorEl(null);
+  }, [currentUser])
 
   return (
     currentUser ? <>
@@ -87,19 +101,19 @@ const AccountOptions: React.FC = () => {
           onClose={() => setMenuAnchorEl(null)}
         >
           <Box display='flex' flexDirection='column' width='200px'>
-            <MenuItem onClick={() => setMenuAnchorEl(null)}>
+            <MenuItem onClick={handleProfileButtonClick}>
               <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
                 <Typography>Profile</Typography>
                 <PersonIcon />
               </Box>
             </MenuItem>
-            <MenuItem onClick={() => setMenuAnchorEl(null)}>
+            <MenuItem onClick={handleTripsButtonClick}>
               <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
                 <Typography>Trips</Typography>
                 <DirectionsBusIcon />
               </Box>
             </MenuItem>
-            <MenuItem onClick={handleLogout}>
+            <MenuItem onClick={handleLogoutButtonClick}>
               <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
                 <Typography>Logout</Typography>
                 <ExitToAppIcon />
@@ -117,10 +131,10 @@ const AccountOptions: React.FC = () => {
         disableRipple
         disableFocusRipple
       >
-        <Button className={classes.button} onClick={() => { history.push(routes.loginPage) }}>
+        <Button className={classes.button} onClick={() => history.push(routes.loginPage)}>
           Login
         </Button>
-        <Button className={classes.button} onClick={() => { history.push(routes.singupPage) }}>
+        <Button className={classes.button} onClick={() => history.push(routes.signupPage)}>
           Signup
         </Button>
       </ButtonGroup>

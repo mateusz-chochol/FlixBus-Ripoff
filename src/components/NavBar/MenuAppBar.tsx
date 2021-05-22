@@ -72,7 +72,7 @@ const mobileTabsIfNotLoggedIn: AppBarMenuItem[] = menuItems.concat([
     key: 'Singup',
     text: 'Singup',
     icon: <CreateIcon />,
-    route: routes.singupPage,
+    route: routes.signupPage,
   },
 ])
 
@@ -149,7 +149,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                       key={item.key}
                       label={item.text}
                       icon={item.icon}
-                      onClick={() => { history.push(item.route) }}
+                      onClick={() => history.push(item.route)}
                     />
                   )}
                 </Tabs>

@@ -45,6 +45,8 @@ import NewsetterPage from './NewsletterPage/NewsetterPage';
 import SendFeedbackPage from './SendFeedbackPage/SendFeedbackPage';
 import HelpPage from './HelpPage/HelpPage';
 import CheckoutPage from './CheckoutPage/CheckoutPage';
+import ProfilePage from './ProfilePage/ProfilePage';
+import TripsPage from './TripsPage/TripsPage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -121,8 +123,10 @@ const App = () => {
                 <DefaultRoute exact path={routes.helpPage} component={HelpPage} tabIndex={5} />
                 <DefaultRoute exact path={routes.checkoutPage} component={CheckoutPage} />
                 <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} tabIndex={6} />
-                <PrivateRoute exact path={routes.singupPage} component={SignupPage} shouldBeLogged={false} tabIndex={7} />
+                <PrivateRoute exact path={routes.signupPage} component={SignupPage} shouldBeLogged={false} tabIndex={7} />
                 <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
+                <PrivateRoute exact path={routes.profilePage} component={ProfilePage} shouldBeLogged={true} />
+                <PrivateRoute exact path={routes.tripsPage} component={TripsPage} shouldBeLogged={true} />
                 <DefaultRoute path={routes.mainPage} component={MainPage} />
               </Switch>
             </MuiPickersUtilsProvider>

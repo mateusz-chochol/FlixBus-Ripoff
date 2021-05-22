@@ -44,8 +44,11 @@ const SignupForm: React.FC = () => {
 
       await signup(emailRef.current.value, passwordRef.current.value);
 
-      showSuccess('Successfully signed up.')
-      history.push(routes.mainPage);
+      showSuccess('Successfully signed up.');
+
+      if (history.location.pathname !== routes.loginPage || history.location.pathname !== routes.signupPage) {
+        history.goBack();
+      }
     }
     catch (error) {
       console.error(error);

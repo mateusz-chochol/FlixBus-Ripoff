@@ -1,6 +1,6 @@
 export const routes = {
   loginPage: "/login",
-  singupPage: "/signup",
+  signupPage: "/signup",
   forgotPasswordPage: "/forgotpassword",
   routeMapPage: "/routemap",
   resultsPage: "/results/:departureIdFromUrl/:destinationIdFromUrl/:departureDateAsString/:returnDateAsString?",
@@ -10,5 +10,7 @@ export const routes = {
   sendFeedbackPage: "/sendfeedback",
   helpPage: "/help",
   checkoutPage: "/checkout",
+  profilePage: "/profile",
+  tripsPage: "/trips",
   mainPage: "/",
 }

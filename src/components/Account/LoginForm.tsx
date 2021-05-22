@@ -55,8 +55,11 @@ const LoginForm: React.FC = () => {
 
       await login(emailRef.current.value, passwordRef.current.value);
 
-      showSuccess('Successfully logged in.')
-      history.push(routes.mainPage);
+      showSuccess('Successfully logged in.');
+
+      if (history.location.pathname !== routes.loginPage || history.location.pathname !== routes.signupPage) {
+        history.goBack();
+      }
     }
     catch (error) {
       console.error(error);
@@ -136,7 +139,7 @@ const LoginForm: React.FC = () => {
             <Typography variant="h6" align="center" color='textSecondary'>
               Need an account?
             </Typography>
-            <Button color="primary" onClick={() => { history.push(routes.singupPage) }}>
+            <Button color="primary" onClick={() => { history.push(routes.signupPage) }}>
               <Typography variant="h4">Sign Up</Typography>
             </Button>
           </Grid>
