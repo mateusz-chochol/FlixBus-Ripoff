@@ -21,7 +21,7 @@ const SignupForm: React.FC = () => {
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { signup } = useAuth();
-  const { showError, showInfo } = useNotifications();
+  const { showError, showInfo, showSuccess } = useNotifications();
   const history = useHistory();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
@@ -41,7 +41,10 @@ const SignupForm: React.FC = () => {
 
     try {
       setLoading(true);
+
       await signup(emailRef.current.value, passwordRef.current.value);
+
+      showSuccess('Successfully signed up.')
       history.push(routes.mainPage);
     }
     catch (error) {
