@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 import { firestore } from '../firebase';
 import config from 'reduxConfig.json';
 
@@ -5,13 +6,24 @@ const tripsRef = firestore.collection('trips');
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
-const convertFirebaseDataToTrip = (doc: any) => {
+const convertFirebaseDataToTrip = (doc: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>) => {
   const data = doc.data();
 
-  return {
-    id: doc.id,
-    ...data,
+  if (data) {
+    return {
+      id: doc.id,
+      startLocationId: data.startLocationId,
+      endLocationId: data.endLocationId,
+      tripDuration: data.tripDuration,
+      date: data.date,
+      hour: data.hour,
+      price: data.price,
+      maxSeats: data.maxSeats,
+      seatsLeft: data.seatsLeft
+    }
   }
+
+  throw new Error('Response from the server didn\'t contain data to process');
 }
 
 export const getTripsByDepartureIdAndDate = async (id: string, date: string) => {

@@ -1,5 +1,6 @@
 import Coordinates from 'types/Objects/Coordinates';
 import * as geofire from 'geofire-common';
+import firebase from 'firebase/app';
 import { firestore } from '../firebase';
 import config from 'reduxConfig.json';
 
@@ -7,18 +8,22 @@ const locationsRef = firestore.collection('locations');
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
-const convertFirebaseDataToLocation = (doc: any) => {
+const convertFirebaseDataToLocation = (doc: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>) => {
   const data = doc.data();
 
-  return {
-    id: doc.id,
-    name: data.name,
-    coordinates: {
-      lat: data.coordinates.latitude,
-      lng: data.coordinates.longitude
-    },
-    importance: data.importance
+  if (data) {
+    return {
+      id: doc.id,
+      name: data.name,
+      coordinates: {
+        lat: data.coordinates.latitude,
+        lng: data.coordinates.longitude
+      },
+      importance: data.importance
+    }
   }
+
+  throw new Error('Response from the server didn\'t contain data to process');
 }
 
 export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: Coordinates, bottomRight: Coordinates, zoomLevel: number) => {
