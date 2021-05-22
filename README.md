@@ -136,6 +136,11 @@ Site should be visible under the address: http://localhost:5000
   - <del> create forms for payment </del> (Done)
   - <del> create trip summary </del> (Done)
   - <del> add forms validation </del> (Done)
+- profile page:
+  - <del> create layout </del> (Done)
+  - <del> create forms </del> (Done)
+  - <del> create transactions history </del> (Done)
+  - make Update button actually updating the profile in firebase
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - <del> move all data to the firebase backend and create api calls that will fetch them when needed </del> (Done)
