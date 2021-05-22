@@ -44,9 +44,9 @@ or
 Site should be visible under the address: http://localhost:5000
 
 ## As of now the things that work are:
-- login (as of now api keys have expired so it throws an error)
-- singup (as of now api keys have expired so it throws an error)
-- password reseting (it sends a message to the registered email) (as of now api keys have expired so it throws an error)
+- login
+- singup
+- password reseting (it sends a message to the registered email)
 - notifications
 - routing
 - private routing (i.e. you cannot go to the login page if you are already logged in)
