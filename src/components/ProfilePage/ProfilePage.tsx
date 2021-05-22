@@ -9,10 +9,6 @@ import {
   Typography,
   TextField,
   Button,
-  List,
-  ListItem,
-  Grid,
-  CircularProgress,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -29,6 +25,9 @@ import {
   getTransactionsByUserId,
 } from 'redux/TransactionsSlice';
 import { getRequestsState } from 'redux/RequestsStateSlice';
+import DisplayNameAndPhoneForms from './DisplayNameAndPhoneForms';
+import NewPasswordForms from './NewPasswordForms';
+import TransactionsHistory from './TransactionsHistory';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -113,29 +112,12 @@ const ProfilePage: React.FC = () => {
             <Box paddingX={2} paddingY={3}>
               <Typography variant='h2' align='center' color='textSecondary'>Profile</Typography>
             </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' paddingTop={3} paddingBottom={2}>
-              <Box paddingRight={1}>
-                <TextField
-                  variant='outlined'
-                  color='secondary'
-                  fullWidth
-                  label='Display name'
-                  value={displayName}
-                  onChange={(event) => setDisplayName(event.target.value)}
-                />
-              </Box>
-              <Box paddingLeft={1}>
-                <TextField
-                  variant='outlined'
-                  color='secondary'
-                  fullWidth
-                  label='Phone number'
-                  type='tel'
-                  value={phoneNumber}
-                  onChange={(event) => setPhoneNumber(event.target.value)}
-                />
-              </Box>
-            </Box>
+            <DisplayNameAndPhoneForms
+              displayName={displayName}
+              setDisplayName={setDisplayName}
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
+            />
             <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
               <TextField
                 variant='outlined'
@@ -147,76 +129,13 @@ const ProfilePage: React.FC = () => {
                 onChange={(event) => setEmail(event.target.value)}
               />
             </Box>
-            <Box paddingX={2} paddingTop={3}>
-              <Typography variant='h5' align='center' color='textSecondary'>Change password</Typography>
-            </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
-              <TextField
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                label='New password'
-                type='password'
-                value={newPassword}
-                onChange={(event) => setNewPassword(event.target.value)}
-              />
-            </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
-              <TextField
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                label='Confirm new password'
-                type='password'
-                value={confirmedPassword}
-                onChange={(event) => setConfirmedPassword(event.target.value)}
-              />
-            </Box>
-            <Box paddingBottom={8}>
-              {isLoading ?
-                <Box display='flex' alignItems='center' justifyContent='center' paddingTop={5}>
-                  <CircularProgress color='secondary' thickness={1} size={50} />
-                </Box> :
-                (transactions.length > 0 ?
-                  <>
-                    <Box paddingX={2} paddingTop={3}>
-                      <Typography variant='h5' align='center' color='textSecondary'>Transactions history</Typography>
-                    </Box>
-                    <Box>
-                      <List>
-                        {transactions.map(transaction => {
-                          return (
-                            <ListItem key={transaction.id} divider>
-                              <Grid container direction='column'>
-                                <Grid item>
-                                  <Typography color='textSecondary'>id: <b>{transaction.id}</b></Typography>
-                                </Grid>
-                                <Grid item>
-                                  <Typography color='textSecondary'>date: <b>{transaction.date}</b></Typography>
-                                </Grid>
-                                <Grid item>
-                                  <Typography color='textSecondary'>cost: <b>{transaction.price}$</b></Typography>
-                                </Grid>
-                                <Grid item>
-                                  <Typography color='textSecondary'>trips: <b>{transaction.tripIds.length}</b></Typography>
-                                </Grid>
-                                <Grid item>
-                                  <Typography color='textSecondary'>total seats: <b>{transaction.tripIds.map(trip => trip.seats).reduce((acc, cur) => acc + cur)}</b></Typography>
-                                </Grid>
-                              </Grid>
-                            </ListItem>
-                          )
-                        })}
-                      </List>
-                      <Typography></Typography>
-                    </Box>
-                  </> :
-                  <Box paddingX={2} paddingY={3}>
-                    <Typography variant='h5' align='center' color='textSecondary'>Nothing in transactions history yet.</Typography>
-                  </Box>
-                )
-              }
-            </Box>
+            <NewPasswordForms
+              newPassword={newPassword}
+              setNewPassword={setNewPassword}
+              confirmedPassword={confirmedPassword}
+              setConfirmedPassword={setConfirmedPassword}
+            />
+            <TransactionsHistory transactions={transactions} isLoading={isLoading} />
             <Box
               display='flex'
               justifyContent='center'
@@ -240,7 +159,54 @@ const ProfilePage: React.FC = () => {
       </Hidden>
       <Hidden mdUp>
         <Paper className={classes.paperMobile} square elevation={0}>
-
+          <Box paddingX={2} display='flex' flexDirection='column'>
+            <Box paddingX={2} paddingY={3}>
+              <Typography variant='h2' align='center' color='textSecondary'>Profile</Typography>
+            </Box>
+            <DisplayNameAndPhoneForms
+              displayName={displayName}
+              setDisplayName={setDisplayName}
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
+              separateLines
+            />
+            <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
+              <TextField
+                variant='outlined'
+                color='secondary'
+                fullWidth
+                type='email'
+                label='Email'
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </Box>
+            <NewPasswordForms
+              newPassword={newPassword}
+              setNewPassword={setNewPassword}
+              confirmedPassword={confirmedPassword}
+              setConfirmedPassword={setConfirmedPassword}
+            />
+            <TransactionsHistory transactions={transactions} isLoading={isLoading} />
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              padding={2}
+              position='absolute'
+              bottom={0}
+              left={0}
+              right={0}
+            >
+              <Button
+                size='large'
+                variant='contained'
+                color='secondary'
+              >
+                Update profile
+              </Button>
+            </Box>
+          </Box>
         </Paper>
       </Hidden>
     </Box>
