@@ -137,7 +137,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
               </Typography>
             </Grid>
             <Hidden smDown>
-              <Grid item md={7}>
+              <Grid item md={currentUser ? 8 : 7} >
                 <Tabs
                   value={tabIndex <= menuItems.map(item => item.index).sort((a, b) => b - a)[0] ? tabIndex : false}
                   indicatorColor="secondary"
@@ -155,7 +155,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Tabs>
               </Grid>
             </Hidden>
-            <Grid item container xs={3} justify='flex-end' alignItems='center'>
+            <Grid item container xs={3} md={currentUser ? 2 : 3} justify='flex-end' alignItems='center'>
               <Grid item>
                 <Cart />
               </Grid>
