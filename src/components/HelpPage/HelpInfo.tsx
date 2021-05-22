@@ -30,7 +30,11 @@ const HelpInfo: React.FC = () => {
       'REACT_APP_FIREBASE_MESSAGING_SENDER_ID=<your_firebase_messaging_sender_id>',
       'REACT_APP_FIREBASE_APP_ID=<your_firebase_app_id>',
       'REACT_APP_GOOGLE_MAPS_API_KEY=<your_googlemaps_api_key>',
-    ]
+    ],
+    [
+      'auth.useEmulator("http://localhost:9099")',
+      'firestore.useEmulator("localhost", 8080)',
+    ],
   ]
 
   return (
@@ -67,6 +71,12 @@ const HelpInfo: React.FC = () => {
         • <b>.env</b> file that contains all the firebase and Google Maps API keys with below content
       </Typography>
       <TextCard cardTextTable={cardTextTables[2]} />
+      <Box paddingTop={3}>
+        <Typography variant='subtitle1' gutterBottom>
+          • Working firebase firestore and authentication emulators on ports respectively 9099 and 8080 or deletion of below code in src/components/App.tsx file
+        </Typography>
+      </Box>
+      <TextCard cardTextTable={cardTextTables[3]} />
     </>
   )
 }
