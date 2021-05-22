@@ -69,7 +69,7 @@ const theme = createMuiTheme({
   },
 })
 
-const App = () => {
+const App: React.FC = () => {
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const notifications = useSelector(getNotifications);

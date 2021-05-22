@@ -12,6 +12,7 @@ import {
   ButtonGroup,
   Box,
   Typography,
+  Divider,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -102,21 +103,23 @@ const AccountOptions: React.FC = () => {
         >
           <Box display='flex' flexDirection='column' width='200px'>
             <MenuItem onClick={handleProfileButtonClick}>
-              <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
+              <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
                 <Typography>Profile</Typography>
-                <PersonIcon />
+                <PersonIcon color='action' />
               </Box>
             </MenuItem>
+            <Divider variant='middle' />
             <MenuItem onClick={handleTripsButtonClick}>
-              <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
+              <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
                 <Typography>Trips</Typography>
-                <DirectionsBusIcon />
+                <DirectionsBusIcon color='action' />
               </Box>
             </MenuItem>
+            <Divider variant='middle' />
             <MenuItem onClick={handleLogoutButtonClick}>
-              <Box display='flex' justifyContent='space-between' width='100%' paddingX={1}>
+              <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
                 <Typography>Logout</Typography>
-                <ExitToAppIcon />
+                <ExitToAppIcon color='action' />
               </Box>
             </MenuItem>
           </Box>

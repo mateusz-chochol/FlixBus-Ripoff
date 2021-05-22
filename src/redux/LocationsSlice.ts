@@ -154,11 +154,23 @@ const locationsSlice = createSlice({
           allLocations: filterExistingLocations(state.allLocations, action.payload)
         }
       })
+      .addCase(getDepartureLocationsBySubstringAsync.pending, (state) => {
+        return {
+          ...state,
+          locationsForDepartureTextField: [],
+        }
+      })
       .addCase(getDestinationLocationsBySubstringAsync.fulfilled, (state, action) => {
         return {
           ...state,
           locationsForDestinationTextField: action.payload,
           allLocations: filterExistingLocations(state.allLocations, action.payload)
+        }
+      })
+      .addCase(getDestinationLocationsBySubstringAsync.pending, (state) => {
+        return {
+          ...state,
+          locationsForDepartureTextField: [],
         }
       })
       .addCase(getLocationsByIdArrayAsync.fulfilled, (state, action) => {

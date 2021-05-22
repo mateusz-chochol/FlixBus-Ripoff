@@ -10,6 +10,7 @@ import { getRequestsState } from 'redux/RequestsStateSlice';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TripPlaceFormProps from 'types/Props/Misc/TripPlaceFormProps';
 import TextField from '@material-ui/core/TextField';
+import Location from 'types/Objects/Location';
 
 const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   locations,
@@ -26,8 +27,8 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   const dispatch = useDispatch();
   const requestsState = useSelector(getRequestsState);
   const [placeTextValue, setPlaceTextValue] = useState<string>('');
-  const [placeText, setPlaceText] = useState<string | null>(place?.name ?? null);
-  const [options, setOptions] = useState<string[]>([]);
+  const [placeText, setPlaceText] = useState<Location | null>(place ?? null);
+  const [options, setOptions] = useState<Location[]>([]);
   const [noOptionsText, setNoOptionsText] = useState<string>('Type at least 1 character...');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -38,16 +39,18 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   };
 
   const handleOnBlur = () => {
-    if (options.find(option => option === placeTextValue)) {
-      setPlace(locations.find(location => location.name === placeTextValue));
+    const location = options.find(option => option.name === placeTextValue);
+
+    if (location) {
+      setPlace(location);
     }
     else {
       setPlace(undefined);
     }
   };
 
-  const handleOnChange = (value: string | null, reason: string) => {
-    setPlace(locations.find(location => location.name.toUpperCase() === value?.toUpperCase()));
+  const handleOnChange = (value: Location | null) => {
+    setPlace(locations.find(location => location.id === value?.id));
   }
 
   const capitalizeFirstLetter = (value: string) => {
@@ -64,11 +67,6 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   }, [requestsState, requestToCheck])
 
   useEffect(() => {
-    setPlaceText(place?.name ?? null);
-    setPlaceTextValue(place?.name ?? '');
-  }, [place])
-
-  useEffect(() => {
     let locationsToShow = locations.filter(location => location.name.toUpperCase().startsWith(placeTextValue.toUpperCase()));
 
     if (trips !== undefined) {
@@ -76,15 +74,15 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
       locationsToShow = locations.filter(location => tripsEndLocationsIds.includes(location.id));
     }
 
-    setOptions(locationsToShow.map(locations => locations.name));
+    setOptions(locationsToShow);
   }, [locations, placeTextValue, trips])
 
   useEffect(() => {
     if (!shouldHideOptions) {
       setIsLoading(true);
+      setOptions([]);
 
       if (placeTextValue.length < 1) {
-        setOptions([]);
         setIsLoading(false);
         setNoOptionsText('Type at least 1 character...');
       }
@@ -104,10 +102,17 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
     }
   }, [placeTextValue, place, dispatch, toDispatch, shouldHideOptions])
 
+  useEffect(() => {
+    setPlaceText(place ?? null);
+    setPlaceTextValue(place?.name ?? '');
+  }, [place])
+
   return (
     <Autocomplete
       value={placeText}
-      onChange={(event: any, value, reason) => handleOnChange(value, reason)}
+      getOptionLabel={option => option.name}
+      getOptionSelected={(option, value) => option.id === value.id}
+      onChange={(event: any, value) => handleOnChange(value)}
       inputValue={placeTextValue}
       onInputChange={(event, value) => setPlaceTextValue(capitalizeFirstLetter(value))}
       onBlur={handleOnBlur}
