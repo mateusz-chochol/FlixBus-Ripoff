@@ -1,0 +1,19 @@
+{
+  "transactions": [
+    {
+      "date": "2021-05-23",
+      "price": 280,
+      "tripIds": [
+        {
+          "tripId": "0SlaB2PwvyowIFBJI00p",
+          "seats": 1
+        },
+        {
+          "tripId": "1PPGUOwDbWZnImr4zQgB",
+          "seats": 2
+        }
+      ],
+      "userId": "wc9lCbscA3A3vihNL2tqt9S8twdo"
+    }
+  ]
+}
