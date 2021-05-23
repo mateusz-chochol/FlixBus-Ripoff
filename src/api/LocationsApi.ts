@@ -41,6 +41,8 @@ export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: 
   const radius = calculateRadiusInM(upperLeft, bottomRight);
   const bounds = geofire.geohashQueryBounds([center.lat, center.lng], radius);
 
+  // workaround for firestore emulator that doesn't support composite indexes
+  // on the actual firestore you could just run .orderBy('geohash').where('importance', '<=', zoomLevel)
   const allowedZoomLevels = Array.from(Array(zoomLevel + 1).keys())
 
   try {

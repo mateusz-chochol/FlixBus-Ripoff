@@ -14,7 +14,7 @@ export const TransactionsHistory: React.FC<TransactionsHistoryProps> = ({ transa
     <Box paddingBottom={8}>
       {isLoading ?
         <Box display='flex' alignItems='center' justifyContent='center' paddingTop={5}>
-          <CircularProgress color='secondary' thickness={1} size={50} />
+          <CircularProgress color='secondary' thickness={1.5} size={75} />
         </Box> :
         (transactions.length > 0 ?
           <>

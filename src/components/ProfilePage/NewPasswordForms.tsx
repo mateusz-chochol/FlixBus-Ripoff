@@ -19,6 +19,12 @@ export const NewPasswordForms: React.FC<NewPasswordFormsProps> = ({
       </Box>
       <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
         <TextField
+          inputProps={{
+            autocomplete: 'new-password',
+            form: {
+              autocomplete: 'off',
+            },
+          }}
           variant='outlined'
           color='secondary'
           fullWidth
@@ -30,6 +36,12 @@ export const NewPasswordForms: React.FC<NewPasswordFormsProps> = ({
       </Box>
       <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
         <TextField
+          inputProps={{
+            autocomplete: 'new-password',
+            form: {
+              autocomplete: 'off',
+            },
+          }}
           variant='outlined'
           color='secondary'
           fullWidth
