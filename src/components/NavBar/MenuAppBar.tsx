@@ -155,7 +155,7 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
                 </Tabs>
               </Grid>
             </Hidden>
-            <Grid item container xs={3} md={currentUser ? 2 : 3} justify='flex-end' alignItems='center'>
+            <Grid item container xs={4} md={currentUser ? 2 : 3} justify='flex-end' alignItems='center'>
               <Grid item>
                 <Cart />
               </Grid>
