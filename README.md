@@ -22,6 +22,13 @@ App is installable as a PWA (Progressive Web App) on both mobile and desktop dev
   REACT_APP_GOOGLE_MAPS_API_KEY=<your_googlemaps_api_key>
 ```
 
+- Working firebase <b>firestore</b> and <b>authentication</b> emulators on ports respectively <b>9099</b> and <b>8080</b> or deletion of below code in <b>src/components/App.tsx</b> file
+
+```
+  auth.useEmulator("http://localhost:9099")
+  firestore.useEmulator("localhost", 8080)
+```
+
 ## To run locally, do:
 
 ```
