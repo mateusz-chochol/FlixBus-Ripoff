@@ -29,10 +29,12 @@ import {
 import { getRequestsState } from 'redux/RequestsStateSlice';
 import NewPasswordForms from './NewPasswordForms';
 import TransactionsHistory from './TransactionsHistory';
+import { ReactComponent as ProfileFirstSvg } from 'svgs/profile.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
+      zIndex: 5,
       height: "calc(90vh - 75px)",
       width: "90vw",
       maxWidth: "500px",
@@ -46,6 +48,11 @@ const useStyles = makeStyles((theme: Theme) =>
       '&::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.2)',
       }
+    },
+    paperBackground: {
+      height: "calc(100vh - 75px)",
+      width: "100vw",
+      backgroundColor: 'whitesmoke'
     },
     paperMobile: {
       height: "calc(100vh - 75px)",
@@ -113,15 +120,17 @@ const ProfilePage: React.FC = () => {
         updates.push(currentUser.updatePassword(newPassword));
       }
 
-      try {
-        await Promise.all(updates);
+      if (updates.length > 0) {
+        try {
+          await Promise.all(updates);
 
-        showSuccess('Profile successfully updated.');
-      }
-      catch (error) {
-        console.error(error);
+          showSuccess('Profile successfully updated.');
+        }
+        catch (error) {
+          console.error(error);
 
-        showError('Something went wrong.')
+          showError('Something went wrong.')
+        }
       }
     }
   }
@@ -149,137 +158,143 @@ const ProfilePage: React.FC = () => {
   }, [dispatch, currentUser])
 
   return (
-    <Box
-      height='calc(100vh - 75px)'
-      width='100vw'
-      display='flex'
-      justifyContent='center'
-      alignItems='center'
-      position='relative'
-    >
-      <Hidden xsDown>
-        <Paper className={classes.paper} elevation={4}>
-          <Box paddingX={2} display='flex' flexDirection='column'>
-            <Box paddingX={2} paddingY={3}>
-              <Typography variant='h2' align='center' color='textSecondary'>Profile</Typography>
-            </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' paddingTop={3} paddingBottom={2} paddingX={2}>
-              <TextField
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                label='Display name'
-                value={displayName}
-                onChange={(event) => setDisplayName(event.target.value)}
-              />
-            </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
-              <TextField
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                type='email'
-                label='Email'
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </Box>
-            <NewPasswordForms
-              newPassword={newPassword}
-              setNewPassword={setNewPassword}
-              confirmedPassword={confirmedPassword}
-              setConfirmedPassword={setConfirmedPassword}
-            />
-            <TransactionsHistory transactions={transactions} isLoading={isLoading} />
-            <Box
-              display='flex'
-              justifyContent='center'
-              alignItems='center'
-              padding={2}
-              position='absolute'
-              bottom='5%'
-              left={0}
-              right={0}
-            >
-              <Fab
-                variant="extended"
-                color='secondary'
-                size='large'
-                onClick={handleUpdateButtonClick}
-              >
-                <Box paddingRight={1}>
-                  Update profile
-                </Box>
-                <Box display='flex' alignItems='center'>
-                  <SaveIcon />
-                </Box>
-              </Fab>
-            </Box>
+    <Paper className={classes.paperBackground} square elevation={0}>
+      <Box
+        height='calc(100vh - 75px)'
+        width='100vw'
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        position='relative'
+        overflow='hidden'
+      >
+        <Hidden xsDown>
+          <Box position='absolute' zIndex={4} right={0} left={0} paddingLeft={10} paddingRight={5}>
+            <ProfileFirstSvg width='100%' height='100%' />
           </Box>
-        </Paper>
-      </Hidden>
-      <Hidden smUp>
-        <Paper className={classes.paperMobile} square elevation={0}>
-          <Box paddingX={2} display='flex' flexDirection='column'>
-            <Box paddingX={2} paddingY={3}>
-              <Typography variant='h2' align='center' color='textSecondary'>Profile</Typography>
-            </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' paddingTop={3} paddingBottom={2} paddingX={2}>
-              <TextField
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                label='Display name'
-                value={displayName}
-                onChange={(event) => setDisplayName(event.target.value)}
+          <Paper className={classes.paper} elevation={4}>
+            <Box paddingX={2} display='flex' flexDirection='column'>
+              <Box paddingX={2} paddingY={3}>
+                <Typography variant='h2' align='center' color='textSecondary'>Profile</Typography>
+              </Box>
+              <Box display='flex' justifyContent='center' alignItems='center' paddingTop={3} paddingBottom={2} paddingX={2}>
+                <TextField
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                  label='Display name'
+                  value={displayName}
+                  onChange={(event) => setDisplayName(event.target.value)}
+                />
+              </Box>
+              <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
+                <TextField
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                  type='email'
+                  label='Email'
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Box>
+              <NewPasswordForms
+                newPassword={newPassword}
+                setNewPassword={setNewPassword}
+                confirmedPassword={confirmedPassword}
+                setConfirmedPassword={setConfirmedPassword}
               />
-            </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
-              <TextField
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                type='email'
-                label='Email'
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </Box>
-            <NewPasswordForms
-              newPassword={newPassword}
-              setNewPassword={setNewPassword}
-              confirmedPassword={confirmedPassword}
-              setConfirmedPassword={setConfirmedPassword}
-            />
-            <TransactionsHistory transactions={transactions} isLoading={isLoading} />
-            <Box
-              display='flex'
-              justifyContent='center'
-              alignItems='center'
-              padding={2}
-              position='absolute'
-              bottom={0}
-              left={0}
-              right={0}
-            >
-              <Fab
-                variant="extended"
-                color='secondary'
-                size='large'
-                onClick={handleUpdateButtonClick}
+              <TransactionsHistory transactions={transactions} isLoading={isLoading} />
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                padding={2}
+                position='absolute'
+                bottom='5%'
+                left={0}
+                right={0}
               >
-                <Box paddingRight={1}>
-                  Update profile
+                <Fab
+                  variant="extended"
+                  color='secondary'
+                  size='large'
+                  onClick={handleUpdateButtonClick}
+                >
+                  <Box paddingRight={1}>
+                    Update profile
                 </Box>
-                <Box display='flex' alignItems='center'>
-                  <SaveIcon />
-                </Box>
-              </Fab>
+                  <Box display='flex' alignItems='center'>
+                    <SaveIcon />
+                  </Box>
+                </Fab>
+              </Box>
             </Box>
-          </Box>
-        </Paper>
-      </Hidden>
-    </Box>
+          </Paper>
+        </Hidden>
+        <Hidden smUp>
+          <Paper className={classes.paperMobile} square elevation={0}>
+            <Box paddingX={2} display='flex' flexDirection='column'>
+              <Box paddingX={2} paddingY={3}>
+                <Typography variant='h2' align='center' color='textSecondary'>Profile</Typography>
+              </Box>
+              <Box display='flex' justifyContent='center' alignItems='center' paddingTop={3} paddingBottom={2} paddingX={2}>
+                <TextField
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                  label='Display name'
+                  value={displayName}
+                  onChange={(event) => setDisplayName(event.target.value)}
+                />
+              </Box>
+              <Box display='flex' justifyContent='center' alignItems='center' padding={2}>
+                <TextField
+                  variant='outlined'
+                  color='secondary'
+                  fullWidth
+                  type='email'
+                  label='Email'
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Box>
+              <NewPasswordForms
+                newPassword={newPassword}
+                setNewPassword={setNewPassword}
+                confirmedPassword={confirmedPassword}
+                setConfirmedPassword={setConfirmedPassword}
+              />
+              <TransactionsHistory transactions={transactions} isLoading={isLoading} />
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                padding={2}
+                position='absolute'
+                bottom={0}
+                left={0}
+                right={0}
+              >
+                <Fab
+                  variant="extended"
+                  color='secondary'
+                  size='large'
+                  onClick={handleUpdateButtonClick}
+                >
+                  <Box paddingRight={1}>
+                    Update profile
+                </Box>
+                  <Box display='flex' alignItems='center'>
+                    <SaveIcon />
+                  </Box>
+                </Fab>
+              </Box>
+            </Box>
+          </Paper>
+        </Hidden>
+      </Box>
+    </Paper>
   )
 }
 
