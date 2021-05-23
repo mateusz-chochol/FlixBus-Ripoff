@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import { firestore } from '../firebase';
 import config from 'reduxConfig.json';
+import moment from 'moment';
 
 const tripsRef = firestore.collection('trips');
 
@@ -59,6 +60,30 @@ export const getTripById = async (id: string) => {
 
   try {
     return convertFirebaseDataToTrip(await tripsRef.doc(id).get())
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+}
+
+export const updateTripsDates = async () => {
+  const today = moment().format('YYYY-MM-DD');
+  const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+
+  try {
+    const promises: Promise<void>[] = [];
+
+    (await tripsRef.get()).forEach(snapshot => {
+      const coinToss = Math.floor(Math.random() * 2) === 0;
+
+      promises.push(snapshot.ref.update({
+        date: coinToss ? today : tomorrow
+      }))
+    })
+
+    await Promise.all(promises);
   }
   catch (error) {
     console.error(error);

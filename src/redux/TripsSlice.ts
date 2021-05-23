@@ -103,6 +103,13 @@ export const getTripById = createAsyncThunk<Trip | undefined, string>(
   }
 );
 
+export const updateTripsDates = createAsyncThunk(
+  'trips/updateTripsDates',
+  async () => {
+    await api.updateTripsDates();
+  }
+)
+
 const tripsSlice = createSlice({
   name: 'trips',
   initialState: tripsInitialState,

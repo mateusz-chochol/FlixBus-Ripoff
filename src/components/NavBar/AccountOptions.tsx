@@ -2,8 +2,6 @@ import React, {
   useState,
   useEffect
 } from 'react';
-import { useAuth } from 'contexts/AuthContext';
-import { useHistory } from 'react-router-dom';
 import {
   IconButton,
   MenuItem,
@@ -22,8 +20,13 @@ import PersonIcon from '@material-ui/icons/Person';
 import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import UpdateIcon from '@material-ui/icons/Update';
+import { useAuth } from 'contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 import { useNotifications } from 'components/Misc/Notifications';
 import { routes } from 'routes';
+import { useDispatch } from 'react-redux';
+import { updateTripsDates } from 'redux/TripsSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,8 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AccountOptions: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
-  const { currentUser, logout } = useAuth();
+  const { currentUser, userTokenResult, logout } = useAuth();
   const { showError, showSuccess } = useNotifications();
   const history = useHistory();
   const open = Boolean(menuAnchorEl);
@@ -113,6 +117,14 @@ const AccountOptions: React.FC = () => {
                 <DirectionsBusIcon color='action' />
               </Box>
             </MenuItem>
+            {userTokenResult?.claims.admin &&
+              <MenuItem onClick={() => dispatch(updateTripsDates())}>
+                <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
+                  <Typography>Update trips</Typography>
+                  <UpdateIcon color='action' />
+                </Box>
+              </MenuItem>
+            }
             <MenuItem onClick={handleLogoutButtonClick}>
               <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
                 <Typography>Logout</Typography>

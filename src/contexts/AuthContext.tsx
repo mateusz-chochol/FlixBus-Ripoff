@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect
 } from 'react';
+import firebase from 'firebase/app';
 import { auth } from '../firebase';
 
 const signup = (email: string, password: string) => {
@@ -23,15 +24,17 @@ const resetPassword = (email: string) => {
 }
 
 interface AuthValues {
-  currentUser: firebase.default.User | null,
-  signup: (email: string, password: string) => Promise<firebase.default.auth.UserCredential>,
-  login: (email: string, password: string) => Promise<firebase.default.auth.UserCredential>,
+  currentUser: firebase.User | null,
+  userTokenResult: firebase.auth.IdTokenResult | undefined,
+  signup: (email: string, password: string) => Promise<firebase.auth.UserCredential>,
+  login: (email: string, password: string) => Promise<firebase.auth.UserCredential>,
   logout: () => Promise<void>,
   resetPassword: (email: string) => Promise<void>,
 }
 
 const AuthContext = createContext<AuthValues>({
   currentUser: null,
+  userTokenResult: undefined,
   signup,
   login,
   logout,
@@ -43,11 +46,13 @@ export const useAuth = () => {
 }
 
 export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<firebase.default.User | null>(null);
+  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
+  const [userTokenResult, setUserTokenResult] = useState<firebase.auth.IdTokenResult | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
 
   const value: AuthValues = {
     currentUser,
+    userTokenResult,
     signup,
     login,
     logout,
@@ -55,8 +60,9 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
+      setUserTokenResult(await user?.getIdTokenResult());
       setLoading(false);
     });
 
