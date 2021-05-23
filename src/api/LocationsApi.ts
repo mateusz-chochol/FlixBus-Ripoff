@@ -35,8 +35,8 @@ export const getLocationsByCoordinates = async (center: Coordinates, upperLeft: 
       Math.cos(upperLeft.lat * radian) * Math.cos(bottomRight.lat * radian) *
       (1 - Math.cos((bottomRight.lng - upperLeft.lng) * radian)) / 2;
 
-    return 6371 * Math.asin(Math.sqrt(angle)) * 500;
-  }
+    return 6371 * Math.asin(Math.sqrt(angle)) * 500; // for some reason multiplying by 500 (so half the radius) seems to give
+  }                                                  // a bit more accurate results later in getting the proper bounds
 
   const radius = calculateRadiusInM(upperLeft, bottomRight);
   const bounds = geofire.geohashQueryBounds([center.lat, center.lng], radius);
