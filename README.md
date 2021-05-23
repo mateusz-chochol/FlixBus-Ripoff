@@ -22,7 +22,7 @@ App is installable as a PWA (Progressive Web App) on both mobile and desktop dev
   REACT_APP_GOOGLE_MAPS_API_KEY=<your_googlemaps_api_key>
 ```
 
-- Working firebase <b>firestore</b> and <b>authentication</b> emulators on ports respectively <b>9099</b> and <b>8080</b> or deletion of below code in <b>src/components/App.tsx</b> file
+- Working firebase <b>firestore</b> and <b>authentication</b> emulators on ports respectively <b>8080</b> and <b>9099</b> or deletion of below code in <b>src/components/App.tsx</b> file
 
 ```
   auth.useEmulator("http://localhost:9099")
@@ -147,7 +147,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> create layout </del> (Done)
   - <del> create forms </del> (Done)
   - <del> create transactions history </del> (Done)
-  - make Update button actually updating the profile in firebase
+  - <del> make Update button actually updating the profile in firebase </del> (Done)
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - <del> move all data to the firebase backend and create api calls that will fetch them when needed </del> (Done)
