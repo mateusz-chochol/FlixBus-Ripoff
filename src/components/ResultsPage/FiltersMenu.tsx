@@ -212,7 +212,7 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
             <Slider
               value={priceFilter}
               onChange={(event, newValue) => setPriceFilter(newValue as number[])}
-              max={100}
+              max={200}
               min={0}
               marks={[
                 {
@@ -220,8 +220,8 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
                   label: '0$'
                 },
                 {
-                  value: 100,
-                  label: '100$'
+                  value: 200,
+                  label: '200$'
                 }
               ]}
               valueLabelDisplay="on"
