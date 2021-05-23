@@ -73,7 +73,7 @@ const HelpInfo: React.FC = () => {
       <TextCard cardTextTable={cardTextTables[2]} />
       <Box paddingTop={3}>
         <Typography variant='subtitle1' gutterBottom>
-          • Working firebase <b>firestore</b> and <b>authentication</b> emulators on ports respectively <b>9099</b> and <b>8080</b> or deletion of below code in <b>src/components/App.tsx</b> file
+          • Working firebase <b>firestore</b> and <b>authentication</b> emulators on ports respectively <b>8080</b> and <b>9099</b> or deletion of below code in <b>src/components/App.tsx</b> file
         </Typography>
       </Box>
       <TextCard cardTextTable={cardTextTables[3]} />
