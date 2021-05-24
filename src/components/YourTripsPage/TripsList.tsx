@@ -8,7 +8,8 @@ import {
   List,
   ListItem,
   Grid,
-  Collapse
+  Collapse,
+  Divider
 } from '@material-ui/core';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -50,12 +51,13 @@ const TripsList: React.FC<TripsListProps> = ({
 
   if (list.length > 0) {
     return (
-      <Box minWidth='350px'>
+      <Box width='100%'>
         <Typography variant='h3' gutterBottom color='textSecondary' align='center'>{title}</Typography>
         <List>
           {list.map(tripWithTransaction => {
             const listItem = listOpenState.find(listItem => listItem.transactionId === tripWithTransaction.transaction.id && listItem.tripId === tripWithTransaction.trip?.id);
             const isOpen = listItem?.open;
+            const seats = tripWithTransaction.transaction.tripIds.find(tripId => tripId.tripId === tripWithTransaction.trip?.id)?.seats;
 
             return (
               <Box key={`${tripWithTransaction.trip?.id}_${tripWithTransaction.transaction.id}`}>
@@ -81,15 +83,17 @@ const TripsList: React.FC<TripsListProps> = ({
                   </Grid>
                 </ListItem>
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                  <Box paddingBottom={1}>
+                  <Box paddingBottom={1} paddingLeft={4}>
                     <Typography color='textSecondary'>Departure date: <b>{tripWithTransaction.trip?.date}</b></Typography>
                     <Typography color='textSecondary'>Departure hour: <b>{tripWithTransaction.trip?.hour}</b></Typography>
                     <Typography color='textSecondary'>Trip duration: <b>{tripWithTransaction.trip?.tripDuration}h</b></Typography>
                     <Typography color='textSecondary'>Price per seat: <b>{tripWithTransaction.trip?.price}$</b></Typography>
-                    <Typography color='textSecondary'>Seats: <b>{tripWithTransaction.transaction.tripIds.find(tripId => tripId.tripId === tripWithTransaction.trip?.id)?.seats}</b></Typography>
+                    <Typography color='textSecondary'>Seats: <b>{seats}</b></Typography>
+                    <Typography color='textSecondary'>Total price: <b>{seats && tripWithTransaction.trip?.price && seats * tripWithTransaction.trip?.price}$</b></Typography>
                     <Typography color='textSecondary'>Trip id: <b>{tripWithTransaction.trip?.id}</b></Typography>
                     <Typography color='textSecondary'>Transaction id: <b>{tripWithTransaction.transaction.id}</b></Typography>
                   </Box>
+                  <Divider />
                 </Collapse>
               </Box>
             )
