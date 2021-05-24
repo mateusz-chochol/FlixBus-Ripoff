@@ -138,10 +138,10 @@ const TripsPage: React.FC = () => {
   }, [requestsState])
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && transactions.length === 0) {
       dispatch(getTransactionsByUserId(currentUser.uid));
     }
-  }, [dispatch, currentUser])
+  }, [dispatch, currentUser, transactions.length])
 
   useEffect(() => {
     if (transactions.length > 0) {

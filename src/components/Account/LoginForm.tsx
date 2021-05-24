@@ -57,9 +57,7 @@ const LoginForm: React.FC = () => {
 
       showSuccess('Successfully logged in.');
 
-      if (history.location.pathname !== routes.loginPage || history.location.pathname !== routes.signupPage) {
-        history.goBack();
-      }
+      history.goBack();
     }
     catch (error) {
       console.error(error);

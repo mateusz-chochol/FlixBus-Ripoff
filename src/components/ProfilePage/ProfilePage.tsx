@@ -159,11 +159,11 @@ const ProfilePage: React.FC = () => {
   }, [requestsState])
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && transactions.length === 0) {
       dispatch(getTransactionsByUserId(currentUser.uid));
       setNewPassword('');
     }
-  }, [dispatch, currentUser])
+  }, [dispatch, currentUser, transactions.length])
 
   return (
     <Paper className={classes.paperBackground} square elevation={0}>
