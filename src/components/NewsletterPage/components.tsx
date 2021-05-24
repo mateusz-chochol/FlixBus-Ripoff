@@ -151,9 +151,7 @@ const components: Component[] = [
       'Create layout',
       'Create trips history lists',
     ],
-    todo: [
-      'Add passenger info to transactions',
-    ]
+    todo: []
   },
   {
     icon: <SupervisorAccountIcon />,
@@ -192,6 +190,7 @@ const components: Component[] = [
     ],
     todo: [
       'Make buying trips actually create a transaction object with all info about the transaction (who\'s going, where and such)',
+      'Add passenger info to transactions',
     ],
   },
 ]

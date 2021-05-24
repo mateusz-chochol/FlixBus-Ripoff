@@ -72,7 +72,7 @@ Site should be visible under the address: http://localhost:5000
 - main page:
   - <del> fix vertical scaling on mobile devices </del> (Done)
   - <del> add autocompletion for destination / departure text fields </del> (Done)
-  - <del> change background paper to something code generated so it's never to small no matter the resolution </del> (kinda Won't do [code for gradient commented out])
+  - <del> change background paper to something code generated so it's never to small no matter the resolution </del> (Won't do)
   - <del> fix return / departure date fields so they have separate data sources and departure cannot be after return date and none can be before current date </del>  (Done)
   - <del> make search button actually do something </del> (Done)
   - fix mobile keyboard that bumps departure form nearly out of the user view
@@ -81,7 +81,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> use RxJS to delay call for autocompletion data (1-2 seconds after last typed character) </del> (Done [found easier way than with RxJS])
   - <del> disable selecting markers after typing the departure / destination (make so the search button does that) </del> (Won't do)
   - <del> disable immediate filtering of the trips (make so the search button does the filtering) </del> (Won't do)
-  - <del> create new button that redirects the user to the results page if departure / destination forms are filled up (include parameters in the url)</del> (Won't do)
+  - <del> create new button that redirects the user to the results page if departure / destination forms are filled up (include parameters in the url) </del> (Won't do)
     - <del> the button should at first be disabled with info that you need to fill up the forms </del> (Won't do)
   - <del> search button should update the available trips column </del> (Won't do)
   - <del> default stage of the trips column should tell the user to fill up at least one form </del> (Done)
@@ -148,10 +148,9 @@ Site should be visible under the address: http://localhost:5000
   - <del> create forms </del> (Done)
   - <del> create transactions history </del> (Done)
   - <del> make Update button actually updating the profile in firebase </del> (Done)
-- your trips page:
+- <del> your trips page: </del> (Done)
   - <del> create layout </del> (Done)
   - <del> create trips history lists </del> (Done)
-  - add passenger info to transactions
 - admin panel:
   - create layout for the page
   - add form for adding locations
@@ -178,3 +177,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> add loading screen to text forms </del> (Done)
   - <del> add some timeouts before displaying loading screens </del> (Done)
   - make buying trips actually create a transaction object with all info about the transaction (who's going, where and such)
+  - add passenger info to transactions
