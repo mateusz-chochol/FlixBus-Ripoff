@@ -37,7 +37,7 @@ import { getRequestsState } from 'redux/RequestsStateSlice';
 import moment from 'moment';
 import Trip from 'types/Objects/Trip';
 import TripsList from './TripsList';
-import { ReactComponent as TripsSvg } from 'svgs/trips.svg';
+import { ReactComponent as MapSvg } from 'svgs/map.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -172,7 +172,7 @@ const TripsPage: React.FC = () => {
             paddingLeft={10}
             paddingRight={5}
           >
-            <TripsSvg className={classes.fixedItem} width='100%' height='100%' />
+            <MapSvg className={classes.fixedItem} width='100%' height='100%' />
           </Box>
           <Paper className={classes.paper} elevation={4}>
             <Box paddingX={2} paddingY={3}>

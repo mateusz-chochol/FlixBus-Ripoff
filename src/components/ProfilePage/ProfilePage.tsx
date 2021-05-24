@@ -29,7 +29,7 @@ import {
 import { getRequestsState } from 'redux/RequestsStateSlice';
 import NewPasswordForms from './NewPasswordForms';
 import TransactionsHistory from './TransactionsHistory';
-import { ReactComponent as ProfileFirstSvg } from 'svgs/profile.svg';
+import { ReactComponent as MapSvg } from 'svgs/map.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -185,7 +185,7 @@ const ProfilePage: React.FC = () => {
             paddingLeft={10}
             paddingRight={5}
           >
-            <ProfileFirstSvg className={classes.fixedItem} width='100%' height='100%' />
+            <MapSvg className={classes.fixedItem} width='100%' height='100%' />
           </Box>
           <Paper className={classes.paper} elevation={4}>
             <Box paddingX={2} display='flex' flexDirection='column'>
