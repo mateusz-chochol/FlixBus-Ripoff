@@ -1,4 +1,7 @@
+import Trip from './Trip';
+import Transaction from './Transaction';
+
 export default interface TripWithTransaction {
-  transactionId: string,
-  tripId: string,
+  trip?: Trip,
+  transaction: Transaction,
 }

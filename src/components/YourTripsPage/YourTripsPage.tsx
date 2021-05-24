@@ -38,6 +38,7 @@ import moment from 'moment';
 import Trip from 'types/Objects/Trip';
 import TripsList from './TripsList';
 import { ReactComponent as MapSvg } from 'svgs/map.svg';
+import TripWithTransaction from 'types/Objects/TripWithTransaction';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -93,11 +94,20 @@ const TripsPage: React.FC = () => {
   const trips = useSelector(getTrips);
   const locations = useSelector(getAllLocations);
   const requestsState = useSelector(getRequestsState);
-  const [upcomingTrips, setUpcomingTrips] = useState<Trip[]>(trips.filter(trip => moment(trip.date).isSameOrAfter(moment())));
-  const [previousTrips, setPreviousTrips] = useState<Trip[]>(trips.filter(trip => moment(trip.date).isBefore(moment())));
+  const [upcomingList, setUpcomingList] = useState<TripWithTransaction[]>([]);
+  const [previousList, setPreviousList] = useState<TripWithTransaction[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const getTripIdsWithTransactions = useCallback(() => {
+  const getTripsWithTransaction = useCallback(() => {
+    return transactions.map(transaction => transaction.tripIds.map(tripId => {
+      return {
+        trip: trips.find(trip => trip.id === tripId.tripId),
+        transaction: transaction
+      }
+    })).flat()
+  }, [transactions, trips])
+
+  const getTripIdsWithTransactionIds = useCallback(() => {
     return transactions.map(transaction => transaction.tripIds.map(tripId => {
       return {
         tripId: tripId.tripId,
@@ -107,8 +117,8 @@ const TripsPage: React.FC = () => {
   }, [transactions])
 
   const isTripInTransactions = useCallback((trip: Trip) => {
-    return getTripIdsWithTransactions().map(tripId => tripId.tripId).includes(trip.id);
-  }, [getTripIdsWithTransactions]);
+    return getTripIdsWithTransactionIds().map(tripId => tripId.tripId).includes(trip.id);
+  }, [getTripIdsWithTransactionIds]);
 
   useEffect(() => {
     const requestsToCheck = [
@@ -135,14 +145,14 @@ const TripsPage: React.FC = () => {
 
   useEffect(() => {
     if (transactions.length > 0) {
-      dispatch(getTripsByIdsArray(getTripIdsWithTransactions().map(tripId => tripId.tripId)));
+      dispatch(getTripsByIdsArray(getTripIdsWithTransactionIds().map(tripId => tripId.tripId)));
     }
-  }, [transactions, trips, getTripIdsWithTransactions, dispatch])
+  }, [transactions, trips, getTripIdsWithTransactionIds, dispatch])
 
   useEffect(() => {
-    setUpcomingTrips(trips.filter(trip => moment(trip.date).isSameOrAfter(moment()) && isTripInTransactions(trip)));
-    setPreviousTrips(trips.filter(trip => moment(trip.date).isBefore(moment()) && isTripInTransactions(trip)));
-  }, [trips, isTripInTransactions])
+    setUpcomingList(getTripsWithTransaction().filter(tripWithTransaction => moment(tripWithTransaction.trip?.date).isSameOrAfter(moment())))
+    setPreviousList(getTripsWithTransaction().filter(tripWithTransaction => moment(tripWithTransaction.trip?.date).isBefore(moment())))
+  }, [getTripsWithTransaction])
 
   useEffect(() => {
     const locationsIds = trips.filter(trip => isTripInTransactions(trip))
@@ -197,10 +207,8 @@ const TripsPage: React.FC = () => {
                 padding={4}
               >
                 <TripsList
-                  trips={upcomingTrips}
-                  transactions={transactions}
+                  list={upcomingList}
                   locations={locations}
-                  getTripIdsWithTransactions={getTripIdsWithTransactions}
                   title='Upcoming trips'
                   emptyListMessage='No upcoming trips'
                 />
@@ -208,10 +216,8 @@ const TripsPage: React.FC = () => {
                   <Divider flexItem className={classes.divider} />
                 </Box>
                 <TripsList
-                  trips={previousTrips}
-                  transactions={transactions}
+                  list={previousList}
                   locations={locations}
-                  getTripIdsWithTransactions={getTripIdsWithTransactions}
                   title='Previous trips'
                   emptyListMessage='No previous trips'
                 />
@@ -243,10 +249,8 @@ const TripsPage: React.FC = () => {
                 padding={4}
               >
                 <TripsList
-                  trips={upcomingTrips}
-                  transactions={transactions}
+                  list={upcomingList}
                   locations={locations}
-                  getTripIdsWithTransactions={getTripIdsWithTransactions}
                   title='Upcoming trips'
                   emptyListMessage='No upcoming trips'
                 />
@@ -254,10 +258,8 @@ const TripsPage: React.FC = () => {
                   <Divider flexItem className={classes.divider} />
                 </Box>
                 <TripsList
-                  trips={previousTrips}
-                  transactions={transactions}
+                  list={previousList}
                   locations={locations}
-                  getTripIdsWithTransactions={getTripIdsWithTransactions}
                   title='Previous trips'
                   emptyListMessage='No previous trips'
                 />
