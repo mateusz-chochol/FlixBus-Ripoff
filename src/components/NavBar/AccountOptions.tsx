@@ -53,7 +53,7 @@ const AccountOptions: React.FC = () => {
 
       showSuccess('Successfully logged out.')
 
-      if (history.location.pathname === routes.profilePage || history.location.pathname === routes.tripsPage) {
+      if (history.location.pathname === routes.profilePage || history.location.pathname === routes.yourTripsPage) {
         history.push(routes.mainPage);
       }
     }
@@ -68,7 +68,7 @@ const AccountOptions: React.FC = () => {
   }
 
   const handleTripsButtonClick = () => {
-    history.push(routes.tripsPage);
+    history.push(routes.yourTripsPage);
     setMenuAnchorEl(null);
   }
 

@@ -11,6 +11,6 @@ export const routes = {
   helpPage: "/help",
   checkoutPage: "/checkout",
   profilePage: "/profile",
-  tripsPage: "/trips",
+  yourTripsPage: "/yourtrips",
   mainPage: "/",
 }
