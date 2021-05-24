@@ -31,6 +31,7 @@ import {
   Tab,
   Grid,
   Hidden,
+  Box,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import CreateIcon from '@material-ui/icons/Create';
@@ -137,25 +138,27 @@ const MenuAppBar: React.FC<WithWidth> = ({ width }) => {
               </Typography>
             </Grid>
             <Hidden smDown>
-              <Grid item md={currentUser ? 8 : 7} >
-                <Tabs
-                  value={tabIndex <= menuItems.map(item => item.index).sort((a, b) => b - a)[0] ? tabIndex : false}
-                  indicatorColor="secondary"
-                  variant="scrollable"
-                  scrollButtons="on"
-                >
-                  {menuItems.map(item =>
-                    <Tab
-                      key={item.key}
-                      label={item.text}
-                      icon={item.icon}
-                      onClick={() => history.push(item.route)}
-                    />
-                  )}
-                </Tabs>
+              <Grid item md={currentUser ? 8 : 7} xl={8}>
+                <Box display='flex' justifyContent='center'>
+                  <Tabs
+                    value={tabIndex <= menuItems.map(item => item.index).sort((a, b) => b - a)[0] ? tabIndex : false}
+                    indicatorColor="secondary"
+                    variant="scrollable"
+                    scrollButtons="on"
+                  >
+                    {menuItems.map(item =>
+                      <Tab
+                        key={item.key}
+                        label={item.text}
+                        icon={item.icon}
+                        onClick={() => history.push(item.route)}
+                      />
+                    )}
+                  </Tabs>
+                </Box>
               </Grid>
             </Hidden>
-            <Grid item container xs={4} md={currentUser ? 2 : 3} justify='flex-end' alignItems='center'>
+            <Grid item container xs={4} md={currentUser ? 2 : 3} xl={2} justify='flex-end' alignItems='center'>
               <Grid item>
                 <Cart />
               </Grid>
