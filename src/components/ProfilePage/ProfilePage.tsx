@@ -86,6 +86,7 @@ const ProfilePage: React.FC = () => {
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmedPassword, setConfirmedPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [updatingProfile, setUpdatingProgile] = useState<boolean>(false);
 
   const handleSaveButtonClick = async () => {
     let errors = false;
@@ -125,6 +126,8 @@ const ProfilePage: React.FC = () => {
 
       if (updates.length > 0) {
         try {
+          setUpdatingProgile(true);
+
           await Promise.all(updates);
 
           showSuccess('Profile successfully updated.');
@@ -134,6 +137,8 @@ const ProfilePage: React.FC = () => {
 
           showError('Something went wrong.')
         }
+
+        setUpdatingProgile(false);
       }
     }
   }
@@ -230,6 +235,7 @@ const ProfilePage: React.FC = () => {
                   color='secondary'
                   size='large'
                   onClick={handleSaveButtonClick}
+                  disabled={updatingProfile}
                 >
                   <Box paddingRight={1}>
                     Save profile
@@ -291,6 +297,7 @@ const ProfilePage: React.FC = () => {
                   color='secondary'
                   size='large'
                   onClick={handleSaveButtonClick}
+                  disabled={updatingProfile}
                 >
                   <Box paddingRight={1}>
                     Save profile

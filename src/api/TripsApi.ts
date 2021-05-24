@@ -31,7 +31,7 @@ export const getTripsByDepartureIdAndDate = async (id: string, date: string) => 
   await delay();
 
   try {
-    return (await tripsRef.where('startLocationId', '==', id).where('date', '==', date).get())
+    return (await tripsRef.where('startLocationId', '==', id).where('date', '==', date).where('seatsLeft', '!=', 0).get())
       .docs.map(doc => convertFirebaseDataToTrip(doc));
   }
   catch (error) {
@@ -45,7 +45,7 @@ export const getTripsByDepartureAndDestinationIdsAndDate = async (departureId: s
   await delay();
 
   try {
-    return (await tripsRef.where('startLocationId', '==', departureId).where('endLocationId', '==', destinationId).where('date', '==', date).get())
+    return (await tripsRef.where('startLocationId', '==', departureId).where('endLocationId', '==', destinationId).where('date', '==', date).where('seatsLeft', '!=', 0).get())
       .docs.map(doc => convertFirebaseDataToTrip(doc));
   }
   catch (error) {

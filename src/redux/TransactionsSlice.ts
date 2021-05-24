@@ -14,6 +14,14 @@ const transactionsInitialState: TransactionsSliceState = {
   transactions: [],
 };
 
+const filterExistingTransactions = (transactions: Transaction[], transactionsToAdd: Transaction[]) => {
+  let transactionsToReturn = transactions;
+
+  transactionsToReturn = transactionsToReturn.concat(transactionsToAdd.filter(transactionToAdd => !transactionsToReturn.map(transaction => transaction.id).includes(transactionToAdd.id)))
+
+  return transactionsToReturn
+}
+
 export const getTransactionsByUserId = createAsyncThunk<Transaction[], string>(
   'transactions/getTransactionsByUserId',
   async (id) => {
@@ -51,8 +59,7 @@ const transactionsSlice = createSlice({
         }
 
         return {
-          ...state,
-          transactions: action.payload,
+          transactions: filterExistingTransactions(state.transactions, action.payload),
         }
       })
       .addCase(addTransaction.pending, (state, action) => {

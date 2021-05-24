@@ -24,6 +24,20 @@ const tripsInitialState: TripSliceState = {
   returnList: [],
 };
 
+const filterExistingTrips = (trips: Trip[], tripsToAdd?: Trip[], tripToAdd?: Trip) => {
+  let tripsToReturn = trips;
+
+  if (tripsToAdd) {
+    tripsToReturn = tripsToReturn.concat(tripsToAdd.filter(tripToAdd => !tripsToReturn.map(trip => trip.id).includes(tripToAdd.id)));
+  }
+
+  if (tripToAdd && !tripsToReturn.map(trip => trip.id).includes(tripToAdd.id)) {
+    tripsToReturn = tripsToReturn.concat(tripToAdd);
+  }
+
+  return tripsToReturn;
+}
+
 export const getTripsByDepartureIdAndDateAsync = createAsyncThunk<
   { list: Trip[], lastDepartureId: string, lastDepartureDate: string },
   { departureId: string, departureDate: Date }
@@ -195,16 +209,13 @@ const tripsSlice = createSlice({
 
         return {
           ...state,
-          list: state.list.concat(action.payload)
+          list: filterExistingTrips(state.list, undefined, action.payload),
         }
       })
       .addCase(getTripsByIdsArray.fulfilled, (state, action) => {
         return {
           ...state,
-          list: [
-            ...state.list,
-            ...action.payload
-          ]
+          list: filterExistingTrips(state.list, action.payload),
         }
       })
   }
