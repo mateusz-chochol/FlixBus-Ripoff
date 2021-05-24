@@ -60,7 +60,7 @@ const Summary: React.FC<SummaryProps> = ({
   const dispatch = useDispatch();
   const { showSuccess, showInfo, showError } = useNotifications();
 
-  const handleProcceedToPaymentButtonClick = () => {
+  const handleProceedToPaymentButtonClick = () => {
     const passengersNames = passengersForTrips
       .map(passengersForTrip => passengersForTrip.passengers
         .map(passenger => [passenger.firstName, passenger.lastName]))
@@ -76,7 +76,7 @@ const Summary: React.FC<SummaryProps> = ({
         }
       }
 
-      return showInfo('All fields must be filled out before procceeding further.');
+      return showInfo('All fields must be filled out before proceeding further.');
     }
 
     const arePassengersFormsCorrect = !passengersNames.some(name => name.match(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/) === null);
@@ -193,7 +193,7 @@ const Summary: React.FC<SummaryProps> = ({
           variant='contained'
           fullWidth
           color='primary'
-          onClick={handleProcceedToPaymentButtonClick}
+          onClick={handleProceedToPaymentButtonClick}
         >
           Proceed to payment
         </Button>
