@@ -113,7 +113,7 @@ const Summary: React.FC<SummaryProps> = ({
 
     if (!isPhoneNumberCorrect) {
       setErrors(errors => errors.concat('contact'));
-      showError("Incorrect phone number");
+      showError("Incorrect phone number.");
     }
   }
 
