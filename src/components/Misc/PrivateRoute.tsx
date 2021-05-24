@@ -4,10 +4,15 @@ import { useAuth } from 'contexts/AuthContext';
 import PrivateRouteProps from 'types/Props/Misc/PrivateRouteProps';
 import DefaultRoute from './DefaultRoute';
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, shouldBeLogged, ...rest }) => {
-  const { currentUser } = useAuth();
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, shouldBeLogged, shouldBeAdmin, ...rest }) => {
+  const { currentUser, userTokenResult } = useAuth();
 
-  const display = (currentUser && shouldBeLogged) || (!currentUser && !shouldBeLogged);
+  const display = (
+    (currentUser && (
+      (shouldBeLogged && !shouldBeAdmin) || (shouldBeLogged && shouldBeAdmin && userTokenResult?.claims.admin)
+    )) ||
+    (!currentUser && !shouldBeLogged && !shouldBeAdmin)
+  );
 
   return Component ? (
     <DefaultRoute {...rest} render={props =>

@@ -20,13 +20,11 @@ import PersonIcon from '@material-ui/icons/Person';
 import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import UpdateIcon from '@material-ui/icons/Update';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { useAuth } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 import { useNotifications } from 'components/Misc/Notifications';
 import { routes } from 'routes';
-import { useDispatch } from 'react-redux';
-import { updateTripsDates } from 'redux/TripsSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,7 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AccountOptions: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const { currentUser, userTokenResult, logout } = useAuth();
   const { showError, showSuccess } = useNotifications();
@@ -51,11 +48,7 @@ const AccountOptions: React.FC = () => {
     try {
       await logout();
 
-      showSuccess('Successfully logged out.')
-
-      if (history.location.pathname === routes.profilePage || history.location.pathname === routes.yourTripsPage) {
-        history.push(routes.mainPage);
-      }
+      showSuccess('Successfully logged out.');
     }
     catch {
       showError('Failed to log out.');
@@ -67,8 +60,13 @@ const AccountOptions: React.FC = () => {
     setMenuAnchorEl(null);
   }
 
-  const handleTripsButtonClick = () => {
+  const handleYourTripsButtonClick = () => {
     history.push(routes.yourTripsPage);
+    setMenuAnchorEl(null);
+  }
+
+  const handleAdminPanelButtonClick = () => {
+    history.push(routes.adminPage);
     setMenuAnchorEl(null);
   }
 
@@ -83,7 +81,7 @@ const AccountOptions: React.FC = () => {
           aria-label="account of current user"
           aria-controls="menu-appbar"
           aria-haspopup="true"
-          onClick={(event: React.MouseEvent<HTMLElement>) => { setMenuAnchorEl(event.currentTarget) }}
+          onClick={(event: React.MouseEvent<HTMLElement>) => setMenuAnchorEl(event.currentTarget)}
           color="inherit"
         >
           <AccountCircleIcon />
@@ -111,17 +109,17 @@ const AccountOptions: React.FC = () => {
                 <PersonIcon color='action' />
               </Box>
             </MenuItem>
-            <MenuItem onClick={handleTripsButtonClick}>
+            <MenuItem onClick={handleYourTripsButtonClick}>
               <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
                 <Typography>Your trips</Typography>
                 <DirectionsBusIcon color='action' />
               </Box>
             </MenuItem>
             {userTokenResult?.claims.admin &&
-              <MenuItem onClick={() => dispatch(updateTripsDates())}>
+              <MenuItem onClick={handleAdminPanelButtonClick}>
                 <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
-                  <Typography>Update trips</Typography>
-                  <UpdateIcon color='action' />
+                  <Typography>Admin panel</Typography>
+                  <SupervisorAccountIcon color='action' />
                 </Box>
               </MenuItem>
             }

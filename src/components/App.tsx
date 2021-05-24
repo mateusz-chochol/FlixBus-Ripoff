@@ -47,6 +47,7 @@ import HelpPage from './HelpPage/HelpPage';
 import CheckoutPage from './CheckoutPage/CheckoutPage';
 import ProfilePage from './ProfilePage/ProfilePage';
 import YourTripsPage from './YourTripsPage/YourTripsPage';
+import AdminPage from './AdminPage/AdminPage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -125,8 +126,9 @@ const App: React.FC = () => {
                 <PrivateRoute exact path={routes.loginPage} component={LoginPage} shouldBeLogged={false} tabIndex={6} />
                 <PrivateRoute exact path={routes.signupPage} component={SignupPage} shouldBeLogged={false} tabIndex={7} />
                 <PrivateRoute exact path={routes.forgotPasswordPage} component={ForgotPasswordPage} shouldBeLogged={false} />
-                <PrivateRoute exact path={routes.profilePage} component={ProfilePage} shouldBeLogged={true} />
-                <PrivateRoute exact path={routes.yourTripsPage} component={YourTripsPage} shouldBeLogged={true} />
+                <PrivateRoute exact path={routes.profilePage} component={ProfilePage} shouldBeLogged />
+                <PrivateRoute exact path={routes.yourTripsPage} component={YourTripsPage} shouldBeLogged />
+                <PrivateRoute exact path={routes.adminPage} component={AdminPage} shouldBeLogged shouldBeAdmin />
                 <DefaultRoute path={routes.mainPage} component={MainPage} />
               </Switch>
             </MuiPickersUtilsProvider>

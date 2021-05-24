@@ -12,5 +12,6 @@ export const routes = {
   checkoutPage: "/checkout",
   profilePage: "/profile",
   yourTripsPage: "/yourtrips",
+  adminPage: "/admin",
   mainPage: "/",
 }
