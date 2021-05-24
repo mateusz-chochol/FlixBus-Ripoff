@@ -113,7 +113,7 @@ const AccountOptions: React.FC = () => {
             </MenuItem>
             <MenuItem onClick={handleTripsButtonClick}>
               <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
-                <Typography>Trips</Typography>
+                <Typography>Your trips</Typography>
                 <DirectionsBusIcon color='action' />
               </Box>
             </MenuItem>

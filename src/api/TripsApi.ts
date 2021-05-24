@@ -68,6 +68,21 @@ export const getTripById = async (id: string) => {
   }
 }
 
+export const getTripsByIdsArray = async (ids: string[]) => {
+  await delay();
+
+  try {
+    const documentsPromises = ids.map(id => tripsRef.doc(id).get());
+
+    return (await Promise.all(documentsPromises)).map(doc => convertFirebaseDataToTrip(doc));
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+}
+
 export const updateTripsDates = async () => {
   const today = moment().format('YYYY-MM-DD');
   const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');

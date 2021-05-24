@@ -103,6 +103,24 @@ export const getTripById = createAsyncThunk<Trip | undefined, string>(
   }
 );
 
+export const getTripsByIdsArray = createAsyncThunk<Trip[], string[]>(
+  'trips/getTripsByIdsArray',
+  async (ids, thunkApi) => {
+    const { trips } = thunkApi.getState() as AppState;
+
+    const missingTripsIds = ids.filter(id => !trips.list.map(trip => trip.id).includes(id))
+
+    return await api.getTripsByIdsArray(missingTripsIds);
+  },
+  {
+    condition: (ids, { getState }) => {
+      const { trips } = getState() as AppState;
+
+      return ids.some(id => !trips.list.map(trip => trip.id).includes(id));
+    }
+  }
+);
+
 export const updateTripsDates = createAsyncThunk(
   'trips/updateTripsDates',
   async () => {
@@ -178,6 +196,15 @@ const tripsSlice = createSlice({
         return {
           ...state,
           list: state.list.concat(action.payload)
+        }
+      })
+      .addCase(getTripsByIdsArray.fulfilled, (state, action) => {
+        return {
+          ...state,
+          list: [
+            ...state.list,
+            ...action.payload
+          ]
         }
       })
   }

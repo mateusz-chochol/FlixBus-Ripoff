@@ -68,6 +68,9 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: 'rgba(0,0,0,.2)',
       }
     },
+    fixedItem: {
+      pointerEvents: 'none'
+    },
   }),
 );
 
@@ -84,7 +87,7 @@ const ProfilePage: React.FC = () => {
   const [confirmedPassword, setConfirmedPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const handleUpdateButtonClick = async () => {
+  const handleSaveButtonClick = async () => {
     let errors = false;
 
     if (email !== '' && !email.match(/^.+@.+\.[a-z]+$/)) {
@@ -169,8 +172,15 @@ const ProfilePage: React.FC = () => {
         overflow='hidden'
       >
         <Hidden xsDown>
-          <Box position='absolute' zIndex={4} right={0} left={0} paddingLeft={10} paddingRight={5}>
-            <ProfileFirstSvg width='100%' height='100%' />
+          <Box
+            position='absolute'
+            zIndex={4}
+            right={0}
+            left={0}
+            paddingLeft={10}
+            paddingRight={5}
+          >
+            <ProfileFirstSvg className={classes.fixedItem} width='100%' height='100%' />
           </Box>
           <Paper className={classes.paper} elevation={4}>
             <Box paddingX={2} display='flex' flexDirection='column'>
@@ -219,10 +229,10 @@ const ProfilePage: React.FC = () => {
                   variant="extended"
                   color='secondary'
                   size='large'
-                  onClick={handleUpdateButtonClick}
+                  onClick={handleSaveButtonClick}
                 >
                   <Box paddingRight={1}>
-                    Update profile
+                    Save profile
                 </Box>
                   <Box display='flex' alignItems='center'>
                     <SaveIcon />
@@ -280,10 +290,10 @@ const ProfilePage: React.FC = () => {
                   variant="extended"
                   color='secondary'
                   size='large'
-                  onClick={handleUpdateButtonClick}
+                  onClick={handleSaveButtonClick}
                 >
                   <Box paddingRight={1}>
-                    Update profile
+                    Save profile
                 </Box>
                   <Box display='flex' alignItems='center'>
                     <SaveIcon />
