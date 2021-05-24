@@ -45,7 +45,7 @@ const TripsList: React.FC<TripsListProps> = ({
       return {
         transactionId: tripWithTransaction.transactionId,
         tripId: tripWithTransaction.tripId,
-        open: false,
+        open: true,
       }
     }));
   }, [transactions, getTripIdsWithTransactions])
