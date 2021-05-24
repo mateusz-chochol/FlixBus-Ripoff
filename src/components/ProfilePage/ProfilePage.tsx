@@ -301,7 +301,7 @@ const ProfilePage: React.FC = () => {
                 >
                   <Box paddingRight={1}>
                     Save profile
-                </Box>
+                  </Box>
                   <Box display='flex' alignItems='center'>
                     <SaveIcon />
                   </Box>

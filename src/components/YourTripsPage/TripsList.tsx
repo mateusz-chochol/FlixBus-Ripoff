@@ -53,7 +53,7 @@ const TripsList: React.FC<TripsListProps> = ({
   if (trips.length > 0) {
     return (
       <Box minWidth='350px'>
-        <Typography variant='h3' gutterBottom color='textSecondary'>{title}</Typography>
+        <Typography variant='h3' gutterBottom color='textSecondary' align='center'>{title}</Typography>
         <List>
           {trips.map(trip => {
             const listItem = listOpenState.find(listItem => listItem.tripId === trip.id);
@@ -108,7 +108,7 @@ const TripsList: React.FC<TripsListProps> = ({
 
   return (
     <Box paddingY={5}>
-      <Typography variant='h4' gutterBottom color='textSecondary'>{emptyListMessage}</Typography>
+      <Typography variant='h4' gutterBottom color='textSecondary' align='center'>{emptyListMessage}</Typography>
     </Box>
   )
 }

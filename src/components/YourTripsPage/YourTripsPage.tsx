@@ -9,6 +9,7 @@ import {
   Hidden,
   Typography,
   CircularProgress,
+  Divider,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -34,13 +35,34 @@ import {
 } from 'redux/LocationsSlice';
 import { getRequestsState } from 'redux/RequestsStateSlice';
 import moment from 'moment';
-import { ReactComponent as TripsSvg } from 'svgs/trips.svg';
 import Trip from 'types/Objects/Trip';
 import TripsList from './TripsList';
+import { ReactComponent as TripsSvg } from 'svgs/trips.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
+      zIndex: 5,
+      height: "calc(90vh - 75px)",
+      width: "90vw",
+      maxWidth: "500px",
+      overflow: 'auto',
+      '&::-webkit-scrollbar': {
+        width: '0.4em'
+      },
+      '&::-webkit-scrollbar-track': {
+        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgba(0,0,0,.2)',
+      }
+    },
+    paperBackground: {
+      height: "calc(100vh - 75px)",
+      width: "100vw",
+      backgroundColor: 'whitesmoke'
+    },
+    paperMobile: {
       height: "calc(100vh - 75px)",
       width: "100vw",
       overflow: 'auto',
@@ -52,9 +74,14 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '&::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.2)',
-      },
-      backgroundColor: 'whitesmoke'
+      }
     },
+    fixedItem: {
+      pointerEvents: 'none'
+    },
+    divider: {
+      width: '100%'
+    }
   }),
 );
 
@@ -126,56 +153,119 @@ const TripsPage: React.FC = () => {
   }, [transactions, trips, isTripInTransactions, dispatch])
 
   return (
-    <Paper className={classes.paper} square elevation={0}>
-      <Hidden smDown>
-        <Box position='relative'>
-          <Box position='absolute' right='5%' top='10vh'>
-            <Box padding={3}>
-              <Typography variant='h1' color='textSecondary'>
-                Trips history
-              </Typography>
+    <Paper className={classes.paperBackground} square elevation={0}>
+      <Box
+        height='calc(100vh - 75px)'
+        width='100vw'
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        position='relative'
+        overflow='hidden'
+      >
+        <Hidden xsDown>
+          <Box
+            position='absolute'
+            zIndex={4}
+            right={0}
+            left={0}
+            paddingLeft={10}
+            paddingRight={5}
+          >
+            <TripsSvg className={classes.fixedItem} width='100%' height='100%' />
+          </Box>
+          <Paper className={classes.paper} elevation={4}>
+            <Box paddingX={2} paddingY={3}>
+              <Typography variant='h2' align='center' color='textSecondary'>Your trips</Typography>
             </Box>
-            <TripsSvg />
-          </Box>
-        </Box>
-        {isLoading ?
-          <Box
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-            flexDirection='column'
-            height='100%'
-            width='50%'
-          >
-            <CircularProgress size={250} thickness={1} />
-          </Box> :
-          <Box
-            display='flex'
-            justifyContent='center'
-            alignItems='flex-start'
-            flexDirection='column'
-            height='100%'
-            padding={4}
-          >
-            <TripsList
-              trips={upcomingTrips}
-              transactions={transactions}
-              locations={locations}
-              getTripIdsWithTransactions={getTripIdsWithTransactions}
-              title='Upcoming trips'
-              emptyListMessage='No upcoming trips'
-            />
-            <TripsList
-              trips={previousTrips}
-              transactions={transactions}
-              locations={locations}
-              getTripIdsWithTransactions={getTripIdsWithTransactions}
-              title='Previous trips'
-              emptyListMessage='No previous trips'
-            />
-          </Box>
-        }
-      </Hidden>
+            {isLoading ?
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                flexDirection='column'
+                height='80%'
+                width='100%'
+              >
+                <CircularProgress color='secondary' size={250} thickness={1} />
+              </Box> :
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                flexDirection='column'
+                padding={4}
+              >
+                <TripsList
+                  trips={upcomingTrips}
+                  transactions={transactions}
+                  locations={locations}
+                  getTripIdsWithTransactions={getTripIdsWithTransactions}
+                  title='Upcoming trips'
+                  emptyListMessage='No upcoming trips'
+                />
+                <Box display='flex' width='100%' height='1px' marginBottom={4} >
+                  <Divider flexItem className={classes.divider} />
+                </Box>
+                <TripsList
+                  trips={previousTrips}
+                  transactions={transactions}
+                  locations={locations}
+                  getTripIdsWithTransactions={getTripIdsWithTransactions}
+                  title='Previous trips'
+                  emptyListMessage='No previous trips'
+                />
+              </Box>
+            }
+          </Paper>
+        </Hidden>
+        <Hidden smUp>
+          <Paper className={classes.paperMobile} elevation={0} square>
+            <Box paddingX={2} paddingY={3}>
+              <Typography variant='h2' align='center' color='textSecondary'>Your trips</Typography>
+            </Box>
+            {isLoading ?
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                flexDirection='column'
+                height='80%'
+                width='100%'
+              >
+                <CircularProgress color='secondary' size={250} thickness={1} />
+              </Box> :
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                flexDirection='column'
+                padding={4}
+              >
+                <TripsList
+                  trips={upcomingTrips}
+                  transactions={transactions}
+                  locations={locations}
+                  getTripIdsWithTransactions={getTripIdsWithTransactions}
+                  title='Upcoming trips'
+                  emptyListMessage='No upcoming trips'
+                />
+                <Box display='flex' width='100%' height='1px' marginBottom={4} >
+                  <Divider flexItem className={classes.divider} />
+                </Box>
+                <TripsList
+                  trips={previousTrips}
+                  transactions={transactions}
+                  locations={locations}
+                  getTripIdsWithTransactions={getTripIdsWithTransactions}
+                  title='Previous trips'
+                  emptyListMessage='No previous trips'
+                />
+              </Box>
+            }
+          </Paper>
+        </Hidden>
+      </Box>
     </Paper>
   )
 }
