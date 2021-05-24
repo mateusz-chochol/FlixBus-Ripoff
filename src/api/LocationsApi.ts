@@ -65,7 +65,7 @@ export const getLocationsBySubstring = async (substring: string) => {
   await delay();
 
   try {
-    return (await locationsRef.where('name', '>=', substring).where('name', '<=', substring + '\uf8ff').get())
+    return (await locationsRef.where('name', '>=', substring).where('name', '<=', substring + '\uf8ff').limit(5).get())
       .docs.map(doc => convertFirebaseDataToLocation(doc))
   }
   catch (error) {
