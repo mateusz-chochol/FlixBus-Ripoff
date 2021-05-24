@@ -143,11 +143,21 @@ Site should be visible under the address: http://localhost:5000
   - <del> create forms for payment </del> (Done)
   - <del> create trip summary </del> (Done)
   - <del> add forms validation </del> (Done)
-- profile page:
+- <del> profile page: </del> (Done)
   - <del> create layout </del> (Done)
   - <del> create forms </del> (Done)
   - <del> create transactions history </del> (Done)
   - <del> make Update button actually updating the profile in firebase </del> (Done)
+- your trips page:
+  - <del> create layout </del> (Done)
+  - <del> create trips history lists </del> (Done)
+  - add passenger info to transactions
+- admin panel:
+  - create layout for the page
+  - add form for adding locations
+  - add form for adding trips
+  - add button to update trips dates
+  - add option of adding random trip
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - <del> move all data to the firebase backend and create api calls that will fetch them when needed </del> (Done)
@@ -167,3 +177,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> add loading screen to cart </del> (Done)
   - <del> add loading screen to text forms </del> (Done)
   - <del> add some timeouts before displaying loading screens </del> (Done)
+  - make buying trips actually create a transaction object with all info about the transaction (who's going, where and such)
