@@ -10,10 +10,12 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import PaymentIcon from '@material-ui/icons/Payment';
 import PersonIcon from '@material-ui/icons/Person';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import LanguageIcon from '@material-ui/icons/Language';
 
 const components: Component[] = [
   {
-    icon: <DirectionsBusIcon />,
+    icon: <LanguageIcon />,
     name: 'Main page',
     done: [
       'Fix vertical scaling on mobile devices',
@@ -138,10 +140,32 @@ const components: Component[] = [
       'Create layout',
       'Create forms',
       'Create transactions history',
-    ],
-    todo: [
       'Make Update button actually updating the profile in firebase',
     ],
+    todo: [],
+  },
+  {
+    icon: <DirectionsBusIcon />,
+    name: 'Your Trips page',
+    done: [
+      'Create layout',
+      'Create trips history lists',
+    ],
+    todo: [
+      'Add passenger info to transactions',
+    ]
+  },
+  {
+    icon: <SupervisorAccountIcon />,
+    name: 'Admin panel',
+    done: [],
+    todo: [
+      'Create layout for the page',
+      'Add form for adding locations',
+      'Add form for adding trips',
+      'Add button to update trips dates',
+      'Add option of adding random trip',
+    ]
   },
   {
     icon: <SettingsIcon />,
@@ -166,7 +190,9 @@ const components: Component[] = [
       'Add creating ids of everything with uuid.v4()',
       'Move all data to the firebase backend and create api calls that will fetch them when needed',
     ],
-    todo: [],
+    todo: [
+      'Make buying trips actually create a transaction object with all info about the transaction (who\'s going, where and such)',
+    ],
   },
 ]
 
