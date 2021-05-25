@@ -20,19 +20,19 @@ const LocationsForm: React.FC = () => {
   const [importance, setImportance] = useState<string>('');
 
   const handleChangeName = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (event.target.value.match(/^[a-zA-Z]*$/)) {
+    if (event.target.value.match(/^[a-zA-Z]{0,20}$/)) {
       setName(event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1).toLowerCase());
     }
   }
 
   const handleChangeLatitude = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (event.target.value.match(/^-?[0-9]*\.?[0-9]*$/)) {
+    if (event.target.value.match(/^-?[0-9]{0,2}\.?[0-9]{0,8}$/)) {
       setLatitude(event.target.value);
     }
   }
 
   const handleChangeLongitude = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (event.target.value.match(/^-?[0-9]*\.?[0-9]*$/)) {
+    if (event.target.value.match(/^-?[0-9]{0,2}\.?[0-9]{0,8}$/)) {
       setLongitude(event.target.value);
     }
   }
@@ -53,9 +53,9 @@ const LocationsForm: React.FC = () => {
     if (name !== '' && latitude !== '' && longitude !== '' && geohash !== '' && importance !== '') {
       let errors = false;
 
-      if (!name.match(/^[A-Z]{1}[a-z]*$/)) {
+      if (!name.match(/^[A-Z]{1}[a-z]{0,19}$/)) {
         errors = true;
-        showError('Location name can contain only letters.');
+        showError('Location name can contain only letters and cannot be greater than 20 characters.');
       }
 
       const coordinatesPattern = /^-?[1-9]?[0-9]{1}(\.[0-9]{1,8})?$/;
