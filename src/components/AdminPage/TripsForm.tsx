@@ -204,6 +204,9 @@ const TripsForm: React.FC = () => {
             InputProps={{
               endAdornment: <InputAdornment position="start">h</InputAdornment>,
             }}
+            InputLabelProps={{
+              shrink: true,
+            }}
             color='secondary'
             fullWidth
           />
@@ -218,6 +221,9 @@ const TripsForm: React.FC = () => {
             InputProps={{
               endAdornment: <InputAdornment position="start">$</InputAdornment>,
             }}
+            InputLabelProps={{
+              shrink: true,
+            }}
             fullWidth
           />
         </Box>
@@ -228,6 +234,9 @@ const TripsForm: React.FC = () => {
             value={maxSeats}
             onChange={handleMaxSeatsChange}
             color='secondary'
+            InputLabelProps={{
+              shrink: true,
+            }}
             fullWidth
           />
         </Box>
