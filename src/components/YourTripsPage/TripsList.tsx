@@ -93,7 +93,6 @@ const TripsList: React.FC<TripsListProps> = ({
                     <Typography color='textSecondary'>Trip id: <b>{tripWithTransaction.trip?.id}</b></Typography>
                     <Typography color='textSecondary'>Transaction id: <b>{tripWithTransaction.transaction.id}</b></Typography>
                   </Box>
-                  <Divider />
                 </Collapse>
               </Box>
             )
