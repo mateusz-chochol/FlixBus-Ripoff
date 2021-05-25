@@ -212,8 +212,10 @@ const TripsPage: React.FC = () => {
                   title='Upcoming trips'
                   emptyListMessage='No upcoming trips'
                 />
-                <Box display='flex' width='400px' height='1px' marginBottom={4} >
-                  <Divider flexItem className={classes.divider} />
+                <Box display='flex' width='400px' height='1px' marginBottom={4}>
+                  {upcomingList.length === 0 &&
+                    <Divider flexItem className={classes.divider} />
+                  }
                 </Box>
                 <TripsList
                   list={previousList}
@@ -254,8 +256,10 @@ const TripsPage: React.FC = () => {
                   title='Upcoming trips'
                   emptyListMessage='No upcoming trips'
                 />
-                <Box display='flex' width='400px' height='1px' marginBottom={4} >
-                  <Divider flexItem className={classes.divider} />
+                <Box display='flex' width='400px' height='1px' marginBottom={4}>
+                  {upcomingList.length === 0 &&
+                    <Divider flexItem className={classes.divider} />
+                  }
                 </Box>
                 <TripsList
                   list={previousList}
