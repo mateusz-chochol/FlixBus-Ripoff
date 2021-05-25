@@ -21,7 +21,7 @@ import { useDispatch } from 'react-redux';
 import { emptyCartActionCreator } from 'redux/CartSlice';
 import {
   addTransaction,
-  getTransactionsByUserId,
+  getTransactionsByUserId
 } from 'redux/TransactionsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import { useAuth } from 'contexts/AuthContext';
@@ -91,6 +91,10 @@ const Summary: React.FC<SummaryProps> = ({
     const isPhoneNumberCorrect = phoneNumber.match(/^[0-9]{9}$|^\+?[0-9]{11}$/) !== null;
 
     if (arePassengersFormsCorrect && isMailCorrect && isPhoneNumberCorrect) {
+      if (currentUser) {
+        dispatch(getTransactionsByUserId(currentUser.uid));
+      }
+
       dispatch(addTransaction({
         date: moment().format('YYYY-MM-DD'),
         price: passengersForTrips.map(passengersForTrip => passengersForTrip.cartTrip.trip.price * passengersForTrip.cartTrip.passengersCount).reduce((acc, cur) => acc + cur),
@@ -103,10 +107,6 @@ const Summary: React.FC<SummaryProps> = ({
         userId: currentUser ? currentUser.uid : '',
         email: mail
       }))
-
-      if (currentUser) {
-        dispatch(getTransactionsByUserId(currentUser.uid))
-      }
 
       dispatch(emptyCartActionCreator());
       showSuccess('Payment done.');

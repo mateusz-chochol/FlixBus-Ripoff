@@ -27,6 +27,13 @@ export const getTransactionsByUserId = createAsyncThunk<Transaction[], string>(
   'transactions/getTransactionsByUserId',
   async (id) => {
     return await api.getTransactionsByUserId(id);
+  },
+  {
+    condition: (id, { getState }) => {
+      const { transactions } = getState() as AppState;
+
+      return transactions.transactions.length === 0;
+    }
   }
 );
 
