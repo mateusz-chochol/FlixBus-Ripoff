@@ -6,7 +6,9 @@ import {
   Button,
   ButtonGroup,
   InputAdornment,
+  createMuiTheme,
 } from '@material-ui/core';
+import { ThemeProvider } from "@material-ui/styles";
 import UpdateIcon from '@material-ui/icons/Update';
 import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
 import {
@@ -31,6 +33,15 @@ import { useNotifications } from 'components/Misc/Notifications';
 import moment from 'moment';
 import TripPlaceForm from 'components/Misc/TripPlaceForm';
 import Location from 'types/Objects/Location';
+
+const pinkMaterialUiThemeForDatePickers = createMuiTheme({
+  palette: {
+    type: 'light',
+    primary: {
+      main: '#e91e63'
+    },
+  },
+});
 
 const TripsForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -155,39 +166,41 @@ const TripsForm: React.FC = () => {
         </Typography>
       </Box>
       <Box display='flex' justifyContent='center' width='100%' paddingTop={2}>
-        <Box paddingLeft={5} paddingRight={1} width='50%'>
-          <DatePicker
-            value={departureDate}
-            onChange={(date: Date | null) => setDepartureDate(date)}
-            color='secondary'
-            inputVariant="outlined"
-            fullWidth
-            open={isDepartureDateWindowOpen}
-            onOpen={() => setIsDepartureDateWindowOpen(true)}
-            onClose={() => setIsDepartureDateWindowOpen(false)}
-            inputProps={{
-              "aria-label": 'departure date'
-            }}
-            disablePast
-          />
-        </Box>
-        <Box paddingRight={5} paddingLeft={1} width='50%'>
-          <TimePicker
-            value={departureTime}
-            onChange={(time: Date | null) => setDepartureTime(time)}
-            color='secondary'
-            inputVariant="outlined"
-            ampm={false}
-            minutesStep={5}
-            open={isDepartureTimeWindowOpen}
-            onOpen={() => setIsDepartureTimeWindowOpen(true)}
-            onClose={() => setIsDepartureTimeWindowOpen(false)}
-            fullWidth
-            inputProps={{
-              "aria-label": 'departure hour'
-            }}
-          />
-        </Box>
+        <ThemeProvider theme={pinkMaterialUiThemeForDatePickers}>
+          <Box paddingLeft={5} paddingRight={1} width='50%'>
+            <DatePicker
+              value={departureDate}
+              onChange={(date: Date | null) => setDepartureDate(date)}
+              color='secondary'
+              inputVariant="outlined"
+              fullWidth
+              open={isDepartureDateWindowOpen}
+              onOpen={() => setIsDepartureDateWindowOpen(true)}
+              onClose={() => setIsDepartureDateWindowOpen(false)}
+              inputProps={{
+                "aria-label": 'departure date'
+              }}
+              disablePast
+            />
+          </Box>
+          <Box paddingRight={5} paddingLeft={1} width='50%'>
+            <TimePicker
+              value={departureTime}
+              onChange={(time: Date | null) => setDepartureTime(time)}
+              color='secondary'
+              inputVariant="outlined"
+              ampm={false}
+              minutesStep={5}
+              open={isDepartureTimeWindowOpen}
+              onOpen={() => setIsDepartureTimeWindowOpen(true)}
+              onClose={() => setIsDepartureTimeWindowOpen(false)}
+              fullWidth
+              inputProps={{
+                "aria-label": 'departure hour'
+              }}
+            />
+          </Box>
+        </ThemeProvider>
       </Box>
       <Box paddingX={3} paddingTop={5}>
         <Typography color='textSecondary' variant='h5' gutterBottom align='center'>
