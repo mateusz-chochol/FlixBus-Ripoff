@@ -4,6 +4,7 @@ import { firestore } from '../firebase';
 import config from 'reduxConfig.json';
 
 const transactionsRef = firestore.collection('transactions');
+const tripsRef = firestore.collection('trips');
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
@@ -39,6 +40,26 @@ export const getTransactionsByUserId = async (id: string) => {
 
 export const addTransaction = async (date: string, price: number, tripIds: TransactionTrip[], userId: string, email: string) => {
   await delay();
+
+  try {
+    const promises = tripIds.map(async (tripId) => {
+      const trip = await tripsRef.doc(tripId.tripId).get();
+      const tripData = trip.data();
+
+      if (tripData) {
+        trip.ref.update({
+          seatsLeft: tripData.seatsLeft - tripId.seats,
+        })
+      }
+    })
+
+    await Promise.all(promises);
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 
   try {
     const newTransaction = await (await transactionsRef.add({
