@@ -100,7 +100,7 @@ export const removeTransaction = async (transactionId: string) => {
       await Promise.all(promises);
     }
     else {
-      throw new Error('Couldn\'t find the transaction.')
+      throw new Error(`Couldn't find the transaction with id: ${transactionId}.`)
     }
   }
   catch (error) {
