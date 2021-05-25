@@ -190,6 +190,7 @@ const components: Component[] = [
     todo: [
       'Make buying trips actually create a transaction object with all info about the transaction (who\'s going, where and such)',
       'Add passenger info to transactions',
+      'Update security rules so they also check for validity of incoming trips / locations / transactions',
     ],
   },
 ]

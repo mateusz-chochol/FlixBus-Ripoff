@@ -178,3 +178,4 @@ Site should be visible under the address: http://localhost:5000
   - <del> add some timeouts before displaying loading screens </del> (Done)
   - make buying trips actually create a transaction object with all info about the transaction (who's going, where and such)
   - add passenger info to transactions
+  - update security rules so they also check for validity of incoming trips / locations / transactions
