@@ -16,7 +16,8 @@ service cloud.firestore {
     }
 
     match /transactions/{transaction} {
-      allow read, create: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if true;
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
       allow read, write: if request.auth.token.admin == true;
     }
   }

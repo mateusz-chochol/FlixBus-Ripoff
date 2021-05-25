@@ -1,4 +1,4 @@
-import Transaction from 'types/Objects/Transaction';
+import TransactionTrip from 'types/Objects/TransactionTrip';
 import firebase from 'firebase/app';
 import { firestore } from '../firebase';
 import config from 'reduxConfig.json';
@@ -16,6 +16,7 @@ const convertFirebaseDataToTransaction = (doc: firebase.firestore.DocumentSnapsh
       price: data.price,
       date: data.date,
       tripIds: data.tripIds,
+      email: data.email,
     }
   }
 
@@ -26,7 +27,7 @@ export const getTransactionsByUserId = async (id: string) => {
   await delay();
 
   try {
-    return (await transactionsRef.where('userId', '==', id).get())
+    return (await transactionsRef.where('userId', '==', id).orderBy('date', 'desc').get())
       .docs.map(doc => convertFirebaseDataToTransaction(doc));
   }
   catch (error) {
@@ -36,6 +37,23 @@ export const getTransactionsByUserId = async (id: string) => {
   }
 }
 
-export const addTransaction = async (transaction: Transaction) => {
-  return transaction;
+export const addTransaction = async (date: string, price: number, tripIds: TransactionTrip[], userId: string, email: string) => {
+  await delay();
+
+  try {
+    const newTransaction = await (await transactionsRef.add({
+      date: date,
+      price: price,
+      tripIds: tripIds,
+      userId: userId,
+      email: email,
+    })).get()
+
+    return convertFirebaseDataToTransaction(newTransaction)
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 }

@@ -19,10 +19,16 @@ import { useHistory } from 'react-router-dom';
 import { routes } from 'routes';
 import { useDispatch } from 'react-redux';
 import { emptyCartActionCreator } from 'redux/CartSlice';
+import {
+  addTransaction,
+  getTransactionsByUserId,
+} from 'redux/TransactionsSlice';
 import { useNotifications } from 'components/Misc/Notifications';
+import { useAuth } from 'contexts/AuthContext';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import SummaryProps from 'types/Props/CheckoutPage/SummaryProps';
 import CartTrip from 'types/Objects/CartTrip';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,6 +64,7 @@ const Summary: React.FC<SummaryProps> = ({
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { currentUser } = useAuth();
   const { showSuccess, showInfo, showError } = useNotifications();
 
   const handleProceedToPaymentButtonClick = () => {
@@ -84,6 +91,23 @@ const Summary: React.FC<SummaryProps> = ({
     const isPhoneNumberCorrect = phoneNumber.match(/^[0-9]{9}$|^\+?[0-9]{11}$/) !== null;
 
     if (arePassengersFormsCorrect && isMailCorrect && isPhoneNumberCorrect) {
+      dispatch(addTransaction({
+        date: moment().format('YYYY-MM-DD'),
+        price: passengersForTrips.map(passengersForTrip => passengersForTrip.cartTrip.trip.price * passengersForTrip.cartTrip.passengersCount).reduce((acc, cur) => acc + cur),
+        tripIds: passengersForTrips.map(passengersForTrip => {
+          return {
+            tripId: passengersForTrip.cartTrip.trip.id,
+            seats: passengersForTrip.cartTrip.passengersCount
+          }
+        }),
+        userId: currentUser ? currentUser.uid : '',
+        email: mail
+      }))
+
+      if (currentUser) {
+        dispatch(getTransactionsByUserId(currentUser.uid))
+      }
+
       dispatch(emptyCartActionCreator());
       showSuccess('Payment done.');
 

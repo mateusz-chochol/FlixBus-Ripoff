@@ -9,7 +9,6 @@ import {
   ListItem,
   Grid,
   Collapse,
-  Divider
 } from '@material-ui/core';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import ExpandLess from '@material-ui/icons/ExpandLess';

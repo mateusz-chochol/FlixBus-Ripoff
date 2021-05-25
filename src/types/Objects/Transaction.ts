@@ -5,4 +5,5 @@ export default interface Transaction {
   price: number,
   date: string,
   tripIds: TransactionTrip[],
+  email: string,
 }
