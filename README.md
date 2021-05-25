@@ -151,12 +151,12 @@ Site should be visible under the address: http://localhost:5000
 - <del> your trips page: </del> (Done)
   - <del> create layout </del> (Done)
   - <del> create trips history lists </del> (Done)
-- admin panel:
-  - create layout for the page
-  - add form for adding locations
-  - add form for adding trips
-  - add button to update trips dates
-  - add option of adding random trip
+- <del> admin panel: </del> (Done)
+  - <del> create layout for the page </del> (Done)
+  - <del> add form for adding locations </del> (Done)
+  - <del> add form for adding trips </del> (Done)
+  - <del> add button to update trips dates </del> (Done)
+  - <del> add option of adding random trip </del> (Won't do)
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - <del> move all data to the firebase backend and create api calls that will fetch them when needed </del> (Done)

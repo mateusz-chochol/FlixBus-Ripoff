@@ -156,14 +156,13 @@ const components: Component[] = [
   {
     icon: <SupervisorAccountIcon />,
     name: 'Admin panel',
-    done: [],
-    todo: [
+    done: [
       'Create layout for the page',
       'Add form for adding locations',
       'Add form for adding trips',
       'Add button to update trips dates',
-      'Add option of adding random trip',
-    ]
+    ],
+    todo: []
   },
   {
     icon: <SettingsIcon />,
