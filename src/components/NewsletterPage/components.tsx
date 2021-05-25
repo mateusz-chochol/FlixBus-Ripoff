@@ -186,9 +186,9 @@ const components: Component[] = [
       'Add some timeouts before displaying loading screens',
       'Add creating ids of everything with uuid.v4()',
       'Move all data to the firebase backend and create api calls that will fetch them when needed',
+      'Make buying trips actually create a transaction object with all info about the transaction (who\'s going, where and such)',
     ],
     todo: [
-      'Make buying trips actually create a transaction object with all info about the transaction (who\'s going, where and such)',
       'Add passenger info to transactions',
       'Update security rules so they also check for validity of incoming trips / locations / transactions',
     ],
