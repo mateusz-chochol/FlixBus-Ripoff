@@ -102,3 +102,23 @@ export const getLocationById = async (id: string) => {
     throw error;
   }
 }
+
+export const addLocation = async (name: string, latitude: number, longitude: number, geohash: string, importance: number) => {
+  await delay();
+
+  try {
+    if (!isNaN(latitude) && !isNaN(longitude) && !isNaN(importance)) {
+      await locationsRef.add({
+        name: name,
+        coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
+        geohash: geohash,
+        importance: importance
+      })
+    }
+  }
+  catch (error) {
+    console.error(error)
+
+    throw error;
+  }
+}

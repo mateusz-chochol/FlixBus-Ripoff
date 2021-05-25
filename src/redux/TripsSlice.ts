@@ -140,7 +140,17 @@ export const updateTripsDates = createAsyncThunk(
   async () => {
     await api.updateTripsDates();
   }
-)
+);
+
+export const addTrip = createAsyncThunk<
+  void,
+  { startLocationId: string, endLocationId: string, tripDuration: number, date: string, hour: string, price: number, maxSeats: number }
+>(
+  'trips/addTrip',
+  async ({ startLocationId, endLocationId, tripDuration, date, hour, price, maxSeats }) => {
+    await api.addTrip(startLocationId, endLocationId, tripDuration, date, hour, price, maxSeats);
+  }
+);
 
 const tripsSlice = createSlice({
   name: 'trips',

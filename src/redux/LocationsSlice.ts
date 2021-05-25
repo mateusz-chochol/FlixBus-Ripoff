@@ -37,6 +37,16 @@ const filterExistingLocations = (allLocations: Location[], locationsToAdd?: Loca
   return locationsToReturn;
 }
 
+export const addLocation = createAsyncThunk<
+  void,
+  { name: string, latitude: number, longitude: number, geohash: string, importance: number }
+>(
+  'locations/addLocation',
+  async ({ name, latitude, longitude, geohash, importance }) => {
+    return await api.addLocation(name, latitude, longitude, geohash, importance);
+  }
+)
+
 export const getLocationsByIdAsync = createAsyncThunk<Location | undefined, string>(
   'locations/getLocationsByIdAsync',
   async (id) => {

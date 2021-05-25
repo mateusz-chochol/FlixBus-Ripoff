@@ -20,6 +20,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   toDispatch,
   requestToCheck,
   label,
+  disableShrink,
   placeholder,
   shouldHideOptions,
   disableClearable,
@@ -39,13 +40,10 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
   };
 
   const handleOnBlur = () => {
-    const location = options.find(option => option.name === placeTextValue);
+    const location = locations.find(location => location.name === placeTextValue);
 
     if (location) {
       setPlace(location);
-    }
-    else {
-      setPlace(undefined);
     }
   };
 
@@ -130,7 +128,7 @@ const TripPlaceForm: React.FC<TripPlaceFormProps> = ({
           placeholder={placeholder}
           color="secondary"
           InputLabelProps={{
-            shrink: true,
+            shrink: disableShrink === undefined ? true : undefined,
           }}
           variant="outlined"
         />

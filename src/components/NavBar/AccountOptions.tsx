@@ -25,6 +25,8 @@ import { useAuth } from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 import { useNotifications } from 'components/Misc/Notifications';
 import { routes } from 'routes';
+import { useDispatch } from 'react-redux';
+import { clearTransactionsActionCreator } from 'redux/TransactionsSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AccountOptions: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const { currentUser, userTokenResult, logout } = useAuth();
   const { showError, showSuccess } = useNotifications();
@@ -47,6 +50,8 @@ const AccountOptions: React.FC = () => {
   const handleLogoutButtonClick = async () => {
     try {
       await logout();
+
+      dispatch(clearTransactionsActionCreator());
 
       showSuccess('Successfully logged out.');
     }

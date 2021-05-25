@@ -9,7 +9,8 @@ export default interface TripPlaceFormProps {
   toDispatch: (value: string) => void,
   requestToCheck: string,
   shouldHideOptions?: boolean,
-  label: string,
-  placeholder: string,
+  label?: string,
+  disableShrink?: boolean,
+  placeholder?: string,
   disableClearable?: boolean,
 }

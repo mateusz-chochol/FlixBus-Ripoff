@@ -106,3 +106,35 @@ export const updateTripsDates = async () => {
     throw error;
   }
 }
+
+export const addTrip = async (
+  startLocationId: string,
+  endLocationId: string,
+  tripDuration: number,
+  date: string,
+  hour: string,
+  price: number,
+  maxSeats: number,
+) => {
+  await delay();
+
+  try {
+    if (!isNaN(tripDuration) && !isNaN(price) && !isNaN(maxSeats)) {
+      await tripsRef.add({
+        startLocationId: startLocationId,
+        endLocationId: endLocationId,
+        tripDuration: tripDuration,
+        date: date,
+        hour: hour,
+        price: price,
+        maxSeats: maxSeats,
+        seatsLeft: maxSeats,
+      })
+    }
+  }
+  catch (error) {
+    console.error(error)
+
+    throw error;
+  }
+}

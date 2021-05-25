@@ -104,7 +104,7 @@ const TripsList: React.FC<TripsListProps> = ({
   }
 
   return (
-    <Box paddingY={5}>
+    <Box paddingBottom={4} paddingTop={1}>
       <Typography variant='h4' gutterBottom color='textSecondary' align='center'>{emptyListMessage}</Typography>
     </Box>
   )
