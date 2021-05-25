@@ -78,3 +78,45 @@ export const addTransaction = async (date: string, price: number, tripIds: Trans
     throw error;
   }
 }
+
+export const removeTransaction = async (transactionId: string) => {
+  await delay();
+
+  try {
+    const transactionData = (await transactionsRef.doc(transactionId).get()).data()
+
+    if (transactionData) {
+      const promises = transactionData.tripIds.map(async (tripId: TransactionTrip) => {
+        const trip = await tripsRef.doc(tripId.tripId).get();
+        const tripData = trip.data();
+
+        if (tripData) {
+          trip.ref.update({
+            seatsLeft: tripData.seatsLeft + tripId.seats,
+          })
+        }
+      })
+
+      await Promise.all(promises);
+    }
+    else {
+      throw new Error('Could\'nt find the transaction.')
+    }
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+
+  try {
+    await transactionsRef.doc(transactionId).delete();
+
+    return transactionId;
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+}

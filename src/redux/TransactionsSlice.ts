@@ -52,6 +52,13 @@ export const addTransaction = createAsyncThunk<
   }
 )
 
+export const removeTransaction = createAsyncThunk<string, string>(
+  'transactions/removeTransaction',
+  async (transactionId) => {
+    return api.removeTransaction(transactionId);
+  }
+)
+
 const transactionsSlice = createSlice({
   name: 'transactions',
   initialState: transactionsInitialState,
@@ -83,6 +90,15 @@ const transactionsSlice = createSlice({
             ...state.transactions,
             action.payload
           ],
+        }
+      })
+      .addCase(removeTransaction.fulfilled, (state, action) => {
+        if (action.payload === undefined) {
+          return state;
+        }
+
+        return {
+          transactions: state.transactions.filter(transaction => transaction.id !== action.payload),
         }
       })
   }
