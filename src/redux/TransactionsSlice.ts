@@ -38,7 +38,7 @@ export const getTransactionsByUserId = createAsyncThunk<Transaction[], string>(
 );
 
 export const addTransaction = createAsyncThunk<
-  Transaction,
+  Transaction | undefined,
   { date: string, price: number, tripIds: TransactionTrip[], userId: string, email: string }
 >(
   'transactions/addTransaction',

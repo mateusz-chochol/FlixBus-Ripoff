@@ -165,7 +165,7 @@ const TripsPage: React.FC = () => {
       tripWithTransaction.trip.isCanceled &&
       moment(tripWithTransaction.trip.date).isSameOrAfter(moment().add(-1, 'days'))
     ))
-  }, [getTripsWithTransaction, upcomingList])
+  }, [getTripsWithTransaction])
 
   useEffect(() => {
     const locationsIds = trips.filter(trip => isTripInTransactions(trip))

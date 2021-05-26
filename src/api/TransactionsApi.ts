@@ -59,15 +59,21 @@ export const addTransaction = async (date: string, price: number, tripIds: Trans
   }
 
   try {
-    const newTransaction = await (await transactionsRef.add({
+    const newTransactionRef = await transactionsRef.add({
       date: date,
       price: price,
       tripIds: tripIds,
       userId: userId,
       email: email,
-    })).get()
+    })
 
-    return convertFirebaseDataToTransaction(newTransaction);
+    if (userId !== '') {
+      const newTransaction = await newTransactionRef.get();
+
+      return convertFirebaseDataToTransaction(newTransaction);
+    }
+
+    return undefined;
   }
   catch (error) {
     console.error(error);
