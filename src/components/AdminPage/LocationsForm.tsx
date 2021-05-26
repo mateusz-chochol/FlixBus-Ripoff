@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import {
   Box,
   Typography,
@@ -6,13 +9,21 @@ import {
   Button,
 } from '@material-ui/core';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
-import { useNotifications } from 'components/Misc/Notifications';
-import { useDispatch } from 'react-redux';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import { addLocation } from 'redux/LocationsSlice';
+import {
+  getRequestsState,
+  removeFulfilledActionCreator,
+} from 'redux/RequestsStateSlice';
+import { useNotifications } from 'components/Misc/Notifications';
 
 const LocationsForm: React.FC = () => {
   const dispatch = useDispatch();
   const { showError, showSuccess, showInfo } = useNotifications();
+  const requestsState = useSelector(getRequestsState);
   const [name, setName] = useState<string>('');
   const [latitude, setLatitude] = useState<string>('');
   const [longitude, setLongitude] = useState<string>('');
@@ -83,14 +94,20 @@ const LocationsForm: React.FC = () => {
           geohash: geohash,
           importance: parseInt(importance),
         }))
-
-        showSuccess(`Location "${name}" successfully added to the locations collection.`)
       }
     }
     else {
       showInfo('You need to fill all the forms before adding the location.')
     }
   }
+
+  useEffect(() => {
+    if (requestsState['locations/addLocation'] === 'fulfilled') {
+      showSuccess(`Location successfully added.`)
+
+      dispatch(removeFulfilledActionCreator('locations/addLocation'));
+    }
+  }, [requestsState, dispatch, showSuccess])
 
   return (
     <Box display='flex' width='100%' height='100%' flexDirection='column' justifyContent='space-between'>

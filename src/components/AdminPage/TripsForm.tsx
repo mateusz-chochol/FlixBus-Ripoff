@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import {
   Box,
   Typography,
@@ -26,6 +29,10 @@ import {
   addTrip,
 } from 'redux/TripsSlice';
 import {
+  getRequestsState,
+  removeFulfilledActionCreator,
+} from 'redux/RequestsStateSlice';
+import {
   useSelector,
   useDispatch
 } from 'react-redux';
@@ -46,6 +53,7 @@ const pinkMaterialUiThemeForDatePickers = createMuiTheme({
 const TripsForm: React.FC = () => {
   const dispatch = useDispatch();
   const { showError, showSuccess, showInfo } = useNotifications();
+  const requestsState = useSelector(getRequestsState);
   const departureLocations = useSelector(getLocationsForDepartureTextField);
   const destinationLocations = useSelector(getLocationsForDestinationTextField);
   const [departure, setDeparture] = useState<Location>();
@@ -110,8 +118,6 @@ const TripsForm: React.FC = () => {
           price: parseInt(price),
           maxSeats: parseInt(maxSeats)
         }));
-
-        showSuccess(`Trip from ${departure.name} to ${destination.name} successfully added to the trips collection.`)
       }
     }
     else {
@@ -121,9 +127,26 @@ const TripsForm: React.FC = () => {
 
   const handleUpdateTripsButtonClick = () => {
     dispatch(updateTripsDates());
-
-    showSuccess('Successfully updated all trips dates.')
   }
+
+  useEffect(() => {
+    if (requestsState['trips/updateTripsDates'] === 'fulfilled') {
+      showSuccess('Successfully updated all trips dates.')
+
+      dispatch(removeFulfilledActionCreator('trips/updateTripsDates'));
+    }
+
+    if (requestsState['trips/addTrip'] === 'fulfilled') {
+      dispatch(removeFulfilledActionCreator('trips/addTrip'));
+      showSuccess('Successfully added trip.');
+
+      setDeparture(undefined);
+      setDestination(undefined);
+      setTripDuration('');
+      setPrice('');
+      setMaxSeats('');
+    }
+  }, [departure, destination, dispatch, requestsState, showSuccess])
 
   return (
     <Box display='flex' width='100%' height='100%' flexDirection='column' justifyContent='flex-start'>
