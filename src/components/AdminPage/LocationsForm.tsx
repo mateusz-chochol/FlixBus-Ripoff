@@ -106,8 +106,14 @@ const LocationsForm: React.FC = () => {
 
   useEffect(() => {
     if (requestsState['locations/addLocation'] === 'fulfilled') {
-      showSuccess(`Location successfully added.`)
+      showSuccess('Location successfully added.')
       setButtonDisabled(false);
+
+      setName('');
+      setLatitude('');
+      setLongitude('');
+      setGeohash('');
+      setImportance('');
 
       dispatch(removeFulfilledActionCreator('locations/addLocation'));
     }
