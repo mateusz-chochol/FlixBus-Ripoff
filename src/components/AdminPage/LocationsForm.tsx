@@ -32,7 +32,7 @@ const LocationsForm: React.FC = () => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
 
   const handleChangeName = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (event.target.value.match(/^[a-zA-Z]{0,20}$/)) {
+    if (event.target.value.match(/^[a-ząćęłńóśźżA-ZĄĆĘŁŃÓŚŹŻ]{0,20}$/)) {
       setName(event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1).toLowerCase());
     }
   }
@@ -65,7 +65,7 @@ const LocationsForm: React.FC = () => {
     if (name !== '' && latitude !== '' && longitude !== '' && geohash !== '' && importance !== '') {
       let errors = false;
 
-      if (!name.match(/^[A-Z]{1}[a-z]{0,19}$/)) {
+      if (!name.match(/^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]{0,19}$/)) {
         errors = true;
         showError('Location name can contain only letters and cannot be greater than 20 characters.');
       }
