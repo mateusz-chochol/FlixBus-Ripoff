@@ -76,9 +76,13 @@ const AdminPage: React.FC = () => {
   const [locationToDeleteId, setLocationToDeleteId] = useState<string>('');
   const [transactionToDeleteId, setTransactionToDeleteId] = useState<string>('');
   const [tripToDeleteId, setTripToDeleteId] = useState<string>('');
+  const [locationButtonDisabled, setLocationButtonDisabled] = useState<boolean>(false);
+  const [tripButtonDisabled, setTripButtonDisabled] = useState<boolean>(false);
+  const [transactionButtonDisabled, setTransactionButtonDisabled] = useState<boolean>(false);
 
   const handleRemoveLocationButtonClick = () => {
     if (locationToDeleteId !== '') {
+      setLocationButtonDisabled(true);
       //todo implement location deletion
     }
     else {
@@ -88,6 +92,7 @@ const AdminPage: React.FC = () => {
 
   const handleRemoveTransactionButtonClick = async () => {
     if (transactionToDeleteId !== '') {
+      setTransactionButtonDisabled(true);
       dispatch(removeTransaction(transactionToDeleteId));
     }
     else {
@@ -97,6 +102,7 @@ const AdminPage: React.FC = () => {
 
   const handleRemoveTripButtonClick = () => {
     if (tripToDeleteId !== '') {
+      setTripButtonDisabled(true);
       //todo implement trip deletion
     }
     else {
@@ -105,25 +111,40 @@ const AdminPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (requestsState['transactions/removeTransaction'] === 'fulfilled' && transactionToDeleteId !== '') {
+    if (requestsState['transactions/removeTransaction'] === 'fulfilled') {
       showSuccess(`Successfully deleted transaction with id: "${transactionToDeleteId}"`);
       setTransactionToDeleteId('');
+      setTransactionButtonDisabled(false);
 
       dispatch(removeFulfilledActionCreator('transactions/removeTransaction'));
     }
 
-    if (requestsState['trips/removeTrip'] === 'fulfilled' && tripToDeleteId !== '') {
+    if (requestsState['trips/removeTrip'] === 'fulfilled') {
       showSuccess(`Successfully deleted trip with id: "${tripToDeleteId}"`);
       setTripToDeleteId('');
+      setTripButtonDisabled(false);
 
       dispatch(removeFulfilledActionCreator('trips/removeTrip'));
     }
 
-    if (requestsState['locations/removeLocation'] === 'fulfilled' && locationToDeleteId !== '') {
+    if (requestsState['locations/removeLocation'] === 'fulfilled') {
       showSuccess(`Successfully deleted location with id: "${locationToDeleteId}"`);
       setLocationToDeleteId('');
+      setLocationButtonDisabled(false);
 
       dispatch(removeFulfilledActionCreator('locations/removeLocation'));
+    }
+
+    if (requestsState['transactions/removeTransaction'] === 'rejected') {
+      setTransactionButtonDisabled(false);
+    }
+
+    if (requestsState['trips/removeTrip'] === 'rejected') {
+      setTripButtonDisabled(false);
+    }
+
+    if (requestsState['locations/removeLocation'] === 'rejected') {
+      setLocationButtonDisabled(false);
     }
   }, [requestsState, transactionToDeleteId, tripToDeleteId, locationToDeleteId, dispatch, showSuccess])
 
@@ -173,6 +194,7 @@ const AdminPage: React.FC = () => {
                           variant='contained'
                           disableElevation
                           onClick={handleRemoveLocationButtonClick}
+                          disabled={locationButtonDisabled}
                         >
                           Remove location
                         </Button>
@@ -194,6 +216,7 @@ const AdminPage: React.FC = () => {
                           variant='contained'
                           disableElevation
                           onClick={handleRemoveTransactionButtonClick}
+                          disabled={transactionButtonDisabled}
                         >
                           Remove transaction
                         </Button>
@@ -215,6 +238,7 @@ const AdminPage: React.FC = () => {
                           variant='contained'
                           disableElevation
                           onClick={handleRemoveTripButtonClick}
+                          disabled={tripButtonDisabled}
                         >
                           Remove trip
                         </Button>
@@ -264,6 +288,7 @@ const AdminPage: React.FC = () => {
                     <Button
                       disableElevation
                       onClick={handleRemoveLocationButtonClick}
+                      disabled={locationButtonDisabled}
                       fullWidth
                     >
                       Remove location
@@ -286,6 +311,7 @@ const AdminPage: React.FC = () => {
                       disableElevation
                       fullWidth
                       onClick={handleRemoveTransactionButtonClick}
+                      disabled={transactionButtonDisabled}
                     >
                       Remove transaction
                     </Button>
@@ -307,6 +333,7 @@ const AdminPage: React.FC = () => {
                       disableElevation
                       fullWidth
                       onClick={handleRemoveTripButtonClick}
+                      disabled={tripButtonDisabled}
                     >
                       Remove trip
                     </Button>

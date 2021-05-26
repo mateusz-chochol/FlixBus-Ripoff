@@ -28,18 +28,20 @@ const requestsSlice = createSlice({
       .addMatcher<PendingAction>(
         (action) => action.type.endsWith('/pending'),
         (state, action) => {
-          state[action.type.split("/pending")[0]] = 'pending'
+          state[action.type.split("/pending")[0]] = 'pending';
         }
       )
       .addMatcher<FulfilledAction>(
         (action) => action.type.endsWith('/fulfilled'),
         (state, action) => {
-          state[action.type.split("/fulfilled")[0]] = 'fulfilled'
+          state[action.type.split("/fulfilled")[0]] = 'fulfilled';
         }
       )
       .addMatcher<RejectedAction>(
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
+          state[action.type.split("/rejected")[0]] = 'rejected';
+
           if (action.error.name === 'CustomError') {
             state['rejected'] = action.error.message;
           }

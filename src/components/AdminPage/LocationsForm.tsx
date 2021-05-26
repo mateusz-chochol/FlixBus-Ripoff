@@ -29,6 +29,7 @@ const LocationsForm: React.FC = () => {
   const [longitude, setLongitude] = useState<string>('');
   const [geohash, setGeohash] = useState<string>('');
   const [importance, setImportance] = useState<string>('');
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
 
   const handleChangeName = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if (event.target.value.match(/^[a-zA-Z]{0,20}$/)) {
@@ -55,7 +56,7 @@ const LocationsForm: React.FC = () => {
   }
 
   const handleChangeImportance = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (event.target.value.match(/^[1-9]?[0-4]?$/)) {
+    if (event.target.value.match(/(^1[0-4]{1}$)|(^[1-9]?$)/)) {
       setImportance(event.target.value);
     }
   }
@@ -94,6 +95,8 @@ const LocationsForm: React.FC = () => {
           geohash: geohash,
           importance: parseInt(importance),
         }))
+
+        setButtonDisabled(true);
       }
     }
     else {
@@ -104,8 +107,13 @@ const LocationsForm: React.FC = () => {
   useEffect(() => {
     if (requestsState['locations/addLocation'] === 'fulfilled') {
       showSuccess(`Location successfully added.`)
+      setButtonDisabled(false);
 
       dispatch(removeFulfilledActionCreator('locations/addLocation'));
+    }
+
+    if (requestsState['locations/addLocation'] === 'rejected') {
+      setButtonDisabled(false);
     }
   }, [requestsState, dispatch, showSuccess])
 
@@ -183,6 +191,7 @@ const LocationsForm: React.FC = () => {
           color='primary'
           disableElevation
           onClick={handleAddLocationButtonClick}
+          disabled={buttonDisabled}
         >
           <Box display='flex' justifyContent='space-between' alignItems='center' width='100%' padding={1}>
             Add location

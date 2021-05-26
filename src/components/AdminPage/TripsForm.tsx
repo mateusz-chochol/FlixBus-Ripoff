@@ -65,6 +65,8 @@ const TripsForm: React.FC = () => {
   const [maxSeats, setMaxSeats] = useState<string>('');
   const [isDepartureDateWindowOpen, setIsDepartureDateWindowOpen] = useState<boolean>(false);
   const [isDepartureTimeWindowOpen, setIsDepartureTimeWindowOpen] = useState<boolean>(false);
+  const [updateTripsButtonDisabled, setUpdateTripsButtonDisabled] = useState<boolean>(false);
+  const [addTripButtonDisabled, setAddTripButtonDisabled] = useState<boolean>(false);
 
   const handlePriceChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if (event.target.value.match(/^[0-9]*$/)) {
@@ -118,6 +120,8 @@ const TripsForm: React.FC = () => {
           price: parseInt(price),
           maxSeats: parseInt(maxSeats)
         }));
+
+        setAddTripButtonDisabled(true);
       }
     }
     else {
@@ -127,24 +131,37 @@ const TripsForm: React.FC = () => {
 
   const handleUpdateTripsButtonClick = () => {
     dispatch(updateTripsDates());
+
+    setUpdateTripsButtonDisabled(true);
   }
 
   useEffect(() => {
     if (requestsState['trips/updateTripsDates'] === 'fulfilled') {
-      showSuccess('Successfully updated all trips dates.')
-
       dispatch(removeFulfilledActionCreator('trips/updateTripsDates'));
+
+      showSuccess('Successfully updated all trips dates.')
+      setUpdateTripsButtonDisabled(true);
     }
 
     if (requestsState['trips/addTrip'] === 'fulfilled') {
       dispatch(removeFulfilledActionCreator('trips/addTrip'));
+
       showSuccess('Successfully added trip.');
+      setAddTripButtonDisabled(true);
 
       setDeparture(undefined);
       setDestination(undefined);
       setTripDuration('');
       setPrice('');
       setMaxSeats('');
+    }
+
+    if (requestsState['trips/updateTripsDates'] === 'rejected') {
+      setUpdateTripsButtonDisabled(true);
+    }
+
+    if (requestsState['trips/addTrip'] === 'rejected') {
+      setAddTripButtonDisabled(true);
     }
   }, [departure, destination, dispatch, requestsState, showSuccess])
 
@@ -283,6 +300,7 @@ const TripsForm: React.FC = () => {
             <Button
               variant='contained'
               onClick={handleUpdateTripsButtonClick}
+              disabled={updateTripsButtonDisabled}
             >
               <Box display='flex' justifyContent='space-between' alignItems='center' width='100%' paddingY={1}>
                 Update trips
@@ -294,6 +312,7 @@ const TripsForm: React.FC = () => {
             <Button
               variant='contained'
               onClick={handleAddTripButtonClick}
+              disabled={addTripButtonDisabled}
             >
               <Box display='flex' justifyContent='space-between' alignItems='center' width='100%' paddingY={1}>
                 Add trip
