@@ -283,7 +283,7 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
             <Slider
               value={durationFilter}
               onChange={(event, newValue) => setDurationFilter(newValue as number[])}
-              max={10}
+              max={24}
               min={0}
               marks={[
                 {
@@ -291,8 +291,8 @@ const FiltersMenu: React.FC<FiltersMenuProps> = ({
                   label: '0h'
                 },
                 {
-                  value: 10,
-                  label: '10h'
+                  value: 24,
+                  label: '24h'
                 }
               ]}
               valueLabelDisplay="on"

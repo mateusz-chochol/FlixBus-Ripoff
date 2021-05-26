@@ -129,8 +129,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
   const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
   const [returnTripsToDisplay, setReturnTripsToDisplay] = useState<Trip[]>(returnTrips);
   const [sortBySetting, setSortBySetting] = useState<string>("Departure hour-increasing");
-  const [priceFilter, setPriceFilter] = useState<number[]>([20, 160]);
-  const [durationFilter, setDurationFilter] = useState<number[]>([0, 6]);
+  const [priceFilter, setPriceFilter] = useState<number[]>([0, 160]);
+  const [durationFilter, setDurationFilter] = useState<number[]>([0, 8]);
   const [departureHourFilter, setDepartureHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [returnHourFilter, setReturnHourFilter] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
   const [passengersCount, setPassengersCount] = useState<number>(1);
