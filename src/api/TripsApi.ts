@@ -81,6 +81,8 @@ export const getTripsByIdsArray = async (ids: string[]) => {
 }
 
 export const updateTripsDates = async () => {
+  await delay();
+
   const today = moment().format('YYYY-MM-DD');
   const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
 
@@ -137,6 +139,8 @@ export const addTrip = async (
 }
 
 export const removeTrip = async (tripId: string) => {
+  await delay();
+
   try {
     await tripsRef.doc(tripId).delete();
 

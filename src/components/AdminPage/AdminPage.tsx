@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect
+  useEffect,
+  useRef
 } from 'react';
 import {
   Paper,
@@ -22,7 +23,11 @@ import {
   useDispatch
 } from 'react-redux';
 import { removeTransaction } from 'redux/TransactionsSlice';
-import { removeTrip } from 'redux/TripsSlice';
+import {
+  removeTrip,
+  removeTripsByLocationIdActionCreator,
+} from 'redux/TripsSlice';
+import { removeLocation } from 'redux/LocationsSlice';
 import {
   getRequestsState,
   removeFulfilledActionCreator,
@@ -80,11 +85,14 @@ const AdminPage: React.FC = () => {
   const [locationButtonDisabled, setLocationButtonDisabled] = useState<boolean>(false);
   const [tripButtonDisabled, setTripButtonDisabled] = useState<boolean>(false);
   const [transactionButtonDisabled, setTransactionButtonDisabled] = useState<boolean>(false);
+  const locationIdRef = useRef<string>('');
 
   const handleRemoveLocationButtonClick = () => {
     if (locationToDeleteId !== '') {
       setLocationButtonDisabled(true);
-      //todo implement location deletion
+      dispatch(removeLocation(locationToDeleteId));
+
+      locationIdRef.current = locationToDeleteId;
     }
     else {
       showInfo('You need to specify the location id first.')
@@ -113,7 +121,7 @@ const AdminPage: React.FC = () => {
 
   useEffect(() => {
     if (requestsState['transactions/removeTransaction'] === 'fulfilled') {
-      showSuccess(`Successfully deleted transaction with id: "${transactionToDeleteId}"`);
+      showSuccess(`Successfully deleted transaction.`);
       setTransactionToDeleteId('');
       setTransactionButtonDisabled(false);
 
@@ -121,7 +129,7 @@ const AdminPage: React.FC = () => {
     }
 
     if (requestsState['trips/removeTrip'] === 'fulfilled') {
-      showSuccess(`Successfully deleted trip with id: "${tripToDeleteId}"`);
+      showSuccess(`Successfully deleted trip.`);
       setTripToDeleteId('');
       setTripButtonDisabled(false);
 
@@ -129,7 +137,9 @@ const AdminPage: React.FC = () => {
     }
 
     if (requestsState['locations/removeLocation'] === 'fulfilled') {
-      showSuccess(`Successfully deleted location with id: "${locationToDeleteId}"`);
+      dispatch(removeTripsByLocationIdActionCreator(locationIdRef.current))
+
+      showSuccess(`Successfully deleted location.`);
       setLocationToDeleteId('');
       setLocationButtonDisabled(false);
 

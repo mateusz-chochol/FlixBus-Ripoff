@@ -180,6 +180,13 @@ const tripsSlice = createSlice({
         ...state,
         returnList: []
       }
+    },
+    removeTripsByLocationId: (state, { payload }: PayloadAction<string>) => {
+      return {
+        ...state,
+        list: state.list.filter(trip => trip.startLocationId !== payload && trip.endLocationId !== payload),
+        returnList: state.returnList.filter(trip => trip.startLocationId !== payload && trip.endLocationId !== payload),
+      }
     }
   },
   extraReducers: builder => {
@@ -254,7 +261,8 @@ export const getLastDepartureDate = (state: AppState) => moment(state.trips.last
 export const {
   setLastDepartureId: setLastDepartureIdActionCreator,
   setLastDestinationId: setLastDestinationIdActionCreator,
-  clearReturnTrips: clearReturnTripsActionCreator
+  clearReturnTrips: clearReturnTripsActionCreator,
+  removeTripsByLocationId: removeTripsByLocationIdActionCreator,
 } = tripsSlice.actions;
 
 export default tripsSlice.reducer

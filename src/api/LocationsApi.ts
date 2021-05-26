@@ -1,7 +1,7 @@
 import Coordinates from 'types/Objects/Coordinates';
 import * as geofire from 'geofire-common';
 import firebase from 'firebase/app';
-import { locationsRef } from './firestoreCollectionsRefs';
+import { locationsRef, tripsRef } from './firestoreCollectionsRefs';
 import config from 'reduxConfig.json';
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
@@ -106,16 +106,50 @@ export const addLocation = async (name: string, latitude: number, longitude: num
 
   try {
     if (!isNaN(latitude) && !isNaN(longitude) && !isNaN(importance)) {
-      await locationsRef.add({
+      const newLocation = await (await locationsRef.add({
         name: name,
         coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
         geohash: geohash,
         importance: importance
-      })
+      })).get()
+
+      return convertFirebaseDataToLocation(newLocation);
     }
   }
   catch (error) {
     console.error(error)
+
+    throw error;
+  }
+}
+
+export const removeLocation = async (locationId: string) => {
+  await delay();
+
+  try {
+    const tripsWithThisDeparture = tripsRef.where('startLocationId', '==', locationId).get();
+    const tripsWithThisDestination = tripsRef.where('endLocationId', '==', locationId).get();
+    const allTrips = await Promise.all([tripsWithThisDeparture, tripsWithThisDestination]);
+
+    const promises: Promise<void>[] = [];
+
+    allTrips.forEach(snapshot => snapshot.forEach(async (trip) => promises.push(trip.ref.delete())));
+
+    await Promise.all(promises);
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+
+  try {
+    await locationsRef.doc(locationId).delete();
+
+    return locationId;
+  }
+  catch (error) {
+    console.error(error);
 
     throw error;
   }

@@ -37,16 +37,6 @@ const filterExistingLocations = (allLocations: Location[], locationsToAdd?: Loca
   return locationsToReturn;
 }
 
-export const addLocation = createAsyncThunk<
-  void,
-  { name: string, latitude: number, longitude: number, geohash: string, importance: number }
->(
-  'locations/addLocation',
-  async ({ name, latitude, longitude, geohash, importance }) => {
-    return await api.addLocation(name, latitude, longitude, geohash, importance);
-  }
-)
-
 export const getLocationByIdAsync = createAsyncThunk<Location | undefined, string>(
   'locations/getLocationByIdAsync',
   async (id) => {
@@ -137,6 +127,23 @@ export const getLocationsByCoordinatesAsync = createAsyncThunk<
   }
 );
 
+export const addLocation = createAsyncThunk<
+  Location | undefined,
+  { name: string, latitude: number, longitude: number, geohash: string, importance: number }
+>(
+  'locations/addLocation',
+  async ({ name, latitude, longitude, geohash, importance }) => {
+    return await api.addLocation(name, latitude, longitude, geohash, importance);
+  }
+)
+
+export const removeLocation = createAsyncThunk<string, string>(
+  'locations/removeLocation',
+  async (locationId) => {
+    return await api.removeLocation(locationId);
+  }
+)
+
 const locationsSlice = createSlice({
   name: 'locations',
   initialState: locationsInitialState,
@@ -193,6 +200,25 @@ const locationsSlice = createSlice({
         return {
           ...state,
           allLocations: filterExistingLocations(state.allLocations, undefined, action.payload)
+        }
+      })
+      .addCase(addLocation.fulfilled, (state, action) => {
+        if (action.payload === undefined) {
+          return state;
+        }
+
+        return {
+          ...state,
+          allLocations: state.allLocations.concat(action.payload)
+        }
+      })
+      .addCase(removeLocation.fulfilled, (state, action) => {
+        return {
+          ...state,
+          allLocations: state.allLocations.filter(location => location.id !== action.payload),
+          locationsForDepartureTextField: state.locationsForDepartureTextField.filter(location => location.id !== action.payload),
+          locationsForDestinationTextField: state.locationsForDestinationTextField.filter(location => location.id !== action.payload),
+          locationsForMap: state.locationsForMap.filter(location => location.id !== action.payload),
         }
       })
   }
