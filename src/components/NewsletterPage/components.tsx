@@ -161,6 +161,7 @@ const components: Component[] = [
       'Add form for adding locations',
       'Add form for adding trips',
       'Add button to update trips dates',
+      'Add buttons for removing locations, trips and transactions',
     ],
     todo: []
   },

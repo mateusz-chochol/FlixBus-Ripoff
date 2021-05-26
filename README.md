@@ -157,6 +157,7 @@ Site should be visible under the address: http://localhost:5000
   - <del> add form for adding trips </del> (Done)
   - <del> add button to update trips dates </del> (Done)
   - <del> add option of adding random trip </del> (Won't do)
+  - <del> add buttons for removing locations, trips and transactions </del> (Done)
 - general:
   - <del> fix scaling of the Log In / Sign Up buttons so the In / Up doesnt jump between the lines when the screen gets smaller (or if it has to jump make it so both Log In and Sign Up jump at the same time) </del> (Done)
   - <del> move all data to the firebase backend and create api calls that will fetch them when needed </del> (Done)
