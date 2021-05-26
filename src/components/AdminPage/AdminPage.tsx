@@ -12,6 +12,7 @@ import {
   TextField,
   Button,
   Typography,
+  ButtonGroup,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -24,6 +25,8 @@ import {
 } from 'react-redux';
 import { removeTransaction } from 'redux/TransactionsSlice';
 import {
+  resumeTrip,
+  cancelTrip,
   removeTrip,
   removeTripsByLocationIdActionCreator,
 } from 'redux/TripsSlice';
@@ -83,7 +86,9 @@ const AdminPage: React.FC = () => {
   const [transactionToDeleteId, setTransactionToDeleteId] = useState<string>('');
   const [tripToDeleteId, setTripToDeleteId] = useState<string>('');
   const [locationButtonDisabled, setLocationButtonDisabled] = useState<boolean>(false);
-  const [tripButtonDisabled, setTripButtonDisabled] = useState<boolean>(false);
+  const [tripDeleteButtonDisabled, setTripDeleteButtonDisabled] = useState<boolean>(false);
+  const [tripCancelButtonDisabled, setTripCancelButtonDisabled] = useState<boolean>(false);
+  const [tripResumeButtonDisabled, setTripResumeButtonDisabled] = useState<boolean>(false);
   const [transactionButtonDisabled, setTransactionButtonDisabled] = useState<boolean>(false);
   const locationIdRef = useRef<string>('');
 
@@ -111,13 +116,34 @@ const AdminPage: React.FC = () => {
 
   const handleRemoveTripButtonClick = () => {
     if (tripToDeleteId !== '') {
-      setTripButtonDisabled(true);
+      setTripDeleteButtonDisabled(true);
       dispatch(removeTrip(tripToDeleteId));
     }
     else {
       showInfo('You need to specify the trip id first.')
     }
   }
+
+  const handleCancelTripButtonClick = () => {
+    if (tripToDeleteId !== '') {
+      setTripCancelButtonDisabled(true);
+      dispatch(cancelTrip(tripToDeleteId));
+    }
+    else {
+      showInfo('You need to specify the trip id first.')
+    }
+  }
+
+  const handleResumeTripButtonClick = () => {
+    if (tripToDeleteId !== '') {
+      setTripResumeButtonDisabled(true);
+      dispatch(resumeTrip(tripToDeleteId));
+    }
+    else {
+      showInfo('You need to specify the trip id first.')
+    }
+  }
+
 
   useEffect(() => {
     if (requestsState['transactions/removeTransaction'] === 'fulfilled') {
@@ -131,9 +157,25 @@ const AdminPage: React.FC = () => {
     if (requestsState['trips/removeTrip'] === 'fulfilled') {
       showSuccess(`Successfully deleted trip.`);
       setTripToDeleteId('');
-      setTripButtonDisabled(false);
+      setTripDeleteButtonDisabled(false);
 
       dispatch(removeFulfilledActionCreator('trips/removeTrip'));
+    }
+
+    if (requestsState['trips/resumeTrip'] === 'fulfilled') {
+      showSuccess(`Successfully resumed trip.`);
+      setTripToDeleteId('');
+      setTripResumeButtonDisabled(false);
+
+      dispatch(removeFulfilledActionCreator('trips/resumeTrip'));
+    }
+
+    if (requestsState['trips/cancelTrip'] === 'fulfilled') {
+      showSuccess(`Successfully canceled trip.`);
+      setTripToDeleteId('');
+      setTripCancelButtonDisabled(false);
+
+      dispatch(removeFulfilledActionCreator('trips/cancelTrip'));
     }
 
     if (requestsState['locations/removeLocation'] === 'fulfilled') {
@@ -151,7 +193,15 @@ const AdminPage: React.FC = () => {
     }
 
     if (requestsState['trips/removeTrip'] === 'rejected') {
-      setTripButtonDisabled(false);
+      setTripDeleteButtonDisabled(false);
+    }
+
+    if (requestsState['trips/resumeTrip'] === 'rejected') {
+      setTripResumeButtonDisabled(false);
+    }
+
+    if (requestsState['trips/cancel'] === 'rejected') {
+      setTripCancelButtonDisabled(false);
     }
 
     if (requestsState['locations/removeLocation'] === 'rejected') {
@@ -245,14 +295,32 @@ const AdminPage: React.FC = () => {
                         fullWidth
                       />
                       <Box display='flex' justifyContent='center' paddingTop={3}>
-                        <Button
-                          variant='contained'
-                          disableElevation
-                          onClick={handleRemoveTripButtonClick}
-                          disabled={tripButtonDisabled}
-                        >
-                          Remove trip
-                        </Button>
+                        <ButtonGroup variant="contained" disableElevation>
+                          <Button
+                            variant='contained'
+                            disableElevation
+                            onClick={handleCancelTripButtonClick}
+                            disabled={tripCancelButtonDisabled}
+                          >
+                            Cancel trip
+                          </Button>
+                          <Button
+                            variant='contained'
+                            disableElevation
+                            onClick={handleRemoveTripButtonClick}
+                            disabled={tripDeleteButtonDisabled}
+                          >
+                            Remove trip
+                          </Button>
+                          <Button
+                            variant='contained'
+                            disableElevation
+                            onClick={handleResumeTripButtonClick}
+                            disabled={tripResumeButtonDisabled}
+                          >
+                            Resume trip
+                          </Button>
+                        </ButtonGroup>
                       </Box>
                     </Box>
                   </Grid>
@@ -340,14 +408,32 @@ const AdminPage: React.FC = () => {
                     fullWidth
                   />
                   <Box display='flex' justifyContent='center'>
-                    <Button
-                      disableElevation
-                      fullWidth
-                      onClick={handleRemoveTripButtonClick}
-                      disabled={tripButtonDisabled}
-                    >
-                      Remove trip
-                    </Button>
+                    <ButtonGroup variant="text" disableElevation fullWidth>
+                      <Button
+                        variant='text'
+                        disableElevation
+                        onClick={handleCancelTripButtonClick}
+                        disabled={tripCancelButtonDisabled}
+                      >
+                        Cancel trip
+                      </Button>
+                      <Button
+                        variant='text'
+                        disableElevation
+                        onClick={handleRemoveTripButtonClick}
+                        disabled={tripDeleteButtonDisabled}
+                      >
+                        Remove trip
+                      </Button>
+                      <Button
+                        variant='text'
+                        disableElevation
+                        onClick={handleResumeTripButtonClick}
+                        disabled={tripResumeButtonDisabled}
+                      >
+                        Resume trip
+                      </Button>
+                    </ButtonGroup>
                   </Box>
                 </Box>
               </Grid>

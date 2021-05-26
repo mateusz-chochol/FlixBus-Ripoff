@@ -96,6 +96,7 @@ const TripsPage: React.FC = () => {
   const requestsState = useSelector(getRequestsState);
   const [upcomingList, setUpcomingList] = useState<TripWithTransaction[]>([]);
   const [previousList, setPreviousList] = useState<TripWithTransaction[]>([]);
+  const [canceledList, setCanceledList] = useState<TripWithTransaction[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getTripsWithTransaction = useCallback(() => {
@@ -151,11 +152,20 @@ const TripsPage: React.FC = () => {
 
   useEffect(() => {
     setUpcomingList(getTripsWithTransaction().filter(tripWithTransaction =>
-      tripWithTransaction.trip && moment(tripWithTransaction.trip.date).isSameOrAfter(moment().add(-1, 'days'))))
+      tripWithTransaction.trip &&
+      moment(tripWithTransaction.trip.date).isSameOrAfter(moment().add(-1, 'days')) &&
+      !tripWithTransaction.trip.isCanceled
+    ))
 
     setPreviousList(getTripsWithTransaction().filter(tripWithTransaction =>
       tripWithTransaction.trip && moment(tripWithTransaction.trip.date).isBefore(moment().add(-1, 'days'))))
-  }, [getTripsWithTransaction])
+
+    setCanceledList(getTripsWithTransaction().filter(tripWithTransaction =>
+      tripWithTransaction.trip &&
+      tripWithTransaction.trip.isCanceled &&
+      moment(tripWithTransaction.trip.date).isSameOrAfter(moment().add(-1, 'days'))
+    ))
+  }, [getTripsWithTransaction, upcomingList])
 
   useEffect(() => {
     const locationsIds = trips.filter(trip => isTripInTransactions(trip))
@@ -209,6 +219,19 @@ const TripsPage: React.FC = () => {
                 flexDirection='column'
                 padding={4}
               >
+                {canceledList.length > 0 &&
+                  <>
+                    <TripsList
+                      list={canceledList}
+                      locations={locations}
+                      title='Canceled trips'
+                      emptyListMessage='No canceled trips'
+                    />
+                    <Box display='flex' width='400px' height='1px' marginBottom={4}>
+                      <Divider flexItem className={classes.divider} />
+                    </Box>
+                  </>
+                }
                 <TripsList
                   list={upcomingList}
                   locations={locations}
@@ -253,6 +276,19 @@ const TripsPage: React.FC = () => {
                 flexDirection='column'
                 padding={4}
               >
+                {canceledList.length > 0 &&
+                  <>
+                    <TripsList
+                      list={canceledList}
+                      locations={locations}
+                      title='Canceled trips'
+                      emptyListMessage='No canceled trips'
+                    />
+                    <Box display='flex' width='400px' height='1px' marginBottom={4}>
+                      <Divider flexItem className={classes.divider} />
+                    </Box>
+                  </>
+                }
                 <TripsList
                   list={upcomingList}
                   locations={locations}

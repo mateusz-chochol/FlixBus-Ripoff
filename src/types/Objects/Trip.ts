@@ -8,4 +8,5 @@ export default interface Trip {
   price: number,
   maxSeats: number,
   seatsLeft: number,
+  isCanceled?: boolean,
 };

@@ -19,7 +19,8 @@ const convertFirebaseDataToTrip = (doc: firebase.firestore.DocumentSnapshot<fire
       hour: data.hour,
       price: data.price,
       maxSeats: data.maxSeats,
-      seatsLeft: data.seatsLeft
+      seatsLeft: data.seatsLeft,
+      isCanceled: data.isCanceled,
     }
   }
 }
@@ -143,6 +144,40 @@ export const removeTrip = async (tripId: string) => {
 
   try {
     await tripsRef.doc(tripId).delete();
+
+    return tripId
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+}
+
+export const cancelTrip = async (tripId: string) => {
+  await delay();
+
+  try {
+    await tripsRef.doc(tripId).update({
+      isCanceled: true,
+    })
+
+    return tripId
+  }
+  catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+}
+
+export const resumeTrip = async (tripId: string) => {
+  await delay();
+
+  try {
+    await tripsRef.doc(tripId).update({
+      isCanceled: false,
+    })
 
     return tripId
   }

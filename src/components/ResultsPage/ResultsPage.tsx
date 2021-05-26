@@ -126,8 +126,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
     moment(departureDate).add(1, 'days').toDate()
   );
   const [hasSetup, setHasSetup] = useState<boolean>(false);
-  const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips);
-  const [returnTripsToDisplay, setReturnTripsToDisplay] = useState<Trip[]>(returnTrips);
+  const [tripsToDisplay, setTripsToDisplay] = useState<Trip[]>(trips.filter(trip => trip.isCanceled === undefined || trip.isCanceled !== true));
+  const [returnTripsToDisplay, setReturnTripsToDisplay] = useState<Trip[]>(returnTrips.filter(trip => trip.isCanceled === undefined || trip.isCanceled !== true));
   const [sortBySetting, setSortBySetting] = useState<string>("Departure hour-increasing");
   const [priceFilter, setPriceFilter] = useState<number[]>([0, 160]);
   const [durationFilter, setDurationFilter] = useState<number[]>([0, 8]);
@@ -231,8 +231,8 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ match, width }) => {
       return false;
     }
 
-    setTripsToDisplay(filterTrips(trips).filter(trip => compareHours(trip.hour, `${departureHourFilter.getHours()}:${departureHourFilter.getMinutes()}`)));
-    setReturnTripsToDisplay(filterTrips(returnTrips).filter(trip => compareHours(trip.hour, `${returnHourFilter.getHours()}:${returnHourFilter.getMinutes()}`)));
+    setTripsToDisplay(filterTrips(trips).filter(trip => (trip.isCanceled === undefined || trip.isCanceled !== true) && compareHours(trip.hour, `${departureHourFilter.getHours()}:${departureHourFilter.getMinutes()}`)));
+    setReturnTripsToDisplay(filterTrips(returnTrips).filter(trip => (trip.isCanceled === undefined || trip.isCanceled !== true) && compareHours(trip.hour, `${returnHourFilter.getHours()}:${returnHourFilter.getMinutes()}`)));
   }, [priceFilter, durationFilter, departureHourFilter, returnHourFilter, passengersCount, trips, returnTrips])
 
   useEffect(() => {

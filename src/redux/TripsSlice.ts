@@ -159,6 +159,20 @@ export const removeTrip = createAsyncThunk<string, string>(
   }
 )
 
+export const cancelTrip = createAsyncThunk<string, string>(
+  'trips/cancelTrip',
+  async (tripId) => {
+    return await api.cancelTrip(tripId);
+  }
+)
+
+export const resumeTrip = createAsyncThunk<string, string>(
+  'trips/resumeTrip',
+  async (tripId) => {
+    return await api.resumeTrip(tripId);
+  }
+)
+
 const tripsSlice = createSlice({
   name: 'trips',
   initialState: tripsInitialState,
@@ -247,6 +261,36 @@ const tripsSlice = createSlice({
           ...state,
           list: state.list.filter(trip => trip.id !== action.payload),
           returnList: state.returnList.filter(trip => trip.id !== action.payload),
+        }
+      })
+      .addCase(cancelTrip.fulfilled, (state, action) => {
+        return {
+          ...state,
+          list: state.list.map(trip => {
+            if (trip.id === action.payload) {
+              return {
+                ...trip,
+                isCanceled: true,
+              }
+            }
+
+            return trip;
+          }),
+        }
+      })
+      .addCase(resumeTrip.fulfilled, (state, action) => {
+        return {
+          ...state,
+          list: state.list.map(trip => {
+            if (trip.id === action.payload) {
+              return {
+                ...trip,
+                isCanceled: false,
+              }
+            }
+
+            return trip;
+          }),
         }
       })
   }
