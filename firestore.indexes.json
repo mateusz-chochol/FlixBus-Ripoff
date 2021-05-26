@@ -13,6 +13,60 @@
           "order": "ASCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "transactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "userId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "date",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "trips",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "date",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "endLocationId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "startLocationId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsLeft",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "trips",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "date",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "startLocationId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsLeft",
+          "order": "ASCENDING"
+        }
+      ]
     }
   ],
   "fieldOverrides": []
