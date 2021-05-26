@@ -74,7 +74,7 @@ const App: React.FC = () => {
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const notifications = useSelector(getNotifications);
-  const hasRequestBeenRejected = useSelector(getRequestsState)['rejected'] === 'rejected';
+  const rejectedRequestMessage = useSelector(getRequestsState)['rejected'];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -90,15 +90,15 @@ const App: React.FC = () => {
   }, [notifications, closeSnackbar, dispatch, enqueueSnackbar]);
 
   useEffect(() => {
-    if (hasRequestBeenRejected) {
-      const snackbarKey = enqueueSnackbar('Server error. Please comeback later.', {
+    if (rejectedRequestMessage && rejectedRequestMessage !== '') {
+      const snackbarKey = enqueueSnackbar(rejectedRequestMessage, {
         variant: 'error',
         onClick: () => closeSnackbar(snackbarKey)
       });
 
       dispatch(removeRejectedActionCreator());
     }
-  }, [hasRequestBeenRejected, dispatch, enqueueSnackbar, closeSnackbar])
+  }, [rejectedRequestMessage, dispatch, enqueueSnackbar, closeSnackbar])
 
   return (
     <ThemeProvider theme={theme}>

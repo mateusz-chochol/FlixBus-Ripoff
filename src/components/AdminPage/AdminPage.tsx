@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import {
   Paper,
   Box,
@@ -14,8 +17,15 @@ import {
   makeStyles,
   Theme
 } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import { removeTransaction } from 'redux/TransactionsSlice';
+import {
+  getRequestsState,
+  removeFulfilledActionCreator,
+} from 'redux/RequestsStateSlice';
 import { useNotifications } from 'components/Misc/Notifications';
 import LocationsForm from './LocationsForm';
 import TripsForm from './TripsForm';
@@ -61,7 +71,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const AdminPage: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { showSuccess } = useNotifications();
+  const requestsState = useSelector(getRequestsState);
+  const { showSuccess, showInfo } = useNotifications();
   const [locationToDeleteId, setLocationToDeleteId] = useState<string>('');
   const [transactionToDeleteId, setTransactionToDeleteId] = useState<string>('');
   const [tripToDeleteId, setTripToDeleteId] = useState<string>('');
@@ -69,27 +80,52 @@ const AdminPage: React.FC = () => {
   const handleRemoveLocationButtonClick = () => {
     if (locationToDeleteId !== '') {
       //todo implement location deletion
-
-      showSuccess(`Successfully deleted location with id: ${locationToDeleteId}`)
+    }
+    else {
+      showInfo('You need to specify the location id first.')
     }
   }
 
-  const handleRemoveTransactionButtonClick = () => {
+  const handleRemoveTransactionButtonClick = async () => {
     if (transactionToDeleteId !== '') {
       dispatch(removeTransaction(transactionToDeleteId));
-
-      setTransactionToDeleteId('');
-      showSuccess(`Successfully deleted transaction with id: ${transactionToDeleteId}`)
+    }
+    else {
+      showInfo('You need to specify the transaction id first.')
     }
   }
 
   const handleRemoveTripButtonClick = () => {
     if (tripToDeleteId !== '') {
       //todo implement trip deletion
-
-      showSuccess(`Successfully deleted trip with id: ${tripToDeleteId}`)
+    }
+    else {
+      showInfo('You need to specify the trip id first.')
     }
   }
+
+  useEffect(() => {
+    if (requestsState['transactions/removeTransaction'] === 'fulfilled' && transactionToDeleteId !== '') {
+      showSuccess(`Successfully deleted transaction with id: "${transactionToDeleteId}"`);
+      setTransactionToDeleteId('');
+
+      dispatch(removeFulfilledActionCreator('transactions/removeTransaction'));
+    }
+
+    if (requestsState['trips/removeTrip'] === 'fulfilled' && tripToDeleteId !== '') {
+      showSuccess(`Successfully deleted trip with id: "${tripToDeleteId}"`);
+      setTripToDeleteId('');
+
+      dispatch(removeFulfilledActionCreator('trips/removeTrip'));
+    }
+
+    if (requestsState['locations/removeLocation'] === 'fulfilled' && locationToDeleteId !== '') {
+      showSuccess(`Successfully deleted location with id: "${locationToDeleteId}"`);
+      setLocationToDeleteId('');
+
+      dispatch(removeFulfilledActionCreator('locations/removeLocation'));
+    }
+  }, [requestsState, transactionToDeleteId, tripToDeleteId, locationToDeleteId, dispatch, showSuccess])
 
   return (
     <Paper className={classes.paperBackground} square elevation={0}>
