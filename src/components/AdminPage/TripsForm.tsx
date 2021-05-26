@@ -140,14 +140,14 @@ const TripsForm: React.FC = () => {
       dispatch(removeFulfilledActionCreator('trips/updateTripsDates'));
 
       showSuccess('Successfully updated all trips dates.')
-      setUpdateTripsButtonDisabled(true);
+      setUpdateTripsButtonDisabled(false);
     }
 
     if (requestsState['trips/addTrip'] === 'fulfilled') {
       dispatch(removeFulfilledActionCreator('trips/addTrip'));
 
       showSuccess('Successfully added trip.');
-      setAddTripButtonDisabled(true);
+      setAddTripButtonDisabled(false);
 
       setDeparture(undefined);
       setDestination(undefined);
@@ -157,11 +157,11 @@ const TripsForm: React.FC = () => {
     }
 
     if (requestsState['trips/updateTripsDates'] === 'rejected') {
-      setUpdateTripsButtonDisabled(true);
+      setUpdateTripsButtonDisabled(false);
     }
 
     if (requestsState['trips/addTrip'] === 'rejected') {
-      setAddTripButtonDisabled(true);
+      setAddTripButtonDisabled(false);
     }
   }, [departure, destination, dispatch, requestsState, showSuccess])
 

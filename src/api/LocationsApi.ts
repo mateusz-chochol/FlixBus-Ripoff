@@ -1,10 +1,8 @@
 import Coordinates from 'types/Objects/Coordinates';
 import * as geofire from 'geofire-common';
 import firebase from 'firebase/app';
-import { firestore } from '../firebase';
+import { locationsRef } from './firestoreCollectionsRefs';
 import config from 'reduxConfig.json';
-
-const locationsRef = firestore.collection('locations');
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 

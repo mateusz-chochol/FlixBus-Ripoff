@@ -1,10 +1,7 @@
 import TransactionTrip from 'types/Objects/TransactionTrip';
 import firebase from 'firebase/app';
-import { firestore } from '../firebase';
+import { tripsRef, transactionsRef } from './firestoreCollectionsRefs';
 import config from 'reduxConfig.json';
-
-const transactionsRef = firestore.collection('transactions');
-const tripsRef = firestore.collection('trips');
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
@@ -29,7 +26,7 @@ export const getTransactionsByUserId = async (id: string) => {
 
   try {
     return (await transactionsRef.where('userId', '==', id).orderBy('date', 'desc').get())
-      .docs.map(doc => convertFirebaseDataToTransaction(doc));
+      .docs.map(doc => convertFirebaseDataToTransaction(doc)).filter(transaction => transaction !== undefined);
   }
   catch (error) {
     console.error(error);
@@ -70,7 +67,7 @@ export const addTransaction = async (date: string, price: number, tripIds: Trans
       email: email,
     })).get()
 
-    return convertFirebaseDataToTransaction(newTransaction)
+    return convertFirebaseDataToTransaction(newTransaction);
   }
   catch (error) {
     console.error(error);

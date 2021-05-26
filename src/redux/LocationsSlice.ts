@@ -47,8 +47,8 @@ export const addLocation = createAsyncThunk<
   }
 )
 
-export const getLocationsByIdAsync = createAsyncThunk<Location | undefined, string>(
-  'locations/getLocationsByIdAsync',
+export const getLocationByIdAsync = createAsyncThunk<Location | undefined, string>(
+  'locations/getLocationByIdAsync',
   async (id) => {
     return await api.getLocationById(id);
   },
@@ -189,7 +189,7 @@ const locationsSlice = createSlice({
           allLocations: filterExistingLocations(state.allLocations, action.payload)
         }
       })
-      .addCase(getLocationsByIdAsync.fulfilled, (state, action) => {
+      .addCase(getLocationByIdAsync.fulfilled, (state, action) => {
         return {
           ...state,
           allLocations: filterExistingLocations(state.allLocations, undefined, action.payload)

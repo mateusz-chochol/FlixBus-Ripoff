@@ -22,6 +22,7 @@ import {
   useDispatch
 } from 'react-redux';
 import { removeTransaction } from 'redux/TransactionsSlice';
+import { removeTrip } from 'redux/TripsSlice';
 import {
   getRequestsState,
   removeFulfilledActionCreator,
@@ -103,7 +104,7 @@ const AdminPage: React.FC = () => {
   const handleRemoveTripButtonClick = () => {
     if (tripToDeleteId !== '') {
       setTripButtonDisabled(true);
-      //todo implement trip deletion
+      dispatch(removeTrip(tripToDeleteId));
     }
     else {
       showInfo('You need to specify the trip id first.')

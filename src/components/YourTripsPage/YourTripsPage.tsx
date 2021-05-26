@@ -147,11 +147,14 @@ const TripsPage: React.FC = () => {
     if (transactions.length > 0) {
       dispatch(getTripsByIdsArray(getTripIdsWithTransactionIds().map(tripId => tripId.tripId)));
     }
-  }, [transactions, trips, getTripIdsWithTransactionIds, dispatch])
+  }, [transactions, getTripIdsWithTransactionIds, dispatch])
 
   useEffect(() => {
-    setUpcomingList(getTripsWithTransaction().filter(tripWithTransaction => moment(tripWithTransaction.trip?.date).isSameOrAfter(moment())))
-    setPreviousList(getTripsWithTransaction().filter(tripWithTransaction => moment(tripWithTransaction.trip?.date).isBefore(moment())))
+    setUpcomingList(getTripsWithTransaction().filter(tripWithTransaction =>
+      tripWithTransaction.trip && moment(tripWithTransaction.trip.date).isSameOrAfter(moment().add(-1, 'days'))))
+
+    setPreviousList(getTripsWithTransaction().filter(tripWithTransaction =>
+      tripWithTransaction.trip && moment(tripWithTransaction.trip.date).isBefore(moment().add(-1, 'days'))))
   }, [getTripsWithTransaction])
 
   useEffect(() => {

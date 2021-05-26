@@ -1,9 +1,8 @@
 import firebase from 'firebase/app';
-import { firestore } from '../firebase';
+import { tripsRef } from './firestoreCollectionsRefs';
 import config from 'reduxConfig.json';
 import moment from 'moment';
-
-const tripsRef = firestore.collection('trips');
+import Trip from 'types/Objects/Trip';
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
 
@@ -23,8 +22,6 @@ const convertFirebaseDataToTrip = (doc: firebase.firestore.DocumentSnapshot<fire
       seatsLeft: data.seatsLeft
     }
   }
-
-  throw new Error('Response from the server didn\'t contain data to process');
 }
 
 export const getTripsByDepartureIdAndDate = async (id: string, date: string) => {
@@ -32,7 +29,7 @@ export const getTripsByDepartureIdAndDate = async (id: string, date: string) => 
 
   try {
     return (await tripsRef.where('startLocationId', '==', id).where('date', '==', date).where('seatsLeft', '!=', 0).get())
-      .docs.map(doc => convertFirebaseDataToTrip(doc));
+      .docs.map(doc => convertFirebaseDataToTrip(doc)).filter(trip => trip !== undefined) as Trip[];
   }
   catch (error) {
     console.error(error);
@@ -46,7 +43,7 @@ export const getTripsByDepartureAndDestinationIdsAndDate = async (departureId: s
 
   try {
     return (await tripsRef.where('startLocationId', '==', departureId).where('endLocationId', '==', destinationId).where('date', '==', date).where('seatsLeft', '!=', 0).get())
-      .docs.map(doc => convertFirebaseDataToTrip(doc));
+      .docs.map(doc => convertFirebaseDataToTrip(doc)).filter(trip => trip !== undefined) as Trip[];
   }
   catch (error) {
     console.error(error);
@@ -74,7 +71,7 @@ export const getTripsByIdsArray = async (ids: string[]) => {
   try {
     const documentsPromises = ids.map(id => tripsRef.doc(id).get());
 
-    return (await Promise.all(documentsPromises)).map(doc => convertFirebaseDataToTrip(doc));
+    return (await Promise.all(documentsPromises)).map(doc => convertFirebaseDataToTrip(doc)).filter(trip => trip !== undefined) as Trip[];
   }
   catch (error) {
     console.error(error);
@@ -134,6 +131,19 @@ export const addTrip = async (
   }
   catch (error) {
     console.error(error)
+
+    throw error;
+  }
+}
+
+export const removeTrip = async (tripId: string) => {
+  try {
+    await tripsRef.doc(tripId).delete();
+
+    return tripId
+  }
+  catch (error) {
+    console.error(error);
 
     throw error;
   }

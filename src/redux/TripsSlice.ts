@@ -152,6 +152,13 @@ export const addTrip = createAsyncThunk<
   }
 );
 
+export const removeTrip = createAsyncThunk<string, string>(
+  'trips/removeTrip',
+  async (tripId) => {
+    return await api.removeTrip(tripId);
+  }
+)
+
 const tripsSlice = createSlice({
   name: 'trips',
   initialState: tripsInitialState,
@@ -226,6 +233,13 @@ const tripsSlice = createSlice({
         return {
           ...state,
           list: filterExistingTrips(state.list, action.payload),
+        }
+      })
+      .addCase(removeTrip.fulfilled, (state, action) => {
+        return {
+          ...state,
+          list: state.list.filter(trip => trip.id !== action.payload),
+          returnList: state.returnList.filter(trip => trip.id !== action.payload),
         }
       })
   }
