@@ -66,6 +66,9 @@ Site should be visible under the address: http://localhost:5000
 - newsletter page
 - help page
 - checkout page
+- admin panel page
+- user profile page
+- user trips page
 - running as mobile app (PWA)
 
 ## Current TODOs:
