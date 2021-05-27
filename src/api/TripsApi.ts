@@ -160,7 +160,7 @@ export const cancelTrip = async (tripId: string) => {
   try {
     await tripsRef.doc(tripId).update({
       isCanceled: true,
-    })
+    });
 
     return tripId
   }

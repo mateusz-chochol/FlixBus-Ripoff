@@ -10,6 +10,7 @@ import {
   ButtonGroup,
   Box,
   Typography,
+  Divider,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -108,6 +109,8 @@ const AccountOptions: React.FC = () => {
           onClose={() => setMenuAnchorEl(null)}
         >
           <Box display='flex' flexDirection='column' width='200px'>
+            <Typography gutterBottom variant='subtitle2' color='textSecondary' align='center'>Account balance: {currentUser.balance}$</Typography>
+            <Divider />
             <MenuItem onClick={handleProfileButtonClick}>
               <Box display='flex' justifyContent='space-between' width='100%' padding={1}>
                 <Typography>Profile</Typography>

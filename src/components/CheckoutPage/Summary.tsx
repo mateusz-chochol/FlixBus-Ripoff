@@ -64,10 +64,10 @@ const Summary: React.FC<SummaryProps> = ({
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { currentUser } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const { showSuccess, showInfo, showError } = useNotifications();
 
-  const handleProceedToPaymentButtonClick = () => {
+  const handleProceedToPaymentButtonClick = async () => {
     const passengersNames = passengersForTrips
       .map(passengersForTrip => passengersForTrip.passengers
         .map(passenger => [passenger.firstName, passenger.lastName]))
@@ -95,9 +95,11 @@ const Summary: React.FC<SummaryProps> = ({
         dispatch(getTransactionsByUserId(currentUser.uid));
       }
 
+      const tripPrice = passengersForTrips.map(passengersForTrip => passengersForTrip.cartTrip.trip.price * passengersForTrip.cartTrip.passengersCount).reduce((acc, cur) => acc + cur);
+
       dispatch(addTransaction({
         date: moment().format('YYYY-MM-DD'),
-        price: passengersForTrips.map(passengersForTrip => passengersForTrip.cartTrip.trip.price * passengersForTrip.cartTrip.passengersCount).reduce((acc, cur) => acc + cur),
+        price: tripPrice,
         tripIds: passengersForTrips.map(passengersForTrip => {
           return {
             tripId: passengersForTrip.cartTrip.trip.id,
@@ -107,6 +109,13 @@ const Summary: React.FC<SummaryProps> = ({
         userId: currentUser ? currentUser.uid : '',
         email: mail
       }))
+
+      if (currentUser && setCurrentUser) {
+        setCurrentUser({
+          ...currentUser,
+          balance: currentUser.balance - tripPrice,
+        })
+      }
 
       dispatch(emptyCartActionCreator());
       showSuccess('Payment done.');
@@ -217,7 +226,7 @@ const Summary: React.FC<SummaryProps> = ({
           variant='contained'
           fullWidth
           color='primary'
-          onClick={handleProceedToPaymentButtonClick}
+          onClick={async () => await handleProceedToPaymentButtonClick()}
         >
           Proceed to payment
         </Button>

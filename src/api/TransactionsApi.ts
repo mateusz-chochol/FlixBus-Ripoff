@@ -1,6 +1,6 @@
 import TransactionTrip from 'types/Objects/TransactionTrip';
 import firebase from 'firebase/app';
-import { tripsRef, transactionsRef } from './firestoreCollectionsRefs';
+import { tripsRef, transactionsRef, usersRef } from './firestoreCollectionsRefs';
 import config from 'reduxConfig.json';
 
 const delay = () => new Promise(resolve => setTimeout(resolve, config.apiDelay));
@@ -65,12 +65,24 @@ export const addTransaction = async (date: string, price: number, tripIds: Trans
       tripIds: tripIds,
       userId: userId,
       email: email,
+      tripIdsList: tripIds.map(tripId => tripId.tripId)
     })
 
     if (userId !== '') {
       const newTransaction = await newTransactionRef.get();
 
-      return convertFirebaseDataToTransaction(newTransaction);
+      const userRef = usersRef.doc(userId);
+      const userData = (await userRef.get()).data();
+
+      if (userData) {
+        if (userData.balance >= price) {
+          await userRef.update({
+            balance: userData.balance - price,
+          })
+        }
+
+        return convertFirebaseDataToTransaction(newTransaction);
+      }
     }
 
     return undefined;
@@ -99,6 +111,17 @@ export const removeTransaction = async (transactionId: string) => {
           })
         }
       })
+
+      if (transactionData.userId) {
+        const user = await usersRef.doc(transactionData.userId).get();
+        const userData = user.data();
+
+        if (userData) {
+          promises.push(usersRef.doc(transactionData.userId).update({
+            balance: userData.balance + transactionData.price
+          }))
+        }
+      }
 
       await Promise.all(promises);
     }
