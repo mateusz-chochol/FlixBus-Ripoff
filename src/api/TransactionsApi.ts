@@ -117,7 +117,7 @@ export const removeTransaction = async (transactionId: string) => {
         const userData = user.data();
 
         if (userData) {
-          promises.push(usersRef.doc(transactionData.userId).update({
+          promises.push(user.ref.update({
             balance: userData.balance + transactionData.price
           }))
         }
